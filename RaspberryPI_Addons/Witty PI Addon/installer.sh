@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-# Allgemeiner Installationsstarter fuer Raspberry Pi OS. Er laedt bei jedem
-# Aufruf das aktuelle GitHub-Paket; installer_addon.sh verarbeitet danach die
-# interaktiven Eingaben oder die Parameter des Windows-Programms.
-readonly ADDON_URL="https://raw.githubusercontent.com/C4rstenSC/scripte/main/RaspberryPI_Addons/Witty%20PI%20Addon/witty_addon.zip"
+# Allgemeiner Installationsstarter fuer Raspberry Pi OS. Das Windows-Programm
+# lädt das verschlüsselte GitHub-Paket, entschlüsselt und prüft es und überträgt
+# anschließend diese Klartext-ZIP nur zum Raspberry.
+readonly ADDON_ENCRYPTED_URL="https://raw.githubusercontent.com/C4rstenSC/scripte/main/RaspberryPI_Addons/Witty%20PI%20Addon/witty_addon.zip.enc"
 
 log() { printf '[Witty-Launcher] %s\n' "$*"; }
 die() { printf '[Witty-Launcher] FEHLER: %s\n' "$*" >&2; exit 1; }
@@ -35,11 +35,30 @@ cleanup() { rm -rf -- "$work_dir"; }
 trap cleanup EXIT
 
 archive="$work_dir/witty_addon.zip"
-log "Lade die aktuelle witty_addon.zip von GitHub ..."
-curl --fail --location --show-error --silent --connect-timeout 15 --max-time 180 \
-    --retry 5 --retry-delay 2 --retry-all-errors \
-    --output "$archive" "${ADDON_URL}?download=$(date +%s)" || \
-    die "GitHub-Download fehlgeschlagen."
+if [[ -n "${WITTY_ADDON_LOCAL_ZIP:-}" ]]; then
+    [[ -f "$WITTY_ADDON_LOCAL_ZIP" ]] || die "Das übergebene lokale Witty-Paket fehlt: $WITTY_ADDON_LOCAL_ZIP"
+    log "Verwende die vom Windows-Programm übertragene witty_addon.zip ..."
+    cp -- "$WITTY_ADDON_LOCAL_ZIP" "$archive"
+else
+    launcher_user="${SUDO_USER:-$(id -un)}"
+    launcher_home="$(getent passwd "$launcher_user" 2>/dev/null | cut -d: -f6)"
+    prepared_zip="${launcher_home:-/home/$launcher_user}/witty_addon.zip"
+    if [[ -f "$prepared_zip" && -r "$prepared_zip" ]]; then
+        log "Verwende die von Raspi-Scripte vorbereitete witty_addon.zip aus $prepared_zip ..."
+        cp -- "$prepared_zip" "$archive"
+    elif [[ -x /usr/local/sbin/witty-package-decrypt ]]; then
+        encrypted_archive="$work_dir/witty_addon.zip.enc"
+        log "Lade das verschlüsselte Witty-Paket von GitHub ..."
+        curl --fail --location --show-error --silent --connect-timeout 15 --max-time 180 \
+            --retry 5 --retry-delay 2 --retry-all-errors \
+            --output "$encrypted_archive" "${ADDON_ENCRYPTED_URL}?download=$(date +%s)" || \
+            die "GitHub-Download des verschlüsselten Pakets fehlgeschlagen."
+        /usr/local/sbin/witty-package-decrypt "$encrypted_archive" "$archive" || \
+            die "Das GitHub-Paket konnte auf dem Raspberry nicht entschlüsselt werden."
+    else
+        die "Erstinstallation benötigt Raspi-Scripte 0.6; danach kann der Raspberry verschlüsselte Updates selbst verarbeiten."
+    fi
+fi
 
 unzip -tq "$archive" >/dev/null || die "Das GitHub-ZIP ist beschaedigt."
 if unzip -Z1 "$archive" | grep -Eq '(^/|(^|/)\.\.(/|$))'; then
@@ -51,7 +70,26 @@ runner="$work_dir/extracted/witty_addon/installer_addon.sh"
 [[ -f "$runner" ]] || die "installer_addon.sh fehlt im GitHub-ZIP."
 chmod 0755 "$runner"
 
-printf '[WITTY-CONTROL] event=install_started source=github\n'
+# Mit jeder Basisinstallation auch den Update-Starter im Home des aufrufenden
+# SSH-Benutzers erneuern. So bleibt keine ältere update.sh neben dem neuen
+# Add-on liegen.
+update_launcher="$work_dir/extracted/witty_addon/launchers/update.sh"
+[[ -f "$update_launcher" ]] || die "launchers/update.sh fehlt im GitHub-ZIP."
+launcher_user="${SUDO_USER:-}"
+if [[ -z "$launcher_user" || "$launcher_user" == root ]]; then
+    launcher_user="$(stat -c '%U' "$0" 2>/dev/null || true)"
+fi
+if [[ -n "$launcher_user" && "$launcher_user" != root ]] && id "$launcher_user" >/dev/null 2>&1; then
+    launcher_home="$(getent passwd "$launcher_user" | cut -d: -f6)"
+    launcher_group="$(id -gn "$launcher_user")"
+    if [[ -n "$launcher_home" && -d "$launcher_home" ]]; then
+        install -o "$launcher_user" -g "$launcher_group" -m 0755 \
+            "$update_launcher" "$launcher_home/update.sh"
+        log "update.sh im Benutzer-Home aktualisiert: $launcher_home/update.sh"
+    fi
+fi
+
+printf '[WITTY-CONTROL] event=install_started source=windows-upload\n'
 runner_rc=0
 bash "$runner" "$@" || runner_rc=$?
 if (( runner_rc != 0 )); then
