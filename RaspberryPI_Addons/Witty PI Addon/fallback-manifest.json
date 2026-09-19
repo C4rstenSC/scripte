@@ -2,6 +2,14 @@
   "schema": 1,
   "versions": [
     {
+      "version": "0.6.7",
+      "releaseDate": "2026-09-19",
+      "package": "witty_addon-0.6.7.zip.enc",
+      "sha256": "5b2f35ba0a5e2564ed243b937278babf5b31be837a91d51d4a64609968b953fa",
+      "releaseNotesDe": "Basis- und Softwareinstallationen akzeptieren Bookworm oder Trixie und brechen auf anderen Systemständen verständlich ab. Die zusätzliche Witty-Kameravorprüfung vor dem blauen Allsky-Installer entfällt; Allsky entscheidet selbst. Die rote Abschlussmeldung bei fehlender Kamera bleibt auf beiden Systemen erhalten.",
+      "releaseNotesEn": "Base and software installations accept Bookworm or Trixie and stop clearly on other operating-system revisions. The additional Witty camera pre-check before the blue Allsky installer has been removed; Allsky decides itself. The red no-camera completion message remains available on both systems."
+    },
+    {
       "version": "0.6.6",
       "releaseDate": "2026-09-18",
       "package": "witty_addon-0.6.6.zip.enc",
@@ -16,14 +24,6 @@
       "sha256": "0d1b23201198b253c540bc8ae15abe530f258856278c8f13871191ecd4b65929",
       "releaseNotesDe": "Repariert die GitHub-Basisinstallation nach der Umstellung auf verschlüsselte Pakete. Eine noch ausstehende GPS-NMEA-Ausgabe wird als Wartezustand behandelt; die Synchronisierung läuft nach dem ersten gültigen Fix weiter.",
       "releaseNotesEn": "Repairs GitHub base installation after the switch to encrypted packages. A pending GPS NMEA stream is treated as a waiting state and synchronisation continues after the first valid fix."
-    },
-    {
-      "version": "0.6.4",
-      "releaseDate": "2026-09-17",
-      "package": "witty_addon-0.6.4.zip.enc",
-      "sha256": "20487ea0b2f42578a294b59dd0e80de90221bf6ab125ea74f096a6ab83221ed7",
-      "releaseNotesDe": "Beendet nach einem WPI-ZIP-Upload zuerst den Busy-Zustand und aktualisiert anschließend die Skriptliste mit kurzen Wiederholungen. Die dauerhafte Anzeige „Witty beschäftigt“ wird dadurch vermieden.",
-      "releaseNotesEn": "Releases the busy state before refreshing the script list after a WPI ZIP upload and retries the refresh briefly. This prevents a permanent ‘Witty is busy’ display."
     }
   ]
 }
