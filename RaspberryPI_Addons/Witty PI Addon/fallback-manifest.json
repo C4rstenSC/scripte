@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "versions": [
+    {
+      "version": "0.6.6",
+      "releaseDate": "2026-09-18",
+      "package": "witty_addon-0.6.6.zip.enc",
+      "sha256": "f508425c7ba6ce2aa6aa92976c47ae12f923c94e3895927715c3ad3c9470c471",
+      "releaseNotesDe": "Erste Zeitplanaktivierung nach einem Kaltstart gegen Firmware-I/O-Fehler abgesichert. Witty-Pi-5-Logging kann auf der Webseite ein- und ausgeschaltet werden. Abschaltzeit und aktiver Zeitmodus stehen getrennt; Jahreswarnungen verwenden ausschließlich das Witty-RTC-Jahr.",
+      "releaseNotesEn": "Protects the first schedule activation after a cold boot against the firmware I/O state. Witty Pi 5 logging can be enabled or disabled on the web page. Shutdown time and active time mode are separated; year warnings use only the Witty RTC year."
+    },
+    {
+      "version": "0.6.5",
+      "releaseDate": "2026-09-18",
+      "package": "witty_addon-0.6.5.zip.enc",
+      "sha256": "0d1b23201198b253c540bc8ae15abe530f258856278c8f13871191ecd4b65929",
+      "releaseNotesDe": "Repariert die GitHub-Basisinstallation nach der Umstellung auf verschlüsselte Pakete. Eine noch ausstehende GPS-NMEA-Ausgabe wird als Wartezustand behandelt; die Synchronisierung läuft nach dem ersten gültigen Fix weiter.",
+      "releaseNotesEn": "Repairs GitHub base installation after the switch to encrypted packages. A pending GPS NMEA stream is treated as a waiting state and synchronisation continues after the first valid fix."
+    },
+    {
+      "version": "0.6.4",
+      "releaseDate": "2026-09-17",
+      "package": "witty_addon-0.6.4.zip.enc",
+      "sha256": "20487ea0b2f42578a294b59dd0e80de90221bf6ab125ea74f096a6ab83221ed7",
+      "releaseNotesDe": "Beendet nach einem WPI-ZIP-Upload zuerst den Busy-Zustand und aktualisiert anschließend die Skriptliste mit kurzen Wiederholungen. Die dauerhafte Anzeige „Witty beschäftigt“ wird dadurch vermieden.",
+      "releaseNotesEn": "Releases the busy state before refreshing the script list after a WPI ZIP upload and retries the refresh briefly. This prevents a permanent ‘Witty is busy’ display."
+    }
+  ]
+}
