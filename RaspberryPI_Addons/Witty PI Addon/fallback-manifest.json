@@ -2,6 +2,14 @@
   "schema": 1,
   "versions": [
     {
+      "version": "0.6.9",
+      "releaseDate": "2026-09-21",
+      "package": "witty_addon-0.6.9.zip.enc",
+      "sha256": "344d0379eab5d8763e1960ac865ad37158d97b35d8caadd9d6f7f5e0a553e4eb",
+      "releaseNotesDe": "Verifizierte WPI-Dateigrößen nach Editor- und ZIP-Upload, Witty-Web-Entwicklermodus, fortgesetzte GPS-Zeitsynchronisierung sowie versionsgenaues Updateprotokoll.",
+      "releaseNotesEn": "Verified WPI file sizes after editor and ZIP uploads, Witty web developer mode, continued GPS time synchronisation, and version-specific update logging."
+    },
+    {
       "version": "0.6.8",
       "releaseDate": "2026-09-21",
       "package": "witty_addon-0.6.8.zip.enc",
@@ -16,14 +24,6 @@
       "sha256": "5b2f35ba0a5e2564ed243b937278babf5b31be837a91d51d4a64609968b953fa",
       "releaseNotesDe": "Basis- und Softwareinstallationen akzeptieren Bookworm oder Trixie. Die zusätzliche Witty-Kameravorprüfung vor dem Allsky-Installer entfällt.",
       "releaseNotesEn": "Base and software installations accept Bookworm or Trixie. The additional Witty camera pre-check before the Allsky installer has been removed."
-    },
-    {
-      "version": "0.6.6",
-      "releaseDate": "2026-09-18",
-      "package": "witty_addon-0.6.6.zip.enc",
-      "sha256": "f508425c7ba6ce2aa6aa92976c47ae12f923c94e3895927715c3ad3c9470c471",
-      "releaseNotesDe": "Erste Zeitplanaktivierung nach einem Kaltstart gegen Firmware-I/O-Fehler abgesichert und Witty-Pi-5-Logging auf der Webseite schaltbar.",
-      "releaseNotesEn": "Protects the first schedule activation after a cold boot against the firmware I/O state and makes Witty Pi 5 logging switchable on the web page."
     }
   ]
 }
