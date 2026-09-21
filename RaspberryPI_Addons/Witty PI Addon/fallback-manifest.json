@@ -1,6 +1,14 @@
 {
   "versions": [
     {
+      "version": "0.6.13",
+      "releaseDate": "2026-09-21",
+      "package": "witty_addon-0.6.13.zip.enc",
+      "sha256": "719b78a3c41d9af7c8b01ea59a09054a45becebe4d1218c397b3964d6ff388b2",
+      "releaseNotesDe": "Energie-Priorität V-USB/V-IN und VIN-Hot-Standby sind über die offiziellen wp5-Menüpunkte einstellbar. Der automatische Tiefschlaf ab Firmware 1.6 wird angezeigt. Weitere Einstellungen sind vorerst ohne Entwickler-Login änderbar.",
+      "releaseNotesEn": "V-USB/V-IN power priority and VIN hot standby are configurable through the official wp5 menu. Automatic hibernation on firmware 1.6 and later is displayed. Other settings can currently be changed without developer login."
+    },
+    {
       "version": "0.6.12",
       "releaseDate": "2026-09-21",
       "package": "witty_addon-0.6.12.zip.enc",
@@ -15,22 +23,6 @@
       "sha256": "05c0233e1925beb2a742591d2095cf48873ba7ab7b92c64b1b3c02f7121b7434",
       "releaseNotesDe": "USB-GPS und Waveshare L76X behalten beim Add-on-Update ihre automatische GPS-Zeitsynchronisierung für Linux, WURB, WIRC, Pi-RTC und Witty-RTC; hinzu kommen eindeutige Zeitausgaben, ALLSKY-SETUP in voller Browserbreite und der Entwickler-Login ausschließlich unter Anleitung.",
       "releaseNotesEn": "USB GPS and Waveshare L76X retain automatic GPS time synchronisation for Linux, WURB, WIRC, Pi RTC and Witty RTC during add-on updates, with clear time-status output, full-width ALLSKY SETUP, and developer login available only from the guide."
-    },
-    {
-      "version": "0.6.10",
-      "releaseDate": "2026-09-21",
-      "package": "witty_addon-0.6.10.zip.enc",
-      "sha256": "7e314153ccf9f5047cee8f30e04dd8dd37ec2b98405aa178ca829a4b3487c4b8",
-      "releaseNotesDe": "Bestätigte Diensterkennung nach dem Raspberry-Start ohne falsche „nicht installiert“-Anzeige, automatische Aktualisierung der Homepage-Knöpfe, deutsche und englische Release Notes mit korrektem Sprungziel, Entwickler-Login direkt in der Anleitung sowie Anzeige und Schaltung der Witty-Spannungsschwellen mit Ausgangsstrommessung.",
-      "releaseNotesEn": "Confirmed service detection after Raspberry Pi startup without false “not installed” states, automatic homepage-button refresh, German and English release notes with the correct target, developer login directly in the guide, and display/control of Witty voltage thresholds with output-current measurement."
-    },
-    {
-      "version": "0.6.9",
-      "releaseDate": "2026-09-21",
-      "package": "witty_addon-0.6.9.zip.enc",
-      "sha256": "344d0379eab5d8763e1960ac865ad37158d97b35d8caadd9d6f7f5e0a553e4eb",
-      "releaseNotesDe": "Verifizierte WPI-Dateigrößen nach Editor- und ZIP-Upload, Witty-Web-Entwicklermodus, fortgesetzte GPS-Zeitsynchronisierung sowie versionsgenaues Updateprotokoll.",
-      "releaseNotesEn": "Verified WPI file sizes after editor and ZIP uploads, Witty web developer mode, continued GPS time synchronisation, and version-specific update logging."
     }
   ],
   "schema": 1
