@@ -1,6 +1,13 @@
 {
-  "schema": 1,
   "versions": [
+    {
+      "version": "0.6.10",
+      "releaseDate": "2026-09-21",
+      "package": "witty_addon-0.6.10.zip.enc",
+      "sha256": "7e314153ccf9f5047cee8f30e04dd8dd37ec2b98405aa178ca829a4b3487c4b8",
+      "releaseNotesDe": "Bestätigte Diensterkennung nach dem Raspberry-Start ohne falsche „nicht installiert“-Anzeige, automatische Aktualisierung der Homepage-Knöpfe, deutsche und englische Release Notes mit korrektem Sprungziel, Entwickler-Login direkt in der Anleitung sowie Anzeige und Schaltung der Witty-Spannungsschwellen mit Ausgangsstrommessung.",
+      "releaseNotesEn": "Confirmed service detection after Raspberry Pi startup without false “not installed” states, automatic homepage-button refresh, German and English release notes with the correct target, developer login directly in the guide, and display/control of Witty voltage thresholds with output-current measurement."
+    },
     {
       "version": "0.6.9",
       "releaseDate": "2026-09-21",
@@ -25,5 +32,6 @@
       "releaseNotesDe": "Basis- und Softwareinstallationen akzeptieren Bookworm oder Trixie. Die zusätzliche Witty-Kameravorprüfung vor dem Allsky-Installer entfällt.",
       "releaseNotesEn": "Base and software installations accept Bookworm or Trixie. The additional Witty camera pre-check before the Allsky installer has been removed."
     }
-  ]
+  ],
+  "schema": 1
 }
