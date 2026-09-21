@@ -1,6 +1,13 @@
 {
-  "schema": 1,
   "versions": [
+    {
+      "version": "0.6.12",
+      "releaseDate": "2026-09-21",
+      "package": "witty_addon-0.6.12.zip.enc",
+      "sha256": "389d5fbb61a109daf203a360b30d74764692cc5aae551c486b1c73bf71571289",
+      "releaseNotesDe": "Die Witty-Webseite zeigt Unterspannungsgrenze, Wiederanlaufspannung sowie Über- und Untertemperaturaktionen getrennt an und kann sie setzen oder deaktivieren. Vier weitere Firmware-Einstellungen werden immer angezeigt und lassen sich ausschließlich nach Entwickler-Login ändern. Auf Raspberry Pi 4 synchronisiert GPS Linux und Witty auch ohne interne Pi-RTC; alle Uhren laufen in der Anzeige ab ihrem tatsächlichen Lesezeitpunkt synchron weiter.",
+      "releaseNotesEn": "The Witty page separately displays and controls low-voltage, recovery-voltage, over-temperature and below-temperature actions. Four additional firmware settings are always visible and can be changed only after developer login. On Raspberry Pi 4, GPS synchronises Linux and Witty without an internal Pi RTC, and every displayed clock advances from its actual sampling time."
+    },
     {
       "version": "0.6.11",
       "releaseDate": "2026-09-21",
@@ -24,14 +31,7 @@
       "sha256": "344d0379eab5d8763e1960ac865ad37158d97b35d8caadd9d6f7f5e0a553e4eb",
       "releaseNotesDe": "Verifizierte WPI-Dateigrößen nach Editor- und ZIP-Upload, Witty-Web-Entwicklermodus, fortgesetzte GPS-Zeitsynchronisierung sowie versionsgenaues Updateprotokoll.",
       "releaseNotesEn": "Verified WPI file sizes after editor and ZIP uploads, Witty web developer mode, continued GPS time synchronisation, and version-specific update logging."
-    },
-    {
-      "version": "0.6.8",
-      "releaseDate": "2026-09-21",
-      "package": "witty_addon-0.6.8.zip.enc",
-      "sha256": "ee21600b81b37689e2ecee2e973f701b50d5baf8208be743032509bb69fac97f",
-      "releaseNotesDe": "Vollständige GPS-Ersteinrichtung für Pi 4 und Pi 5, reibungsloser Wechsel zwischen Kein GPS, USB-GPS und Waveshare L76X sowie ALLSKY-Speicherwahl und vollständige Konfigurationssicherung.",
-      "releaseNotesEn": "Complete initial GPS configuration for Pi 4 and Pi 5, reliable switching among No GPS, USB GPS and Waveshare L76X, plus ALLSKY storage selection and complete configuration backup."
     }
-  ]
+  ],
+  "schema": 1
 }
