@@ -1,5 +1,14 @@
 {
+  "schema": 1,
   "versions": [
+    {
+      "version": "0.6.11",
+      "releaseDate": "2026-09-21",
+      "package": "witty_addon-0.6.11.zip.enc",
+      "sha256": "05c0233e1925beb2a742591d2095cf48873ba7ab7b92c64b1b3c02f7121b7434",
+      "releaseNotesDe": "USB-GPS und Waveshare L76X behalten beim Add-on-Update ihre automatische GPS-Zeitsynchronisierung für Linux, WURB, WIRC, Pi-RTC und Witty-RTC; hinzu kommen eindeutige Zeitausgaben, ALLSKY-SETUP in voller Browserbreite und der Entwickler-Login ausschließlich unter Anleitung.",
+      "releaseNotesEn": "USB GPS and Waveshare L76X retain automatic GPS time synchronisation for Linux, WURB, WIRC, Pi RTC and Witty RTC during add-on updates, with clear time-status output, full-width ALLSKY SETUP, and developer login available only from the guide."
+    },
     {
       "version": "0.6.10",
       "releaseDate": "2026-09-21",
@@ -23,15 +32,6 @@
       "sha256": "ee21600b81b37689e2ecee2e973f701b50d5baf8208be743032509bb69fac97f",
       "releaseNotesDe": "Vollständige GPS-Ersteinrichtung für Pi 4 und Pi 5, reibungsloser Wechsel zwischen Kein GPS, USB-GPS und Waveshare L76X sowie ALLSKY-Speicherwahl und vollständige Konfigurationssicherung.",
       "releaseNotesEn": "Complete initial GPS configuration for Pi 4 and Pi 5, reliable switching among No GPS, USB GPS and Waveshare L76X, plus ALLSKY storage selection and complete configuration backup."
-    },
-    {
-      "version": "0.6.7",
-      "releaseDate": "2026-09-19",
-      "package": "witty_addon-0.6.7.zip.enc",
-      "sha256": "5b2f35ba0a5e2564ed243b937278babf5b31be837a91d51d4a64609968b953fa",
-      "releaseNotesDe": "Basis- und Softwareinstallationen akzeptieren Bookworm oder Trixie. Die zusätzliche Witty-Kameravorprüfung vor dem Allsky-Installer entfällt.",
-      "releaseNotesEn": "Base and software installations accept Bookworm or Trixie. The additional Witty camera pre-check before the Allsky installer has been removed."
     }
-  ],
-  "schema": 1
+  ]
 }
