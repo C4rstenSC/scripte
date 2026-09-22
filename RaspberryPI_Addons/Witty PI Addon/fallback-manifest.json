@@ -1,6 +1,14 @@
 {
   "versions": [
     {
+      "version": "0.6.14",
+      "releaseDate": "2026-09-22",
+      "package": "witty_addon-0.6.14.zip.enc",
+      "sha256": "5ca467442437ba63c677eea2e458308b86ff20cf770d13e77ac82704504a03cd",
+      "releaseNotesDe": "ALLSKY-Sicherung, Wiederherstellung und Bildspeicherwechsel verwenden den tatsächlichen ALLSKY-Besitzer und einen geprüften Webpfad-Rückfall. Der Basisinstaller prüft Pi 4/4B/4B+, Bookworm/Trixie und ARM64 frühzeitig. Die Pi-4-Familie erhält die USB-GPS-Seriellreparatur. Eine gpsd-JSON-Bridge liefert WURB garantiert GPGGA/GPRMC über /dev/ttyUSB9, während die Witty-Seite Zeit und Position parallel liest; der Pi-5-Gerätepfad bleibt unverändert.",
+      "releaseNotesEn": "ALLSKY backup, restore and image-storage changes use the actual ALLSKY owner and a validated web-path fallback. The base installer validates Pi 4/4B/4B+, Bookworm/Trixie and ARM64 early. The Pi 4 family receives USB GPS serial repair. A GPSD-JSON bridge guarantees GPGGA/GPRMC for WURB on /dev/ttyUSB9 while the Witty page reads time and position concurrently; the Pi 5 device path remains unchanged."
+    },
+    {
       "version": "0.6.13",
       "releaseDate": "2026-09-21",
       "package": "witty_addon-0.6.13.zip.enc",
@@ -15,14 +23,6 @@
       "sha256": "389d5fbb61a109daf203a360b30d74764692cc5aae551c486b1c73bf71571289",
       "releaseNotesDe": "Die Witty-Webseite zeigt Unterspannungsgrenze, Wiederanlaufspannung sowie Über- und Untertemperaturaktionen getrennt an und kann sie setzen oder deaktivieren. Vier weitere Firmware-Einstellungen werden immer angezeigt und lassen sich ausschließlich nach Entwickler-Login ändern. Auf Raspberry Pi 4 synchronisiert GPS Linux und Witty auch ohne interne Pi-RTC; alle Uhren laufen in der Anzeige ab ihrem tatsächlichen Lesezeitpunkt synchron weiter.",
       "releaseNotesEn": "The Witty page separately displays and controls low-voltage, recovery-voltage, over-temperature and below-temperature actions. Four additional firmware settings are always visible and can be changed only after developer login. On Raspberry Pi 4, GPS synchronises Linux and Witty without an internal Pi RTC, and every displayed clock advances from its actual sampling time."
-    },
-    {
-      "version": "0.6.11",
-      "releaseDate": "2026-09-21",
-      "package": "witty_addon-0.6.11.zip.enc",
-      "sha256": "05c0233e1925beb2a742591d2095cf48873ba7ab7b92c64b1b3c02f7121b7434",
-      "releaseNotesDe": "USB-GPS und Waveshare L76X behalten beim Add-on-Update ihre automatische GPS-Zeitsynchronisierung für Linux, WURB, WIRC, Pi-RTC und Witty-RTC; hinzu kommen eindeutige Zeitausgaben, ALLSKY-SETUP in voller Browserbreite und der Entwickler-Login ausschließlich unter Anleitung.",
-      "releaseNotesEn": "USB GPS and Waveshare L76X retain automatic GPS time synchronisation for Linux, WURB, WIRC, Pi RTC and Witty RTC during add-on updates, with clear time-status output, full-width ALLSKY SETUP, and developer login available only from the guide."
     }
   ],
   "schema": 1
