@@ -1,6 +1,14 @@
 {
   "versions": [
     {
+      "version": "0.6.18",
+      "releaseDate": "2026-09-22",
+      "package": "witty_addon-0.6.18.zip.enc",
+      "sha256": "ab383318abda2cf928811b9e87a6d2ea2280c9a53446fdc6f770c373fbcddf52",
+      "releaseNotesDe": "Die ALLSKY-Sicherung umfasst alle aktuellen Konfigurationsbereiche einschließlich Overlays, Website-Anpassungen und Benutzermodulen, aber keine Aufnahmen oder Programmdateien. Wiederherstellen leert den vorhandenen Konfigurationsbaum nicht mehr, prüft ausgewählte Overlaydefinitionen und bewahrt eine dauerhafte Rückrollsicherung. ALLSKY-Dienstzustände werden erhalten, langsame Bildpfad-Neukonfigurationen nur bei einer tatsächlichen Änderung ausgeführt und Deinstallationsreste unter /opt/allsky zuverlässig entfernt.",
+      "releaseNotesEn": "ALLSKY backup covers all current configuration areas including overlays, website customisation, and user modules, but excludes captures and program files. Restore no longer clears the existing configuration tree, validates selected overlay definitions, and retains a permanent rollback backup. ALLSKY service states are preserved, slow image-path reconfiguration only runs after an actual change, and uninstall remnants under /opt/allsky are removed reliably."
+    },
+    {
       "version": "0.6.17",
       "releaseDate": "2026-09-22",
       "package": "witty_addon-0.6.17.zip.enc",
@@ -15,14 +23,6 @@
       "sha256": "1eed78ecbbc4a9e04ed95b2c7ab62915ac8c24b3a76772958f511fa5c9e71cb6",
       "releaseNotesDe": "Raspberry Pi 4 verwendet für USB- und Waveshare-GPS wieder den unveränderten NMEA-Rohdatenstrom. Ein ausfallsicherer Verteiler liefert getrennte Kopien an WURB und gpsd/Witty, ohne den Empfänger in den problematischen u-blox-Binärmodus umzuschalten. WURB toleriert die fehlende RTS-Modemsteuerung virtueller PTYs; die Schnittstellen bleiben auch ohne sofortigen Satellitenfix dauerhaft bestehen. Der Pi-5-Pfad bleibt unverändert.",
       "releaseNotesEn": "Raspberry Pi 4 now keeps the original NMEA stream for USB and Waveshare GPS. A resilient fanout supplies separate copies to WURB and gpsd/Witty without switching the receiver into the problematic u-blox binary mode. WURB tolerates missing RTS modem control on virtual PTYs, and both interfaces remain stable while waiting for the first satellite fix. The Pi 5 path remains unchanged."
-    },
-    {
-      "version": "0.6.15",
-      "releaseDate": "2026-09-22",
-      "package": "witty_addon-0.6.15.zip.enc",
-      "sha256": "63418c881169511f4064cbb7970b36e0e4371c056738c31998691dd17808da0a",
-      "releaseNotesDe": "Die WURB- und WIRC-Navigation blendet ALLSKY und ALLSKY-Setup außerhalb einer bestätigten Entwicklersitzung vollständig aus. Die Links bleiben bereits im HTML verborgen, sodass sie weder beim Laden noch bei einem Verbindungsfehler kurz sichtbar werden. Das gilt ebenfalls für die WURB- und WIRC-Recordingseiten.",
-      "releaseNotesEn": "The WURB and WIRC navigation hides ALLSKY and ALLSKY Setup completely unless a verified developer session is active. The links start hidden in the HTML, preventing a brief display during page loading or when the navigation API cannot be reached. This also applies to the WURB and WIRC recordings pages."
     }
   ],
   "schema": 1
