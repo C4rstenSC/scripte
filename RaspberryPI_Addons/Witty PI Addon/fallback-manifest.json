@@ -1,6 +1,14 @@
 {
   "versions": [
     {
+      "version": "0.6.15",
+      "releaseDate": "2026-09-22",
+      "package": "witty_addon-0.6.15.zip.enc",
+      "sha256": "63418c881169511f4064cbb7970b36e0e4371c056738c31998691dd17808da0a",
+      "releaseNotesDe": "Die WURB- und WIRC-Navigation blendet ALLSKY und ALLSKY-Setup außerhalb einer bestätigten Entwicklersitzung vollständig aus. Die Links bleiben bereits im HTML verborgen, sodass sie weder beim Laden noch bei einem Verbindungsfehler kurz sichtbar werden. Das gilt ebenfalls für die WURB- und WIRC-Recordingseiten.",
+      "releaseNotesEn": "The WURB and WIRC navigation hides ALLSKY and ALLSKY Setup completely unless a verified developer session is active. The links start hidden in the HTML, preventing a brief display during page loading or when the navigation API cannot be reached. This also applies to the WURB and WIRC recordings pages."
+    },
+    {
       "version": "0.6.14",
       "releaseDate": "2026-09-22",
       "package": "witty_addon-0.6.14.zip.enc",
@@ -15,14 +23,6 @@
       "sha256": "719b78a3c41d9af7c8b01ea59a09054a45becebe4d1218c397b3964d6ff388b2",
       "releaseNotesDe": "Energie-Priorität V-USB/V-IN und VIN-Hot-Standby sind über die offiziellen wp5-Menüpunkte einstellbar. Der automatische Tiefschlaf ab Firmware 1.6 wird angezeigt. Weitere Einstellungen sind vorerst ohne Entwickler-Login änderbar.",
       "releaseNotesEn": "V-USB/V-IN power priority and VIN hot standby are configurable through the official wp5 menu. Automatic hibernation on firmware 1.6 and later is displayed. Other settings can currently be changed without developer login."
-    },
-    {
-      "version": "0.6.12",
-      "releaseDate": "2026-09-21",
-      "package": "witty_addon-0.6.12.zip.enc",
-      "sha256": "389d5fbb61a109daf203a360b30d74764692cc5aae551c486b1c73bf71571289",
-      "releaseNotesDe": "Die Witty-Webseite zeigt Unterspannungsgrenze, Wiederanlaufspannung sowie Über- und Untertemperaturaktionen getrennt an und kann sie setzen oder deaktivieren. Vier weitere Firmware-Einstellungen werden immer angezeigt und lassen sich ausschließlich nach Entwickler-Login ändern. Auf Raspberry Pi 4 synchronisiert GPS Linux und Witty auch ohne interne Pi-RTC; alle Uhren laufen in der Anzeige ab ihrem tatsächlichen Lesezeitpunkt synchron weiter.",
-      "releaseNotesEn": "The Witty page separately displays and controls low-voltage, recovery-voltage, over-temperature and below-temperature actions. Four additional firmware settings are always visible and can be changed only after developer login. On Raspberry Pi 4, GPS synchronises Linux and Witty without an internal Pi RTC, and every displayed clock advances from its actual sampling time."
     }
   ],
   "schema": 1
