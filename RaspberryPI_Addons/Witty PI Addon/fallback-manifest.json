@@ -1,6 +1,14 @@
 {
   "versions": [
     {
+      "version": "0.6.16",
+      "releaseDate": "2026-09-22",
+      "package": "witty_addon-0.6.16.zip.enc",
+      "sha256": "1eed78ecbbc4a9e04ed95b2c7ab62915ac8c24b3a76772958f511fa5c9e71cb6",
+      "releaseNotesDe": "Raspberry Pi 4 verwendet für USB- und Waveshare-GPS wieder den unveränderten NMEA-Rohdatenstrom. Ein ausfallsicherer Verteiler liefert getrennte Kopien an WURB und gpsd/Witty, ohne den Empfänger in den problematischen u-blox-Binärmodus umzuschalten. WURB toleriert die fehlende RTS-Modemsteuerung virtueller PTYs; die Schnittstellen bleiben auch ohne sofortigen Satellitenfix dauerhaft bestehen. Der Pi-5-Pfad bleibt unverändert.",
+      "releaseNotesEn": "Raspberry Pi 4 now keeps the original NMEA stream for USB and Waveshare GPS. A resilient fanout supplies separate copies to WURB and gpsd/Witty without switching the receiver into the problematic u-blox binary mode. WURB tolerates missing RTS modem control on virtual PTYs, and both interfaces remain stable while waiting for the first satellite fix. The Pi 5 path remains unchanged."
+    },
+    {
       "version": "0.6.15",
       "releaseDate": "2026-09-22",
       "package": "witty_addon-0.6.15.zip.enc",
@@ -15,14 +23,6 @@
       "sha256": "5ca467442437ba63c677eea2e458308b86ff20cf770d13e77ac82704504a03cd",
       "releaseNotesDe": "ALLSKY-Sicherung, Wiederherstellung und Bildspeicherwechsel verwenden den tatsächlichen ALLSKY-Besitzer und einen geprüften Webpfad-Rückfall. Der Basisinstaller prüft Pi 4/4B/4B+, Bookworm/Trixie und ARM64 frühzeitig. Die Pi-4-Familie erhält die USB-GPS-Seriellreparatur. Eine gpsd-JSON-Bridge liefert WURB garantiert GPGGA/GPRMC über /dev/ttyUSB9, während die Witty-Seite Zeit und Position parallel liest; der Pi-5-Gerätepfad bleibt unverändert.",
       "releaseNotesEn": "ALLSKY backup, restore and image-storage changes use the actual ALLSKY owner and a validated web-path fallback. The base installer validates Pi 4/4B/4B+, Bookworm/Trixie and ARM64 early. The Pi 4 family receives USB GPS serial repair. A GPSD-JSON bridge guarantees GPGGA/GPRMC for WURB on /dev/ttyUSB9 while the Witty page reads time and position concurrently; the Pi 5 device path remains unchanged."
-    },
-    {
-      "version": "0.6.13",
-      "releaseDate": "2026-09-21",
-      "package": "witty_addon-0.6.13.zip.enc",
-      "sha256": "719b78a3c41d9af7c8b01ea59a09054a45becebe4d1218c397b3964d6ff388b2",
-      "releaseNotesDe": "Energie-Priorität V-USB/V-IN und VIN-Hot-Standby sind über die offiziellen wp5-Menüpunkte einstellbar. Der automatische Tiefschlaf ab Firmware 1.6 wird angezeigt. Weitere Einstellungen sind vorerst ohne Entwickler-Login änderbar.",
-      "releaseNotesEn": "V-USB/V-IN power priority and VIN hot standby are configurable through the official wp5 menu. Automatic hibernation on firmware 1.6 and later is displayed. Other settings can currently be changed without developer login."
     }
   ],
   "schema": 1
