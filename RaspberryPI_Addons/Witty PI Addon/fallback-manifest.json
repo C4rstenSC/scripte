@@ -1,6 +1,14 @@
 {
   "versions": [
     {
+      "version": "0.6.17",
+      "releaseDate": "2026-09-22",
+      "package": "witty_addon-0.6.17.zip.enc",
+      "sha256": "4e31fbfee75252dd370c6162c0f7b3531ffafa263a5510abf972b57ee25e5194",
+      "releaseNotesDe": "WURB erhält auf Raspberry Pi 4 weiterhin zuerst den vollständigen unveränderten NMEA-Rohdatenstrom und übernimmt die tatsächliche Position nun zusätzlich aus einem gültigen GGA-Datensatz. Empfänger ohne für WURB verwertbaren RMC-Satz zeigen dadurch nicht länger die Live-Satellitenzahl zusammen mit der gespeicherten Standardposition. Alte aktive Koordinaten werden bei der GPS-Konfiguration zurückgesetzt; Standard- und letzte GPS-Position bleiben als Rückfall erhalten. Der Pi-5-Transport bleibt unverändert.",
+      "releaseNotesEn": "WURB on Raspberry Pi 4 continues to receive the complete unchanged NMEA stream first and now also accepts the actual position from a valid GGA sentence. Receivers without an RMC sentence usable by WURB no longer show a live satellite count together with the stored default position. GPS configuration clears stale active coordinates while preserving the configured default and last GPS fix as fallbacks. The Pi 5 transport remains unchanged."
+    },
+    {
       "version": "0.6.16",
       "releaseDate": "2026-09-22",
       "package": "witty_addon-0.6.16.zip.enc",
@@ -15,14 +23,6 @@
       "sha256": "63418c881169511f4064cbb7970b36e0e4371c056738c31998691dd17808da0a",
       "releaseNotesDe": "Die WURB- und WIRC-Navigation blendet ALLSKY und ALLSKY-Setup außerhalb einer bestätigten Entwicklersitzung vollständig aus. Die Links bleiben bereits im HTML verborgen, sodass sie weder beim Laden noch bei einem Verbindungsfehler kurz sichtbar werden. Das gilt ebenfalls für die WURB- und WIRC-Recordingseiten.",
       "releaseNotesEn": "The WURB and WIRC navigation hides ALLSKY and ALLSKY Setup completely unless a verified developer session is active. The links start hidden in the HTML, preventing a brief display during page loading or when the navigation API cannot be reached. This also applies to the WURB and WIRC recordings pages."
-    },
-    {
-      "version": "0.6.14",
-      "releaseDate": "2026-09-22",
-      "package": "witty_addon-0.6.14.zip.enc",
-      "sha256": "5ca467442437ba63c677eea2e458308b86ff20cf770d13e77ac82704504a03cd",
-      "releaseNotesDe": "ALLSKY-Sicherung, Wiederherstellung und Bildspeicherwechsel verwenden den tatsächlichen ALLSKY-Besitzer und einen geprüften Webpfad-Rückfall. Der Basisinstaller prüft Pi 4/4B/4B+, Bookworm/Trixie und ARM64 frühzeitig. Die Pi-4-Familie erhält die USB-GPS-Seriellreparatur. Eine gpsd-JSON-Bridge liefert WURB garantiert GPGGA/GPRMC über /dev/ttyUSB9, während die Witty-Seite Zeit und Position parallel liest; der Pi-5-Gerätepfad bleibt unverändert.",
-      "releaseNotesEn": "ALLSKY backup, restore and image-storage changes use the actual ALLSKY owner and a validated web-path fallback. The base installer validates Pi 4/4B/4B+, Bookworm/Trixie and ARM64 early. The Pi 4 family receives USB GPS serial repair. A GPSD-JSON bridge guarantees GPGGA/GPRMC for WURB on /dev/ttyUSB9 while the Witty page reads time and position concurrently; the Pi 5 device path remains unchanged."
     }
   ],
   "schema": 1
