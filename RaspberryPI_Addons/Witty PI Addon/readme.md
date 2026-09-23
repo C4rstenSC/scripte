@@ -1,6 +1,13 @@
-# Witty Add-on 0.6.35
+# Witty Add-on 0.6.36
 
 Release: 23.09.2026
+
+- Der überflüssige zusätzliche Download-Button unterhalb der Datensicherung
+  auf ALLSKY-SETUP wurde vollständig entfernt. Sein Platzhalterziel führte nur
+  auf `allsky-setup#`.
+- Neu erstellte TAR.GZ-Sicherungen werden weiterhin automatisch
+  heruntergeladen. Gespeicherte Sicherungen bleiben in der separaten Liste
+  verfügbar.
 
 - ALLSKY-SETUP zeigt Standort, GPS-Position und Sonnenberechnung in einem
   eigenen gerahmten Bereich.

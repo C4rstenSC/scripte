@@ -1,4 +1,16 @@
-# Raspi-Scripte 0.6.26
+# Raspi-Scripte 0.6.27
+
+- Das dauerhafte ALLSKY-Dateilesen aktualisiert die geöffnete Liste nach jedem
+  erfolgreichen Abruf. Hostname und IP-Adresse verwenden denselben aktuellen
+  Cache.
+- Ist der Raspberry erreichbar, aber SSH oder das Dateilesen schlägt fehl,
+  wird nach einer Minute erneut versucht. Nach Erfolg gilt wieder der
+  Fünf-Minuten-Abstand.
+- Der gesamte SSH-Terminalbereich besitzt einen weißen Außenrahmen. Der Inhalt
+  belegt ungefähr 75 Prozent der Breite; rechts bleibt Platz zum Scrollen der
+  Hauptseite.
+- Enthält Witty Add-on 0.6.36 ohne den überflüssigen zusätzlichen
+  `allsky-setup#`-Link unterhalb der Datensicherung.
 
 - Der SSH-Terminalbereich besitzt wieder den äußeren Rahmen und zusätzlich
   einen eigenen Rahmen um Überschrift und Ein-/Ausklappknopf.
