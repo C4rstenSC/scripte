@@ -1,6 +1,14 @@
-# Witty Add-on 0.6.30
+# Witty Add-on 0.6.32
 
 Release: 23.09.2026
+
+- Die ALLSKY-Webanmeldung mit Benutzer `admin` und Passwort `secret` wird über
+  die offizielle Einstellung `uselogin=false` vollständig deaktiviert.
+- Der Wert wird direkt nach der ALLSKY-Installation und vor dem ersten
+  Neustart gesetzt. Add-on-Update, Erststart und Backup-Wiederherstellung
+  stellen ihn ebenfalls erneut her.
+- ALLSKY, WURB, WIRC, Recordings und Anleitung nennen den gemeinsamen
+  Navigationsknopf unabhängig von der Hardware dauerhaft „Witty Addon“.
 
 - Der Backend-Dispatcher wird auf bestehenden Installationen unter dem
   richtigen Laufzeitnamen installiert. „Kein Witty“ ruft deshalb keine

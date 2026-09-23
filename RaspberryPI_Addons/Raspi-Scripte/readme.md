@@ -1,4 +1,16 @@
-# Raspi-Scripte 0.6.23
+# Raspi-Scripte 0.6.24
+
+- Nach jedem Updateknopf werden Firmware- und Softwarestände automatisch mit
+  Wiederholungen neu eingelesen; ein Trennen und erneutes Verbinden ist nicht
+  mehr erforderlich.
+- Webserver starten/stoppen befindet sich jetzt in der Zeile „Witty Addon
+  Script“ und bleibt auch bei „Kein Witty“ verfügbar.
+- Das SSH-Terminal besitzt wieder einen vollständigen Rahmen und bleibt
+  standardmäßig eingeklappt; Installation und Update klappen es bei Bedarf auf.
+- Enthält Witty Add-on 0.6.32 mit einheitlichem Navigationsnamen „Witty Addon“
+  auf ALLSKY, WURB, WIRC und den Zusatzseiten.
+- Die ALLSKY-Webanmeldung mit `admin`/`secret` wird bereits während der
+  Installation deaktiviert und bleibt auch nach Update und Restore aus.
 
 - ALLSKY-Konfiguration herunterladen und hochladen verwendet dieselben
   geprüften Web-Endpunkte wie die ALLSKY-SETUP-Seite.
