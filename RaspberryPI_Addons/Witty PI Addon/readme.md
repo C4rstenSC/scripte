@@ -1,6 +1,15 @@
-# Witty Add-on 0.6.27
+# Witty Add-on 0.6.28
 
 Release: 23.09.2026
+
+- Der unabhängige `wittypi5-webserver.service` wird jetzt unmittelbar nach
+  der Konfigurationsmigration installiert, aktiviert, gestartet und direkt
+  über Port 8081 geprüft.
+- Erst wenn die Homepage erreichbar ist, folgen WURB-/WIRC-Navigation und
+  optionale GPS-Nacharbeiten. Ein späterer Fehler kann deshalb keinen
+  sichtbaren „Witty Addon“-Button ohne zugehörigen Webdienst hinterlassen.
+- Diese Prüfung gilt auch auf Raspberry Pi 4 mit „Kein Witty“; der
+  Herstellerdienst `wp5d.service` wird dort nicht benötigt.
 
 - Das Update von älteren Raspberry-Pi-4-Installationen bricht nicht mehr ab,
   wenn `/etc/witty-addon.conf` noch fehlt. Die notwendige Konfiguration wird
