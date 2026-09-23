@@ -9,8 +9,10 @@
 - Der gesamte SSH-Terminalbereich besitzt einen weißen Außenrahmen. Der Inhalt
   belegt ungefähr 75 Prozent der Breite; rechts bleibt Platz zum Scrollen der
   Hauptseite.
-- Enthält Witty Add-on 0.6.36 ohne den überflüssigen zusätzlichen
-  `allsky-setup#`-Link unterhalb der Datensicherung.
+- Enthält Witty Add-on 0.6.37 mit einem beim Neuladen erhaltenen
+  Fortschrittsbalken für ALLSKY-Speichertransfers. Alle Aktionsknöpfe bleiben
+  sichtbar, werden gemeinsam deaktiviert und danach wieder freigegeben. Der
+  überflüssige `allsky-setup#`-Link ist entfernt.
 
 - Der SSH-Terminalbereich besitzt wieder den äußeren Rahmen und zusätzlich
   einen eigenen Rahmen um Überschrift und Ein-/Ausklappknopf.

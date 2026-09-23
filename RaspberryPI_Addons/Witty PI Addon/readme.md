@@ -1,6 +1,15 @@
-# Witty Add-on 0.6.36
+# Witty Add-on 0.6.37
 
 Release: 23.09.2026
+
+- ALLSKY-Speichertransfers zeigen verarbeitete Dateien, Gesamtzahl und
+  Prozentwert in einem Fortschrittsbalken.
+- Der Fortschritt wird serverseitig geführt und läuft nach dem Neuladen der
+  Homepage am aktuellen Stand weiter.
+- Alle Aktionsknöpfe bleiben sichtbar, werden während des Vorgangs gemeinsam
+  ausgegraut und nach Abschluss automatisch wieder freigegeben.
+- Der Abschlussabgleich kopiert nur neue oder zwischenzeitlich geänderte
+  Dateien.
 
 - Der überflüssige zusätzliche Download-Button unterhalb der Datensicherung
   auf ALLSKY-SETUP wurde vollständig entfernt. Sein Platzhalterziel führte nur
