@@ -1,6 +1,16 @@
-# Witty Add-on 0.6.32
+# Witty Add-on 0.6.33
 
 Release: 23.09.2026
+
+- ALLSKY-Setup zeigt die während der Installation eingetragene GPS-Position
+  und erlaubt die Änderung von Breitengrad und Längengrad. Die validierten
+  Werte werden in ALLSKY gespeichert und nach einem gezielten Dienstneustart
+  sofort für Sonnenaufgang, Sonnenuntergang und Winkelberechnung verwendet.
+- Der Bildspeicherwechsel prüft, ob das ausgewählte USB-Laufwerk weiterhin
+  eingehängt ist. Nach dem offiziellen ALLSKY-Aufruf werden PHP- und Lighttpd-
+  Bildpfade geprüft und bei Bedarf kompatibel repariert.
+- Kopieren, Verschieben und Belassen vorhandener Bilder wurden getrennt
+  getestet.
 
 - Die ALLSKY-Webanmeldung mit Benutzer `admin` und Passwort `secret` wird über
   die offizielle Einstellung `uselogin=false` vollständig deaktiviert.

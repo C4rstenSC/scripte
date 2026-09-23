@@ -1,4 +1,10 @@
-# Raspi-Scripte 0.6.24
+# Raspi-Scripte 0.6.25
+
+- Enthält Witty Add-on 0.6.33 mit geprüftem ALLSKY-Speicherortwechsel.
+- ALLSKY-Setup zeigt die Installationsposition und schreibt Änderungen an
+  Breitengrad und Längengrad in die ALLSKY-Sonnenwinkelberechnung.
+- Ausgewählter USB-Mount und erzeugte PHP-/Lighttpd-Bildpfade werden geprüft;
+  Kopieren, Verschieben und Belassen wurden separat getestet.
 
 - Nach jedem Updateknopf werden Firmware- und Softwarestände automatisch mit
   Wiederholungen neu eingelesen; ein Trennen und erneutes Verbinden ist nicht
