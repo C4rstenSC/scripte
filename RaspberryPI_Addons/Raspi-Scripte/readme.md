@@ -1,4 +1,14 @@
-# Raspi-Scripte 0.6.25
+# Raspi-Scripte 0.6.26
+
+- Der SSH-Terminalbereich besitzt wieder den äußeren Rahmen und zusätzlich
+  einen eigenen Rahmen um Überschrift und Ein-/Ausklappknopf.
+- Das Terminal bleibt beim normalen Verbinden eingeklappt, öffnet sich nur bei
+  Installation oder Software-Update automatisch und wird ohne Verbindung
+  vollständig geleert.
+- Das Dateienlesen-Popup gruppiert ALLSKY-Bilder nach Tagesordnern, sortiert sie
+  innerhalb der Ordner und blendet sämtliche Thumbnails aus.
+- Enthält Witty Add-on 0.6.35 mit kurzer Updateausgabe, getrennten
+  ALLSKY-SETUP-Bereichen und repariertem Speicherwechsel.
 
 - Enthält Witty Add-on 0.6.33 mit geprüftem ALLSKY-Speicherortwechsel.
 - ALLSKY-Setup zeigt die Installationsposition und schreibt Änderungen an
