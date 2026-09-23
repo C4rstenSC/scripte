@@ -1,6 +1,14 @@
-# Witty Add-on 0.6.28
+# Witty Add-on 0.6.29
 
 Release: 23.09.2026
+
+- Die WURB-/WIRC-Abschlussprüfung verwendet jetzt dasselbe Linkmerkmal wie
+  der gemeinsame Navigations-Patcher.
+- Die frühere WIRC-Prüfung suchte irrtümlich nach einer CSS-Klasse aus der
+  ALLSKY-Navigation und meldete deshalb trotz korrekt sichtbarem Button einen
+  Fehler.
+- Ein erfolgreicher Wiederholungslauf speichert die neue Add-on-Version, ohne
+  den bereits funktionierenden Webdienst auf Port 8081 zurückzusetzen.
 
 - Der unabhängige `wittypi5-webserver.service` wird jetzt unmittelbar nach
   der Konfigurationsmigration installiert, aktiviert, gestartet und direkt
