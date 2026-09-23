@@ -1,6 +1,17 @@
-# Witty Add-on 0.6.29
+# Witty Add-on 0.6.30
 
 Release: 23.09.2026
+
+- Der Backend-Dispatcher wird auf bestehenden Installationen unter dem
+  richtigen Laufzeitnamen installiert. „Kein Witty“ ruft deshalb keine
+  wp5-Hardware mehr auf und endet nicht mehr mit Backend-Code 1.
+- Ohne Witty bleiben Linux-Zeit, GPS, Zeitzone, Neustart und Linux-Shutdown
+  verfügbar; sämtliche Witty-Hardwarefunktionen werden ausgeblendet.
+- USB-GPS wird auch bei älteren RPi-4-Konfigurationen erkannt, angezeigt und
+  kann über die Homepage auf „Kein GPS“ umgestellt werden.
+- „Next Shutdown“ und „Deactivate auto switch off“ werden ohne Witty-Platine
+  auf allen eingebundenen Homepages ausgeblendet.
+- Der Navigationsknopf der gemeinsamen Seite heißt einheitlich „Witty Addon“.
 
 - Die WURB-/WIRC-Abschlussprüfung verwendet jetzt dasselbe Linkmerkmal wie
   der gemeinsame Navigations-Patcher.

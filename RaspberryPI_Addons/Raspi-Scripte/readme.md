@@ -1,4 +1,11 @@
-# Raspi-Scripte 0.6.21
+# Raspi-Scripte 0.6.22
+
+- Ohne Witty-Hardware werden die Witty-Hardware- und Herstellerzeilen
+  ausgeblendet; Betriebssystem und Witty Addon Script bleiben sichtbar.
+- Sicheres Herunterfahren nutzt ohne Witty den Linux-Poweroff-Pfad und weist
+  auf das anschließende manuelle Einschalten hin.
+- Enthält Witty Add-on 0.6.30 mit repariertem Backend-Dispatcher, sichtbarer
+  USB-GPS-Auswahl und ausgeblendeter Next-Shutdown-Anzeige ohne Witty-Platine.
 
 - Die Überschrift des einklappbaren Bereichs heißt wieder „SSH Terminal“ und
   zeigt nicht mehr `System.Windows.Controls.StackPanel` an.
