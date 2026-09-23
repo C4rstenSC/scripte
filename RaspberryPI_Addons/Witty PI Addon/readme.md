@@ -1,6 +1,12 @@
-# Witty Add-on 0.6.23
+# Witty Add-on 0.6.24
 
 Release: 23.09.2026
+
+- Beim Wiederherstellen einer ALLSKY-Sicherung bleibt Lighttpd online, damit
+  die Browser-Verbindung nicht unterbrochen wird.
+- Der vorherige Lighttpd-Zustand wird zuverlässig wiederhergestellt und bis zu
+  15 Sekunden geprüft. Bei einem echten Fehler erscheint jetzt das Journal des
+  betroffenen Dienstes statt der langen ALLSKY-Kameraausgabe.
 
 - Nach einer Änderung an der WURB- oder WIRC-Navigation wird ausschließlich
   der betroffene Dienst neu gestartet und anschließend auf Port 8080
