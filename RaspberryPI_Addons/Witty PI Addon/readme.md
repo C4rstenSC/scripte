@@ -1,6 +1,14 @@
-# Witty Add-on 0.6.25
+# Witty Add-on 0.6.26
 
 Release: 23.09.2026
+
+- Port 8081 und der sichtbare „Witty Addon“-Link werden in allen Varianten
+  installiert: „Kein Witty“, Witty Pi 4 und Witty Pi 5.
+- Die unterschiedliche Herstellersoftware bleibt getrennt: Witty Pi 4 nutzt
+  `wittypi.service`, Witty Pi 5 nutzt `wp5d.service`, und ohne Platine wird
+  keiner der beiden Dienste vorausgesetzt.
+- WURB- und WIRC-Homepagepatches werden anhand ihrer unterschiedlichen
+  HTML-Strukturen verbindlich geprüft; Patchfehler werden nicht mehr ignoriert.
 
 - Auf Raspberry Pi 4 ohne Witty-Hardware wird die Add-on-Webseite auf Port
   8081 jetzt vor allen optionalen WURB-/WIRC-/GPS-Prüfungen gestartet.
