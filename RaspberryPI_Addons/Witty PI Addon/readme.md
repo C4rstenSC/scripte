@@ -1,6 +1,11 @@
-# Witty Add-on 0.6.24
+# Witty Add-on 0.6.25
 
 Release: 23.09.2026
+
+- Auf Raspberry Pi 4 ohne Witty-Hardware wird die Add-on-Webseite auf Port
+  8081 jetzt vor allen optionalen WURB-/WIRC-/GPS-Prüfungen gestartet.
+- Der Webserver wartet nicht mehr auf `wp5d.service`. Bei einem Startfehler
+  erscheinen systemd-Status und die letzten Journalzeilen direkt im Terminal.
 
 - Beim Wiederherstellen einer ALLSKY-Sicherung bleibt Lighttpd online, damit
   die Browser-Verbindung nicht unterbrochen wird.
