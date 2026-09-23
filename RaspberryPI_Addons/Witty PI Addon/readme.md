@@ -1,6 +1,11 @@
-# Witty Add-on 0.6.22
+# Witty Add-on 0.6.23
 
 Release: 23.09.2026
+
+- Nach einer Änderung an der WURB- oder WIRC-Navigation wird ausschließlich
+  der betroffene Dienst neu gestartet und anschließend auf Port 8080
+  beziehungsweise 8082 geprüft. Der Link „Witty Addon“ ist dadurch sofort
+  sichtbar.
 
 - Das Update prüft und aktiviert den Add-on-Webdienst nun bei jedem Lauf; ein
   vorhandener Programmordner gilt nicht mehr als Nachweis eines laufenden
