@@ -1,6 +1,16 @@
-# Witty Add-on 0.6.26
+# Witty Add-on 0.6.27
 
 Release: 23.09.2026
+
+- Das Update von älteren Raspberry-Pi-4-Installationen bricht nicht mehr ab,
+  wenn `/etc/witty-addon.conf` noch fehlt. Die notwendige Konfiguration wird
+  aus Raspberry-Modell und vorhandener Witty-Herstellersoftware ergänzt.
+- Ist der bisherige GPS-Modus nicht dokumentiert, bleiben der funktionierende
+  WURB-GPS-Pfad und die Zeiteinstellungen unverändert.
+- Danach werden der unabhängige Add-on-Webdienst auf Port 8081 und der Link
+  „Witty Addon“ in der vorhandenen WURB-Navigation verbindlich repariert.
+- Ein unerwarteter Skriptabbruch nennt künftig Zeile, Befehl und Exit-Code,
+  statt lediglich mit einem nicht erklärten Exit-Code 2 zu enden.
 
 - Port 8081 und der sichtbare „Witty Addon“-Link werden in allen Varianten
   installiert: „Kein Witty“, Witty Pi 4 und Witty Pi 5.
