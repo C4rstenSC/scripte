@@ -9,6 +9,36 @@ readonly ADDON_ENCRYPTED_URL="https://raw.githubusercontent.com/C4rstenSC/script
 log() { printf '[Witty-Launcher] %s\n' "$*"; }
 die() { printf '[Witty-Launcher] FEHLER: %s\n' "$*" >&2; exit 1; }
 
+console_install_blocked() {
+    cat >&2 <<'EOF'
+[Witty-Launcher] INSTALLATION GESPERRT.
+[Witty-Launcher] Diese installer.sh darf nicht manuell über SSH oder eine andere Konsole gestartet werden.
+[Witty-Launcher] Bitte Raspi-Scripte für Windows öffnen und dort „Basis Installation“ verwenden.
+EOF
+    exit 23
+}
+
+# Eine Basisinstallation verändert Hardware-, Dienst- und GPS-Einstellungen.
+# Deshalb akzeptiert der Starter ausschließlich die einmalige, vom verbundenen
+# Windows-Programm erzeugte Freigabe. Die Datei wird vor allen Änderungen
+# verbraucht; ein kopierter Konsolenbefehl lässt sich danach nicht wiederholen.
+launcher_user="${SUDO_USER:-}"
+[[ -n "$launcher_user" && "$launcher_user" != root ]] || console_install_blocked
+id "$launcher_user" >/dev/null 2>&1 || console_install_blocked
+launcher_home="$(getent passwd "$launcher_user" 2>/dev/null | cut -d: -f6)"
+ticket_file="$launcher_home/.raspi-scripte-install.ticket"
+session_token="${WITTY_WINDOWS_SESSION:-}"
+[[ "$session_token" =~ ^[0-9A-Fa-f]{64}$ ]] || console_install_blocked
+[[ -f "$ticket_file" && ! -L "$ticket_file" ]] || console_install_blocked
+[[ "$(stat -c '%U' "$ticket_file" 2>/dev/null || true)" == "$launcher_user" ]] || console_install_blocked
+ticket_mode="$(stat -c '%a' "$ticket_file" 2>/dev/null || true)"
+[[ "$ticket_mode" == 600 || "$ticket_mode" == 400 ]] || console_install_blocked
+IFS= read -r ticket_token < "$ticket_file" || console_install_blocked
+[[ "$ticket_token" == "$session_token" ]] || console_install_blocked
+rm -f -- "$ticket_file"
+unset ticket_token session_token WITTY_WINDOWS_SESSION
+export WITTY_WINDOWS_AUTHORIZED=1
+
 [[ "${EUID:-$(id -u)}" -eq 0 ]] || die "Bitte mit sudo starten: sudo ./installer.sh"
 
 missing=false
@@ -75,10 +105,6 @@ chmod 0755 "$runner"
 # Add-on liegen.
 update_launcher="$work_dir/extracted/witty_addon/launchers/update.sh"
 [[ -f "$update_launcher" ]] || die "launchers/update.sh fehlt im GitHub-ZIP."
-launcher_user="${SUDO_USER:-}"
-if [[ -z "$launcher_user" || "$launcher_user" == root ]]; then
-    launcher_user="$(stat -c '%U' "$0" 2>/dev/null || true)"
-fi
 if [[ -n "$launcher_user" && "$launcher_user" != root ]] && id "$launcher_user" >/dev/null 2>&1; then
     launcher_home="$(getent passwd "$launcher_user" | cut -d: -f6)"
     launcher_group="$(id -gn "$launcher_user")"

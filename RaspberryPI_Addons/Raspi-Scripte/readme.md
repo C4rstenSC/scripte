@@ -1,4 +1,15 @@
-# Raspi-Scripte 0.6.27
+# Raspi-Scripte 0.6.28
+
+- Die Basisinstallation erzeugt eine einmalige Startfreigabe und überträgt sie
+  zusammen mit der Konfiguration. Der Raspberry verbraucht sie vor jeder
+  Änderung; kopierte oder manuelle Konsolenaufrufe funktionieren nicht erneut.
+- Das Raspberry-Pi-Modell wird direkt aus `/proc/device-tree/model` gelesen.
+  Eine Pi-5-Auswahl wird auf einem Pi 4B Rev 1.5 bereits vor dem Upload beendet.
+- Veraltete lokale Installer ohne gesicherten Windows-Start werden abgewiesen.
+- Enthält Witty Add-on 0.6.38 mit korrigierter Hotspotbenennung und
+  komponentenabhängigen Abschlussprüfungen.
+- Die Auswahl „USB GPS“ funktioniert bei der Installation auch ohne momentan
+  angeschlossene Maus und wird beim späteren Einstecken automatisch aktiv.
 
 - Das dauerhafte ALLSKY-Dateilesen aktualisiert die geöffnete Liste nach jedem
   erfolgreichen Abruf. Hostname und IP-Adresse verwenden denselben aktuellen

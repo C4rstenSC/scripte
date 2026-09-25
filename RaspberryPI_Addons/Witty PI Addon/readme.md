@@ -1,6 +1,24 @@
-# Witty Add-on 0.6.37
+# Witty Add-on 0.6.38
 
-Release: 23.09.2026
+Release: 25.09.2026
+
+- `installer.sh` akzeptiert Basisinstallationen ausschließlich mit der
+  einmaligen Startfreigabe aus Raspi-Scripte für Windows. Manuelle Aufrufe über
+  PuTTY, SSH oder andere Konsolen werden vor jeder Systemänderung beendet.
+- Raspberry Pi 4/4B/4B+ und Raspberry Pi 5 werden im Windows-Programm direkt
+  vor dem Start erneut ausgelesen und verbindlich mit der Auswahl verglichen.
+- Hotspot-Name und SSID werden erst nach der WURB-/WIRC-/ALLSKY-Auswahl
+  festgelegt. Ein Hostname wie `wurbi-n8` wird nicht mehr vorzeitig als
+  `allskywifi-wurbi-n8` angezeigt.
+- Abschlussmeldungen behandeln WURB und WIRC nur noch dann als Prüfpunkt, wenn
+  diese Komponenten tatsächlich ausgewählt wurden.
+- Ein Add-on-Update ersetzt auch den vorhandenen Starter `~/installer.sh`,
+  damit bestehende Installationen die Konsolensperre erhalten.
+- „USB GPS“ lässt sich auch ohne angeschlossene GPS-Maus vollständig
+  installieren. Pi 4 bereitet WURBs direkten Gerätezugriff, Pi 5 gpsd/udev
+  für späteres Hot-Plug vor; fehlende Hardware ist kein Installationsfehler.
+- Auf Pi 4 verlangt die Add-on-Prüfung keine absichtlich deaktivierte
+  ttyUSB9-Bridge und überschreibt WURBs direkte USB-Geräteliste nicht.
 
 - ALLSKY-Speichertransfers zeigen verarbeitete Dateien, Gesamtzahl und
   Prozentwert in einem Fortschrittsbalken.
