@@ -1,8 +1,13 @@
-# Witty Add-on 0.6.39
+# Witty Add-on 0.6.40
 
 Release: 26.09.2026
 
-**Update-Reihenfolge:** Zuerst Raspi-Scripte für Windows 0.6.29 aus dem Entwicklerpaket kompilieren und installieren. Windows 0.6.28 sendet die für `update.sh` benötigte einmalige Startfreigabe nicht und kann dieses Add-on daher nicht installieren.
+**Update-Reihenfolge:** Zuerst Raspi-Scripte für Windows 0.6.29 oder neuer installieren. Windows 0.6.28 sendet die für `update.sh` benötigte einmalige Startfreigabe nicht.
+
+- ALLSKY-Sicherungen enthalten auch Benutzervariablen und Modulkonfiguration, wenn die installierte ALLSKY-Version dafür eigene Pfade vorgibt; bei der Wiederherstellung werden diese Dateien eingespielt.
+- Bei irrtümlich gewähltem Witty Pi 4 wird ein angeschlossener Witty Pi 5 vor der Herstellerinstallation auch auf Raspberry Pi 5 erkannt und verwendet.
+
+## Bisherige Änderungen (0.6.39)
 
 - Auf Raspberry Pi 4 wird Witty Pi 5 vor einer Witty-Pi-4-Herstellerinstallation anhand der I2C-Hardware erkannt.
 - ALLSKY-Sicherungen führen Overlay-Layouts im Manifest; nach dem Einspielen werden die aktiven JSON-Layouts geprüft.
