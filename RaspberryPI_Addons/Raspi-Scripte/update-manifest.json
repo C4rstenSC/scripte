@@ -2,8 +2,8 @@
   "fullPackage": "Raspi-Scripte.zip",
   "version": "0.6.29",
   "schema": 1,
-  "contentVersion": "0.6.30",
-  "contentSha256": "0f103230f958b8542b880c04786f1a409ddeb09327cf5143e97e70ddae31e228",
+  "contentVersion": "0.6.31",
+  "contentSha256": "f1e244f5358e20aba3f0220218dc0175727f694c0d45503ac09f6dda83971579",
   "fullSha256": "6b3676dc798a554e633cb82c9e80a37b1fa67a31af78807df27aa37903dec931",
   "contentPackage": "Raspi-Scripte-Content.zip"
 }
