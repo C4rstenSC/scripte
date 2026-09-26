@@ -1,4 +1,4 @@
-# Witty Add-on 0.6.40
+# Witty Add-on 0.6.41
 
 Release: 26.09.2026
 
@@ -7,7 +7,9 @@ Release: 26.09.2026
 - ALLSKY-Sicherungen enthalten auch Benutzervariablen und Modulkonfiguration, wenn die installierte ALLSKY-Version dafür eigene Pfade vorgibt; bei der Wiederherstellung werden diese Dateien eingespielt.
 - Bei irrtümlich gewähltem Witty Pi 4 wird ein angeschlossener Witty Pi 5 vor der Herstellerinstallation auch auf Raspberry Pi 5 erkannt und verwendet.
 
-## Bisherige Änderungen (0.6.39)
+- „Weitere Einstellungen“ steht vor der Eingangsspannung und ist standardmäßig eingeklappt. Neustart und sicheres Herunterfahren bleiben sichtbar; die hibernationMode-Zeile entfällt.
+
+## Bisherige Änderungen (0.6.40)
 
 - Auf Raspberry Pi 4 wird Witty Pi 5 vor einer Witty-Pi-4-Herstellerinstallation anhand der I2C-Hardware erkannt.
 - ALLSKY-Sicherungen führen Overlay-Layouts im Manifest; nach dem Einspielen werden die aktiven JSON-Layouts geprüft.
