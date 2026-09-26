@@ -1,6 +1,14 @@
-# Witty Add-on 0.6.38
+# Witty Add-on 0.6.39
 
-Release: 25.09.2026
+Release: 26.09.2026
+
+**Update-Reihenfolge:** Zuerst Raspi-Scripte für Windows 0.6.29 aus dem Entwicklerpaket kompilieren und installieren. Windows 0.6.28 sendet die für `update.sh` benötigte einmalige Startfreigabe nicht und kann dieses Add-on daher nicht installieren.
+
+- Auf Raspberry Pi 4 wird Witty Pi 5 vor einer Witty-Pi-4-Herstellerinstallation anhand der I2C-Hardware erkannt.
+- ALLSKY-Sicherungen führen Overlay-Layouts im Manifest; nach dem Einspielen werden die aktiven JSON-Layouts geprüft.
+- Zweisprachige Add-on-Release-Notes werden beim Update nur auf Deutsch ausgegeben.
+
+## Bisherige Änderungen (0.6.38)
 
 - `installer.sh` akzeptiert Basisinstallationen ausschließlich mit der
   einmaligen Startfreigabe aus Raspi-Scripte für Windows. Manuelle Aufrufe über
