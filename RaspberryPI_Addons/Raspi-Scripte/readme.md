@@ -1,4 +1,8 @@
-# Raspi-Scripte 0.6.28
+# Raspi-Scripte 0.6.31
+
+- Die integrierte Hilfe und die herunterladbaren Release Notes benennen Witty Add-on 0.6.42 und die aktuellen Änderungen korrekt.
+- Das Inhaltspaket 0.6.32 enthält die aktualisierten Release Notes für das Windows-Programm.
+## Frühere Änderungen
 
 - Die Basisinstallation erzeugt eine einmalige Startfreigabe und überträgt sie
   zusammen mit der Konfiguration. Der Raspberry verbraucht sie vor jeder
