@@ -1,0 +1,12 @@
+Witty Add-on 0.6.54 – 06.10.2026
+=================================
+
+- Die GPS-Position und GPS-Zeit auf der Pi-5-Homepage werden nach einem ausbleibenden ersten Fix erneut im Hintergrund abgefragt; Waveshare L76X erhält dafür ein längeres Empfangsfenster. Witty-Hardware wird weiterhin nur beim Aufruf und über den Statusbutton gelesen.
+- Die Windows-Steuerung meldet die installierte GPS-Variante und den aktuellen Dienstzustand und erlaubt eine Auswahl oder Deinstallation über das sichtbare SSH-Terminal.
+- Ein Allsky-Update über die Windows-Steuerung sichert vorher die Konfiguration mit der Web-Backup-Routine und stellt sie vor dem Neustart wieder her. Die Witty-Navigationsbuttons werden nach der Herstellerinstallation erneut in die aktuelle Allsky-Homepage eingesetzt.
+
+- GPS-Nachladen ist auch für Raspberry Pi 4 mit Witty Pi 5, Witty Pi 4 und ohne Witty verfügbar; die GPS-Statusleuchten werden mit jeder Abfrage aktualisiert. Gültige Positionen werden nach zehn Sekunden erneut gelesen, ein fehlender Fix nach fünf Sekunden. Ungültige oder fehlende Koordinaten werden nicht als 0°/0° angezeigt; eine ausgefallene Abfrage blockiert spätere Abfragen nicht.
+
+- Allsky v2026.10.01: Die Navigation wurde mit der aktuellen Hersteller-Homepage geprüft. Beim Update wird die bisherige Installation für die Herstellermigration erhalten; eine vorzeitige Installationsneustart-Anforderung erhält die vorgemerkte Konfigurationswiederherstellung.
+- Die vollständige Konfiguration enthält die neuen Module, Zustandsdateien und Datenbankeinstellungen. SQLite-Datenbanken werden mit der SQLite-Sicherungsschnittstelle einschließlich bestätigter WAL-Daten konsistent aufgenommen; separate WAL-/SHM-Dateien werden nicht als widersprüchlicher Zwischenstand eingespielt.
+- Die Wiederherstellung berücksichtigt den neuen allskyserver-Dienst. Bei der Wiederherstellung nach Updates bleiben neue Options-/Kameradefinitionen erhalten und neue Einstellungsfelder werden mit bisherigen Werten zusammengeführt.

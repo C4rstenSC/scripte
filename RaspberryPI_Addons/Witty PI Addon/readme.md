@@ -1,4 +1,16 @@
-# Witty Add-on 0.6.43
+# Witty Add-on 0.6.54
+
+Release: 06.10.2026
+
+- GPS-Daten werden bei USB GPS und Waveshare wiederholt abgefragt, auch auf Raspberry Pi 4 und ohne Witty. Ein ausbleibender Fix oder eine fehlgeschlagene Abfrage verhindert spätere Aktualisierungen nicht.
+- GPS-Statusleuchten folgen jeder Abfrage; ungültige Positionen werden ausgeblendet. Windows zeigt GPS-Variante und Aktivzustand.
+- Allsky v2026.10.01: Witty-Navigation wird nach Updates erneut in die Hersteller-Homepage eingefügt. Die vorherige Installation bleibt für die Herstellermigration erhalten.
+- Konfigurationssicherungen enthalten neue Module, Zustandsdateien und Datenbanken. SQLite wird konsistent einschließlich bestätigter WAL-Daten gesichert.
+- Wiederherstellung berücksichtigt allskyserver und erhält neue Optionsdefinitionen sowie neue Einstellungsfelder. Eine durch Neustart unterbrochene Update-Wiederherstellung wird beim Start fortgesetzt.
+
+Detaillierte deutsche Änderungen stehen in RELEASE_NOTES_0.6.54.txt und release-notes.json sowie im Windows-Programm. Hardware-Laufzeittests bleiben ausstehend.
+
+## Frühere Änderungen
 
 Release: 06.10.2026
 

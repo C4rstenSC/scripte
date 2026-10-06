@@ -1,4 +1,17 @@
-# Raspi-Scripte 0.6.31
+# Raspi-Scripte 0.6.44
+
+Release: 06.10.2026 · Programm und Inhalt: 0.6.44 · Witty Add-on: 0.6.54
+
+- Versionsanzeige in Windows-Titelleiste, Programmdialogen und Updateanzeige vereinheitlicht.
+- Obermenüs öffnen linksbündig unter dem angeklickten Menüpunkt.
+- SSH-Terminal mit Überschrift und Rahmen; GPS-Zeile zeigt die gewählte Variante und den Aktivzustand des eingelesenen Raspberry Pi.
+- Herstellerzeile bezeichnet Witty Pi 4 oder Witty Pi 5 passend zur erkannten Hardware. Der Skript-Buttonrahmen wird nur mit sichtbaren Buttons angezeigt.
+- GPS-Homepage fragt Daten wiederholt ab und aktualisiert Statusleuchten; fehlende oder ungültige Koordinaten werden nicht als 0°/0° dargestellt.
+- Allsky v2026.10.01: Navigation wird nach der Herstellerinstallation erneut eingefügt. Sicherung und Wiederherstellung berücksichtigen neue Konfigurationen, Module und SQLite-Datenbanken einschließlich bestätigter WAL-Daten.
+
+Programm und Updater wurden für Windows x64 gebaut und mit dem bestehenden Zertifikat signiert. GPS-Abfragen, SQLite-Sicherung/Wiederherstellung und die Navigation der aktuellen Allsky-Homepage wurden mit Testdaten geprüft. Ein vollständiger Laufzeittest auf Windows und Raspberry-Hardware steht noch aus.
+
+## Frühere Änderungen
 
 - Die integrierte Hilfe und die herunterladbaren Release Notes benennen Witty Add-on 0.6.42 und die aktuellen Änderungen korrekt.
 - Das Inhaltspaket 0.6.32 enthält die aktualisierten Release Notes für das Windows-Programm.
