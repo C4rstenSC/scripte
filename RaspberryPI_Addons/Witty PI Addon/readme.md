@@ -1,12 +1,17 @@
-# Witty Add-on 0.6.42
+# Witty Add-on 0.6.43
 
-Release: 26.09.2026
+Release: 06.10.2026
 
-Die Homepage-Anleitung zeigt die Release Notes für 0.6.42, 0.6.41, 0.6.40 und 0.6.39 wieder mit den jeweiligen Änderungen.
+Die Homepage-Anleitung zeigt die Änderungen der Versionen 0.6.43, 0.6.42, 0.6.41 und 0.6.40.
 
 **Update-Reihenfolge:** Zuerst Raspi-Scripte für Windows 0.6.29 oder neuer installieren. Windows 0.6.28 sendet die für `update.sh` benötigte einmalige Startfreigabe nicht.
 
-- Die Anleitung auf der Witty-Homepage zeigt die aktuellen Release Notes für 0.6.42 sowie die drei vorherigen Versionen.
+- Raspberry Pi 5: GPS-Maus wird nach jedem USB-Portwechsel am aktuellen seriellen Anschluss an gpsd angebunden. WURB erhält einen gültigen Positionsfix auch vor der ersten SKY-Meldung.
+- Raspberry Pi 4: Der direkte GPS-Datenweg bleibt unverändert.
+
+## Bisherige Änderungen (0.6.42)
+
+- Die Anleitung zeigt den aktuellen und drei vorangegangene Stände.
 
 ## Bisherige Änderungen (0.6.41)
 
