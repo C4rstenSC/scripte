@@ -22,7 +22,7 @@ jobs:
           target=RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte.zip.enc
           test -f "$source_dir/part-08"
           cat "$source_dir"/part-{00..08} > "$target"
-          echo "576ca5d1a69322b202e4f69a39c978560cb13dd7e9ae0ff61cddf2056b2dd28b  $target" | sha256sum --check -
+          echo "133475933f0fd060ca181821d2429e9b0a045d568846e4eb61fc9587130e9f32  $target" | sha256sum --check -
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git rm -r "$source_dir"
