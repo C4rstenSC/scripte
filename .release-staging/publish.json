@@ -1,0 +1,21 @@
+{
+  "expected_head": "75d28703f742ccdcb0d7d6149b68491d0e2780f4",
+  "hashes": {
+    "Raspi-Scripte.zip.enc": "d514f92f2bffc69b2b03ab00af2feb3c8a05835834522ee7cc36188947e81b04",
+    "Raspi-Scripte-Content.zip.enc": "61b7db36b61bb419e6d440de56d1d4ab6be5a447248d0c386e655f65b2c96f2b",
+    "witty_addon.zip.enc": "e64e3f008bdb8fc33729c135409061042385b5abfadc0090ffdb235315957e7c"
+  },
+  "files": {
+    "Raspi-Scripte.zip.enc": "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte.zip.enc",
+    "Raspi-Scripte-Content.zip.enc": "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Content.zip.enc",
+    "witty_addon.zip.enc": "RaspberryPI_Addons/Witty PI Addon/witty_addon.zip.enc",
+    "update-manifest.json": "RaspberryPI_Addons/Raspi-Scripte/update-manifest.json",
+    "version.txt": "RaspberryPI_Addons/Raspi-Scripte/version.txt",
+    "addon-version.txt": "RaspberryPI_Addons/Witty PI Addon/version.txt",
+    "release-date.txt": "RaspberryPI_Addons/Witty PI Addon/release-date.txt",
+    "windows-readme.md": "RaspberryPI_Addons/Raspi-Scripte/readme.md",
+    "addon-readme.md": "RaspberryPI_Addons/Witty PI Addon/readme.md",
+    "release-notes.json": "RaspberryPI_Addons/Raspi-Scripte/release-notes.json",
+    "RELEASE_NOTES_0.6.54.txt": "RaspberryPI_Addons/Witty PI Addon/RELEASE_NOTES_0.6.54.txt"
+  }
+}
