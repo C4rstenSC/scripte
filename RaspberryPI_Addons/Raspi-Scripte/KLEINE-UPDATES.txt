@@ -1,0 +1,15 @@
+Raspi-Scripte 0.6.46 – kleine Programmupdates
+
+1. Das ganze ZIP in einen eigenen, beschreibbaren Ordner entpacken.
+2. START.cmd ausfuehren. Falls .NET 8 Desktop Runtime fehlt, wird sie einmalig direkt von Microsoft geladen und installiert.
+3. Danach wie gewohnt ueber Raspi-Scripte.exe starten. Fuer neue Versionen den Update-Knopf im Programm verwenden.
+
+EXE-Starter, DLLs und JSON-Konfigurationsdateien muessen zusammen bleiben. Einstellungen und vorhandene Aktivierung werden weiterverwendet.
+Das bisherige Programm bleibt in seinem alten Ordner erhalten. Dieses Paket enthaelt alle Windows-Aenderungen bis 0.6.46 und Witty Add-on 0.6.56.
+Die .NET-Laufzeit und die Entwickler-Vollversion sind nicht enthalten.
+
+Geprueft: Windows-x64-Build, Paketsignaturen, Paketverschluesselung, Versionsauswahl und Austausch der Updater-Module. Ein Windows-Laufzeittest ist noch erforderlich.
+
+GitHub: C4rstenSC/scripte, main.
+Nur verschluesselte Updatepakete und Release Notes veroeffentlicht. Die alte grosse Raspi-Scripte.zip.enc wird nicht neu hochgeladen.
+Neue Windows-Installationen verwenden modular-update-manifest.json; alte Einzel-EXE-Installationen behalten ihr bisheriges Manifest.

@@ -1,0 +1,11 @@
+Witty Add-on 0.6.56 – 07.10.2026
+=================================
+
+- Die Homepage startet GPS parallel zur Hardwareabfrage. Der erste vollständige Live-Fix wird ohne gepufferte gpspipe-/jq-Pipeline angezeigt; Positionsaktualisierung alle zwei Sekunden, Wiederholung ohne Fix nach einer Sekunde.
+- Schnelle Hardwareabfragen löschen eine bereits empfangene GPS-Position auch auf Pi 4 nicht mehr.
+- hwclock/util-linux-extra wird nur bei aktiver interner Raspberry-Pi-5-RTC und nur bei fehlendem Programm angefordert. Pi 4 und abgeschaltete interne RTC benötigen es für das Add-on nicht.
+- Bereits unter /usr/sbin oder /sbin installiertes hwclock wird zuverlässig gefunden.
+- Fehlende Entschlüsselungsunterstützung wird auch bei großen Versionssprüngen gezielt nachinstalliert. Paketinstallation wartet auf Paketverwaltungssperren; unvollständige dpkg-Verarbeitung wird vorher abgeschlossen.
+- APT-Signaturfehler bleiben ein Fehler und nennen die aktuelle Systemzeit sowie den Rückgabecode. Die Signaturprüfung wird nicht umgangen.
+
+Prüfung mit simuliertem GPS-Stream und Paketmanager. Hardware-Laufzeittest auf Raspberry Pi ausstehend.
