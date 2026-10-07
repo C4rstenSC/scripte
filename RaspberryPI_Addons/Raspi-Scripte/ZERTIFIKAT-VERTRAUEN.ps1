@@ -21,3 +21,4 @@ try {
     Write-Host "Zertifikat vertraut: $($certificate.Thumbprint)" -ForegroundColor Green
 }
 finally { $certificate.Dispose() }
+

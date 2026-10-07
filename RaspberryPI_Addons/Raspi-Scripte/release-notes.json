@@ -1,7 +1,13 @@
 {
-  "version": "0.6.44",
+  "version": "0.6.45",
   "date": "2026-10-06",
   "de": [
+    "Installation und Update ist ein eigener Kasten oberhalb von Raspberry Pi Status und zeigt seinen Inhalt nur bei Verbindung. Lokales Witty-Update und der separate Paket-Download entfallen; der Updatebutton heißt Witty Addon Software update.",
+    "Ohne SSH-Verbindung zeigt Raspberry Pi Status nur den schmalen Rahmen mit Überschrift; GPS- und Softwareaktionen bleiben ausgeblendet.",
+    "Der Terminal-Klappbutton steht links neben der Überschrift. Witty-Herstellersoftware besitzt wieder eine graue/rote Statusanzeige und eine vertikal mittige Beschriftung.",
+    "GPS-Auswahl: Kein GPS, USB - MAUS und Waveshare GPS erscheinen in lesbaren Beschriftungsbuttons ohne eigene Aktion.",
+    "Die GPS-Ampel steht direkt neben den Varianten. Die zusätzliche Aktivbeschreibung rechts entfällt; unbekannter Zustand wird grau dargestellt.",
+    "Witty Add-on 0.6.55: Die GPS-Abfrage hält die Witty-Hardwaresperre nicht mehr. Schnelle Startabfragen warten auch auf Pi 4 nicht auf GPS.",
     "Windows-Programm 0.6.44: Hauptmenüs öffnen linksbündig direkt unter dem angeklickten Menüpunkt, unabhängig von der Windows-Menüausrichtung.",
     "Allsky v2026.10.01: Der Witty-Navigationspatch wurde mit der neuen Hersteller-Homepage geprüft. Beim Update bleibt der bisherige Allsky-Ordner für die Herstellermigration erhalten.",
     "Allsky-Konfigurationssicherung: Neue Module, Diagrammkonfigurationen, Zustand und Datenbankkonfiguration im vollständigen config-Verzeichnis bleiben enthalten. SQLite-Datenbanken werden einschließlich bestätigter Schreibjournal-Daten konsistent gesichert.",
@@ -46,6 +52,9 @@
     "installer.sh und update.sh benötigen eine einmalige Startfreigabe aus dem Windows-Programm. Add-on-Updates zeigen die relevanten Release Notes nur auf Deutsch."
   ],
   "en-AU": [
+    "GPS choices use readable label buttons without actions and one adjacent status indicator.",
+    "The Raspberry Pi status content is hidden while disconnected. The terminal toggle is left of its heading; Witty manufacturer software has a centered label and indicator.",
+    "GPS polling no longer holds the Witty hardware lock. Quick initial status skips GPS on all hardware variants.",
     "Windows program 0.6.33: GPS selection, uninstall, live status and terminal layout have been updated; the Witty manufacturer label reflects the detected model.",
     "Witty Add-on 0.6.54: Pi 5 retries Waveshare GPS status in the background. Allsky updates preserve settings and reapply homepage navigation.",
     "Windows program 0.6.33: The title and version dialog show the current content release as the visible program version.",
