@@ -1,0 +1,20 @@
+name: Publish Raspi Script 0.6.45
+on:
+  push:
+    branches: [release/raspi-0.6.45]
+permissions:
+  contents: write
+concurrency:
+  group: publish-raspi-0.6.45
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 1
+      - name: Verify and publish complete update
+        run: python3 .release-staging/publish.py
+
