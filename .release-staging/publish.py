@@ -15,7 +15,7 @@ shutil.copytree(stage, staged_copy)
 stage = staged_copy
 def git(*args):
     return subprocess.check_output(["git", *args], text=True).strip()
-git("fetch", "origin", "main")
+git("fetch", "--depth=1", "origin", "main")
 if git("rev-parse", "origin/main") != metadata["expected_head"]:
     raise RuntimeError("main changed; release must be reviewed against the new head")
 git("checkout", "-b", "publish-complete", "origin/main")
