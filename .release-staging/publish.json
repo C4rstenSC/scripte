@@ -1,0 +1,24 @@
+{
+  "expected_head": "61e160ab4fb9d346bfb0f3fb1cd588b4a32bd8f9",
+  "hashes": {
+    "Raspi-Scripte.zip.enc": "d20994703325a75d15bd66b12e055187bf4fa5d039511e12d376e10d074ef8ba",
+    "Raspi-Scripte-Content.zip.enc": "2f91bffcc6389701e11c14cb8e7ca4602b7a9ed27162f0d11fce34a9cf390514",
+    "witty_addon.zip.enc": "019d6974bd1001cbd9655f3a0df4502cef39261bef8b7a44c20a3d152ff76337"
+  },
+  "files": {
+    "Raspi-Scripte.zip.enc": "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte.zip.enc",
+    "Raspi-Scripte-Content.zip.enc": "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Content.zip.enc",
+    "update-manifest.json": "RaspberryPI_Addons/Raspi-Scripte/update-manifest.json",
+    "version.txt": "RaspberryPI_Addons/Raspi-Scripte/version.txt",
+    "readme.md": "RaspberryPI_Addons/Raspi-Scripte/readme.md",
+    "release-notes.json": "RaspberryPI_Addons/Raspi-Scripte/release-notes.json",
+    "Carsten-Schulte-CodeSigning.cer": "RaspberryPI_Addons/Raspi-Scripte/Carsten-Schulte-CodeSigning.cer",
+    "ZERTIFIKAT-VERTRAUEN.ps1": "RaspberryPI_Addons/Raspi-Scripte/ZERTIFIKAT-VERTRAUEN.ps1",
+    "witty_addon.zip.enc": "RaspberryPI_Addons/Witty PI Addon/witty_addon.zip.enc",
+    "installer.sh": "RaspberryPI_Addons/Witty PI Addon/installer.sh",
+    "release-date.txt": "RaspberryPI_Addons/Witty PI Addon/release-date.txt",
+    "RELEASE_NOTES_0.6.55.txt": "RaspberryPI_Addons/Witty PI Addon/RELEASE_NOTES_0.6.55.txt",
+    "witty-version.txt": "RaspberryPI_Addons/Witty PI Addon/version.txt",
+    "witty-readme.md": "RaspberryPI_Addons/Witty PI Addon/readme.md"
+  }
+}
