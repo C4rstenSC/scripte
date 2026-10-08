@@ -1,0 +1,23 @@
+GPS-Diagnose für Witty Add-on 0.6.59
+===================================
+
+1. Witty Add-on über das Windows-Programm auf 0.6.59 aktualisieren.
+2. GPS-Maus, Aufnahme-Mikrofon und normale USB-Speicher angeschlossen lassen.
+3. Im SSH-Terminal starten:
+
+   sudo /usr/local/sbin/witty-gps-diagnose
+
+4. Den Abschluss abwarten. Am Ende steht der genaue Dateiname.
+   Bei SSH-Benutzer wurb liegt die Datei unter /home/wurb und beginnt mit
+   Witty-GPS-Diagnose-. Die .txt-Datei an Carsten schicken.
+
+Das Skript installiert keine Pakete, ändert keine Konfiguration, startet
+keine Dienste neu und öffnet keinen physischen GPS-Port/WURB-PTY als zweiten
+Leser. Die GPSD-Verbindung ist eine normale Clientabfrage; eine vorhandene
+Socket-Aktivierung kann dabei GPSD wie bei einer normalen Anzeige starten.
+Bei direktem Pi-4-USB-GPS entfällt diese zusätzliche GPSD-Abfrage.
+Die Datei ist nur für ihren Besitzer lesbar und kann GPS-Koordinaten enthalten.
+
+Die Diagnose trennt die von GPSD bereitgestellten NMEA-Sätze von einem eigenen
+Testlauf des installierten GPSD-zu-NMEA-Konverters. Sie zeichnet nicht den
+laufenden WURB-PTY mit; dessen Lesen würde WURB Daten wegnehmen können.

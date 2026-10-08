@@ -10,23 +10,3 @@ Witty Add-on 0.6.59 – 08.10.2026
 - Fehler beim Laden der Paketlisten, bei dpkg oder bei der großen Basis-Paketinstallation brechen vor weiterer Einrichtung mit dem tatsächlichen Rückgabecode ab. Fehlendes jq wird im GPS-Werkzeugsatz ergänzt.
 
 Prüfung: Paket-/Verschlüsselungsabgleich, Bash-Syntax, isolierte Diagnose für Pi 4/Pi 5, Paketmanagerfehler, GPS-Konfiguration und simulierte GPSD-Wiederverbindung bestanden. Physischer Raspberry-Pi-Laufzeittest ausstehend. Die Brücke erzeugt weiterhin eigene GPGGA/GPRMC-Sätze; unveränderte Original-NMEA-Durchleitung ist mit diesem Diagnoserelease nicht implementiert. Papas anderes Mausmodell und seine aktuelle Fehlerursache bleiben anhand der neuen Diagnose zu prüfen.
-
-Witty Add-on 0.6.56 – 07.10.2026
-=================================
-
-- Die Homepage startet GPS parallel zur Hardwareabfrage. Der erste vollständige Live-Fix wird ohne gepufferte gpspipe-/jq-Pipeline angezeigt; Positionsaktualisierung alle zwei Sekunden, Wiederholung ohne Fix nach einer Sekunde.
-- Schnelle Hardwareabfragen löschen eine bereits empfangene GPS-Position auch auf Pi 4 nicht mehr.
-- hwclock/util-linux-extra wird nur bei aktiver interner Raspberry-Pi-5-RTC und nur bei fehlendem Programm angefordert. Pi 4 und abgeschaltete interne RTC benötigen es für das Add-on nicht.
-- Bereits unter /usr/sbin oder /sbin installiertes hwclock wird zuverlässig gefunden.
-- Fehlende Entschlüsselungsunterstützung wird auch bei großen Versionssprüngen gezielt nachinstalliert. Paketinstallation wartet auf Paketverwaltungssperren; unvollständige dpkg-Verarbeitung wird vorher abgeschlossen.
-- APT-Signaturfehler bleiben ein Fehler und nennen die aktuelle Systemzeit sowie den Rückgabecode. Die Signaturprüfung wird nicht umgangen.
-
-Prüfung mit simuliertem GPS-Stream und Paketmanager. Hardware-Laufzeittest auf Raspberry Pi ausstehend.
-
-Witty Add-on 0.6.55 – 06.10.2026
-=================================
-
-- GPS-Hintergrundabfragen blockieren die gemeinsame Witty-Hardwaresperre nicht mehr. GPS wartet unabhängig auf einen aktuellen Fix; Witty-Bedienung und Seitenstart bleiben verfügbar.
-- Die schnelle Startabfrage wartet auch auf Raspberry Pi 4 und Witty Pi 4 nicht auf GPS. Die bestehende parallele GPS-Nutzung durch WURB und Witty bleibt erhalten.
-
-- Die hwclock-Paketinstallation erhält zehn Minuten für die abschließende Paketverarbeitung. Zeitüberschreitungen und APT-/dpkg-Fehler nennen nun den tatsächlichen Abbruchgrund; Signaturfehler in den Paketlisten stoppen mit einem Hinweis zur Systemzeit.
