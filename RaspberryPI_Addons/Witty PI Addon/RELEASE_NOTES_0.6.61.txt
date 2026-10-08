@@ -1,0 +1,12 @@
+Witty Add-on 0.6.61 – 08.10.2026
+=================================
+
+- WURB-Bridge leitet vollständige, prüfsummengeprüfte NMEA-Sätze von GPSD weiter. Eigene GGA/RMC-Erzeugung aus TPV-JSON entfernt. Satellitenzahl, HDOP, Fixqualität, Höhenangaben, leere Felder und Talker-Kennung bleiben erhalten; nur Zeilenenden werden vereinheitlicht.
+- GPSD-Abfrage fordert ursprüngliche NMEA-Textmeldungen und NMEA-Konvertierung bereits binärer Empfänger an. An WURB gelangen ausschließlich gültige NMEA-Sätze, keine JSON-Meldungen, UBX-Binärdaten oder Hex-Dumps. Kein GPSD-Raw-2-Modus.
+- USB-GPS auf Raspberry Pi 5 wird im GPS-Manager und Basisinstaller mit -b -p eingerichtet. GPSD sendet keine Empfängerbefehle und stellt das Empfängerprotokoll nicht automatisch um. Das ist eine gezielte Korrektur des Unterschieds zum funktionierenden Waveshare-Nur-Lese-Pfad, keine nachgewiesene Behebung auf Papas Hardware.
+- WURBs ursprüngliche Prüfung der Mindest-Satellitenzahl wiederhergestellt; ältere Ausnahmen für die selbst erzeugten Bridge-Sätze werden entfernt. Die tatsächliche Anzahl aus GGA wird verarbeitet.
+- Die laufende Bridge bleibt bei GPSD-Neustarts erhalten und verbindet sich im selben Prozess erneut. Bestehende USB-Erkennungsregeln bleiben aktiv, einschließlich Vorbereitung für bekannte u-blox-Mäuse ohne angeschlossenen Empfänger.
+- Diagnose beobachtet nun auch den ursprünglichen NMEA-Textstrom; der Testlauf dokumentiert die tatsächliche NMEA-Weiterleitung. Der optionale exklusive USB-Test bleibt verfügbar.
+- Keine zusätzlichen USB-Treiber. Pi-4-USB-Direktbetrieb und Waveshare-Konfiguration bleiben erhalten. Der bisherige GPSD-Neustart im USB-Hotplug-Helfer ist noch vorhanden und wurde in diesem Stand nicht umgebaut.
+
+Prüfung: simulierte GPSD-Verbindungen mit vollständigen GGA/GSV/RMC-Sätzen, sieben Satelliten, HDOP 1.41, ungültigen Prüfsummen, JSON, Binärdaten, Hex-Dumps, fehlendem Fix und Wiederverbindung bestanden. Pi-4/Pi-5-Installationskonfigurationen ohne Empfänger, Paketmanagerfehler und Standarddiagnose bestanden. WURB-Patch auf aktuellem Upstream-Quelltext sowie Migration der alten Satelliten-Ausnahme geprüft. Verschlüsseltes Paket entschlüsselt und mit ZIP verglichen. Physischer Raspberry-Pi-Test ausstehend; fehlender GPSD-Datenstrom ist durch diese Tests nicht abschließend erklärt.

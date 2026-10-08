@@ -167,7 +167,7 @@ counts={}; devices=[]; fixes=[]; used=[]; nmea=0
 try:
     deadline=time.monotonic()+12
     with socket.create_connection(('127.0.0.1',2947),timeout=3) as c:
-        c.sendall(b'?WATCH={"enable":true,"json":true,"nmea":true};\n?DEVICES;\n')
+        c.sendall(b'?WATCH={"enable":true,"json":true,"nmea":true,"raw":1};\n?DEVICES;\n')
         buf=b''
         while time.monotonic()<deadline:
             c.settimeout(max(.05,deadline-time.monotonic()))
@@ -204,12 +204,12 @@ try:
     else: print('BEFUND: Datenstrom vorhanden, aber kein Positionsfix im 12-Sekunden-Fenster. Kaltstart/Empfang prüfen.')
 except OSError as e: print('BEFUND: GPSD nicht erreichbar:',repr(e))
 PY
-section 'Ausgabe des installierten GPSD-zu-NMEA-Konverters: maximal 6 Sekunden'
-echo 'Eigener Konverter-Testlauf gegen GPSD; kein Lesen oder Öffnen des laufenden WURB-PTY.'
+section 'Ausgabe der installierten NMEA-Weiterleitung: maximal 6 Sekunden'
+echo 'Eigener NMEA-Bridge-Testlauf gegen GPSD; kein Lesen oder Öffnen des laufenden WURB-PTY.'
 if [[ -x /usr/local/sbin/witty-gps-nmea-bridge ]]; then
     timeout 6s /usr/local/sbin/witty-gps-nmea-bridge 2>&1 | head -n 24 || true
 else
-    echo 'GPS-Konverter fehlt.'
+    echo 'NMEA-Bridge fehlt.'
 fi
 fi
 section 'WURB-Positionsabfrage'

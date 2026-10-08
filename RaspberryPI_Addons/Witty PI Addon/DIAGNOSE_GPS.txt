@@ -1,26 +1,26 @@
-GPS-Diagnose für Witty Add-on 0.6.60
+GPS-Diagnose für Witty Add-on 0.6.61
 ===================================
 
-Für den aktuellen Fehler auf wurbi-n6:
-1. Witty Add-on über das Windows-Programm auf 0.6.60 aktualisieren.
-2. GPS-Maus, Mikrofon und normalen USB-Speicher angeschlossen lassen.
-3. Im SSH-Terminal starten:
-
-   sudo /usr/local/sbin/witty-gps-diagnose --serial-test
-
-4. Etwa eine Minute warten und die neue Witty-GPS-Diagnose-*.txt-Datei
-   aus /home/wurb an Carsten schicken. Der genaue Name steht am Ende.
-
-Der Zusatzmodus pausiert GPSD für einen exklusiven 20-Sekunden-Test der
-USB-Maus. GPS-Anzeige und GPS-Zeitversorgung werden dabei kurz unterbrochen.
-WURB und Mikrofon bleiben aktiv. Danach werden die zuvor laufenden GPSD-
-Dienste wieder gestartet. Keine Pakete/Treiber werden installiert und keine
-Empfängerbefehle gesendet. Der Port muss eindeutig zugeordnet und frei sein.
-Bei direktem Pi-4-USB-GPS wird dieser Test nicht ausgeführt.
-
-Die normale Diagnose ohne Dienstunterbrechung bleibt verfügbar:
+1. Witty Add-on über das Windows-Programm auf 0.6.61 aktualisieren.
+2. Für eine normale Diagnose ohne Dienstunterbrechung:
 
    sudo /usr/local/sbin/witty-gps-diagnose
 
-Die Datei ist nur für ihren Besitzer lesbar und kann GPS-Koordinaten enthalten.
-Die Rohdatenprobe wird auf 4096 Bytes begrenzt.
+3. Für den gezielten Vergleich USB-Maus gegen GPSD:
+
+   sudo /usr/local/sbin/witty-gps-diagnose --serial-test
+
+Der Zusatzmodus pausiert GPSD kurz und beobachtet den freien physischen
+USB-GPS-Port für 20 Sekunden. Danach werden die zuvor laufenden GPSD-Dienste
+wieder gestartet. WURB und Mikrofon bleiben aktiv. Keine Empfängerbefehle und
+keine Paketinstallation. Bei direktem Pi-4-USB-GPS entfällt dieser Test.
+
+Nach Abschluss die neue Witty-GPS-Diagnose-*.txt-Datei aus /home/wurb schicken.
+Der genaue Pfad steht am Ende. Die Datei kann GPS-Koordinaten enthalten.
+
+Die Bridge liefert nun vollständige NMEA-Sätze von GPSD an WURB. Sie erzeugt
+keine eigenen GGA/RMC-Sätze mehr und leitet keine JSON-/Binärdaten weiter.
+Bereits auf Binärbetrieb eingestellte Empfänger werden durch die Nur-Lese-
+Option nicht automatisch auf NMEA zurückgesetzt; GPSD kann ihre Meldungen
+weiterhin in NMEA umwandeln. Fehlt der Eingangsstrom, erzeugt die Bridge keine
+künstlichen Positions- oder Satellitenmeldungen.
