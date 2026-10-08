@@ -1,23 +1,26 @@
-GPS-Diagnose für Witty Add-on 0.6.59
+GPS-Diagnose für Witty Add-on 0.6.60
 ===================================
 
-1. Witty Add-on über das Windows-Programm auf 0.6.59 aktualisieren.
-2. GPS-Maus, Aufnahme-Mikrofon und normale USB-Speicher angeschlossen lassen.
+Für den aktuellen Fehler auf wurbi-n6:
+1. Witty Add-on über das Windows-Programm auf 0.6.60 aktualisieren.
+2. GPS-Maus, Mikrofon und normalen USB-Speicher angeschlossen lassen.
 3. Im SSH-Terminal starten:
+
+   sudo /usr/local/sbin/witty-gps-diagnose --serial-test
+
+4. Etwa eine Minute warten und die neue Witty-GPS-Diagnose-*.txt-Datei
+   aus /home/wurb an Carsten schicken. Der genaue Name steht am Ende.
+
+Der Zusatzmodus pausiert GPSD für einen exklusiven 20-Sekunden-Test der
+USB-Maus. GPS-Anzeige und GPS-Zeitversorgung werden dabei kurz unterbrochen.
+WURB und Mikrofon bleiben aktiv. Danach werden die zuvor laufenden GPSD-
+Dienste wieder gestartet. Keine Pakete/Treiber werden installiert und keine
+Empfängerbefehle gesendet. Der Port muss eindeutig zugeordnet und frei sein.
+Bei direktem Pi-4-USB-GPS wird dieser Test nicht ausgeführt.
+
+Die normale Diagnose ohne Dienstunterbrechung bleibt verfügbar:
 
    sudo /usr/local/sbin/witty-gps-diagnose
 
-4. Den Abschluss abwarten. Am Ende steht der genaue Dateiname.
-   Bei SSH-Benutzer wurb liegt die Datei unter /home/wurb und beginnt mit
-   Witty-GPS-Diagnose-. Die .txt-Datei an Carsten schicken.
-
-Das Skript installiert keine Pakete, ändert keine Konfiguration, startet
-keine Dienste neu und öffnet keinen physischen GPS-Port/WURB-PTY als zweiten
-Leser. Die GPSD-Verbindung ist eine normale Clientabfrage; eine vorhandene
-Socket-Aktivierung kann dabei GPSD wie bei einer normalen Anzeige starten.
-Bei direktem Pi-4-USB-GPS entfällt diese zusätzliche GPSD-Abfrage.
 Die Datei ist nur für ihren Besitzer lesbar und kann GPS-Koordinaten enthalten.
-
-Die Diagnose trennt die von GPSD bereitgestellten NMEA-Sätze von einem eigenen
-Testlauf des installierten GPSD-zu-NMEA-Konverters. Sie zeichnet nicht den
-laufenden WURB-PTY mit; dessen Lesen würde WURB Daten wegnehmen können.
+Die Rohdatenprobe wird auf 4096 Bytes begrenzt.

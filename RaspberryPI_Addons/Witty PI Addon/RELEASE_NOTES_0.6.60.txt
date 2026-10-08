@@ -1,0 +1,11 @@
+Witty Add-on 0.6.60 – 08.10.2026
+=================================
+
+- Optionaler Diagnosemodus: sudo /usr/local/sbin/witty-gps-diagnose --serial-test. Dieser pausiert GPSD kurz, beobachtet den eindeutig zugeordneten physischen USB-GPS-Port für 20 Sekunden und stellt danach die zuvor laufenden GPSD-Dienste wieder her. Die unverändert laufende Bridge verbindet sich erneut.
+- Kein zweiter Leser: Test verweigert belegte Ports; GPSD-Socket und Daemon werden vor dem Öffnen gestoppt. Es werden keine Befehle an den Empfänger gesendet. Terminaleinstellungen und exklusiver Zugriff werden nach dem Test zurückgesetzt.
+- Direkter Test dokumentiert Bytezahl und begrenzte Rohdatenprobe. Anschließend folgt die normale GPSD-Diagnose zum Vergleich. Ohne angeschlossene Maus oder bei direktem Pi-4-USB-Betrieb wird der zusätzliche Test übersprungen.
+- Standarddiagnose ohne Zusatzoption bleibt reine Beobachtung. Die Befundmeldung unterscheidet nun fehlenden Positionsfix bei vorhandenen Meldungen von einem völlig fehlenden Datenstrom trotz angemeldetem Gerät.
+- Beide eingegangenen Diagnoseberichte von wurbi-n6 mit Version 0.6.59 zeigen einen erkannten u-blox-6-Empfänger, aktiven cdc_acm-Treiber und GPSD als Portbesitzer, aber im Messfenster keine NMEA-/TPV-/SKY-Meldungen. Eine konkrete Ursache ist damit noch nicht bewiesen.
+- Keine zusätzlichen Treiber, keine neue GPS-Betriebsart und keine automatische Umkonfiguration des Empfängers. Original-NMEA-Durchleitung der bestehenden Bridge bleibt eine getrennte offene Aufgabe.
+
+Prüfung: Bash-Syntax und bestehende Standarddiagnose für Pi 4/Pi 5 bestanden. Direkter Test auf echten Test-PTYs mit NMEA, Binärdaten und leerem Datenstrom einschließlich wiederhergestellter Terminaleinstellungen bestanden. Dienstwiederherstellung bei erfolgreichem Test, belegtem Port und Stop-Fehler simuliert und bestanden. Physischer Raspberry-Pi-Test ausstehend.

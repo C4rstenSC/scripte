@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
-# Nur Diagnose: keine Installation, keine Konfigurationsänderung, kein serieller Zweitleser.
+# Standard: reine Beobachtung. --serial-test pausiert GPSD für einen exklusiven Test.
 set -uo pipefail
 umask 077
+serial_test=false
+case ${1:-} in
+    '') ;;
+    --serial-test) serial_test=true ;;
+    *) echo 'Aufruf: sudo witty-gps-diagnose [--serial-test]' >&2; exit 2 ;;
+esac
 if [[ ${EUID:-$(id -u)} -ne 0 ]]; then
     echo 'Bitte starten mit: sudo /usr/local/sbin/witty-gps-diagnose' >&2
     exit 1
@@ -64,6 +70,97 @@ fi
 if [[ $direct_pi4_usb == true ]]; then
     echo 'Pi 4 / USB: WURB liest direkt. GPSD und virtuelle Bridge werden nicht als zusätzliche Leser gestartet.'
 else
+if [[ $serial_test == true ]]; then
+    section 'Exklusiver USB-Test: GPSD kurz pausieren, keine Befehle an die Maus'
+    (
+        device=$(readlink -f /dev/witty-gps 2>/dev/null || true)
+        if [[ ! $device =~ ^/dev/tty(ACM|USB)[0-9]+$ || ! -c $device ]]; then
+            echo 'Direkter Test übersprungen: kein eindeutiger physischer USB-GPS-Port unter /dev/witty-gps.'
+            exit 0
+        fi
+        command -v fuser >/dev/null || { echo 'Direkter Test übersprungen: fuser fehlt; Exklusivität nicht prüfbar.'; exit 0; }
+        socket_active=false; daemon_active=false
+        systemctl is-active --quiet gpsd.socket && socket_active=true
+        systemctl is-active --quiet gpsd.service && daemon_active=true
+        restore_gpsd(){
+            local failed=false
+            if [[ $socket_active == true ]]; then
+                timeout 20s systemctl start gpsd.socket || failed=true
+            fi
+            if [[ $daemon_active == true ]]; then
+                timeout 20s systemctl start gpsd.service || failed=true
+            fi
+            if [[ $failed == true ]]; then
+                echo 'FEHLER: GPSD-Wiederherstellung fehlgeschlagen. Bitte sudo systemctl restart gpsd.socket gpsd.service ausführen.'
+            else
+                echo 'GPSD-Dienstzustände wiederhergestellt; die laufende Bridge verbindet sich erneut.'
+            fi
+        }
+        trap restore_gpsd EXIT
+        trap 'exit 130' INT
+        trap 'exit 143' TERM
+        timeout 20s systemctl stop gpsd.socket || exit 1
+        timeout 20s systemctl stop gpsd.service || exit 1
+        if systemctl is-active --quiet gpsd.socket || systemctl is-active --quiet gpsd.service; then
+            echo 'Direkter Test abgebrochen: GPSD weiterhin aktiv.'; exit 1
+        fi
+        timeout 3s fuser -v "$device"
+        fuser_status=$?
+        if [[ $fuser_status != 1 ]]; then
+            echo 'Direkter Test abgebrochen: Port belegt oder Belegungsprüfung fehlgeschlagen.'; exit 1
+        fi
+        python3 - "$device" <<'SERIALPY'
+import errno, fcntl, os, select, sys, termios, time, tty
+fd = None
+original = None
+try:
+    fd = os.open(sys.argv[1], os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+    fcntl.ioctl(fd, termios.TIOCEXCL)
+    original = termios.tcgetattr(fd)
+    tty.setraw(fd, termios.TCSANOW)
+    settings = termios.tcgetattr(fd)
+    settings[2] |= termios.CLOCAL | termios.CREAD
+    # Baudrate beibehalten; der Test erzwingt keine gerätespezifische Geschwindigkeit.
+    termios.tcsetattr(fd, termios.TCSANOW, settings)
+    deadline = time.monotonic() + 20
+    total = 0
+    sample = bytearray()
+    while time.monotonic() < deadline:
+        ready, _, _ = select.select([fd], [], [], max(0, deadline - time.monotonic()))
+        if not ready:
+            break
+        try:
+            chunk = os.read(fd, 8192)
+        except BlockingIOError:
+            continue
+        if not chunk:
+            raise OSError('USB-GPS während des Tests getrennt')
+        total += len(chunk)
+        sample.extend(chunk[:max(0, 4096 - len(sample))])
+    print('Physischer USB-Port:', sys.argv[1], 'Bytes in 20 Sekunden:', total)
+    print('Rohdatenprobe (maximal 4096 Bytes):', repr(bytes(sample)))
+    if not total:
+        print('BEFUND: Auch ohne GPSD keine Bytes. USB-Ausgabe/Empfängerzustand prüfen; kein reiner WURB-Bridge-Fehler.')
+    elif b'$' in sample:
+        print('BEFUND: Direkter Port liefert Text/NMEA. Mit anschließender GPSD-Messung vergleichen.')
+    else:
+        print('BEFUND: Bytes vorhanden, möglicherweise Binärprotokoll. Rohdaten und GPSD-Version prüfen.')
+except OSError as error:
+    print('BEFUND: Direkter Port-Test fehlgeschlagen:', repr(error))
+finally:
+    if fd is not None:
+        try:
+            if original is not None:
+                termios.tcsetattr(fd, termios.TCSANOW, original)
+        finally:
+            try:
+                fcntl.ioctl(fd, termios.TIOCNXCL)
+            finally:
+                os.close(fd)
+SERIALPY
+    )
+    section 'GPSD nach exklusivem USB-Test: maximal 12 Sekunden'
+fi
 python3 - <<'PY'
 import socket,json,time
 counts={}; devices=[]; fixes=[]; used=[]; nmea=0
@@ -102,7 +199,9 @@ try:
     print('Meldungen:',counts,'NMEA:',nmea,'gültige Positionsmeldungen:',len(fixes),'Satelliten:',used[-5:])
     if fixes: print('BEFUND: GPSD liefert einen Positionsfix. Danach Homepage/WURB prüfen.')
     elif not counts.get('DEVICE') and not devices: print('BEFUND: Kein GPS-Gerät im beobachteten GPSD-Datenstrom gemeldet. Erkennung/Anmeldung prüfen.')
-    else: print('BEFUND: Kein Positionsfix im 12-Sekunden-Fenster. Kaltstart/Empfang und Datenstrom prüfen.')
+    elif not nmea and not counts.get('TPV') and not counts.get('SKY'):
+        print('BEFUND: Gerät angemeldet, aber keinerlei NMEA-/TPV-/SKY-Meldungen im Messfenster. Datenstrom/Initialisierung prüfen; fehlender Fix allein erklärt das nicht.')
+    else: print('BEFUND: Datenstrom vorhanden, aber kein Positionsfix im 12-Sekunden-Fenster. Kaltstart/Empfang prüfen.')
 except OSError as e: print('BEFUND: GPSD nicht erreichbar:',repr(e))
 PY
 section 'Ausgabe des installierten GPSD-zu-NMEA-Konverters: maximal 6 Sekunden'
