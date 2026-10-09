@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-# Allgemeiner Installationsstarter fuer Raspberry Pi OS. Das Windows-Programm
-# lädt das verschlüsselte GitHub-Paket, entschlüsselt und prüft es und überträgt
-# anschließend diese Klartext-ZIP nur zum Raspberry.
+# Allgemeiner Update-Starter. Das öffentliche GitHub-Paket ist verschlüsselt.
+# Raspi-Scripte 0.7.0 lädt und entschlüsselt es vorab und legt die geprüfte ZIP
+# im Benutzer-Home ab. Dadurch liegt das Paket auf GitHub nicht im Klartext.
 readonly ADDON_ENCRYPTED_URL="https://raw.githubusercontent.com/C4rstenSC/scripte/main/RaspberryPI_Addons/Witty%20PI%20Addon/witty_addon.zip.enc"
 
 log() { printf '[Witty-Launcher] %s\n' "$*"; }
@@ -11,14 +11,14 @@ die() { printf '[Witty-Launcher] FEHLER: %s\n' "$*" >&2; exit 1; }
 
 console_install_blocked() {
     cat >&2 <<'EOF'
-[Witty-Launcher] INSTALLATION GESPERRT.
-[Witty-Launcher] Diese installer.sh darf nicht manuell über SSH oder eine andere Konsole gestartet werden.
-[Witty-Launcher] Bitte Raspi-Scripte für Windows öffnen und dort „Basis Installation“ verwenden.
+[Witty-Launcher] UPDATE GESPERRT.
+[Witty-Launcher] Diese update.sh darf nicht manuell über SSH oder eine andere Konsole gestartet werden.
+[Witty-Launcher] Bitte Raspi-Scripte für Windows öffnen und dort „Witty Software update“ verwenden.
 EOF
     exit 23
 }
 
-# Eine Basisinstallation verändert Hardware-, Dienst- und GPS-Einstellungen.
+# Eine Das Update verändert Dienste und Einstellungen.
 # Deshalb akzeptiert der Starter ausschließlich die einmalige, vom verbundenen
 # Windows-Programm erzeugte Freigabe. Die Datei wird vor allen Änderungen
 # verbraucht; ein kopierter Konsolenbefehl lässt sich danach nicht wiederholen.
@@ -26,7 +26,7 @@ launcher_user="${SUDO_USER:-}"
 [[ -n "$launcher_user" && "$launcher_user" != root ]] || console_install_blocked
 id "$launcher_user" >/dev/null 2>&1 || console_install_blocked
 launcher_home="$(getent passwd "$launcher_user" 2>/dev/null | cut -d: -f6)"
-ticket_file="$launcher_home/.raspi-scripte-install.ticket"
+ticket_file="$launcher_home/.raspi-scripte-update.ticket"
 session_token="${WITTY_WINDOWS_SESSION:-}"
 [[ "$session_token" =~ ^[0-9A-Fa-f]{64}$ ]] || console_install_blocked
 [[ -f "$ticket_file" && ! -L "$ticket_file" ]] || console_install_blocked
@@ -39,7 +39,7 @@ rm -f -- "$ticket_file"
 unset ticket_token session_token WITTY_WINDOWS_SESSION
 export WITTY_WINDOWS_AUTHORIZED=1
 
-[[ "${EUID:-$(id -u)}" -eq 0 ]] || die "Bitte mit sudo starten: sudo ./installer.sh"
+[[ "${EUID:-$(id -u)}" -eq 0 ]] || die "Bitte mit sudo starten: sudo ./update.sh"
 
 missing=false
 for command_name in curl unzip; do
@@ -60,15 +60,18 @@ fi
 
 temp_base="${TMPDIR:-/var/tmp}"
 [[ -d "$temp_base" ]] || temp_base=/tmp
-work_dir="$(mktemp -d "$temp_base/witty-install-github.XXXXXX")"
+work_dir="$(mktemp -d "$temp_base/witty-update-github.XXXXXX")"
 cleanup() { rm -rf -- "$work_dir"; }
 trap cleanup EXIT
 
 archive="$work_dir/witty_addon.zip"
+update_source=windows-upload
 if [[ -n "${WITTY_ADDON_LOCAL_ZIP:-}" ]]; then
-    [[ -f "$WITTY_ADDON_LOCAL_ZIP" ]] || die "Das übergebene lokale Witty-Paket fehlt: $WITTY_ADDON_LOCAL_ZIP"
-    log "Verwende die vom Windows-Programm übertragene witty_addon.zip ..."
+    [[ -f "$WITTY_ADDON_LOCAL_ZIP" && -r "$WITTY_ADDON_LOCAL_ZIP" ]] || \
+        die "Das vorbereitete Witty-Paket ist nicht lesbar: $WITTY_ADDON_LOCAL_ZIP"
+    log "Verwende die vom Windows-Programm vorbereitete witty_addon.zip ..."
     cp -- "$WITTY_ADDON_LOCAL_ZIP" "$archive"
+    update_source=windows-upload
 else
     launcher_user="${SUDO_USER:-$(id -un)}"
     launcher_home="$(getent passwd "$launcher_user" 2>/dev/null | cut -d: -f6)"
@@ -82,11 +85,12 @@ else
             die "GitHub-Download des verschlüsselten Pakets fehlgeschlagen."
         /usr/local/sbin/witty-package-decrypt "$encrypted_archive" "$archive" || \
             die "Das GitHub-Paket konnte auf dem Raspberry nicht entschlüsselt werden."
+        update_source=raspberry-decrypt
     elif [[ -f "$prepared_zip" && -r "$prepared_zip" ]]; then
         log "Verwende die von Raspi-Scripte vorbereitete witty_addon.zip aus $prepared_zip ..."
         cp -- "$prepared_zip" "$archive"
     else
-        die "Erstinstallation benötigt Raspi-Scripte 0.7.0; danach kann der Raspberry verschlüsselte Updates selbst verarbeiten."
+        die "Kein entschlüsseltes Witty-Paket und kein lokaler Entschlüsseler vorhanden. Bitte zuerst über Raspi-Scripte 0.7.0 installieren."
     fi
 fi
 
@@ -96,34 +100,21 @@ if unzip -Z1 "$archive" | grep -Eq '(^/|(^|/)\.\.(/|$))'; then
 fi
 
 unzip -q "$archive" -d "$work_dir/extracted"
-runner="$work_dir/extracted/witty_addon/installer_addon.sh"
-[[ -f "$runner" ]] || die "installer_addon.sh fehlt im GitHub-ZIP."
+runner="$work_dir/extracted/witty_addon/update_addon.sh"
+[[ -f "$runner" ]] || die "update_addon.sh fehlt im GitHub-ZIP."
 chmod 0755 "$runner"
 package_version="$(tr -d '\r\n' < "$work_dir/extracted/witty_addon/VERSION")"
 [[ "$package_version" =~ ^[0-9]+([.][0-9]+)+$ ]] || die "Ungültige Paketversion."
 log "Geprüfte Witty-Paketversion: $package_version"
 
 
-# Mit jeder Basisinstallation auch den Update-Starter im Home des aufrufenden
-# SSH-Benutzers erneuern. So bleibt keine ältere update.sh neben dem neuen
-# Add-on liegen.
-update_launcher="$work_dir/extracted/witty_addon/launchers/update.sh"
-[[ -f "$update_launcher" ]] || die "launchers/update.sh fehlt im GitHub-ZIP."
-if [[ -n "$launcher_user" && "$launcher_user" != root ]] && id "$launcher_user" >/dev/null 2>&1; then
-    launcher_home="$(getent passwd "$launcher_user" | cut -d: -f6)"
-    launcher_group="$(id -gn "$launcher_user")"
-    if [[ -n "$launcher_home" && -d "$launcher_home" ]]; then
-        install -o "$launcher_user" -g "$launcher_group" -m 0755 \
-            "$update_launcher" "$launcher_home/update.sh"
-        log "update.sh im Benutzer-Home aktualisiert: $launcher_home/update.sh"
-    fi
-fi
-
-printf '[WITTY-CONTROL] event=install_started source=windows-upload\n'
+printf '[WITTY-CONTROL] event=update_started source=%s\n' "$update_source"
 runner_rc=0
 bash "$runner" "$@" || runner_rc=$?
 if (( runner_rc != 0 )); then
-    printf '[WITTY-CONTROL] event=install_finished result=error exit_code=%s\n' "$runner_rc"
+    result=error
+    (( runner_rc == 130 )) && result=cancelled
+    printf '[WITTY-CONTROL] event=update_finished result=%s exit_code=%s\n' "$result" "$runner_rc"
     exit "$runner_rc"
 fi
-printf '[WITTY-CONTROL] event=install_finished result=success\n'
+printf '[WITTY-CONTROL] event=update_finished result=success\n'

@@ -11,6 +11,11 @@ Prüfung: Windows-x64-Build, Paketverschlüsselung, beide entschlüsselten Allsk
 
 Standalone-Allsky: Sunwait und die Zusatzmodule sind ebenfalls als verschlüsseltes Zusatzpaket im eigenen Repository enthalten. Der Installer verwendet lokale Git-Quellen; Raspberry-Pi-OS- und Python-Paketquellen bleiben erforderlich.
 
+Ergänzung 09.10.2026 (weiterhin 0.7.0):
+- Basisinstaller bietet zusätzlich die jeweils aktuelle Allsky-Version direkt vom Hersteller-GitHub. Kamera-, Trixie-, Navigation- und Erststart-Anpassungen gelten für alle drei Quellen. Updates erhalten die gewählte Quelle.
+- Pi-5-GPS: USB-Verlust wird über ungültige NMEA-Fixes sofort an WURB gemeldet. WURB verwirft veraltete Fixes, fällt auf die gespeicherte manuelle Position zurück und übernimmt bei Wiederverbindung echte GPS-Koordinaten und Satellitenzahlen.
+- Windows: alter und modularer Updatekanal werden auf denselben Stand gebracht. Interne Build-Revision erkennt Korrekturen bei gleicher sichtbarer Version.
+
 
 Witty Add-on 0.6.62 – 09.10.2026
 =================================
