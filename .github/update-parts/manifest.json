@@ -1,0 +1,91 @@
+{
+  "version": "0.7.0",
+  "encryptedSha256": "20155e986c8bcda8c44a3c14571b881ff362b5dc936ce0ae4e31a1391c08c05f",
+  "encryptedContentSha256": "9baf9c540cbff0a8a5ec91d91572cbac95d2812af6a74d2917ba1fe4524e5df2",
+  "parts": [
+    {
+      "name": "part-00",
+      "sha256": "da6f8fefa72272029774a156240db10503645a16111f12b318572273b8d07406"
+    },
+    {
+      "name": "part-01",
+      "sha256": "fcfafac924f308e5ab96b3e9ed685899145e24a0958741fb37f7d91981033695"
+    },
+    {
+      "name": "part-02",
+      "sha256": "38fe5b56290d77cc8ba6269485b8b9afbb48adf3d85d4626afc03a32cbedec54"
+    },
+    {
+      "name": "part-03",
+      "sha256": "e2fc03262af7f30ba4a35919a2cb43e865d1cc06486a31eaa586d947bdd73794"
+    },
+    {
+      "name": "part-04",
+      "sha256": "993976d7bbbb1828c9bac69a9e640bb610369305aa6c6db8ac90a046c0df999f"
+    },
+    {
+      "name": "part-05",
+      "sha256": "5ee1da7dbf2dbdf8dd0ec5ef27ac68becd4293a45f64d28f1f362e943d5fc231"
+    },
+    {
+      "name": "part-06",
+      "sha256": "2924e3ea8a5192ff4c5f3ff297841274b24796f4082c545566f610a73930fe38"
+    }
+  ],
+  "updateManifest": {
+    "schema": 1,
+    "version": "0.7.0",
+    "contentVersion": "0.7.0",
+    "buildRevision": "20261009.3",
+    "fullPackage": "Raspi-Scripte.zip",
+    "fullSha256": "49998611b062b4041ae9a85a9d765641507d5bbd03ddfb2ad258630b4d087e8a",
+    "contentPackage": "Raspi-Scripte-Content.zip",
+    "contentSha256": "7ec4a5174ad8e8f5acc21a9d14c913746e5d73038cdf90f0d865018a99c3995a"
+  },
+  "releaseNotes": {
+    "version": "0.7.0",
+    "date": "2026-10-09",
+    "de": [
+      "Windows 0.7.0 – Ergänzung 09.10.2026: Aktiver GPS-Empfänger wird hellgrün markiert, unabhängig von der Auswahl für eine spätere Installation.",
+      "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
+      "GPS-Zeitabgleich: Ein alter gpsd-Cachewert darf nicht mehr als Synchronisationsquelle dienen. Die Webpage verwirft alte laufende Statusabfragen und liest die Uhren nach jeder Synchronisation erneut. Witty-Messzeiten werden vor dem Herstellerdaemon-Neustart erfasst.",
+      "Neuer rot umrahmter Bereich „Micro SD Karten Optionen“: Ampel für expandierte/geschrumpfte Partitionen, Ja/Nein-Bestätigung vor beiden Aktionen.",
+      "SD-Schrumpfen nutzt einen geprüften einmaligen Offline-Wartungsstart. Alle Dienste werden beendet, ext4 wird vor dem Einhängen verkleinert und der Pi danach heruntergefahren. Standard-Micro-SD-Aufteilung wird vorab geprüft; andere Datenträger werden nicht verändert.",
+      "SD-Expandieren nutzt die Basisinstaller-Methode und startet den Raspberry Pi anschließend neu.",
+      "„Einstellungen anpassen“ zeigt den aktuellen Hostnamen und ändert Hostname und vorhandene Hotspot-SSID nach den Basisinstaller-Regeln. Abbruch ändert nichts.",
+      "Sichtbare Version unverändert 0.7.0; interne Build-Revision 20261009.3 für die Updateerkennung.",
+      "Korrektur 09.10.2026: Auch der bisherige Windows-Updatepfad bietet 0.7.0 an. Paket, Inhalte und Versionsmanifest werden gemeinsam geprüft.",
+      "Basisinstaller: Aktuelle Allsky-Version direkt vom Hersteller-GitHub zusätzlich zu den beiden eigenen verschlüsselten Archiven. Die gewählte Quelle bleibt bei Softwareupdates erhalten.",
+      "Pi 5 GPS: Abziehen meldet einen ungültigen Fix an WURB; dessen vorhandene manuelle Ersatzposition bleibt erhalten. Wiederanstecken liefert Position und tatsächliche Satellitenzahl.",
+      "Interne Build-Revision 20261009.2 erlaubt künftig Korrekturen unter derselben sichtbaren Version 0.7.0.",
+      "Basisinstaller: Allsky v2024.12.06_06 oder v2026.10.01 auswählen; beide Versionen werden als geprüftes verschlüsseltes Archiv vom eigenen GitHub geladen.",
+      "Installierte Witty-Pi-4-Herstellersoftware wird korrekt als Witty Pi 4 angezeigt, auch bei unbekannter Version oder übrig gebliebenen WP5-Dateien.",
+      "WP5-Herstellersoftware wird unabhängig vom Add-on-Webdienst erkannt; vorhandene Software erscheint grün.",
+      "WP5 wird auch außerhalb von PATH erkannt. Eine unbekannte Paketversion wird nicht als fehlende Installation oder verfügbares Update gewertet.",
+      "Witty Add-on 0.7.0: Homepage zeigt GPS-Daten ohne Fix und die tatsächlichen Satellitenzahlen. Vollständige NMEA-Weiterleitung aus 0.6.61 ist enthalten.",
+      "Kleines Windows-Update mit neu kompiliertem Programmcode. Raspberry-Pi-Hardwaretest und Windows-Starttest stehen noch aus. Neue Hauptprogrammdateien sind unsigniert.",
+      "Bedienungsanleitungen aktualisiert: kleine Windows-Updates, Migration älterer Einzel-EXE-Stände, GPS-/RTC-Diagnose, Herstelleranzeige, Sicherung und Allsky-Versionsauswahl. Die vollständige deutsche Witty-Historie ist auch offline verfügbar."
+    ],
+    "en-AU": [
+      "Windows 0.7.0 – Ergänzung 09.10.2026: Aktiver GPS-Empfänger wird hellgrün markiert, unabhängig von der Auswahl für eine spätere Installation.",
+      "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
+      "GPS-Zeitabgleich: Ein alter gpsd-Cachewert darf nicht mehr als Synchronisationsquelle dienen. Die Webpage verwirft alte laufende Statusabfragen und liest die Uhren nach jeder Synchronisation erneut. Witty-Messzeiten werden vor dem Herstellerdaemon-Neustart erfasst.",
+      "Neuer rot umrahmter Bereich „Micro SD Karten Optionen“: Ampel für expandierte/geschrumpfte Partitionen, Ja/Nein-Bestätigung vor beiden Aktionen.",
+      "SD-Schrumpfen nutzt einen geprüften einmaligen Offline-Wartungsstart. Alle Dienste werden beendet, ext4 wird vor dem Einhängen verkleinert und der Pi danach heruntergefahren. Standard-Micro-SD-Aufteilung wird vorab geprüft; andere Datenträger werden nicht verändert.",
+      "SD-Expandieren nutzt die Basisinstaller-Methode und startet den Raspberry Pi anschließend neu.",
+      "„Einstellungen anpassen“ zeigt den aktuellen Hostnamen und ändert Hostname und vorhandene Hotspot-SSID nach den Basisinstaller-Regeln. Abbruch ändert nichts.",
+      "Sichtbare Version unverändert 0.7.0; interne Build-Revision 20261009.3 für die Updateerkennung.",
+      "Korrektur 09.10.2026: Auch der bisherige Windows-Updatepfad bietet 0.7.0 an. Paket, Inhalte und Versionsmanifest werden gemeinsam geprüft.",
+      "Basisinstaller: Aktuelle Allsky-Version direkt vom Hersteller-GitHub zusätzlich zu den beiden eigenen verschlüsselten Archiven. Die gewählte Quelle bleibt bei Softwareupdates erhalten.",
+      "Pi 5 GPS: Abziehen meldet einen ungültigen Fix an WURB; dessen vorhandene manuelle Ersatzposition bleibt erhalten. Wiederanstecken liefert Position und tatsächliche Satellitenzahl.",
+      "Interne Build-Revision 20261009.2 erlaubt künftig Korrekturen unter derselben sichtbaren Version 0.7.0.",
+      "Basisinstaller: Allsky v2024.12.06_06 oder v2026.10.01 auswählen; beide Versionen werden als geprüftes verschlüsseltes Archiv vom eigenen GitHub geladen.",
+      "Installierte Witty-Pi-4-Herstellersoftware wird korrekt als Witty Pi 4 angezeigt, auch bei unbekannter Version oder übrig gebliebenen WP5-Dateien.",
+      "WP5-Herstellersoftware wird unabhängig vom Add-on-Webdienst erkannt; vorhandene Software erscheint grün.",
+      "WP5 wird auch außerhalb von PATH erkannt. Eine unbekannte Paketversion wird nicht als fehlende Installation oder verfügbares Update gewertet.",
+      "Witty Add-on 0.7.0: Homepage zeigt GPS-Daten ohne Fix und die tatsächlichen Satellitenzahlen. Vollständige NMEA-Weiterleitung aus 0.6.61 ist enthalten.",
+      "Kleines Windows-Update mit neu kompiliertem Programmcode. Raspberry-Pi-Hardwaretest und Windows-Starttest stehen noch aus. Neue Hauptprogrammdateien sind unsigniert.",
+      "Bedienungsanleitungen aktualisiert: kleine Windows-Updates, Migration älterer Einzel-EXE-Stände, GPS-/RTC-Diagnose, Herstelleranzeige, Sicherung und Allsky-Versionsauswahl. Die vollständige deutsche Witty-Historie ist auch offline verfügbar."
+    ]
+  }
+}
