@@ -1,6 +1,6 @@
 # Raspi-Scripte 0.7.0
 
-Windows und Witty Add-on: **0.7.0**, korrigierter Stand 09.10.2026, Build-Revision 20261009.3.
+Windows und Witty Add-on: **0.7.0**, korrigierter Stand 09.10.2026, Build-Revision 20261009.4.
 
 **Vorhandene Windows-Versionen aktualisieren sich über den bisherigen Update-Knopf auf 0.7.0.** Der alte Updatepfad und der kleine modulare Updatepfad liefern passende verschlüsselte Pakete mit SHA-256-Manifesten. Ein manueller ZIP-Umstieg ist nicht erforderlich. Das Kompatibilitätsupdate enthält die Windows-Laufzeit; anschließend verwendet das Programm den kleinen modularen Updatekanal.
 

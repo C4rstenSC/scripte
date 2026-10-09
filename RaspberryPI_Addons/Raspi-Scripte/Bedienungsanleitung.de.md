@@ -62,3 +62,6 @@ Der rot umrahmte Bereich befindet sich unter den beiden Installations-/Updatebut
 „Einstellungen anpassen“ zeigt den aktuellen Hostnamen neben dem Eingabefeld. „Änderungen übernehmen“ setzt Hostname und bestehende verwaltete Hotspots: WURB `wifi4bats-<Hostname>`, Allsky `allskywifi-<Hostname>`, sonst `wifi-<Hostname>`. WLAN-Passwort und übrige Netzwerkdaten bleiben erhalten. Ein aktiver Hotspot übernimmt den Namen verzögert; WLAN/SSH können kurz abbrechen. „Abbruch“ verändert nichts.
 
 Im GPS-Bereich ist der tatsächlich aktive Empfänger hellgrün hinterlegt, unabhängig von der Auswahl für eine künftige Installation.
+
+
+GPS-Abgleich korrigiert: Beide GPS-Buttons synchronisieren Linux, Witty-RTC und eine aktive Pi-RTC über denselben geprüften Ablauf. Die Witty-Uhr wird beim tatsächlichen Auslesen zeitlich erfasst; kein pauschaler Sekundenoffset.

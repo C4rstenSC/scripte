@@ -50,3 +50,6 @@ Expand uses the same `raspi-config` method as the base installer and reboots the
 Adjust settings displays the current hostname beside the new hostname field. Apply changes updates hostname and existing managed hotspot SSIDs: WURB `wifi4bats-<hostname>`, Allsky `allskywifi-<hostname>`, otherwise `wifi-<hostname>`. The wireless password and other network settings remain unchanged. Active hotspots adopt the name after a short delay; wireless/SSH may disconnect briefly. Cancel makes no changes.
 
 The actually active GPS receiver is highlighted light green independently of the selection for a future installation.
+
+
+Both GPS buttons now synchronise Linux, the Witty RTC and the enabled Pi RTC through the same verified procedure. Witty display timing is measured when its RTC line is read, without a fixed seconds offset.

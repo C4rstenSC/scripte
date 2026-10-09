@@ -2,8 +2,9 @@
   "version": "0.7.0",
   "date": "2026-10-09",
   "de": [
-    "Windows 0.7.0 – Ergänzung 09.10.2026: Aktiver GPS-Empfänger wird hellgrün markiert, unabhängig von der Auswahl für eine spätere Installation.",
+    "GPS-Abgleich korrigiert: Beide GPS-Buttons synchronisieren Linux, Witty-RTC und eine aktive Pi-RTC über denselben geprüften Ablauf. Die Witty-Uhr wird beim tatsächlichen Auslesen zeitlich erfasst; kein pauschaler Sekundenoffset.",
     "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
+    "Windows 0.7.0 – Ergänzung 09.10.2026: Aktiver GPS-Empfänger wird hellgrün markiert, unabhängig von der Auswahl für eine spätere Installation.",
     "GPS-Zeitabgleich: Ein alter gpsd-Cachewert darf nicht mehr als Synchronisationsquelle dienen. Die Webpage verwirft alte laufende Statusabfragen und liest die Uhren nach jeder Synchronisation erneut. Witty-Messzeiten werden vor dem Herstellerdaemon-Neustart erfasst.",
     "Neuer rot umrahmter Bereich „Micro SD Karten Optionen“: Ampel für expandierte/geschrumpfte Partitionen, Ja/Nein-Bestätigung vor beiden Aktionen.",
     "SD-Schrumpfen nutzt einen geprüften einmaligen Offline-Wartungsstart. Alle Dienste werden beendet, ext4 wird vor dem Einhängen verkleinert und der Pi danach heruntergefahren. Standard-Micro-SD-Aufteilung wird vorab geprüft; andere Datenträger werden nicht verändert.",
@@ -23,8 +24,9 @@
     "Bedienungsanleitungen aktualisiert: kleine Windows-Updates, Migration älterer Einzel-EXE-Stände, GPS-/RTC-Diagnose, Herstelleranzeige, Sicherung und Allsky-Versionsauswahl. Die vollständige deutsche Witty-Historie ist auch offline verfügbar."
   ],
   "en-AU": [
-    "Windows 0.7.0 – Ergänzung 09.10.2026: Aktiver GPS-Empfänger wird hellgrün markiert, unabhängig von der Auswahl für eine spätere Installation.",
+    "GPS-Abgleich korrigiert: Beide GPS-Buttons synchronisieren Linux, Witty-RTC und eine aktive Pi-RTC über denselben geprüften Ablauf. Die Witty-Uhr wird beim tatsächlichen Auslesen zeitlich erfasst; kein pauschaler Sekundenoffset.",
     "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
+    "Windows 0.7.0 – Ergänzung 09.10.2026: Aktiver GPS-Empfänger wird hellgrün markiert, unabhängig von der Auswahl für eine spätere Installation.",
     "GPS-Zeitabgleich: Ein alter gpsd-Cachewert darf nicht mehr als Synchronisationsquelle dienen. Die Webpage verwirft alte laufende Statusabfragen und liest die Uhren nach jeder Synchronisation erneut. Witty-Messzeiten werden vor dem Herstellerdaemon-Neustart erfasst.",
     "Neuer rot umrahmter Bereich „Micro SD Karten Optionen“: Ampel für expandierte/geschrumpfte Partitionen, Ja/Nein-Bestätigung vor beiden Aktionen.",
     "SD-Schrumpfen nutzt einen geprüften einmaligen Offline-Wartungsstart. Alle Dienste werden beendet, ext4 wird vor dem Einhängen verkleinert und der Pi danach heruntergefahren. Standard-Micro-SD-Aufteilung wird vorab geprüft; andere Datenträger werden nicht verändert.",
