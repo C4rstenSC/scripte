@@ -24,6 +24,9 @@ Ergänzung 09.10.2026 – Micro-SD und Geräteeinstellungen (Version bleibt 0.7.
 
 - GPS-Uhrabweichung: Synchronisation benötigt fortschreitende Live-GPS-Zeit statt eines ersten gpsd-Cachewerts. Alte Status-/GPS-Antworten vor dem Zeitabgleich werden auf der Webpage verworfen; danach werden die Uhren garantiert frisch gelesen. Die Erfolgsmeldung erscheint erst nach dieser Aktualisierung. Witty-Messzeitpunkt wird vor dem Neustart des Herstellerdaemons erfasst.
 
+09.10.2026 – GPS-Abgleich beider Buttons
+GPS-Abgleich korrigiert: Beide GPS-Buttons synchronisieren Linux, Witty-RTC und eine aktive Pi-RTC über denselben geprüften Ablauf. Die Witty-Uhr wird beim tatsächlichen Auslesen zeitlich erfasst; kein pauschaler Sekundenoffset.
+
 
 Witty Add-on 0.6.62 – 09.10.2026
 =================================
