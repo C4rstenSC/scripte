@@ -44,3 +44,5 @@ Entschlüsselung, ZIP-Prüfung, beide Allsky-Originalstände und Windows-x64-Kom
 
 ## Verbindliche Versionsprüfung bei Allsky-Backups
 Neue Sicherungen speichern die Allsky-Version und den Original-Git-Stand. Wiederherstellung ist nur auf exakt denselben Softwarestand möglich. Bei Abweichung werden beide Versionen beziehungsweise Git-Stände angezeigt und vor Dateiänderungen oder Dienststopps abgebrochen. Alte Backups ohne Versionsangabe werden als Version unbekannt abgelehnt. Das gilt in Windows, auf der Witty-Webseite und für automatische Wiederherstellungen nach Updates. Nach einem Allsky-Versionswechsel eine neue Sicherung erstellen; ein Backup der vorherigen Version kann erst auf deren gleichem Stand wiederhergestellt werden.
+
+Standalone-Allsky: Sunwait und die Zusatzmodule sind ebenfalls als verschlüsseltes Zusatzpaket im eigenen Repository enthalten. Der Installer verwendet lokale Git-Quellen; Raspberry-Pi-OS- und Python-Paketquellen bleiben erforderlich.

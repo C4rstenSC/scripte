@@ -5,6 +5,7 @@
     "Basisinstaller: Allsky v2024.12.06_06 oder v2026.10.01 auswählen; beide Versionen werden als geprüftes verschlüsseltes Archiv vom eigenen GitHub geladen.",
     "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
     "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
+    "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
     "Installierte Witty-Pi-4-Herstellersoftware wird korrekt als Witty Pi 4 angezeigt, auch bei unbekannter Version oder übrig gebliebenen WP5-Dateien.",
     "WP5-Herstellersoftware wird unabhängig vom Add-on-Webdienst erkannt; vorhandene Software erscheint grün.",
     "WP5 wird auch außerhalb von PATH erkannt. Eine unbekannte Paketversion wird nicht als fehlende Installation oder verfügbares Update gewertet.",
@@ -14,6 +15,7 @@
   ],
   "en-AU": [
     "Basisinstaller: Allsky v2024.12.06_06 oder v2026.10.01 auswählen; beide Versionen werden als geprüftes verschlüsseltes Archiv vom eigenen GitHub geladen.",
+    "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
     "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
     "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
     "Installierte Witty-Pi-4-Herstellersoftware wird korrekt als Witty Pi 4 angezeigt, auch bei unbekannter Version oder übrig gebliebenen WP5-Dateien.",

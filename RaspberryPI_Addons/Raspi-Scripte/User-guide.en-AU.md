@@ -32,3 +32,5 @@ Package encryption, ZIP integrity, both original Allsky snapshots and the Window
 
 ## Required Allsky backup version match
 New backups record the Allsky release and original Git revision. Restore is allowed only on the identical software revision. A mismatch displays the backup and installed versions before any files or services are changed. Old backups without a recorded version are rejected as unknown. This applies to Windows, the Witty web page and automatic post-update restores. Create a new backup after changing Allsky version. A previous-version backup can only be restored to its original matching version.
+
+Standalone Allsky: Sunwait and additional modules are also included in an encrypted support package in the same repository. Installation uses local Git sources. Raspberry Pi OS and Python package repositories are still required.
