@@ -1,0 +1,10 @@
+Witty Add-on 0.7.0 – 09.10.2026
+
+- Alle GPS-, NMEA-, RTC-, Homepage- und Witty-Herstellererkennungsänderungen bis einschließlich 0.6.62 übernommen.
+- Basisinstaller übernimmt Allsky-Versionsauswahl aus Windows: v2024.12.06_06 oder v2026.10.01. Beide Originalstände werden verschlüsselt vom eigenen GitHub geladen und anhand von Prüfsummen und Original-Git-Commit geprüft.
+- Allsky-Sicherungen enthalten die Allsky-Versionsnummer und den ursprünglichen Git-Stand. Wiederherstellung ist ausschließlich auf denselben Softwarestand zulässig, auch bei automatischer Wiederherstellung nach Updates.
+- Abweichende Versionen oder Git-Stände werden vor Änderungen an Dateien oder Diensten abgewiesen. Die Fehlermeldung nennt den Backup- und den installierten Stand. Ältere Backups ohne Versionsangabe werden ebenfalls abgewiesen.
+- Windows und Witty-Webseite verwenden dieselbe serverseitige Sicherung und Prüfung. Overlays, Modulkonfigurationen, Websiteeinstellungen und SQLite-Daten bleiben Bestandteil der Konfigurationssicherung.
+- Vollständige deutsche Witty-Release-Historie und aktualisierte Bedienungsanleitungen werden mit Windows 0.7.0 ausgeliefert.
+
+Prüfung: Windows-x64-Build, Paketverschlüsselung, beide entschlüsselten Allsky-Originalstände, Sicherung/Wiederherstellung und Versionssperre in lokalen Tests. Native Windows- und Raspberry-Hardwaretests stehen aus.

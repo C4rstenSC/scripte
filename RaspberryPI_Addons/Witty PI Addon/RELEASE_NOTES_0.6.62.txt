@@ -1,0 +1,10 @@
+Witty Add-on 0.6.62 – 09.10.2026
+=================================
+
+- Die Homepage unterscheidet jetzt empfangene GPS-Daten ohne Positionsfix, einen gültigen Positionsfix und ausbleibende GPS-Daten. Satelliten aus GPSD-SKY werden mit tatsächlicher Zahl der verwendeten und sichtbaren Satelliten angezeigt, auch ohne Positionsfix.
+- GPS-Status verarbeitet SKY und TPV gemeinsam. VERSION/WATCH-Meldungen gelten nicht als Empfängerdaten. Ohne gültige Zeit und Position werden keine Koordinaten oder synchronisierbare GPS-Zeit ausgegeben.
+- Installierte Witty-Pi-4-Herstellersoftware wird anhand des vollständigen Herstellerverzeichnisses erkannt und als Witty Pi 4 angezeigt, auch bei unbekannter Versionsnummer. Die Auswahl Witty Pi 4 hat bei parallel vorhandenen WP5-Dateien Vorrang. Hardwaremodell und Herstellersoftwaremodell werden getrennt; WP5-Updatehinweise erscheinen nicht für Pi-4-Software.
+- Windows-Status meldet die Installation der Herstellersoftware getrennt vom Add-on-Webdienst. WP5 wird auch an bekannten Installationsorten außerhalb von PATH erkannt. Eine unbekannte Paketversion bedeutet nicht mehr fehlende Installation.
+- Vollständige NMEA-Weiterleitung aus 0.6.61 bleibt enthalten: Satellitenzahl, HDOP und weitere Originalfelder werden nicht durch selbst erzeugte Sätze ersetzt. USB-GPSD bleibt im Nur-Lese-Modus ohne zusätzliche USB-Treiber.
+
+Geprüft: simulierte GPSD-Verbindungen mit SKY vor/nach TPV, fehlendem Fix, ausbleibenden Daten, sieben verwendeten Satelliten, Nullkoordinaten, Nullsatelliten und ungültigen Zeitwerten; vollständige Homepage-JavaScript-Syntax; WP5 außerhalb von PATH ohne Debian-Paketversion; Bridge-Wiederverbindung und vollständige NMEA-Felder; simulierte Neuinstallationen Pi 4/Pi 5. Kein physischer Raspberry-Pi-Test. Der bislang fehlende USB-Eingangsstrom bei Papa ist damit noch nicht als behoben nachgewiesen.

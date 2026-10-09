@@ -123,4 +123,3 @@ if (( runner_rc != 0 )); then
     exit "$runner_rc"
 fi
 printf '[WITTY-CONTROL] event=install_finished result=success\n'
-

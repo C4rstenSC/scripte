@@ -1,3 +1,27 @@
+Witty Add-on 0.7.0 – 09.10.2026
+
+- Alle GPS-, NMEA-, RTC-, Homepage- und Witty-Herstellererkennungsänderungen bis einschließlich 0.6.62 übernommen.
+- Basisinstaller übernimmt Allsky-Versionsauswahl aus Windows: v2024.12.06_06 oder v2026.10.01. Beide Originalstände werden verschlüsselt vom eigenen GitHub geladen und anhand von Prüfsummen und Original-Git-Commit geprüft.
+- Allsky-Sicherungen enthalten die Allsky-Versionsnummer und den ursprünglichen Git-Stand. Wiederherstellung ist ausschließlich auf denselben Softwarestand zulässig, auch bei automatischer Wiederherstellung nach Updates.
+- Abweichende Versionen oder Git-Stände werden vor Änderungen an Dateien oder Diensten abgewiesen. Die Fehlermeldung nennt den Backup- und den installierten Stand. Ältere Backups ohne Versionsangabe werden ebenfalls abgewiesen.
+- Windows und Witty-Webseite verwenden dieselbe serverseitige Sicherung und Prüfung. Overlays, Modulkonfigurationen, Websiteeinstellungen und SQLite-Daten bleiben Bestandteil der Konfigurationssicherung.
+- Vollständige deutsche Witty-Release-Historie und aktualisierte Bedienungsanleitungen werden mit Windows 0.7.0 ausgeliefert.
+
+Prüfung: Windows-x64-Build, Paketverschlüsselung, beide entschlüsselten Allsky-Originalstände, Sicherung/Wiederherstellung und Versionssperre in lokalen Tests. Native Windows- und Raspberry-Hardwaretests stehen aus.
+
+
+Witty Add-on 0.6.62 – 09.10.2026
+=================================
+
+- Die Homepage unterscheidet jetzt empfangene GPS-Daten ohne Positionsfix, einen gültigen Positionsfix und ausbleibende GPS-Daten. Satelliten aus GPSD-SKY werden mit tatsächlicher Zahl der verwendeten und sichtbaren Satelliten angezeigt, auch ohne Positionsfix.
+- GPS-Status verarbeitet SKY und TPV gemeinsam. VERSION/WATCH-Meldungen gelten nicht als Empfängerdaten. Ohne gültige Zeit und Position werden keine Koordinaten oder synchronisierbare GPS-Zeit ausgegeben.
+- Installierte Witty-Pi-4-Herstellersoftware wird anhand des vollständigen Herstellerverzeichnisses erkannt und als Witty Pi 4 angezeigt, auch bei unbekannter Versionsnummer. Die Auswahl Witty Pi 4 hat bei parallel vorhandenen WP5-Dateien Vorrang. Hardwaremodell und Herstellersoftwaremodell werden getrennt; WP5-Updatehinweise erscheinen nicht für Pi-4-Software.
+- Windows-Status meldet die Installation der Herstellersoftware getrennt vom Add-on-Webdienst. WP5 wird auch an bekannten Installationsorten außerhalb von PATH erkannt. Eine unbekannte Paketversion bedeutet nicht mehr fehlende Installation.
+- Vollständige NMEA-Weiterleitung aus 0.6.61 bleibt enthalten: Satellitenzahl, HDOP und weitere Originalfelder werden nicht durch selbst erzeugte Sätze ersetzt. USB-GPSD bleibt im Nur-Lese-Modus ohne zusätzliche USB-Treiber.
+
+Geprüft: simulierte GPSD-Verbindungen mit SKY vor/nach TPV, fehlendem Fix, ausbleibenden Daten, sieben verwendeten Satelliten, Nullkoordinaten, Nullsatelliten und ungültigen Zeitwerten; vollständige Homepage-JavaScript-Syntax; WP5 außerhalb von PATH ohne Debian-Paketversion; Bridge-Wiederverbindung und vollständige NMEA-Felder; simulierte Neuinstallationen Pi 4/Pi 5. Kein physischer Raspberry-Pi-Test. Der bislang fehlende USB-Eingangsstrom bei Papa ist damit noch nicht als behoben nachgewiesen.
+
+
 Witty Add-on 0.6.61 – 08.10.2026
 =================================
 
@@ -11,6 +35,7 @@ Witty Add-on 0.6.61 – 08.10.2026
 
 Prüfung: simulierte GPSD-Verbindungen mit vollständigen GGA/GSV/RMC-Sätzen, sieben Satelliten, HDOP 1.41, ungültigen Prüfsummen, JSON, Binärdaten, Hex-Dumps, fehlendem Fix und Wiederverbindung bestanden. Pi-4/Pi-5-Installationskonfigurationen ohne Empfänger, Paketmanagerfehler und Standarddiagnose bestanden. WURB-Patch auf aktuellem Upstream-Quelltext sowie Migration der alten Satelliten-Ausnahme geprüft. Verschlüsseltes Paket entschlüsselt und mit ZIP verglichen. Physischer Raspberry-Pi-Test ausstehend; fehlender GPSD-Datenstrom ist durch diese Tests nicht abschließend erklärt.
 
+
 Witty Add-on 0.6.60 – 08.10.2026
 =================================
 
@@ -22,6 +47,7 @@ Witty Add-on 0.6.60 – 08.10.2026
 - Keine zusätzlichen Treiber, keine neue GPS-Betriebsart und keine automatische Umkonfiguration des Empfängers. Original-NMEA-Durchleitung der bestehenden Bridge bleibt eine getrennte offene Aufgabe.
 
 Prüfung: Bash-Syntax und bestehende Standarddiagnose für Pi 4/Pi 5 bestanden. Direkter Test auf echten Test-PTYs mit NMEA, Binärdaten und leerem Datenstrom einschließlich wiederhergestellter Terminaleinstellungen bestanden. Dienstwiederherstellung bei erfolgreichem Test, belegtem Port und Stop-Fehler simuliert und bestanden. Physischer Raspberry-Pi-Test ausstehend.
+
 
 Witty Add-on 0.6.59 – 08.10.2026
 =================================
@@ -36,6 +62,33 @@ Witty Add-on 0.6.59 – 08.10.2026
 
 Prüfung: Paket-/Verschlüsselungsabgleich, Bash-Syntax, isolierte Diagnose für Pi 4/Pi 5, Paketmanagerfehler, GPS-Konfiguration und simulierte GPSD-Wiederverbindung bestanden. Physischer Raspberry-Pi-Laufzeittest ausstehend. Die Brücke erzeugt weiterhin eigene GPGGA/GPRMC-Sätze; unveränderte Original-NMEA-Durchleitung ist mit diesem Diagnoserelease nicht implementiert. Papas anderes Mausmodell und seine aktuelle Fehlerursache bleiben anhand der neuen Diagnose zu prüfen.
 
+
+Witty Add-on 0.6.58 – 07.10.2026
+=================================
+
+- USB-GPS verwendet die normale Treibererkennung von Raspberry Pi OS. Das pauschale Nachladen von usbserial, cdc_acm, pl2303, cp210x, ch341 und ftdi_sio entfällt.
+- Kein globales erneutes Auslösen von USB-Add-Ereignissen zur GPS-Reparatur. Nur die eigenen Regeln werden neu geladen; die gerätespezifische Bindung bleibt erhalten.
+- kmod wird nicht mehr zusätzlich als GPS-Voraussetzung in der Basisinstallation angefordert. Vorhandene Systemtreiber und Systempakete werden nicht entfernt.
+- Die USB-Maus wird nicht auf u-blox beschränkt. Ein angeschlossener USB-Seriellempfänger kann weiterhin über seine tatsächliche USB-Kennung gebunden werden. Ohne angeschlossene Maus bestehen bisher eigene vorbereitete Regeln für die bekannten u-blox-Geräte und die mitgelieferte GPSD-Erkennung; Papas anderes Modell muss noch identifiziert und geprüft werden.
+- Änderungen aus 0.6.57 bleiben enthalten: GPSD-Wiederverbindung bei stabiler virtueller Schnittstelle, geprüfte Pakettransaktion bei frischer SD-Installation und vorbereitete USB-Hotplug-Einrichtung.
+
+Teststand: Isolierte GPS-Konfiguration Pi 5 USB/Waveshare, Pi 4 USB und Kein GPS ohne modprobe-Aufruf geprüft. Paketfehler/Timeouts und GPSD-Wiederverbindung geprüft. Echte USB-Maus, Papas Modell und frische physische SD-Installation ausstehend. Nicht nach GitHub veröffentlicht.
+
+
+Witty Add-on 0.6.57 – 07.10.2026
+=================================
+
+- USB-GPS auf Raspberry Pi 5: Eigene Hotplug-Regel für bekannte u-blox-Mäuse 1546:01a6/01a7/01a8 wird auch ohne angeschlossenen Empfänger vor der Geräteerkennung vorbereitet. Die Maus darf nach der Installation eingesteckt werden.
+- Die GPSD-zu-WURB-Datenbrücke verbindet sich nach einem Verbindungsabbruch im selben Prozess neu. Die virtuelle serielle Schnittstelle bleibt erhalten; alte Satellitenwerte werden pro neuer Verbindung verworfen.
+- GPSD-Neustarts stoppen die Datenbrücke nicht mehr über eine Requires-Abhängigkeit. Die anfängliche Einrichtung und der spätere GPS-Manager verwenden denselben Diensttyp.
+- Frische SD-Installation: Die erste Linux-Paketinstallation wartet auf APT-Sperren und bricht bei Paketlisten-, dpkg- oder Installationsfehlern mit dem Rückgabecode ab, bevor GPS-/WURB-Einrichtung weiterläuft.
+- Unvollständige Paketverarbeitung wird vor der Basisinstallation geprüft und abgeschlossen. Die große Grundinstallation erhält bis zu 30 Minuten; zusätzliche Einzelpakete behalten ihre eigenen kürzeren Zeitgrenzen.
+- jq, curl und die übrigen benötigten Voraussetzungen sind Bestandteil der geprüften Grundinstallation. Der GPS-Manager ergänzt auch jq, falls GPS-Werkzeuge fehlen, und prüft den Erfolg.
+- Die Witty-Pi-5-Einrichtung wiederholt die bereits erfolgreiche allgemeine Paketinstallation nicht mehr über ungesicherte APT-Aufrufe.
+
+Teststand: GPS-Wiederverbindung, Paketfehler/Timeouts und isolierte GPS-Konfiguration für Pi 5 USB/Waveshare, Pi 4 USB und Kein GPS geprüft. Frische physische SD-Installation und USB-Maus-Hardwaretest ausstehend. Nicht nach GitHub veröffentlicht.
+
+
 Witty Add-on 0.6.56 – 07.10.2026
 =================================
 
@@ -47,6 +100,7 @@ Witty Add-on 0.6.56 – 07.10.2026
 - APT-Signaturfehler bleiben ein Fehler und nennen die aktuelle Systemzeit sowie den Rückgabecode. Die Signaturprüfung wird nicht umgangen.
 
 Prüfung mit simuliertem GPS-Stream und Paketmanager. Hardware-Laufzeittest auf Raspberry Pi ausstehend.
+
 
 Witty Add-on 0.6.55 – 06.10.2026
 =================================
