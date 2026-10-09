@@ -1,9 +1,9 @@
-# Allsky-Versionen für Basisinstallation in Raspi-Scripte 0.7.0
+# Allsky-Quellen im Basisinstaller 0.7.0
 
-v2024.12.06_06 und v2026.10.01 werden im Windows-Basisinstaller ausgewählt. Beide vollständigen Original-Git-Stände sind RSPKG001-verschlüsselt. Versionskatalog und Installer prüfen SHA-256 und Original-Commit.
+Auswahl: **v2024.12.06_06**, **v2026.10.01** oder **aktuelle Version direkt vom Hersteller-GitHub**. Alle Quellen erhalten die gemeinsamen Witty-, Kamera- und Trixie-Anpassungen.
 
-Die aktuelle Version ist wegen der GitHub-Dateigrößenbegrenzung in mehrere verschlüsselte Archivteile aufgeteilt. Zusammensetzen und Entschlüsseln übernimmt der Installer.
+Die beiden fest archivierten Versionen enthalten ihre vollständigen Original-Git-Stände einschließlich Sunwait und Zusatzmodulen. RSPKG001-Verschlüsselung, SHA-256-Prüfungen und Original-Commit-Prüfung sichern die Installation aus diesem Repository. Der Installer setzt die Archivteile automatisch zusammen. Diese beiden Quellen benötigen das ursprüngliche Allsky-GitHub nicht; Betriebssystem- und Python-Paketquellen bleiben erforderlich.
 
-Backups dürfen ausschließlich auf denselben Allsky-Release und Git-Stand zurückgespielt werden. Abweichende Versionen und ältere Backups ohne Versionsangabe werden vor Änderungen abgewiesen. Das gilt in Windows, auf der Witty-Webseite und bei automatischer Wiederherstellung.
+Die optionale direkte Quelle klont den aktuellen Standardbranch samt Submodulen vom Hersteller-GitHub. Sie wird beim Installieren aufgelöst. Die gewählte Quelle bleibt bei Softwareupdates erhalten.
 
-Sunwait und die Zusatzmodule werden ebenfalls aus dem verschlüsselten Support-Archiv dieses Repositorys installiert. Beide Allsky-Stände einschließlich dieser Git-Abhängigkeiten wurden mit lokal gesperrtem HTTPS vorbereitet und geprüft. Raspberry-Pi-OS- und Python-Paketquellen bleiben erforderlich. Physische Raspberry-Pi-Tests stehen aus.
+Allsky-Backups werden ausschließlich auf denselben Release und Git-Stand zurückgespielt. Abweichende Softwarestände und alte Backups ohne Versionsangabe werden vor Änderungen mit Anzeige der Versionen abgewiesen – im Windows-Programm, auf der Webpage und bei automatischer Wiederherstellung.
