@@ -46,3 +46,7 @@ Entschlüsselung, ZIP-Prüfung, beide Allsky-Originalstände und Windows-x64-Kom
 Neue Sicherungen speichern die Allsky-Version und den Original-Git-Stand. Wiederherstellung ist nur auf exakt denselben Softwarestand möglich. Bei Abweichung werden beide Versionen beziehungsweise Git-Stände angezeigt und vor Dateiänderungen oder Dienststopps abgebrochen. Alte Backups ohne Versionsangabe werden als Version unbekannt abgelehnt. Das gilt in Windows, auf der Witty-Webseite und für automatische Wiederherstellungen nach Updates. Nach einem Allsky-Versionswechsel eine neue Sicherung erstellen; ein Backup der vorherigen Version kann erst auf deren gleichem Stand wiederhergestellt werden.
 
 Standalone-Allsky: Sunwait und die Zusatzmodule sind ebenfalls als verschlüsseltes Zusatzpaket im eigenen Repository enthalten. Der Installer verwendet lokale Git-Quellen; Raspberry-Pi-OS- und Python-Paketquellen bleiben erforderlich.
+
+Die dritte Allsky-Quelle „Aktuelle Version direkt vom Allsky-GitHub“ lädt den beim Installieren aktuellen Standardzweig einschließlich Sunwait. Sie benötigt das Hersteller-GitHub; die zwei verschlüsselten Archive bleiben davon unabhängig. Alle Quellen durchlaufen dieselben Kamera-, Trixie-, Navigations- und Erststart-Anpassungen. Die Softwareverwaltung behält die gewählte Quelle bei.
+
+GPS auf Pi 5: Beim Abziehen oder Verlust des Fixes schaltet WURB auf die unter „Default position“ gespeicherte manuelle Position zurück. Bei erneutem gültigem Fix übernimmt WURB automatisch GPS und die echte Satellitenzahl. Die manuelle Position bleibt gespeichert.

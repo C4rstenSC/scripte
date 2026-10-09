@@ -2,7 +2,7 @@ Raspi-Scripte 0.7.0 – 09.10.2026
 
 ZIP vollständig entpacken und START.cmd starten. Danach normal über den Update-Knopf aktualisieren.
 Enthält sämtliche Windows- und GPS-Änderungen bis 0.6.47 / Witty 0.6.62 sowie Allsky-Versionsauswahl und versionsgebundene Allsky-Sicherung/Wiederherstellung in 0.7.0.
-Allsky v2024.12.06_06 und v2026.10.01 kommen verschlüsselt vom eigenen GitHub. Backups dürfen ausschließlich auf denselben Allsky-Softwarestand zurückgespielt werden; alte Backups ohne Versionsangabe werden abgewiesen.
+Allsky v2024.12.06_06 und v2026.10.01 kommen verschlüsselt vom eigenen GitHub. Alternativ ist die aktuelle Version direkt vom Allsky-GitHub wählbar; gemeinsame Anpassungen gelten für alle Quellen. Backups dürfen ausschließlich auf denselben Allsky-Softwarestand zurückgespielt werden; alte Backups ohne Versionsangabe werden abgewiesen.
 Bedienungsanleitungen sind in Deutsch und Englisch enthalten; Release Notes sind deutsch.
 Keine Entwickler-Vollversion und keine eingebettete .NET-Laufzeit. START.cmd richtet die .NET-Desktop-Laufzeit bei Bedarf ein.
 Native Windows- und Raspberry-Hardwaretests stehen aus. Neue Hauptprogrammdateien sind unsigniert.
