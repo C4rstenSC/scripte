@@ -8,3 +8,5 @@ Witty Add-on 0.7.0 – 09.10.2026
 - Vollständige deutsche Witty-Release-Historie und aktualisierte Bedienungsanleitungen werden mit Windows 0.7.0 ausgeliefert.
 
 Prüfung: Windows-x64-Build, Paketverschlüsselung, beide entschlüsselten Allsky-Originalstände, Sicherung/Wiederherstellung und Versionssperre in lokalen Tests. Native Windows- und Raspberry-Hardwaretests stehen aus.
+
+Standalone-Allsky: Sunwait und die Zusatzmodule sind ebenfalls als verschlüsseltes Zusatzpaket im eigenen Repository enthalten. Der Installer verwendet lokale Git-Quellen; Raspberry-Pi-OS- und Python-Paketquellen bleiben erforderlich.
