@@ -1,11 +1,11 @@
-# Raspi-Scripte 0.6.45
+# Raspi-Scripte 0.7.0
 
-Release: 07.10.2026 · Windows und Inhalt: 0.6.45 · Witty Add-on: 0.6.55
+Windows und Witty Add-on: 0.7.0, 09.10.2026.
 
-- Installation und Update oberhalb des Raspberry-Pi-Status, Inhalte nur bei Verbindung sichtbar.
-- Terminal-Klappbutton links, GPS-Anzeige mit einer Ampel, Witty-Herstellerstatus mit mittiger Beschriftung.
-- Lokales Witty-Update und separater Paketdownload entfernt; Witty Addon Software update lädt und installiert direkt.
-- GPS-Hintergrundabfragen blockieren die Witty-Hardware nicht mehr; schnelle Statusabfrage für alle Hardwarevarianten.
-- Genauere Diagnose und längere Wartezeit bei hwclock-Paketinstallation.
+Das modulare Windows-Update lädt die verschlüsselten Pakete über modular-update-manifest.json. Es enthält die GPS-Änderungen, aktualisierte Bedienungsanleitungen und Release Notes sowie die Auswahl der vollständigen Allsky-Versionen v2024.12.06_06 und v2026.10.01 aus diesem Repository. Die Allsky-Quelldateien benötigen das ursprüngliche Allsky-GitHub bei der Basisinstallation nicht. Raspberry-Pi-OS-Paketquellen bleiben erforderlich.
 
-Die drei verschlüsselten Updatepakete werden gemeinsam mit einem passenden Manifest veröffentlicht.
+Allsky-Backups werden nur auf dieselbe Version und denselben Git-Stand zurückgespielt. Abweichungen und alte Backups ohne Versionsangabe werden vor Änderungen mit einer Fehlermeldung abgewiesen.
+
+Ältere einzelne Windows-EXE-Versionen benötigen einmalig den Umstieg auf das kleine modulare ZIP mit START.cmd. Der alte Einzel-EXE-Updatekanal bleibt auf 0.6.45.
+
+Build, Paketprüfsummen, Entschlüsselung und lokale Sicherungs-/Wiederherstellungstests bestanden. Windows- und Raspberry-Hardwaretests stehen aus.

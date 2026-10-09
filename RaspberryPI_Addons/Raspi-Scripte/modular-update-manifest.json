@@ -1,9 +1,9 @@
 {
   "schema": 1,
-  "version": "0.6.46",
-  "contentVersion": "0.6.46",
+  "version": "0.7.0",
+  "contentVersion": "0.7.0",
   "fullPackage": "Raspi-Scripte-Programm.zip",
-  "fullSha256": "1899f9a1fa4ada34ae8f5fa9fde5768a3f7bf2da2d8c4486e2ac57486ac69d6c",
+  "fullSha256": "e82007900e67d4fe26e3565621621d1f6c83113dc0df96f2b814c97c14ab4e9a",
   "contentPackage": "Raspi-Scripte-Modular-Content.zip",
-  "contentSha256": "423f2df0942db56ddf722d3a5535d267427b5fd973e41fc65b1f62a77f387713"
+  "contentSha256": "ba56d098c057a59f641021c32ac0f9c298dff8ec94d48c6d212c888fc4539362"
 }

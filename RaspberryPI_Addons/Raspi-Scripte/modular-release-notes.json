@@ -1,22 +1,26 @@
 {
-  "version": "0.6.46",
-  "date": "2026-10-07",
+  "version": "0.7.0",
+  "date": "2026-10-09",
   "de": [
-    "Programmcode und Windows-Oberflaeche liegen in kleinen DLL-Dateien; die EXE startet das Programm nur noch.",
-    "Der Update-Knopf laedt das kleine Programmpaket mit allen Funktionsaenderungen. Die grosse .NET-Laufzeit wird nicht mehr in jedem Update mitgeliefert.",
-    "Hilfe, Texte, Darstellung, Versionsanzeige und Witty Add-on bleiben separat im Inhaltspaket aktualisierbar.",
-    "Einmalige Umstellung: ZIP in einen eigenen Ordner entpacken und START.cmd ausfuehren. Eine fehlende Microsoft .NET 8 Desktop Runtime wird dabei geprueft und installiert.",
-    "Witty Add-on 0.6.56: GPS-Anzeige startet parallel und übernimmt den ersten vollständigen Live-Fix ohne gepufferte Pipeline. Bereits angezeigte Positionen bleiben bei schnellen Statusabfragen erhalten.",
-    "GPS-Ampel links neben der Zeilenüberschrift; Auswahl- und Deinstallationsbuttons mit ungefähr 2 cm Abstand nach rechts verschoben.",
-    "hwclock wird nur bei aktiver interner Pi-5-RTC nachinstalliert. Zusätzliche Linux-Pakete werden nur bei fehlender Voraussetzung angefordert; Paketfehler nennen Rückgabecode und Systemzeit."
+    "Basisinstaller: Allsky v2024.12.06_06 oder v2026.10.01 auswählen; beide Versionen werden als geprüftes verschlüsseltes Archiv vom eigenen GitHub geladen.",
+    "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
+    "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
+    "Installierte Witty-Pi-4-Herstellersoftware wird korrekt als Witty Pi 4 angezeigt, auch bei unbekannter Version oder übrig gebliebenen WP5-Dateien.",
+    "WP5-Herstellersoftware wird unabhängig vom Add-on-Webdienst erkannt; vorhandene Software erscheint grün.",
+    "WP5 wird auch außerhalb von PATH erkannt. Eine unbekannte Paketversion wird nicht als fehlende Installation oder verfügbares Update gewertet.",
+    "Witty Add-on 0.7.0: Homepage zeigt GPS-Daten ohne Fix und die tatsächlichen Satellitenzahlen. Vollständige NMEA-Weiterleitung aus 0.6.61 ist enthalten.",
+    "Kleines Windows-Update mit neu kompiliertem Programmcode. Raspberry-Pi-Hardwaretest und Windows-Starttest stehen noch aus. Neue Hauptprogrammdateien sind unsigniert.",
+    "Bedienungsanleitungen aktualisiert: kleine Windows-Updates, Migration älterer Einzel-EXE-Stände, GPS-/RTC-Diagnose, Herstelleranzeige, Sicherung und Allsky-Versionsauswahl. Die vollständige deutsche Witty-Historie ist auch offline verfügbar."
   ],
   "en-AU": [
-    "Programmcode und Windows-Oberflaeche liegen in kleinen DLL-Dateien; die EXE startet das Programm nur noch.",
-    "Der Update-Knopf laedt das kleine Programmpaket mit allen Funktionsaenderungen. Die grosse .NET-Laufzeit wird nicht mehr in jedem Update mitgeliefert.",
-    "Hilfe, Texte, Darstellung, Versionsanzeige und Witty Add-on bleiben separat im Inhaltspaket aktualisierbar.",
-    "Einmalige Umstellung: ZIP in einen eigenen Ordner entpacken und START.cmd ausfuehren. Eine fehlende Microsoft .NET 8 Desktop Runtime wird dabei geprueft und installiert.",
-    "Witty Add-on 0.6.56: GPS-Anzeige startet parallel und übernimmt den ersten vollständigen Live-Fix ohne gepufferte Pipeline. Bereits angezeigte Positionen bleiben bei schnellen Statusabfragen erhalten.",
-    "GPS-Ampel links neben der Zeilenüberschrift; Auswahl- und Deinstallationsbuttons mit ungefähr 2 cm Abstand nach rechts verschoben.",
-    "hwclock wird nur bei aktiver interner Pi-5-RTC nachinstalliert. Zusätzliche Linux-Pakete werden nur bei fehlender Voraussetzung angefordert; Paketfehler nennen Rückgabecode und Systemzeit."
+    "Basisinstaller: Allsky v2024.12.06_06 oder v2026.10.01 auswählen; beide Versionen werden als geprüftes verschlüsseltes Archiv vom eigenen GitHub geladen.",
+    "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
+    "Allsky-Backups speichern Version und Git-Stand. Windows, Webpage und automatische Wiederherstellung erlauben nur identische Softwarestände; Fehler zeigen die Versionen. Alte Sicherungen ohne Versionsangabe werden abgewiesen.",
+    "Installierte Witty-Pi-4-Herstellersoftware wird korrekt als Witty Pi 4 angezeigt, auch bei unbekannter Version oder übrig gebliebenen WP5-Dateien.",
+    "WP5-Herstellersoftware wird unabhängig vom Add-on-Webdienst erkannt; vorhandene Software erscheint grün.",
+    "WP5 wird auch außerhalb von PATH erkannt. Eine unbekannte Paketversion wird nicht als fehlende Installation oder verfügbares Update gewertet.",
+    "Witty Add-on 0.7.0: Homepage zeigt GPS-Daten ohne Fix und die tatsächlichen Satellitenzahlen. Vollständige NMEA-Weiterleitung aus 0.6.61 ist enthalten.",
+    "Kleines Windows-Update mit neu kompiliertem Programmcode. Raspberry-Pi-Hardwaretest und Windows-Starttest stehen noch aus. Neue Hauptprogrammdateien sind unsigniert.",
+    "Bedienungsanleitungen aktualisiert: kleine Windows-Updates, Migration älterer Einzel-EXE-Stände, GPS-/RTC-Diagnose, Herstelleranzeige, Sicherung und Allsky-Versionsauswahl. Die vollständige deutsche Witty-Historie ist auch offline verfügbar."
   ]
 }
