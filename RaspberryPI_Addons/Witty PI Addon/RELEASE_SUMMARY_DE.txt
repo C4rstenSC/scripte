@@ -9,6 +9,8 @@ Witty Add-on 0.7.0 – 09.10.2026
 
 Prüfung: Windows-x64-Build, Paketverschlüsselung, beide entschlüsselten Allsky-Originalstände, Sicherung/Wiederherstellung und Versionssperre in lokalen Tests. Native Windows- und Raspberry-Hardwaretests stehen aus.
 
+Standalone-Allsky: Sunwait und die Zusatzmodule sind ebenfalls als verschlüsseltes Zusatzpaket im eigenen Repository enthalten. Der Installer verwendet lokale Git-Quellen; Raspberry-Pi-OS- und Python-Paketquellen bleiben erforderlich.
+
 
 Witty Add-on 0.6.62 – 09.10.2026
 =================================
