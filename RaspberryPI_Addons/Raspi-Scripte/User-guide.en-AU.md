@@ -38,3 +38,15 @@ Standalone Allsky: Sunwait and additional modules are also included in an encryp
 The third Allsky source downloads the latest default branch directly from Allsky GitHub, including Sunwait. It requires upstream availability; the two encrypted archives remain independent. All sources receive the same camera, Trixie, navigation and first-boot adjustments. Software updates retain the selected source.
 
 Pi 5 GPS: loss of the receiver or fix makes WURB use its saved Default position. A new valid fix automatically restores live GPS coordinates and the real satellite count. The manual position stays saved.
+
+## Micro SD card options and hostname
+
+The red framed group below installation/update contains a green indicator for expanded partitions, red for shrunk partitions and grey for an unknown or unsupported layout. Both partition actions require Yes/No confirmation.
+
+Shrink prepares a verified RAM maintenance image and reboots once. All services stop during this maintenance reboot. The unmounted ext4 filesystem is shrunk first, then the root partition, retaining 512 MiB free space. The Pi powers off afterwards. Do not remove power during maintenance. The boot partition stores the log and original partition table (`witty-sd-result.txt`, `witty-sd-partitions.before`). Normal boot configuration is restored before changes. Only a standard Micro SD with exactly a FAT boot partition and a final ext4 root partition is supported. USB/NVMe/LVM/encrypted root systems are rejected. The installed tools from `initramfs-tools`, `e2fsprogs`, `util-linux` and `fdisk` are required; missing tools stop preparation before changes. Have a current backup.
+
+Expand uses the same `raspi-config` method as the base installer and reboots the Pi. Reconnect to read the actual partition state.
+
+Adjust settings displays the current hostname beside the new hostname field. Apply changes updates hostname and existing managed hotspot SSIDs: WURB `wifi4bats-<hostname>`, Allsky `allskywifi-<hostname>`, otherwise `wifi-<hostname>`. The wireless password and other network settings remain unchanged. Active hotspots adopt the name after a short delay; wireless/SSH may disconnect briefly. Cancel makes no changes.
+
+The actually active GPS receiver is highlighted light green independently of the selection for a future installation.

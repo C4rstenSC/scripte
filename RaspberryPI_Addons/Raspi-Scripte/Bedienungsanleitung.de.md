@@ -50,3 +50,15 @@ Standalone-Allsky: Sunwait und die Zusatzmodule sind ebenfalls als verschlüssel
 Die dritte Allsky-Quelle „Aktuelle Version direkt vom Allsky-GitHub“ lädt den beim Installieren aktuellen Standardzweig einschließlich Sunwait. Sie benötigt das Hersteller-GitHub; die zwei verschlüsselten Archive bleiben davon unabhängig. Alle Quellen durchlaufen dieselben Kamera-, Trixie-, Navigations- und Erststart-Anpassungen. Die Softwareverwaltung behält die gewählte Quelle bei.
 
 GPS auf Pi 5: Beim Abziehen oder Verlust des Fixes schaltet WURB auf die unter „Default position“ gespeicherte manuelle Position zurück. Bei erneutem gültigem Fix übernimmt WURB automatisch GPS und die echte Satellitenzahl. Die manuelle Position bleibt gespeichert.
+
+## Micro SD Karten Optionen und Hostname
+
+Der rot umrahmte Bereich befindet sich unter den beiden Installations-/Updatebuttons. Die Ampel zeigt Grün für expandierte und Rot für geschrumpfte Partitionen; Grau bedeutet unbekannt oder nicht unterstützte Aufteilung. Der Text erklärt den Status. Die Buttons stehen in Flucht mit den Status-Aktionsbuttons.
+
+„Partitionen schrumpfen“ fragt Ja/Nein. Ja bereitet ein geprüftes RAM-Wartungsimage vor und startet den Pi einmal in diesen Wartungsmodus. Der Neustart beendet Witty Add-on, GPS, Herstellersoftware, WURB, WIRC und Allsky. Das nicht eingehängte ext4-Dateisystem wird zuerst verkleinert, anschließend die Root-Partition; 512 MiB freier Platz bleiben erhalten. Danach fährt der Pi herunter. Währenddessen nicht stromlos machen. Protokoll und ursprüngliche Partitionstabelle liegen auf der Bootpartition (`witty-sd-result.txt`, `witty-sd-partitions.before`). Normale Bootkonfiguration wird vor Änderungen wiederhergestellt. Nur Standard-Micro-SD mit genau FAT-Boot und letzter ext4-Root-Partition wird unterstützt; USB/NVMe/LVM/verschlüsselte Root-Systeme werden abgewiesen. `initramfs-tools`, `e2fsprogs`, `util-linux` und `fdisk` müssen vorhanden sein; fehlende Werkzeuge führen zu einer Fehlermeldung vor Änderungen. Eine aktuelle Sicherung sollte vorhanden sein.
+
+„Partitionen expandieren“ fragt Ja/Nein, erweitert per `raspi-config` wie der Basisinstaller und startet den Pi neu. Nach dem erneuten Verbinden zeigt die Ampel den tatsächlichen Zustand.
+
+„Einstellungen anpassen“ zeigt den aktuellen Hostnamen neben dem Eingabefeld. „Änderungen übernehmen“ setzt Hostname und bestehende verwaltete Hotspots: WURB `wifi4bats-<Hostname>`, Allsky `allskywifi-<Hostname>`, sonst `wifi-<Hostname>`. WLAN-Passwort und übrige Netzwerkdaten bleiben erhalten. Ein aktiver Hotspot übernimmt den Namen verzögert; WLAN/SSH können kurz abbrechen. „Abbruch“ verändert nichts.
+
+Im GPS-Bereich ist der tatsächlich aktive Empfänger hellgrün hinterlegt, unabhängig von der Auswahl für eine künftige Installation.
