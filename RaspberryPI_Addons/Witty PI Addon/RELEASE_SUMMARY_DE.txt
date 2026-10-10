@@ -1,17 +1,19 @@
 Witty Add-on 0.7.4 – Build 2 – 10.10.2026
 
+- Allsky-Speicherort: Bei Allsky 2024 wird automatisch die bisherige Methode verwendet, bei Allsky ab 2026 die neue Konfiguration. USB-Stick und SD-Karte können über Allsky-Setup ausgewählt werden.
+- Beim Wechsel werden der von Allsky verwendete Bildpfad und die Web-Konfiguration angepasst. Die bestehenden Trixie-/PHP-FPM-Anpassungen bleiben erhalten.
+- Datensicherung und Wiederherstellung über Webseite und Windows-Programm berücksichtigen den Speicherpfad und die Benutzereinstellungen. Bei Allsky 2026 wird die passende Web-Konfiguration nach dem Wiederherstellen neu erzeugt; veraltete Pfaddaten werden korrigiert.
+- Konfigurationssicherungen enthalten keine aufgenommenen Bilder. Das Wiederherstellen verändert vorhandene Aufnahmen nicht. Eine Wiederherstellung ist nur auf demselben Allsky-Softwarestand möglich; abweichende Versionen oder Builds werden angezeigt und abgewiesen.
+- USB/SD-Wechsel, Kopieren, Verschieben, Belassen der Aufnahmen sowie Rückrollen bei Fehlern mit den Originalskripten geprüft. Backup-Erstellung und Upload/Wiederherstellung über die gemeinsamen Web-Schnittstellen ebenfalls geprüft; Hardware-Dienste wurden in den Tests simuliert.
+- Die Webseite zeigt die zur installierten Allsky-Version passende Speicherort-Methode auf Deutsch und Englisch.
+- Für diese Änderungen genügt das Witty-Addon-Update. Das Windows-Programm nutzt dieselben Backup-Schnittstellen und benötigt kein neues Programm-Update.
+
+Bisherige Änderungen aus 0.7.4 bleiben enthalten:
 - Hintergrund-GPS-Abfragen sperren den Ladebutton in Allsky-Setup nicht mehr. Ein Klick nutzt eine laufende Abfrage mit und wartet auf deren Ergebnis.
 - Kurze GPS-Aussetzer lassen den Button nicht flackern. Ausblenden erst nach drei aufeinanderfolgenden Fehlabfragen und mindestens 15 Sekunden seit dem letzten gültigen Fix; deaktiviertes GPS wirkt sofort.
 - Koordinaten werden ausschließlich aus einer aktuellen gültigen Antwort übernommen. Ohne aktuellen Fix erscheint ein Hinweis; bereits eingetragene Koordinaten bleiben erhalten.
 - Alle Änderungen aus 0.7.3 Build 3 bleiben enthalten: Allsky-Logo, einheitliche Navigation, Ersteinrichtungshinweise, GPS-Übernahme, kompakte Felder und 0,5-Sekunden-Raster mit freien manuellen Eingaben.
 - Windows-Programm unverändert; nur Witty Add-on aktualisieren.
-
-
-
-- Automatische Auswahl der installierten Allsky-Methode: 2024 nutzt die bisherige PHP-Konfiguration; ab 2026 wird variables.json mit dem offiziellen Generator neu erstellt und der Web-Bildalias angepasst. Trixie/PHP-FPM bleibt erhalten.
-- USB/SD-Wechsel, Verschieben/Kopieren/Belassen und Rückrollen bei Fehlern geprüft. Wiederherstellung aktualisiert auch veraltete 2026-Pfaddaten; Softwarestandprüfung bleibt erhalten.
-- Webseite zeigt die zur Allsky-Version passende Speicher-Konfiguration auf Deutsch und Englisch.
-- Backup und Wiederherstellung über Webseite und Windows verwenden dieselben geprüften Schnittstellen: Speicherpfad und Benutzereinstellungen werden gesichert; die passende Web-Konfiguration wird nach Wiederherstellung erzeugt. Aufnahmen bleiben unberührt; Wiederherstellung erfordert denselben Allsky-Softwarestand.
 
 
 Witty Add-on 0.6.62 – 09.10.2026
