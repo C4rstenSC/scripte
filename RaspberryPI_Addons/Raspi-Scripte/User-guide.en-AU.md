@@ -81,3 +81,5 @@ After downloading, package progress also shows preparation, unpacking, configura
 Allsky archives use bounded-memory streaming decryption and checksum verification. Visible progress for archive parts, decryption, SD write completion, extraction and Git validation. Authentication remains mandatory; invalid packages never replace existing files.
 
 Installation progress detects Ctrl+C, KeyboardInterrupt, errors, a returned shell prompt and completion codes. Cancellation stops progress, turns it red and removes stale package messages. Allsky archive progress is displayed above the terminal. Connection text stays white in all states with a larger font; GPS radio controls are vertically centred.
+
+Individual Allsky installation checks that the backend update script exists and launches it explicitly with Bash. ZIP packages without an executable bit are supported. Error dialogs include the actual backend output as well as the exit code.

@@ -97,3 +97,5 @@ Paketfortschritt zeigt nach dem Download auch Vorbereitung, Entpacken, Konfiguri
 Allsky-Archive werden blockweise mit geringem Speicherbedarf entschlüsselt und per Streaming geprüft. Sichtbare Meldungen für Archivteile, Entschlüsselung, SD-Schreibabschluss, Entpacken und Git-Prüfung. Authentizitätsprüfung bleibt verpflichtend; fehlerhafte Pakete ersetzen keine vorhandenen Dateien.
 
 Installationsanzeige erkennt Strg+C, KeyboardInterrupt, Fehler, Rückkehr zum Shell-Prompt und Abschlusscode. Bei Abbruch stoppt der Fortschritt und wird rot; alte Paketmeldungen werden entfernt. Allsky-Archivfortschritt erscheint auch in der Statuszeile. Verbindungstext bleibt in allen Zuständen weiß und ist eine Schriftgröße größer; GPS-Auswahl ist vertikal mittig ausgerichtet.
+
+Allsky-Einzelinstallation: Windows prüft das Backend-Updateskript als vorhandene Datei und startet es ausdrücklich mit Bash. Das Update funktioniert dadurch auch bei ZIP-Dateien ohne Ausführungsrecht. Fehlermeldungen zeigen die tatsächliche Backend-Ausgabe zusätzlich zum Exit-Code.
