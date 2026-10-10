@@ -1,6 +1,6 @@
 # Witty Add-on 0.7.1
 
-Build: 20261010.5 – 10.10.2026
+Build: 20261010.7 – 10.10.2026
 
 Witty Add-on 0.7.1 – 10.10.2026
 
@@ -23,3 +23,9 @@ Build 20261010.4
 
 Build 20261010.5
 - Paketfortschritt zeigt nach dem Download auch Vorbereitung, Entpacken, Konfigurieren und Abschlussarbeiten mit Paketnamen und Zählern. Bereits zwischengespeicherte Pakete werden separat vom Download gezählt. Terminal-Prozessgruppenfehler auch in Witty-Add-on-Voraussetzungen, WURB-/WIRC-Reparatur und Einzelinstallation, GPS-Konfiguration und Witty-Pi-4-Installation korrigiert: äußere und innere zeitbegrenzte Paketaufrufe bleiben im Vordergrund. Fehlendes hwclock auf Pi 5 wird mit den Basispaketen installiert. Automatisches Expandieren bleibt aus der Basisinstallation entfernt; manuelle SD-Funktionen bleiben erhalten.
+
+Build 20261010.6
+- Allsky-Archive werden blockweise mit geringem Speicherbedarf entschlüsselt und per Streaming geprüft. Sichtbare Meldungen für Archivteile, Entschlüsselung, SD-Schreibabschluss, Entpacken und Git-Prüfung. Authentizitätsprüfung bleibt verpflichtend; fehlerhafte Pakete ersetzen keine vorhandenen Dateien.
+
+Build 20261010.7
+- Installationsanzeige erkennt Strg+C, KeyboardInterrupt, Fehler, Rückkehr zum Shell-Prompt und Abschlusscode. Bei Abbruch stoppt der Fortschritt und wird rot; alte Paketmeldungen werden entfernt. Allsky-Archivfortschritt erscheint auch in der Statuszeile. Verbindungstext bleibt in allen Zuständen weiß und ist eine Schriftgröße größer; GPS-Auswahl ist vertikal mittig ausgerichtet.
