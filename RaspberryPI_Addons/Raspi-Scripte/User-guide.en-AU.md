@@ -1,7 +1,7 @@
-# Raspi-Scripte 0.7.0 – User guide (9 October 2026)
+# Raspi-Scripte 0.7.1 – User guide (9 October 2026)
 
 ## Updates
-Use the Windows Update button. The modular program package includes the application DLLs, updater, help and Witty Add-on 0.7.0. Downloads are automatically decrypted and checked against SHA-256 checksums. Connection profiles and an existing activation are retained. Keep the computer and Raspberry Pi powered on until the updater finishes.
+Use the Windows Update button. The modular program package includes the application DLLs, updater, help and Witty Add-on 0.7.1. Downloads are automatically decrypted and checked against SHA-256 checksums. Connection profiles and an existing activation are retained. Keep the computer and Raspberry Pi powered on until the updater finishes.
 
 Program updates use Raspi-Scripte-Programm.zip.enc; content updates use Raspi-Scripte-Modular-Content.zip.enc and modular-update-manifest.json. A content update cannot replace compiled application code. Older single-EXE installations need a one-time migration: extract the complete small ZIP into a writable folder and run START.cmd, which installs the .NET 8 Desktop Runtime if needed. Normal small updates are available afterwards.
 
@@ -65,3 +65,7 @@ Selecting the checkbox caps day/night auto exposure and initial manual exposure 
 Four fields show the actual Allsky manual/starting exposure and maximum automatic exposure for day and night. All inputs use seconds. Separate checkboxes enable or disable day/night automatic exposure. Apply exposure times saves the values to Allsky, reads them back for confirmation and restarts a previously running capture service. A stopped service remains stopped. Startup errors restore the previous settings.
 A GS camera displays a red maximum 15 seconds recommended message, including on the native Allsky homepage. GS defaults cap both automatic maxima at 15 seconds. Location/sun-angle day/night switching and Allsky brightness-based exposure calculation use these limits. Later deliberate changes are permitted within camera capability limits.
 All four exposure values, automatic mode selection and GS profile flag are included in settings.json/options.json configuration backups and restores via the webpage and Windows, including update restores. Backups remain restricted to the exact same Allsky software version and Git revision.
+
+## Paketinstallation / Package installation
+
+Base installation uses the original foreground APT dialogs. Every 20 seconds the terminal reports package process states. Update directly from the latest 0.7.0 build; no intermediate package is needed.

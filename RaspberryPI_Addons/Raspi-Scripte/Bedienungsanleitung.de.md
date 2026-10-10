@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.7.0 – Bedienungsanleitung (09.10.2026)
+# Raspi-Scripte 0.7.1 – Bedienungsanleitung (09.10.2026)
 
 ## Windows-Programm aktualisieren
 Im Programm den Update-Knopf verwenden. Das kleine Programmupdate enthält EXE-Starter, DLLs, Updater, Anleitungen und das aktuelle Witty-Paket. Beim Aktualisieren das Programm und den Raspberry eingeschaltet lassen; der separate Updater startet das Programm anschließend neu. Verbindungsprofile und vorhandene Aktivierung bleiben erhalten.
@@ -81,3 +81,7 @@ Auf „Allsky - Setup“ lässt sich die gleiche GS-Einstellung für die bereits
 Die vier Felder zeigen die tatsächlichen Allsky-Werte für manuelle/Startbelichtung und maximale Autobelichtung, jeweils für Tag und Nacht. Alle Eingaben sind in Sekunden. Separate Haken schalten die automatische Belichtung für Tag und Nacht ein oder aus. „Belichtungszeiten übernehmen“ speichert die Werte in Allsky, liest sie zur Bestätigung zurück und startet einen vorher laufenden Dienst mit diesen Werten neu. Ein gestoppter Dienst bleibt gestoppt. Bei Startfehlern werden die vorherigen Werte wiederhergestellt.
 Bei einer GS-Kamera erscheint der rote Hinweis „Maximal 15 Sekunden Belichtungszeit empfohlen“, auch auf der Allsky-Homepage. Die GS-Voreinstellung begrenzt beide Automatikwerte auf 15 Sekunden. Der standort-/sonnenwinkelabhängige Wechsel zwischen Tag und Nacht und Allskys Helligkeitsregelung verwenden diese Grenzen. Spätere bewusste Änderungen sind möglich, soweit das Kameraprofil sie erlaubt.
 Alle vier Belichtungswerte, die Automatik-Auswahl und die GS-Kennzeichnung werden gemeinsam mit settings.json/options.json gesichert und über Website oder Windows wiederhergestellt. Auch die Update-Wiederherstellung erhält sie. Backups können weiterhin ausschließlich auf denselben Allsky-Softwarestand zurückgespielt werden.
+
+## Paketinstallation / Package installation
+
+Grundinstallation: ursprünglicher direkter APT-/Konsolendialog-Ablauf wiederhergestellt; keine globale erzwungene nichtinteraktive Paketkonfiguration und kein Prozessgruppenwechsel über timeout in der Basis-Paketphase. Paketfehler bleiben Abbruchgründe. Alle 20 Sekunden sichtbarer Prozessstatus statt einer stillstehenden Anzeige. Allsky-/Trixie-/GS-Anpassungen bleiben erhalten. Ursache auf Papas Pi ohne Prozessdaten noch nicht bestätigt.
