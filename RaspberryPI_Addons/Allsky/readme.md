@@ -1,9 +1,3 @@
-# Allsky-Quellen im Basisinstaller 0.7.0
+# Allsky Offline-Archive
 
-Auswahl: **v2024.12.06_06**, **v2026.10.01** oder **aktuelle Version direkt vom Hersteller-GitHub**. Alle Quellen erhalten die gemeinsamen Witty-, Kamera- und Trixie-Anpassungen.
-
-Die beiden fest archivierten Versionen enthalten ihre vollständigen Original-Git-Stände einschließlich Sunwait und Zusatzmodulen. RSPKG001-Verschlüsselung, SHA-256-Prüfungen und Original-Commit-Prüfung sichern die Installation aus diesem Repository. Der Installer setzt die Archivteile automatisch zusammen. Diese beiden Quellen benötigen das ursprüngliche Allsky-GitHub nicht; Betriebssystem- und Python-Paketquellen bleiben erforderlich.
-
-Die optionale direkte Quelle klont den aktuellen Standardbranch samt Submodulen vom Hersteller-GitHub. Sie wird beim Installieren aufgelöst. Die gewählte Quelle bleibt bei Softwareupdates erhalten.
-
-Allsky-Backups werden ausschließlich auf denselben Release und Git-Stand zurückgespielt. Abweichende Softwarestände und alte Backups ohne Versionsangabe werden vor Änderungen mit Anzeige der Versionen abgewiesen – im Windows-Programm, auf der Webpage und bei automatischer Wiederherstellung.
+2026-10-01 aktualisiert auf Original-Commit 2b2c7b1347d076a489df5e614acf27de450738fb vom 06.10.2026. Verschlüsselte Teile werden vom Installer geprüft, zusammengefügt und in einem temporären Ordner entschlüsselt. Sunwait und Zusatzmodule sind ebenfalls aus eigenen Archiven verfügbar. Debian-Systempakete benötigen weiterhin die Paketquellen. Trixie-Korrekturen werden durch Witty Add-on angewendet.

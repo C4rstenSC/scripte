@@ -33,85 +33,85 @@
     },
     {
       "version": "v2026.10.01",
-      "commit": "cbbe1b7f9170f436add4866387c50b528c4ca101",
-      "package": "allsky-v2026.10.01.zip.enc",
-      "sha256": "1ef1c87c0d55ec502bb5acafa520bedb78bdf5a91e2c97c66c02607d5fc2e51d",
-      "sizeBytes": 223536757,
+      "commit": "2b2c7b1347d076a489df5e614acf27de450738fb",
+      "package": "allsky-v2026.10.01-2b2c7b13.zip.enc",
+      "sha256": "e985d7458ee6e0fbf48b3284629a2c890353bf35ef9930751c3f27c01d8f9656",
+      "sizeBytes": 224213987,
       "parts": [
         {
-          "package": "allsky-v2026.10.01.zip.enc.part01",
-          "sha256": "7fb09a3c340925ef514dbbc6ec6848df34206c6087113cf9e53ea82edf397178",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part01",
+          "sha256": "dcc3f73c4386be6739dc40f7f31ee6bc58fcbbc13025f96ca76be1201663a722",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part02",
-          "sha256": "7348cbafbcc25d1db95877f14eddad9371a32f8a04fcc309f68a11cecf097db4",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part02",
+          "sha256": "e3c660228ab2ceea8db5dd1cacb9be0f261e6049c2ba5d07ec71884e2fb74c5e",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part03",
-          "sha256": "580c0d7f948ae606823489d61a33af0f9b37fe4af21967fe2fcfebd721c8aa22",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part03",
+          "sha256": "1a8fbadf1bf4bf63f896eae8a91f5c8508fdd2e51eb6ece0837a187c02da6a1c",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part04",
-          "sha256": "32348ca05761c75073ca187e2819666db37ee509ccea7e10e1f0a1c7837247a0",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part04",
+          "sha256": "c9b63f72c8d8e244abed58a6afa4a7cf2d6c0bbc43ad8daf75cb11ce80c66680",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part05",
-          "sha256": "ae6d91ed74815de2446fc6d2f9ad1666397561fb92e24761faba3cadcb1c37cc",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part05",
+          "sha256": "515b517122df8e9efa1c4018a944ed078dd6e99fef0e795906e11da865ed46ec",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part06",
-          "sha256": "e893f2ce45f1a83a9d995f28483b164e0659519dcffb96fe3ae46acec1295b0a",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part06",
+          "sha256": "e7c32e8ae70f30d1f5121c7290e39cfade2d72e13fcbadd2623edb2ef1d8fe39",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part07",
-          "sha256": "51085fcca2db45c32d84a08d5eadb481362d851c76d612d39b2beb673a8aec50",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part07",
+          "sha256": "12f586b6f2c3fe2a644cc998a434e8c6fac66f43eb35ebfddfd0a0fdf73881dd",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part08",
-          "sha256": "cab3b1d871869635e5257f39765a18bad22ffba027e1dfce21614004f68ed778",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part08",
+          "sha256": "a2c1cc12ef48afb900719968b6b17a238cc7a0c6ff880ba8468987135b1178f8",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part09",
-          "sha256": "2462c00babae3a205adf24044e8d39cb2257ba5e2ec7579228d4af07ed93393c",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part09",
+          "sha256": "2dbb73ecc47334c8cd831b7a627d3a9dcc14ab1f8f26c36e17899e56ea61670f",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part10",
-          "sha256": "363312d298107644be23fb5cefd0ca3d0c918cd08b704eff0a3f23fc75fc0e8f",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part10",
+          "sha256": "b9383b1f4b5fe2aa887a4de778ff70d9417b1ee28a7018b5b29f50e1f475abdc",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part11",
-          "sha256": "a7da9ed427b499bd6a452626337629625bdec4edf849f594ebc41e607db8e716",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part11",
+          "sha256": "247456d7bbb32b41d16cd4d63282df37dc2e1c951f46284b4fed877109d5ab09",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part12",
-          "sha256": "2ad42c4a389d254cc47e3cc933e3e94c9d52642daaef542de0f46b7282f0f839",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part12",
+          "sha256": "dd9872c7411c11b627fe0121347e02a86f7cd73e42e5308cd4e3feab03a4160f",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part13",
-          "sha256": "499ceaa6ab6c73c5530fa408e1279ae6f70891a15a8bd3396a3637c7c69c56f6",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part13",
+          "sha256": "a50cb5e0035d936ed09f25eb030503e4f327fc77e2884a05b13a116b35000ca8",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part14",
-          "sha256": "af5de7a0fcd21b0002dbca709247f5bdb242f41e28f67c0fb25b3cc910159935",
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part14",
+          "sha256": "1bf287343a96aec31a2e7c15142bf7cbe2aef34bad4f8b1cb386c3a5e6a58d63",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2026.10.01.zip.enc.part15",
-          "sha256": "ebba49b5b4cc6a5a6f2b33b687a493b407a4e463cae89ca5d985a766faf4a73c",
-          "sizeBytes": 3335797
+          "package": "allsky-v2026.10.01-2b2c7b13.zip.enc.part15",
+          "sha256": "0af0f705275b60e4103902849c43e180ec0bf2a2e6194947d334840cc184e7a6",
+          "sizeBytes": 4013027
         }
       ]
     }
