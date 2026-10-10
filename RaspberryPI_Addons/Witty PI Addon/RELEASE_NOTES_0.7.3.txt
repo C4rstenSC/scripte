@@ -1,7 +1,3 @@
-# Witty Add-on 0.7.3
-
-Build: 20261010.1 – 10.10.2026
-
 Witty Add-on / Windows 0.7.3 – Build 1 – 10.10.2026
 
 - Phase-Uhr entfernt; Gesamtzeit direkt hinter Schrittzahl und Prozenten. Automatische Allsky-Phasen und Python-Paket n/N werden erkannt; der Balken bewegt sich innerhalb der Installerphase. Prozentwerte sind gewichtete Schrittanteile, keine Zeitprognose.

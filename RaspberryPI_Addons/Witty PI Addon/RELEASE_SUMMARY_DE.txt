@@ -1,3 +1,14 @@
+Witty Add-on / Windows 0.7.3 – Build 1 – 10.10.2026
+
+- Phase-Uhr entfernt; Gesamtzeit direkt hinter Schrittzahl und Prozenten. Automatische Allsky-Phasen und Python-Paket n/N werden erkannt; der Balken bewegt sich innerhalb der Installerphase. Prozentwerte sind gewichtete Schrittanteile, keine Zeitprognose.
+- Erfolgreicher finaler Allsky-Neustart erfolgt erst nach der Witty-Abschlussprüfung und deren Rückmeldung. Notwendige Locale-Neustarts bleiben erhalten.
+- Nach Wiederverbinden wird der alte Installationsfortschritt ausgeblendet. Verbindungsabbruch-Warnung bleibt im Vordergrund bis OK; der Terminalfokus darf das Fenster nicht überdecken.
+- Terminal vor dem ersten Allsky-Dialog vergrößern und tatsächliche Zeilen/Spalten an SSH senden, bevor der Installer startet.
+- Allsky-Kopf, Status, Seitenmenü und Inhalt stehen unter der Witty-Leiste. Die Abstände passen sich Zeilenumbrüchen und GS-Warnung an.
+- Alle bisherigen GPS-, Trixie-, GS-Kamera- und Backup-Korrekturen sowie beide archivierten Allsky-Stände bleiben enthalten.
+
+Allsky-Ersteinrichtung: fehlendes lastchanged in settings.json wird als noch erforderliche Einrichtung erkannt. Erfolgreiche Installation erfordert dann keinen laufenden Kameradienst. Beim Windows-Dienststart erscheint ein verständlicher Hinweis mit Angebot, die Allsky Settings zu öffnen.
+
 Witty Add-on 0.7.2 – 10.10.2026
 
 Build 20261010.10
