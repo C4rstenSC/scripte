@@ -32,3 +32,9 @@ Build 3 update fix: use the installed app_dir for build metadata instead of the 
 
 CloudedBats-Logo ganz links auch in der originalen Allsky-Navigation ergänzt.
 CloudedBats logo added at the far left of the original Allsky navigation.
+
+- Allsky-Setup: GPS Position von Empfänger laden übernimmt gültige USB-/Waveshare-Koordinaten im N/S/E/W-Format in die Eingabefelder; GPS Position setzen speichert sie in Allsky. Ohne gültigen Fix wird der Ladebutton ausgeblendet. Manuelle Änderungen werden bei Statusaktualisierung bewahrt.
+- Kompakte GPS- und Belichtungsfelder. Pfeile und Tastatur springen zum nächsten/vorherigen 0,5-Sekunden-Rasterwert; freie manuelle Eingaben wie 11,3 Sekunden bleiben möglich.
+
+- Allsky Setup loads valid USB/Waveshare receiver coordinates in N/S/E/W format into the position fields. Set GPS position saves them in Allsky; the receiver button is hidden without a valid fix. Status refresh preserves unsaved input.
+- Compact GPS and exposure fields. Arrow buttons and arrow keys snap to the next/previous half-second grid value; manual decimals such as 11.3 seconds remain accepted.

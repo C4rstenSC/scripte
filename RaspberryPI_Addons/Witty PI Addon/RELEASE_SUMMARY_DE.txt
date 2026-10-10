@@ -15,6 +15,8 @@ Nachtrag 0.7.3 Build 3: Rückwechsel Witty → Allsky lädt die Hauptseite mit f
 Update-Korrektur Build 3: nicht gesetzte Variable app in der Build-Ausgabe durch app_dir ersetzt. Versionsgleiche Build-Updates zeigen bei geänderter Revision die aktuellen Release Notes.
 
 - CloudedBats-Logo ganz links auch in der originalen Allsky-Navigation ergänzt.
+- Allsky-Setup: GPS Position von Empfänger laden übernimmt gültige USB-/Waveshare-Koordinaten im N/S/E/W-Format in die Eingabefelder; GPS Position setzen speichert sie in Allsky. Ohne gültigen Fix wird der Ladebutton ausgeblendet. Manuelle Änderungen werden bei Statusaktualisierung bewahrt.
+- Kompakte GPS- und Belichtungsfelder. Pfeile und Tastatur springen zum nächsten/vorherigen 0,5-Sekunden-Rasterwert; freie manuelle Eingaben wie 11,3 Sekunden bleiben möglich.
 
 Witty Add-on 0.7.2 – 10.10.2026
 
