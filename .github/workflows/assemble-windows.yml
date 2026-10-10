@@ -27,7 +27,7 @@ jobs:
           source = pathlib.Path('.github/update-parts')
           release = pathlib.Path('RaspberryPI_Addons/Raspi-Scripte')
           manifest = json.loads((source / 'manifest.json').read_text())
-          assert manifest['version'] == '0.7.0'
+          assert manifest['version'] == '0.7.1'
           output = bytearray()
           for part in manifest['parts']:
               name = part['name']
@@ -47,7 +47,7 @@ jobs:
           subprocess.run(['git', 'config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com'], check=True)
           subprocess.run(['git', 'rm', '-r', str(source)], check=True)
           subprocess.run(['git', 'add', str(release)], check=True)
-          subprocess.run(['git', 'commit', '-m', 'Publish Windows 0.7.0 compatibility update and matching manifests'], check=True)
+          subprocess.run(['git', 'commit', '-m', 'Publish Windows 0.7.1 compatibility update and matching manifests'], check=True)
           subprocess.run(['git', 'push'], check=True)
-          print('Verified 0.7.0 compatibility package and version metadata published together.')
+          print('Verified 0.7.1 compatibility package and version metadata published together.')
           PY
