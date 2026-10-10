@@ -85,3 +85,7 @@ Alle vier Belichtungswerte, die Automatik-Auswahl und die GS-Kennzeichnung werde
 ## Paketinstallation / Package installation
 
 Grundinstallation: ursprünglicher direkter APT-/Konsolendialog-Ablauf wiederhergestellt; keine globale erzwungene nichtinteraktive Paketkonfiguration und kein Prozessgruppenwechsel über timeout in der Basis-Paketphase. Paketfehler bleiben Abbruchgründe. Alle 20 Sekunden sichtbarer Prozessstatus statt einer stillstehenden Anzeige. Allsky-/Trixie-/GS-Anpassungen bleiben erhalten. Ursache auf Papas Pi ohne Prozessdaten noch nicht bestätigt.
+
+Micro-SD-Status prüft Partition und ext4-Dateisystem getrennt. Grün erscheint nur, wenn beide den vorhandenen Platz nutzen. Linux-Update auf einem frischen Image läuft direkt im SSH-Terminal, ohne vorher Witty zu installieren.
+
+Verbindung zum Raspberry Pi wird alle 5 Sekunden per SSH geprüft. Bei Ausfall wird die Anzeige rot; eine einmalige Warnung muss mit OK bestätigt werden, danach wird getrennt. Über dem SSH-Terminal zeigt die Basisinstallation den aktuellen Schritt, konfigurierte Gesamtanzahl und den Paketdownload einschließlich Abhängigkeiten. Prozentwerte beziehen sich auf abgeschlossene Schritte, nicht auf die verbleibende Zeit.
