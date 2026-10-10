@@ -83,3 +83,5 @@ Allsky archives use bounded-memory streaming decryption and checksum verificatio
 Installation progress detects Ctrl+C, KeyboardInterrupt, errors, a returned shell prompt and completion codes. Cancellation stops progress, turns it red and removes stale package messages. Allsky archive progress is displayed above the terminal. Connection text stays white in all states with a larger font; GPS radio controls are vertically centred.
 
 Individual Allsky installation checks that the backend update script exists and launches it explicitly with Bash. ZIP packages without an executable bit are supported. Error dialogs include the actual backend output as well as the exit code.
+
+Individual ALLSKY, WURB and WIRC installation/update progress includes the backend, packages, downloads, setup and completion. The completion message remains until the next action or terminal input. Allsky package commands use /dev/null for stdin to prevent nested sudo/terminal job-control stops in unattended package installation. Applies to both archived versions and the current Allsky GitHub source.
