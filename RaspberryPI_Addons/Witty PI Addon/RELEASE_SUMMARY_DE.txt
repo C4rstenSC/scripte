@@ -1,3 +1,12 @@
+Witty Add-on 0.7.4 – 10.10.2026
+
+- Hintergrund-GPS-Abfragen sperren den Ladebutton in Allsky-Setup nicht mehr. Ein Klick nutzt eine laufende Abfrage mit und wartet auf deren Ergebnis.
+- Kurze GPS-Aussetzer lassen den Button nicht flackern. Ausblenden erst nach drei aufeinanderfolgenden Fehlabfragen und mindestens 15 Sekunden seit dem letzten gültigen Fix; deaktiviertes GPS wirkt sofort.
+- Koordinaten werden ausschließlich aus einer aktuellen gültigen Antwort übernommen. Ohne aktuellen Fix erscheint ein Hinweis; bereits eingetragene Koordinaten bleiben erhalten.
+- Alle Änderungen aus 0.7.3 Build 3 bleiben enthalten: Allsky-Logo, einheitliche Navigation, Ersteinrichtungshinweise, GPS-Übernahme, kompakte Felder und 0,5-Sekunden-Raster mit freien manuellen Eingaben.
+- Windows-Programm unverändert; nur Witty Add-on aktualisieren.
+
+
 Witty Add-on 0.7.3 – Build 3 – 10.10.2026
 
 - Phase-Uhr entfernt; Gesamtzeit direkt hinter Schrittzahl und Prozenten. Automatische Allsky-Phasen und Python-Paket n/N werden erkannt; der Balken bewegt sich innerhalb der Installerphase. Prozentwerte sind gewichtete Schrittanteile, keine Zeitprognose.
@@ -17,6 +26,8 @@ Update-Korrektur Build 3: nicht gesetzte Variable app in der Build-Ausgabe durch
 - CloudedBats-Logo ganz links auch in der originalen Allsky-Navigation ergänzt.
 - Allsky-Setup: GPS Position von Empfänger laden übernimmt gültige USB-/Waveshare-Koordinaten im N/S/E/W-Format in die Eingabefelder; GPS Position setzen speichert sie in Allsky. Ohne gültigen Fix wird der Ladebutton ausgeblendet. Manuelle Änderungen werden bei Statusaktualisierung bewahrt.
 - Kompakte GPS- und Belichtungsfelder. Pfeile und Tastatur springen zum nächsten/vorherigen 0,5-Sekunden-Rasterwert; freie manuelle Eingaben wie 11,3 Sekunden bleiben möglich.
+- GPS-Ladebutton: Hintergrundabfrage sperrt den Button nicht mehr; ein Klick wartet auf die laufende Abfrage und übernimmt deren gültige Position. Erst drei aufeinanderfolgende Ausfälle mit mindestens 15 Sekunden seit dem letzten Fix blenden ihn aus; GPS deaktiviert wirkt sofort. Keine Übernahme veralteter Koordinaten bei fehlendem aktuellem Fix.
+
 
 Witty Add-on 0.7.2 – 10.10.2026
 

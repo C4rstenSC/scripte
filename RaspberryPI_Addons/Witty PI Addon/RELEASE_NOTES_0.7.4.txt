@@ -1,5 +1,3 @@
-# Witty Add-on 0.7.4
-
 Witty Add-on 0.7.4 – 10.10.2026
 
 - Hintergrund-GPS-Abfragen sperren den Ladebutton in Allsky-Setup nicht mehr. Ein Klick nutzt eine laufende Abfrage mit und wartet auf deren Ergebnis.
