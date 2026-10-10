@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.7.2 – User guide (9 October 2026)
+# Raspi-Scripte 0.7.3 – User guide (9 October 2026)
 
 ## Updates
 Use the Windows Update button. The modular program package includes the application DLLs, updater, help and Witty Add-on 0.7.2. Downloads are automatically decrypted and checked against SHA-256 checksums. Connection profiles and an existing activation are retained. Keep the computer and Raspberry Pi powered on until the updater finishes.
@@ -89,3 +89,15 @@ Individual ALLSKY, WURB and WIRC installation/update progress includes the backe
 Allsky 2026-10-01 archive refreshed to original commit 2b2c7b13 (6 October 2026); the 2024 archive is retained. Trixie package names corrected in PHP module installation too: libatlas-base-dev → libopenblas-dev, python-dev → python3-dev. Official installer APT output streams directly to the terminal; output pauses show a time message every 15 seconds. Progress shows total and current phase durations, refreshed every five seconds. Add-on release date corrected; GitHub update detection now compares build revisions within version 0.7.2.
 
 Backup/restore checks passed for the shared website and Windows archive function, including GS choice and day/night exposure settings. Different releases or Git builds are rejected before service/file changes, showing both identities, even when the release number matches. Create a new backup after installing the updated Allsky build; old-build backups cannot be restored onto it.
+
+
+Witty Add-on / Windows 0.7.3 – Build 1 – 10 October 2026
+
+- Removed phase timer; elapsed time follows completed steps and percentage. Automatic Allsky phases and Python package n/N advance progress within the installer step; percentages are weighted step fractions, not a time estimate.
+- Successful final Allsky reboot follows Witty final checks and completion feedback. Required locale reboots remain unchanged.
+- Reconnecting hides previous installation progress. The connection warning stays in front until OK; terminal focus cannot cover it.
+- Enlarge the terminal and send its real rows/columns to SSH before launching the first Allsky dialog.
+- Allsky header, status, sidebar and content sit below the Witty bar, with offsets adapting to wrapped links and GS warning.
+- Previous GPS, Trixie, GS-camera and backup fixes and both archived Allsky versions remain included.
+
+Allsky initial setup: a missing lastchanged value in settings.json indicates pending setup. Successful installation then does not require a running capture service. Starting the service from Windows explains the required setup and offers to open Allsky Settings.

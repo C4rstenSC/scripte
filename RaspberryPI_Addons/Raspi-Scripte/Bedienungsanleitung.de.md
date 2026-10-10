@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.7.2 – Bedienungsanleitung (09.10.2026)
+# Raspi-Scripte 0.7.3 – Bedienungsanleitung (10.10.2026)
 
 ## Windows-Programm aktualisieren
 Im Programm den Update-Knopf verwenden. Das kleine Programmupdate enthält EXE-Starter, DLLs, Updater, Anleitungen und das aktuelle Witty-Paket. Beim Aktualisieren das Programm und den Raspberry eingeschaltet lassen; der separate Updater startet das Programm anschließend neu. Verbindungsprofile und vorhandene Aktivierung bleiben erhalten.
@@ -8,7 +8,7 @@ Das Programm verwendet modular-update-manifest.json. Programmdateien kommen aus 
 Ältere Einzel-EXE-Installationen müssen einmalig auf das kleine Paket umgestellt werden: ZIP vollständig in einen beschreibbaren Ordner entpacken, START.cmd starten und vorhandene Profile weiterverwenden. START.cmd installiert bei Bedarf die .NET-8-Desktop-Laufzeit. Danach sind normale kleine Programmupdates möglich.
 
 ## Witty Add-on aktualisieren
-Zuerst verbinden. Die Witty-Add-on-Zeile zeigt den installierten Stand und den verfügbaren GitHub-Stand. Witty über den zugehörigen Update-Knopf aktualisieren; alternativ die Update-Funktion der Witty-Homepage verwenden. Das veröffentlichte Paket ist witty_addon.zip.enc, Version 0.7.0. Die Updates enthalten sämtliche Änderungen bis 0.6.62 und ersetzen keine WURB-, WIRC- oder Allsky-Neuinstallation.
+Zuerst verbinden. Die Witty-Add-on-Zeile zeigt den installierten Stand und den verfügbaren GitHub-Stand. Witty über den zugehörigen Update-Knopf aktualisieren; alternativ die Update-Funktion der Witty-Homepage verwenden. Das veröffentlichte Paket ist witty_addon.zip.enc, Version 0.7.3. Die Updates enthalten sämtliche Änderungen bis 0.6.62 und ersetzen keine WURB-, WIRC- oder Allsky-Neuinstallation.
 
 ## Basisinstallation und Allsky-Version
 Auf dem neuen Raspberry über Windows verbinden und Basis Installation öffnen. Erkanntes Raspberry-Modell, Witty-Modell, Land, Zeitzone, Tastatur, GPS und Anwendungen prüfen. Deutschland verwendet Europe/Berlin; Australien schlägt Australia/Sydney vor. Für andere australische Zeitzonen die Zeitzone entsprechend ändern.
@@ -105,3 +105,15 @@ Fortschritt bei Software installieren und Software Update für ALLSKY, WURB und 
 Allsky-Archiv 2026-10-01 auf Original-Commit 2b2c7b13 vom 06.10.2026 aktualisiert; 2024er Archiv bleibt erhalten. Trixie-Paketnamen auch im PHP-Modulschritt korrigiert: libatlas-base-dev → libopenblas-dev, python-dev → python3-dev. APT-Ausgabe erscheint während der offiziellen Installation direkt im Terminal; bei Ausgabepausen erfolgt alle 15 Sekunden eine Zeitmeldung. Fortschrittszeile zeigt Gesamtdauer und Dauer der aktuellen Phase, alle fünf Sekunden aktualisiert. Installiertes Add-on-Datum korrigiert; GitHub-Updateerkennung berücksichtigt jetzt Build-Revisionen innerhalb Version 0.7.2.
 
 Sicherung und Wiederherstellung geprüft: Website und Windows verwenden dieselbe Archivfunktion. GS-Auswahl, manuelle und automatische Tag-/Nacht-Belichtungen bleiben enthalten. Abweichende Releases oder Git-Builds werden vor Dienst- und Dateiänderungen mit Anzeige beider Stände abgewiesen – auch bei gleicher Versionsnummer. Nach Installation des neuen Allsky-Builds eine neue Sicherung erstellen; Backups des alten Builds dürfen nicht in den neuen Stand eingespielt werden.
+
+
+Witty Add-on / Windows 0.7.3 – Build 1 – 10.10.2026
+
+- Phase-Uhr entfernt; Gesamtzeit direkt hinter Schrittzahl und Prozenten. Automatische Allsky-Phasen und Python-Paket n/N werden erkannt; der Balken bewegt sich innerhalb der Installerphase. Prozentwerte sind gewichtete Schrittanteile, keine Zeitprognose.
+- Erfolgreicher finaler Allsky-Neustart erfolgt erst nach der Witty-Abschlussprüfung und deren Rückmeldung. Notwendige Locale-Neustarts bleiben erhalten.
+- Nach Wiederverbinden wird der alte Installationsfortschritt ausgeblendet. Verbindungsabbruch-Warnung bleibt im Vordergrund bis OK; der Terminalfokus darf das Fenster nicht überdecken.
+- Terminal vor dem ersten Allsky-Dialog vergrößern und tatsächliche Zeilen/Spalten an SSH senden, bevor der Installer startet.
+- Allsky-Kopf, Status, Seitenmenü und Inhalt stehen unter der Witty-Leiste. Die Abstände passen sich Zeilenumbrüchen und GS-Warnung an.
+- Alle bisherigen GPS-, Trixie-, GS-Kamera- und Backup-Korrekturen sowie beide archivierten Allsky-Stände bleiben enthalten.
+
+Allsky-Ersteinrichtung: fehlendes lastchanged in settings.json wird als noch erforderliche Einrichtung erkannt. Erfolgreiche Installation erfordert dann keinen laufenden Kameradienst. Beim Windows-Dienststart erscheint ein verständlicher Hinweis mit Angebot, die Allsky Settings zu öffnen.
