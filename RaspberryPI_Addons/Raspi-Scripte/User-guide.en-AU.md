@@ -1,7 +1,7 @@
-# Raspi-Scripte 0.7.1 – User guide (9 October 2026)
+# Raspi-Scripte 0.7.2 – User guide (9 October 2026)
 
 ## Updates
-Use the Windows Update button. The modular program package includes the application DLLs, updater, help and Witty Add-on 0.7.1. Downloads are automatically decrypted and checked against SHA-256 checksums. Connection profiles and an existing activation are retained. Keep the computer and Raspberry Pi powered on until the updater finishes.
+Use the Windows Update button. The modular program package includes the application DLLs, updater, help and Witty Add-on 0.7.2. Downloads are automatically decrypted and checked against SHA-256 checksums. Connection profiles and an existing activation are retained. Keep the computer and Raspberry Pi powered on until the updater finishes.
 
 Program updates use Raspi-Scripte-Programm.zip.enc; content updates use Raspi-Scripte-Modular-Content.zip.enc and modular-update-manifest.json. A content update cannot replace compiled application code. Older single-EXE installations need a one-time migration: extract the complete small ZIP into a writable folder and run START.cmd, which installs the .NET 8 Desktop Runtime if needed. Normal small updates are available afterwards.
 
@@ -55,7 +55,7 @@ The actually active GPS receiver is highlighted light green independently of the
 Both GPS buttons now synchronise Linux, the Witty RTC and the enabled Pi RTC through the same verified procedure. Witty display timing is measured when its RTC line is read, without a fixed seconds offset.
 
 
-0.7.1: Allsky versions: archive 01.10.2026 and archive 06.12.2024 (Carsten Github); latest (Github ALLSKY). Software install/uninstall is available only in Windows. Web service controls show only installed services.
+0.7.2: Allsky versions: archive 01.10.2026 and archive 06.12.2024 (Carsten Github); latest (Github ALLSKY). Software install/uninstall is available only in Windows. Web service controls show only installed services.
 
 ### Global Shutter camera (IMX296)
 Connect the GS camera before installation and select the GS camera checkbox in the base installer or Allsky installation dialog. All three Allsky sources receive the IMX296 camera profile. No temporary replacement camera is required.
@@ -85,3 +85,7 @@ Installation progress detects Ctrl+C, KeyboardInterrupt, errors, a returned shel
 Individual Allsky installation checks that the backend update script exists and launches it explicitly with Bash. ZIP packages without an executable bit are supported. Error dialogs include the actual backend output as well as the exit code.
 
 Individual ALLSKY, WURB and WIRC installation/update progress includes the backend, packages, downloads, setup and completion. The completion message remains until the next action or terminal input. Allsky package commands use /dev/null for stdin to prevent nested sudo/terminal job-control stops in unattended package installation. Applies to both archived versions and the current Allsky GitHub source.
+
+Allsky 2026-10-01 archive refreshed to original commit 2b2c7b13 (6 October 2026); the 2024 archive is retained. Trixie package names corrected in PHP module installation too: libatlas-base-dev → libopenblas-dev, python-dev → python3-dev. Official installer APT output streams directly to the terminal; output pauses show a time message every 15 seconds. Progress shows total and current phase durations, refreshed every five seconds. Add-on release date corrected; GitHub update detection now compares build revisions within version 0.7.2.
+
+Backup/restore checks passed for the shared website and Windows archive function, including GS choice and day/night exposure settings. Different releases or Git builds are rejected before service/file changes, showing both identities, even when the release number matches. Create a new backup after installing the updated Allsky build; old-build backups cannot be restored onto it.

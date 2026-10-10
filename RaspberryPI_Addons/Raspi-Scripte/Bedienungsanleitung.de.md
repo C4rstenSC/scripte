@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.7.1 – Bedienungsanleitung (09.10.2026)
+# Raspi-Scripte 0.7.2 – Bedienungsanleitung (09.10.2026)
 
 ## Windows-Programm aktualisieren
 Im Programm den Update-Knopf verwenden. Das kleine Programmupdate enthält EXE-Starter, DLLs, Updater, Anleitungen und das aktuelle Witty-Paket. Beim Aktualisieren das Programm und den Raspberry eingeschaltet lassen; der separate Updater startet das Programm anschließend neu. Verbindungsprofile und vorhandene Aktivierung bleiben erhalten.
@@ -67,7 +67,7 @@ Im GPS-Bereich ist der tatsächlich aktive Empfänger hellgrün hinterlegt, unab
 GPS-Abgleich korrigiert: Beide GPS-Buttons synchronisieren Linux, Witty-RTC und eine aktive Pi-RTC über denselben geprüften Ablauf. Die Witty-Uhr wird beim tatsächlichen Auslesen zeitlich erfasst; kein pauschaler Sekundenoffset.
 
 
-## Änderungen in 0.7.1
+## Änderungen in 0.7.2
 Bei Allsky stehen zwei verschlüsselte Archive (Carsten Github) und die aktuelle Version (Github ALLSKY) zur Auswahl. Diese Auswahl erscheint sowohl im Basisinstaller als auch unter „Raspberry Scripte → Allsky → Software installieren“. Die Archive enthalten die vollständigen Allsky-Quellen; Betriebssystempakete benötigen weiterhin Internetzugang.
 Die Allsky-Paketphase läuft ohne Debian-Rückfragen. Allsky-eigene Kamera- und Konfigurationsdialoge bleiben im SSH-Terminal bedienbar.
 Software wird ausschließlich über Windows installiert und deinstalliert. Die Witty-Webseite zeigt nur installierte Dienste und bietet deren Start-/Stopp-Schaltflächen.
@@ -101,3 +101,7 @@ Installationsanzeige erkennt Strg+C, KeyboardInterrupt, Fehler, Rückkehr zum Sh
 Allsky-Einzelinstallation: Windows prüft das Backend-Updateskript als vorhandene Datei und startet es ausdrücklich mit Bash. Das Update funktioniert dadurch auch bei ZIP-Dateien ohne Ausführungsrecht. Fehlermeldungen zeigen die tatsächliche Backend-Ausgabe zusätzlich zum Exit-Code.
 
 Fortschritt bei Software installieren und Software Update für ALLSKY, WURB und WIRC: Backend, Pakete, Download, Einrichtung und Abschluss. Abschlussmeldung bleibt bis zur nächsten Aktion oder Terminaleingabe sichtbar. Allsky-Paketaufrufe erhalten /dev/null als Standardeingabe, damit verschachtelte sudo-/Terminalprozesse keine unbeaufsichtigte Paketinstallation anhalten. Gilt für beide archivierten Versionen und den aktuellen Allsky-GitHub-Stand.
+
+Allsky-Archiv 2026-10-01 auf Original-Commit 2b2c7b13 vom 06.10.2026 aktualisiert; 2024er Archiv bleibt erhalten. Trixie-Paketnamen auch im PHP-Modulschritt korrigiert: libatlas-base-dev → libopenblas-dev, python-dev → python3-dev. APT-Ausgabe erscheint während der offiziellen Installation direkt im Terminal; bei Ausgabepausen erfolgt alle 15 Sekunden eine Zeitmeldung. Fortschrittszeile zeigt Gesamtdauer und Dauer der aktuellen Phase, alle fünf Sekunden aktualisiert. Installiertes Add-on-Datum korrigiert; GitHub-Updateerkennung berücksichtigt jetzt Build-Revisionen innerhalb Version 0.7.2.
+
+Sicherung und Wiederherstellung geprüft: Website und Windows verwenden dieselbe Archivfunktion. GS-Auswahl, manuelle und automatische Tag-/Nacht-Belichtungen bleiben enthalten. Abweichende Releases oder Git-Builds werden vor Dienst- und Dateiänderungen mit Anzeige beider Stände abgewiesen – auch bei gleicher Versionsnummer. Nach Installation des neuen Allsky-Builds eine neue Sicherung erstellen; Backups des alten Builds dürfen nicht in den neuen Stand eingespielt werden.
