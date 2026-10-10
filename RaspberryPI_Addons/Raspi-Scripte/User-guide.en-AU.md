@@ -53,3 +53,15 @@ The actually active GPS receiver is highlighted light green independently of the
 
 
 Both GPS buttons now synchronise Linux, the Witty RTC and the enabled Pi RTC through the same verified procedure. Witty display timing is measured when its RTC line is read, without a fixed seconds offset.
+
+
+0.7.1: Allsky versions: archive 01.10.2026 and archive 06.12.2024 (Carsten Github); latest (Github ALLSKY). Software install/uninstall is available only in Windows. Web service controls show only installed services.
+
+### Global Shutter camera (IMX296)
+Connect the GS camera before installation and select the GS camera checkbox in the base installer or Allsky installation dialog. All three Allsky sources receive the IMX296 camera profile. No temporary replacement camera is required.
+Selecting the checkbox caps day/night auto exposure and initial manual exposure at 15,000 ms (15 seconds), preserving shorter values. Allsky uses its own auto-exposure algorithm within those limits. Allsky - Setup provides the same setting and shows actual day/night maximum exposure in seconds. A running service is stopped briefly to apply changes and then restarted. Turning the setting off retains current exposure values. Later manual Allsky changes are preserved, including during Allsky updates.
+
+### Exposure times on Allsky - Setup
+Four fields show the actual Allsky manual/starting exposure and maximum automatic exposure for day and night. All inputs use seconds. Separate checkboxes enable or disable day/night automatic exposure. Apply exposure times saves the values to Allsky, reads them back for confirmation and restarts a previously running capture service. A stopped service remains stopped. Startup errors restore the previous settings.
+A GS camera displays a red maximum 15 seconds recommended message, including on the native Allsky homepage. GS defaults cap both automatic maxima at 15 seconds. Location/sun-angle day/night switching and Allsky brightness-based exposure calculation use these limits. Later deliberate changes are permitted within camera capability limits.
+All four exposure values, automatic mode selection and GS profile flag are included in settings.json/options.json configuration backups and restores via the webpage and Windows, including update restores. Backups remain restricted to the exact same Allsky software version and Git revision.
