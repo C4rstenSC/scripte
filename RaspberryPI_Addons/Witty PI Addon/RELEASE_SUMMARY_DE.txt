@@ -14,6 +14,12 @@ Build 20261010.3
 - Micro-SD-Status prüft Partition und ext4-Dateisystem getrennt. Grün erscheint nur, wenn beide den vorhandenen Platz nutzen. Linux-Update auf einem frischen Image läuft direkt im SSH-Terminal, ohne vorher Witty zu installieren.
 - Verbindung zum Raspberry Pi wird alle 5 Sekunden per SSH geprüft. Bei Ausfall wird die Anzeige rot; eine einmalige Warnung muss mit OK bestätigt werden, danach wird getrennt. Über dem SSH-Terminal zeigt die Basisinstallation den aktuellen Schritt, konfigurierte Gesamtanzahl und den Paketdownload einschließlich Abhängigkeiten. Prozentwerte beziehen sich auf abgeschlossene Schritte, nicht auf die verbleibende Zeit.
 
+Build 20261010.4
+- Basisinstallation erweitert die SD-Partition und das Dateisystem nicht mehr. Raspberry Pi OS übernimmt die automatische Erweiterung beim ersten Start. Manuelles Expandieren bleibt über Micro SD Karten Optionen verfügbar.
+
+Build 20261010.5
+- Paketfortschritt zeigt nach dem Download auch Vorbereitung, Entpacken, Konfigurieren und Abschlussarbeiten mit Paketnamen und Zählern. Bereits zwischengespeicherte Pakete werden separat vom Download gezählt. Terminal-Prozessgruppenfehler auch in Witty-Add-on-Voraussetzungen, WURB-/WIRC-Reparatur und Einzelinstallation, GPS-Konfiguration und Witty-Pi-4-Installation korrigiert: äußere und innere zeitbegrenzte Paketaufrufe bleiben im Vordergrund. Fehlendes hwclock auf Pi 5 wird mit den Basispaketen installiert. Automatisches Expandieren bleibt aus der Basisinstallation entfernt; manuelle SD-Funktionen bleiben erhalten.
+
 
 Witty Add-on 0.7.0 – 09.10.2026
 
