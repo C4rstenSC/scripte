@@ -29,6 +29,9 @@ Build 20261010.7
 Build 20261010.8
 - Allsky-Einzelinstallation: Windows prüft das Backend-Updateskript als vorhandene Datei und startet es ausdrücklich mit Bash. Das Update funktioniert dadurch auch bei ZIP-Dateien ohne Ausführungsrecht. Fehlermeldungen zeigen die tatsächliche Backend-Ausgabe zusätzlich zum Exit-Code.
 
+Build 20261010.9
+- Fortschritt bei Software installieren und Software Update für ALLSKY, WURB und WIRC: Backend, Pakete, Download, Einrichtung und Abschluss. Abschlussmeldung bleibt bis zur nächsten Aktion oder Terminaleingabe sichtbar. Allsky-Paketaufrufe erhalten /dev/null als Standardeingabe, damit verschachtelte sudo-/Terminalprozesse keine unbeaufsichtigte Paketinstallation anhalten. Gilt für beide archivierten Versionen und den aktuellen Allsky-GitHub-Stand.
+
 
 Witty Add-on 0.7.0 – 09.10.2026
 
