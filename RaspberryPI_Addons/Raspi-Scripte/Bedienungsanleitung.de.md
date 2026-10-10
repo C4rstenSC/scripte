@@ -89,3 +89,5 @@ Grundinstallation: ursprünglicher direkter APT-/Konsolendialog-Ablauf wiederher
 Micro-SD-Status prüft Partition und ext4-Dateisystem getrennt. Grün erscheint nur, wenn beide den vorhandenen Platz nutzen. Linux-Update auf einem frischen Image läuft direkt im SSH-Terminal, ohne vorher Witty zu installieren.
 
 Verbindung zum Raspberry Pi wird alle 5 Sekunden per SSH geprüft. Bei Ausfall wird die Anzeige rot; eine einmalige Warnung muss mit OK bestätigt werden, danach wird getrennt. Über dem SSH-Terminal zeigt die Basisinstallation den aktuellen Schritt, konfigurierte Gesamtanzahl und den Paketdownload einschließlich Abhängigkeiten. Prozentwerte beziehen sich auf abgeschlossene Schritte, nicht auf die verbleibende Zeit.
+
+Basisinstallation erweitert die SD-Partition und das Dateisystem nicht mehr. Raspberry Pi OS übernimmt die automatische Erweiterung beim ersten Start. Manuelles Expandieren bleibt über Micro SD Karten Optionen verfügbar.

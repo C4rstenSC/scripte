@@ -73,3 +73,5 @@ Base installation uses the original foreground APT dialogs. Every 20 seconds the
 Micro-SD status checks the partition and ext4 filesystem separately. Green requires both to use available space. Linux updates on a fresh image run directly in the SSH terminal without first installing Witty.
 
 The Raspberry Pi connection is checked over SSH every 5 seconds. Loss turns the indicator red and displays one warning; acknowledging OK disconnects the session. Above the SSH terminal, base installation shows the current step, configured total and package downloads including dependencies. Percentages refer to completed steps, not remaining time.
+
+Base installation no longer expands the SD partition or filesystem. Raspberry Pi OS handles automatic expansion on first boot. Manual expansion remains available under Micro SD card options.
