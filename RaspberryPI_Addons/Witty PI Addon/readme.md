@@ -1,30 +1,24 @@
-# Witty Add-on 0.7.4
+# Witty Add-on 0.7.5
 
-Build 2 (20261010.2) – 10.10.2026
+Build 1 (20261010.1) – 10.10.2026
 
-Witty Add-on 0.7.4 – Build 2 – 10.10.2026
+Witty Add-on 0.7.5 – 10.10.2026
 
-- Allsky-Speicherort: Bei Allsky 2024 wird automatisch die bisherige Methode verwendet, bei Allsky ab 2026 die neue Konfiguration. USB-Stick und SD-Karte können über Allsky-Setup ausgewählt werden.
-- Beim Wechsel werden der von Allsky verwendete Bildpfad und die Web-Konfiguration angepasst. Die bestehenden Trixie-/PHP-FPM-Anpassungen bleiben erhalten.
-- Datensicherung und Wiederherstellung über Webseite und Windows-Programm berücksichtigen den Speicherpfad und die Benutzereinstellungen. Bei Allsky 2026 wird die passende Web-Konfiguration nach dem Wiederherstellen neu erzeugt; veraltete Pfaddaten werden korrigiert.
-- Konfigurationssicherungen enthalten keine aufgenommenen Bilder. Das Wiederherstellen verändert vorhandene Aufnahmen nicht. Eine Wiederherstellung ist nur auf demselben Allsky-Softwarestand möglich; abweichende Versionen oder Builds werden angezeigt und abgewiesen.
-- USB/SD-Wechsel, Kopieren, Verschieben, Belassen der Aufnahmen sowie Rückrollen bei Fehlern mit den Originalskripten geprüft. Backup-Erstellung und Upload/Wiederherstellung über die gemeinsamen Web-Schnittstellen ebenfalls geprüft; Hardware-Dienste wurden in den Tests simuliert.
-- Die Webseite zeigt die zur installierten Allsky-Version passende Speicherort-Methode auf Deutsch und Englisch.
-- Für diese Änderungen genügt das Witty-Addon-Update. Das Windows-Programm nutzt dieselben Backup-Schnittstellen und benötigt kein neues Programm-Update.
-
-Bisherige Änderungen aus 0.7.4 bleiben enthalten:
-- Hintergrund-GPS-Abfragen sperren den Ladebutton in Allsky-Setup nicht mehr. Ein Klick nutzt eine laufende Abfrage mit und wartet auf deren Ergebnis.
-- Kurze GPS-Aussetzer lassen den Button nicht flackern. Ausblenden erst nach drei aufeinanderfolgenden Fehlabfragen und mindestens 15 Sekunden seit dem letzten gültigen Fix; deaktiviertes GPS wirkt sofort.
-- Koordinaten werden ausschließlich aus einer aktuellen gültigen Antwort übernommen. Ohne aktuellen Fix erscheint ein Hinweis; bereits eingetragene Koordinaten bleiben erhalten.
-- Alle Änderungen aus 0.7.3 Build 3 bleiben enthalten: Allsky-Logo, einheitliche Navigation, Ersteinrichtungshinweise, GPS-Übernahme, kompakte Felder und 0,5-Sekunden-Raster mit freien manuellen Eingaben.
-- Windows-Programm unverändert; nur Witty Add-on aktualisieren.
+- Navigation behält den im Browser verwendeten Hostnamen bei. Die bereits aufgelöste Adresse wird beim Wechsel zwischen Witty Addon, Allsky, Allsky-Setup, WURB und WIRC nicht mehr durch die Raspberry-LAN-IP ersetzt.
+- Hotspot-Zugriff bleibt möglich: Wird eine Seite über die Hotspot-IP geöffnet, verwenden die Links weiterhin genau diese Adresse. Hostnamen-, LAN-IP-, Hotspot-IP- und IPv6-Zugriff berücksichtigt; keine erzwungene Umleitung auf einen Hostnamen.
+- „Next Shutdown“ bleibt in Allsky-Setup erhalten, wenn die Menüleiste nach Status- oder Sprachänderungen neu aufgebaut wird. Die Anzeige wird wieder eingesetzt, ohne doppelte Elemente anzulegen.
+- Bei kurzzeitig fehlender Statusantwort wird die bekannte Witty-Hardware nicht als abwesend behandelt. Die Anzeige meldet einen nicht verfügbaren Status und versucht den Abruf erneut; noch nicht initialisierte Navigation wird ebenfalls erneut abgefragt.
+- Allsky 2024 verwendet für den USB-/SD-Speicherort weiterhin die bisherige Methode; Allsky ab 2026 erhält die neue Web-Konfiguration über den offiziellen Generator. Die Trixie-/PHP-FPM-Anpassungen bleiben erhalten.
+- Datensicherung und Wiederherstellung über Webseite und Windows-Programm sichern Speicherpfad und Benutzereinstellungen. Bei Allsky 2026 werden die Web-Pfaddaten nach Wiederherstellung neu erzeugt. Konfigurationsbackups enthalten keine Aufnahmen; vorhandene Bilder bleiben bei Wiederherstellung unverändert.
+- Wiederherstellung erfordert denselben Allsky-Softwarestand. Abweichende Versionen und Builds werden angezeigt und abgewiesen.
+- Alle GPS-, GS-Kamera-, Belichtungs-, Navigations- und Backup-Änderungen aus 0.7.4 bleiben enthalten. Für diese Korrekturen nur Witty Addon aktualisieren; das Windows-Programm nutzt weiterhin dieselben Backup-Schnittstellen.
 
 English
 
-- Allsky 2024 automatically uses the legacy image-storage method; Allsky 2026 onward uses the new configuration. Select a USB drive or SD card in Allsky Setup.
-- Storage changes update the image path and web configuration while retaining existing Trixie/PHP-FPM settings.
-- Web and Windows configuration backup/restore preserve the storage path and user settings. For Allsky 2026, the web configuration is regenerated after restore and stale path data is repaired.
-- Configuration backups exclude captured images; restoring leaves existing images unchanged. Restoring requires the same Allsky release and software build; mismatches are reported and rejected.
-- USB/SD changes, copy/move/leave operations, rollback, and shared web backup/upload-restore endpoints were tested with original upstream scripts; hardware services were simulated.
-- Storage-method guidance is available in German and English. Only the Witty Add-on update is required; Windows uses the same backup endpoints.
-- Previous 0.7.4 GPS polling and all 0.7.3 Build 3 improvements remain included.
+- Navigation preserves the address already used by the browser instead of replacing a resolved hostname with the Raspberry LAN IP.
+- Direct hotspot access keeps the hotspot IP across service links; hostname, LAN IP and IPv6 access are also preserved. No forced hostname redirect is introduced.
+- Next Shutdown is reattached after Allsky Setup rebuilds its navigation on status/language changes, without duplicate widgets.
+- Temporary status failures keep the known hardware state, report unavailable status, and retry. Navigation that is still initializing is also retried.
+- Allsky 2024 retains legacy image-storage configuration; Allsky 2026 onward uses its official generator and new web paths. Existing Trixie/PHP-FPM settings are retained.
+- Web and Windows configuration backups preserve the storage path and user settings; restored 2026 web path data is regenerated. Captured images are excluded and remain untouched. Restoring requires the same Allsky release and build.
+- Previous GPS, GS-camera, exposure, navigation and backup changes remain included. Update Witty Add-on only; Windows uses the existing shared backup endpoints.

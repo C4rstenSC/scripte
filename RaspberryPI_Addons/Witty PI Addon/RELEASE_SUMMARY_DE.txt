@@ -1,3 +1,15 @@
+Witty Add-on 0.7.5 – 10.10.2026
+
+- Navigation behält den im Browser verwendeten Hostnamen bei. Die bereits aufgelöste Adresse wird beim Wechsel zwischen Witty Addon, Allsky, Allsky-Setup, WURB und WIRC nicht mehr durch die Raspberry-LAN-IP ersetzt.
+- Hotspot-Zugriff bleibt möglich: Wird eine Seite über die Hotspot-IP geöffnet, verwenden die Links weiterhin genau diese Adresse. Hostnamen-, LAN-IP-, Hotspot-IP- und IPv6-Zugriff berücksichtigt; keine erzwungene Umleitung auf einen Hostnamen.
+- „Next Shutdown“ bleibt in Allsky-Setup erhalten, wenn die Menüleiste nach Status- oder Sprachänderungen neu aufgebaut wird. Die Anzeige wird wieder eingesetzt, ohne doppelte Elemente anzulegen.
+- Bei kurzzeitig fehlender Statusantwort wird die bekannte Witty-Hardware nicht als abwesend behandelt. Die Anzeige meldet einen nicht verfügbaren Status und versucht den Abruf erneut; noch nicht initialisierte Navigation wird ebenfalls erneut abgefragt.
+- Allsky 2024 verwendet für den USB-/SD-Speicherort weiterhin die bisherige Methode; Allsky ab 2026 erhält die neue Web-Konfiguration über den offiziellen Generator. Die Trixie-/PHP-FPM-Anpassungen bleiben erhalten.
+- Datensicherung und Wiederherstellung über Webseite und Windows-Programm sichern Speicherpfad und Benutzereinstellungen. Bei Allsky 2026 werden die Web-Pfaddaten nach Wiederherstellung neu erzeugt. Konfigurationsbackups enthalten keine Aufnahmen; vorhandene Bilder bleiben bei Wiederherstellung unverändert.
+- Wiederherstellung erfordert denselben Allsky-Softwarestand. Abweichende Versionen und Builds werden angezeigt und abgewiesen.
+- Alle GPS-, GS-Kamera-, Belichtungs-, Navigations- und Backup-Änderungen aus 0.7.4 bleiben enthalten. Für diese Korrekturen nur Witty Addon aktualisieren; das Windows-Programm nutzt weiterhin dieselben Backup-Schnittstellen.
+
+
 Witty Add-on 0.7.4 – Build 2 – 10.10.2026
 
 - Allsky-Speicherort: Bei Allsky 2024 wird automatisch die bisherige Methode verwendet, bei Allsky ab 2026 die neue Konfiguration. USB-Stick und SD-Karte können über Allsky-Setup ausgewählt werden.
