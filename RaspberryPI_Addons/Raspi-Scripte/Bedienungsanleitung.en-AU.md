@@ -77,3 +77,5 @@ The Raspberry Pi connection is checked over SSH every 5 seconds. Loss turns the 
 Base installation no longer expands the SD partition or filesystem. Raspberry Pi OS handles automatic expansion on first boot. Manual expansion remains available under Micro SD card options.
 
 After downloading, package progress also shows preparation, unpacking, configuration and finalisation with package names and counters. Cached packages are counted separately from downloads. Terminal process-group faults fixed in Witty add-on prerequisites, WURB/WIRC repair and individual installation, GPS configuration and Witty Pi 4 installation: outer and inner timed package calls preserve the foreground terminal. Missing Pi 5 hwclock is installed with base dependencies. Automatic expansion remains removed from base installation; manual SD controls are retained.
+
+Allsky archives use bounded-memory streaming decryption and checksum verification. Visible progress for archive parts, decryption, SD write completion, extraction and Git validation. Authentication remains mandatory; invalid packages never replace existing files.
