@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 # Allgemeiner Update-Starter. Das öffentliche GitHub-Paket ist verschlüsselt.
-# Raspi-Scripte 0.7.1 lädt und entschlüsselt es vorab und legt die geprüfte ZIP
+# Raspi-Scripte 0.7.2 lädt und entschlüsselt es vorab und legt die geprüfte ZIP
 # im Benutzer-Home ab. Dadurch liegt das Paket auf GitHub nicht im Klartext.
 readonly ADDON_ENCRYPTED_URL="https://raw.githubusercontent.com/C4rstenSC/scripte/main/RaspberryPI_Addons/Witty%20PI%20Addon/witty_addon.zip.enc"
 
@@ -90,7 +90,7 @@ else
         log "Verwende die von Raspi-Scripte vorbereitete witty_addon.zip aus $prepared_zip ..."
         cp -- "$prepared_zip" "$archive"
     else
-        die "Kein entschlüsseltes Witty-Paket und kein lokaler Entschlüsseler vorhanden. Bitte zuerst über Raspi-Scripte 0.7.1 installieren."
+        die "Kein entschlüsseltes Witty-Paket und kein lokaler Entschlüsseler vorhanden. Bitte zuerst über Raspi-Scripte 0.7.2 installieren."
     fi
 fi
 

@@ -1,3 +1,13 @@
+Witty Add-on 0.7.2 – 10.10.2026
+
+Build 20261010.10
+- Allsky-Archiv 2026-10-01 auf Original-Commit 2b2c7b13 vom 06.10.2026 aktualisiert; 2024er Archiv bleibt erhalten. Trixie-Paketnamen auch im PHP-Modulschritt korrigiert: libatlas-base-dev → libopenblas-dev, python-dev → python3-dev. APT-Ausgabe erscheint während der offiziellen Installation direkt im Terminal; bei Ausgabepausen erfolgt alle 15 Sekunden eine Zeitmeldung. Fortschrittszeile zeigt Gesamtdauer und Dauer der aktuellen Phase, alle fünf Sekunden aktualisiert. Installiertes Add-on-Datum korrigiert; GitHub-Updateerkennung berücksichtigt jetzt Build-Revisionen innerhalb Version 0.7.1.
+
+Allsky-Änderungen cbbe1b7f (01.10.) → 2b2c7b13 (06.10.2026): GPIO-/I2C-Gruppenrechte ergänzt; Paketlisten vor der Installer-Voraussetzungsprüfung aktualisiert; vollständigere Modul-Fehlerprotokolle; fehlgeschlagene oder unvollständige Modulablauf-Speicherung wird angezeigt und überschreibt keine Abläufe mit null; Zeichenketten false/true werden bei Moduloptionen sowie Autoexposure/Autogain korrekt ausgewertet; Datenexport verwendet den korrigierten ALLSKYVARIABLES-Import; ungültige Bildmittelwerte werden robuster verarbeitet; Meteorlisten berücksichtigen Aufnahmen nach Mitternacht und vermeiden markierte Doppelbilder; Overlay-Variablen werden auch nach späterer Modulinstallation migriert; Mini-Timelapse-Links beim Website-Upgrade korrigiert; Remote-Website-Version wird aus dem richtigen Konfigurationsfeld gelesen; Versionsprüfung alle 12 Stunden mit einer Stunde Pause nach Netzwerkfehlern; gemeinsame Netzwerkfehler-Zählung und Geheimnisfilterung ergänzt; Status-Tooltip und Schrifticon-Pfade korrigiert; Upgrade-Dokumentation erweitert. Die Trixie-Paketnamenskorrektur ist unsere zusätzliche Anpassung und gehört nicht zu diesen Herstellerkorrekturen.
+
+Sicherung und Wiederherstellung geprüft: Website und Windows verwenden dieselbe Archivfunktion. GS-Auswahl, manuelle und automatische Tag-/Nacht-Belichtungen bleiben enthalten. Abweichende Releases oder Git-Builds werden vor Dienst- und Dateiänderungen mit Anzeige beider Stände abgewiesen – auch bei gleicher Versionsnummer. Nach Installation des neuen Allsky-Builds eine neue Sicherung erstellen; Backups des alten Builds dürfen nicht in den neuen Stand eingespielt werden.
+
+
 Witty Add-on 0.7.1 – 10.10.2026
 
 - Allsky-Paketinstallation unterdrückt Debian-Rückfragen auch hinter sudo und begrenzt Paketaufrufe zeitlich. Interaktive Allsky-Dialoge bleiben bedienbar.

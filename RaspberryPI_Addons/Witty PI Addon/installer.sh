@@ -86,7 +86,7 @@ else
         log "Verwende die von Raspi-Scripte vorbereitete witty_addon.zip aus $prepared_zip ..."
         cp -- "$prepared_zip" "$archive"
     else
-        die "Erstinstallation benötigt Raspi-Scripte 0.7.1; danach kann der Raspberry verschlüsselte Updates selbst verarbeiten."
+        die "Erstinstallation benötigt Raspi-Scripte 0.7.2; danach kann der Raspberry verschlüsselte Updates selbst verarbeiten."
     fi
 fi
 
