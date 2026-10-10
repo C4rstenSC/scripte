@@ -1,7 +1,3 @@
-# Witty Add-on 0.7.1
-
-Release: 10.10.2026
-
 Witty Add-on 0.7.1 – 10.10.2026
 
 - Allsky-Paketinstallation unterdrückt Debian-Rückfragen auch hinter sudo und begrenzt Paketaufrufe zeitlich. Interaktive Allsky-Dialoge bleiben bedienbar.
@@ -10,6 +6,3 @@ Witty Add-on 0.7.1 – 10.10.2026
 - Die bestätigten GPS-Zeit- und WURB-Umschaltkorrekturen bleiben enthalten.
 - GS-Kamera (Raspberry Pi IMX296): Auswahl im Basisinstaller und Allsky-Installationsdialog. Ergänztes Kameraprofil ermöglicht die direkte GS-Erkennung; Tag-/Nacht-Autobelichtung und manuelle Startwerte werden bei Auswahl auf maximal 15 Sekunden begrenzt. Die GS-Auswahl ist auch unter Allsky - Setup verfügbar. Spätere manuelle Änderungen bleiben erhalten, auch beim Allsky-Update.
 - Allsky - Setup: Tag-/Nacht-Belichtungszeiten in Sekunden anzeigen und ändern, automatische Belichtung getrennt schalten. Direkte Übernahme in Allsky mit Rücklesen, Neustart eines laufenden Dienstes und Rücknahme bei Fehlern. GS-Warnhinweis in Rot (Deutsch/Englisch), auch auf der Allsky-Homepage. Sonnenwinkel-/Tag-Nacht-Wechsel verwendet die GS-Obergrenze von 15 Sekunden; alle Kameraeinstellungen sind in Website-/Windows-Sicherungen und Wiederherstellungen enthalten.
-
-
-Update und Neuinstallation verwenden das AES-256-GCM-verschlüsselte Paket `witty_addon.zip.enc`.
