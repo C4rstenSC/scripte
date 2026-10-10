@@ -65,3 +65,19 @@ Im GPS-Bereich ist der tatsächlich aktive Empfänger hellgrün hinterlegt, unab
 
 
 GPS-Abgleich korrigiert: Beide GPS-Buttons synchronisieren Linux, Witty-RTC und eine aktive Pi-RTC über denselben geprüften Ablauf. Die Witty-Uhr wird beim tatsächlichen Auslesen zeitlich erfasst; kein pauschaler Sekundenoffset.
+
+
+## Änderungen in 0.7.1
+Bei Allsky stehen zwei verschlüsselte Archive (Carsten Github) und die aktuelle Version (Github ALLSKY) zur Auswahl. Diese Auswahl erscheint sowohl im Basisinstaller als auch unter „Raspberry Scripte → Allsky → Software installieren“. Die Archive enthalten die vollständigen Allsky-Quellen; Betriebssystempakete benötigen weiterhin Internetzugang.
+Die Allsky-Paketphase läuft ohne Debian-Rückfragen. Allsky-eigene Kamera- und Konfigurationsdialoge bleiben im SSH-Terminal bedienbar.
+Software wird ausschließlich über Windows installiert und deinstalliert. Die Witty-Webseite zeigt nur installierte Dienste und bietet deren Start-/Stopp-Schaltflächen.
+
+### Global-Shutter-Kamera (IMX296)
+GS-Kamera vor der Installation anschließen und „GS-Kamera (IMX296): maximal 15 Sekunden Belichtung“ auswählen. Der Haken steht sowohl im Basisinstaller als auch im einzelnen Allsky-Installationsdialog zur Verfügung. Alle drei Allsky-Versionen erhalten das benötigte IMX296-Kameraprofil; eine Ersatzkamera für die Installation ist nicht erforderlich.
+Bei gewähltem Haken werden Tag-/Nacht-Autobelichtung sowie manuelle Startwerte auf höchstens 15.000 ms (= 15 Sekunden) begrenzt; kürzere Werte bleiben erhalten. Allsky verwendet seine eigene automatische Belichtungsregelung innerhalb dieser Grenzen.
+Auf „Allsky - Setup“ lässt sich die gleiche GS-Einstellung für die bereits ausgewählte GS-Kamera übernehmen. Die Seite zeigt die tatsächlichen maximalen Tag-/Nachtwerte in Sekunden. Allsky wird bei laufendem Dienst kurz angehalten und mit den neuen Werten gestartet. Ausschalten behält die aktuellen Belichtungswerte bei. Manuelle Änderungen in Allsky werden nicht im Hintergrund zurückgesetzt und bleiben beim Allsky-Update erhalten.
+
+### Belichtungszeiten auf Allsky - Setup
+Die vier Felder zeigen die tatsächlichen Allsky-Werte für manuelle/Startbelichtung und maximale Autobelichtung, jeweils für Tag und Nacht. Alle Eingaben sind in Sekunden. Separate Haken schalten die automatische Belichtung für Tag und Nacht ein oder aus. „Belichtungszeiten übernehmen“ speichert die Werte in Allsky, liest sie zur Bestätigung zurück und startet einen vorher laufenden Dienst mit diesen Werten neu. Ein gestoppter Dienst bleibt gestoppt. Bei Startfehlern werden die vorherigen Werte wiederhergestellt.
+Bei einer GS-Kamera erscheint der rote Hinweis „Maximal 15 Sekunden Belichtungszeit empfohlen“, auch auf der Allsky-Homepage. Die GS-Voreinstellung begrenzt beide Automatikwerte auf 15 Sekunden. Der standort-/sonnenwinkelabhängige Wechsel zwischen Tag und Nacht und Allskys Helligkeitsregelung verwenden diese Grenzen. Spätere bewusste Änderungen sind möglich, soweit das Kameraprofil sie erlaubt.
+Alle vier Belichtungswerte, die Automatik-Auswahl und die GS-Kennzeichnung werden gemeinsam mit settings.json/options.json gesichert und über Website oder Windows wiederhergestellt. Auch die Update-Wiederherstellung erhält sie. Backups können weiterhin ausschließlich auf denselben Allsky-Softwarestand zurückgespielt werden.
