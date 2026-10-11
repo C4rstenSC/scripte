@@ -1,0 +1,13 @@
+Witty Add-on 0.7.6 – Build 1 – 11.10.2026
+
+- Allsky-Wiederherstellung korrigiert die Dateirechte und Webservergruppe. env.json mit Zugangsdaten bleibt privat und für den Allsky-Webserver lesbar. Bereits betroffene Konfigurationen werden beim Witty-Update ebenfalls geprüft und die Rechte korrigiert.
+- Alle gesicherten Konfigurationsbereiche berücksichtigt: Aufnahme- und Kameraeinstellungen, Overlays mit Schriften und Grafiken, eigene Module, Moduleinstellungen, Umgebungsdaten und Website-Konfiguration. Ausführbare Benutzermodule behalten ihre Ausführungsrechte.
+- SQLite-Datenbanken werden als konsistente Sicherungen übernommen. Veraltete WAL-/SHM-Dateien werden in allen wiederhergestellten Bereichen entfernt.
+- Beschädigte, unvollständige oder doppelte Archiveinträge werden vor Änderungen abgewiesen. Fehlende oder ungültige env.json verhindert eine angeblich vollständige neue Sicherung.
+- Wiederherstellung verlangt denselben Allsky-Softwarestand und denselben eingerichteten Kameratyp samt Kameramodell. Abweichende Kameras werden vor Dienststopp und Dateiänderungen angezeigt und abgewiesen. Ein physisch umgestecktes Gerät muss vorher in Allsky eingerichtet werden.
+- Fehlende externe Bildspeicher werden vor Wiederherstellung erkannt. Rückrollkopie und vorherige Dienst-/Timerzustände bleiben berücksichtigt. Aufnahmen werden nicht gesichert oder durch die Wiederherstellung ersetzt.
+- GPS-Empfänger-Übernahmebutton aus Allsky-Setup entfernt; manuelle Positionseingabe bleibt verfügbar. Wiederherstellungshinweise auf Deutsch und Englisch ergänzt.
+- WURB/WIRC: Quellenaktualisierung darf nicht mehr trotz Fehler weiterlaufen. Lokale versionierte Änderungen werden vor Aktualisierung gesichert. Fehlende requirements.txt oder nicht beendete Dienste verhindern eine unvollständige Installation.
+- Python-Laufzeitprüfung für Bookworm und Trixie vereinheitlicht. Zusätzliche Trixie-Paketinstallation berücksichtigt Paketsperren, Zeitlimit und nichtinteraktiven Betrieb.
+- Webseite und Windows-Programm verwenden dieselben korrigierten Raspberry-Schnittstellen. Nur Witty Add-on aktualisieren; kein neues Windows-Programm nötig.
+- Tests: 45 erfolgreiche Testausführungen vor Verpackung, Original-Pfaddefinitionen Allsky 2024/2026 sowie lokale WURB/WIRC-Git-Installationen geprüft. Dienste und Eigentümerwechsel simuliert; keine vollständige Hardwareinstallation getestet.
