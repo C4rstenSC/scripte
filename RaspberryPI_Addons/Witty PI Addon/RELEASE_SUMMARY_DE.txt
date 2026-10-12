@@ -1,3 +1,12 @@
+Witty Add-on 0.8.1 – 12.10.2026
+
+- WURB/WIRC installieren kompatible Python-Webpakete direkt; unnötiges Installieren neuer Versionen mit anschließendem Downgrade entfällt.
+- Vorhandene pip-Downloads werden wiederverwendet; auch die optionale GPS-Zeitzonendatenbank nutzt ihren Cache.
+- Reparaturen ergänzen zunächst fehlende oder abweichende Pakete. Vollständige Neuinstallation ohne Cache nur bei weiterhin beschädigten Importen.
+- Getrennte Python-Umgebungen für WURB, WIRC und Witty bleiben erhalten.
+- Paketauflösung und wiederholte Installation ohne erneute Paketinstallation offline geprüft.
+
+
 Witty Add-on 0.7.6 – Build 1 – 11.10.2026
 
 - Allsky-Wiederherstellung korrigiert die Dateirechte und Webservergruppe. env.json mit Zugangsdaten bleibt privat und für den Allsky-Webserver lesbar. Bereits betroffene Konfigurationen werden beim Witty-Update ebenfalls geprüft und die Rechte korrigiert.
@@ -1432,3 +1441,4 @@ Witty Add-on Version 0.6 - 17.09.2026
   Entschluesseler auf dem Raspberry eingerichtet. Spaetere Updates ueber die
   Witty-Webseite koennen das verschluesselte GitHub-Paket damit direkt laden,
   entschluesseln, pruefen und installieren.
+

@@ -1,16 +1,12 @@
-# Raspi-Scripte 0.8.0
+# Raspi-Scripte 0.8.1
 
-Windows Raspi-Scripte 0.8.0 – Build 1 – 12.10.2026
+Windows Raspi-Scripte 0.8.1 – 12.10.2026
 
-- Neue Tabs: Raspberry Pi enthält alle bisherigen Bereiche einschließlich Verbindung und Terminal. mSD Karte enthält SD-Karte beschreiben, mSD Image erstellen und Image wieder einspielen.
-- Raspberry-Pi-Auswahl ab Modell 4 mit Modell 5 und zugehörigen 400/500-/Compute-Module-Varianten. Bookworm und Trixie ausschließlich als offizielle 64-Bit-Lite-Images.
-- Offizieller Raspberry Pi Imager ab Version 2.x wird im Windows-Programm eingebettet. Laufwerksauswahl, Hostname, Benutzerkonto, WLAN, SSH, Region, unterstützte Connect-Funktionen, Schreiben und Prüfen bleiben Funktionen des originalen Imagers. Der Imager muss auf Windows installiert sein; Auswahl einer vorhandenen EXE und Link zum offiziellen Download enthalten.
-- Eigene Linux-Images können eingebunden werden. Deren Aktualität und ARM64-/Modell-Kompatibilität werden nicht als geprüft ausgegeben; unbekannte Images erhalten keine geratenen OS-Voreinstellungen.
-- Automatischer lokaler Cache pro Bookworm-/Trixie-Lite-Version: Offizielle Liste beim Laden auf Aktualität prüfen, vorhandenes aktuelles Image wiederverwenden. Neuen Stand vollständig herunterladen und gegen die offizielle unkomprimierte SHA256-Prüfsumme prüfen, danach alten Cache löschen. Fremde eigene Images bleiben erhalten. Ohne Internet vorhandenen Cache verwenden und fehlende Onlineprüfung kenntlich machen.
-- Gesamte SD-Karte als unkomprimierte IMG-Datei sichern, anschließend Bytevergleich. Image niemals auf derselben Karte ablegen. Nicht genug freier Speicher, FAT32-Größenlimit, vorhandene Zieldateien und unvollständige Kopien werden erkannt.
-- IMG-Dateien auf ein ausgewähltes externes Ziellaufwerk zurückschreiben und vollständig prüfen. Windows-Start-/Systemlaufwerke ausgeschlossen; Karte vor Datenträgerzugriff erneut identifizieren. Alle Daten des Zielmediums werden erst nach ausdrücklicher Bestätigung gelöscht. Windows fordert die erforderlichen Administratorrechte an.
-- Fortschritt, Geschwindigkeit und geschätzte Restzeit oberhalb der Bereiche. Imager-Messwerte werden aus seiner zugänglichen Oberfläche übernommen; nicht bereitgestellte Werte bleiben unbekannt und die Originalanzeige bleibt sichtbar. IMG-Operationen messen übertragene Bytes; 100 Prozent erst nach Prüfung.
-- Optional Partition und ext4-Dateisystem eines unterstützten Raspberry-Pi-OS-Images beim nächsten Raspberry-Start expandieren. Ein einmaliger Bootauftrag verwendet raspi-config und den folgenden Neustart; bestehende Konten und Netzwerke werden nicht neu eingerichtet. Sonderlayouts werden vor dem Schreiben abgewiesen, wenn Expandieren aktiviert ist.
-- Abbrechen für IMG-Sicherung/Wiederherstellung. Unvollständige Sicherungen werden nicht als fertige IMG-Datei ausgegeben; unterbrochene Zielkarten müssen erneut geschrieben werden. Gleichzeitige Schreibvorgänge werden verhindert.
-- Info-Menü: Versionsinfo entfernt. Windows 0.8.0, Witty Add-on unverändert auf 0.7.6; alle bisherigen RPi-/GPS-/Allsky-Funktionen enthalten.
-- Build und simulierte Stream-/FAT-/XZ-Cache-Tests durchgeführt. Kein physischer SD-Schreibtest oder Windows-Imager-Einbettungstest in dieser Linux-Umgebung; diese Funktionen benötigen Prüfung auf Windows.
+- „Ausgewählte Konfig installieren“ ersetzt die bisherigen Imager-Buttons und öffnet den originalen Raspberry-Pi-Imager-Assistenten mit Modell und Linux-Auswahl.
+- Imager ab 2.0.12 wird automatisch gesucht; aktueller Installationspfad ergänzt. Bei fehlender/älterer Version wird das signaturgeprüfte offizielle Setup geöffnet.
+- SD-Karten werden beim Öffnen des Bereichs und der Laufwerksauswahl automatisch abgefragt.
+- USB-C-/UASP-Kartenleser werden über ihre Gerätehierarchie auch bei SCSI-Meldung berücksichtigt.
+- Beschriebene SD-Karten und Karten ohne Windows-Laufwerksbuchstaben können ausgewählt werden. System-/Bootlaufwerke bleiben ausgeschlossen.
+- Gleichzeitige Image-Operationen werden gesperrt; Schreiben erst nach Laufwerksauswahl und Löschbestätigung im Imager.
+- Optimiertes Witty Add-on 0.8.1 im Update enthalten.
+- Kein physischer SD-Schreibtest und kein Windows-Imager-Oberflächentest in dieser Linux-Umgebung.
