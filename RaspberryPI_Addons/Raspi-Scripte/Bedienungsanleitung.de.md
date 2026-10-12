@@ -133,3 +133,7 @@ Windows Raspi-Scripte 0.8.0 – Build 1 – 12.10.2026
 - Abbrechen für IMG-Sicherung/Wiederherstellung. Unvollständige Sicherungen werden nicht als fertige IMG-Datei ausgegeben; unterbrochene Zielkarten müssen erneut geschrieben werden. Gleichzeitige Schreibvorgänge werden verhindert.
 - Info-Menü: Versionsinfo entfernt. Windows 0.8.0, Witty Add-on unverändert auf 0.7.6; alle bisherigen RPi-/GPS-/Allsky-Funktionen enthalten.
 - Build und simulierte Stream-/FAT-/XZ-Cache-Tests durchgeführt. Kein physischer SD-Schreibtest oder Windows-Imager-Einbettungstest in dieser Linux-Umgebung; diese Funktionen benötigen Prüfung auf Windows.
+
+
+## SD-Karte ab Build 4
+Raspberry Pi Imager wird nicht mehr benötigt. Oben die Ziel-SD-Karte auswählen und „Ausgewählte Konfig installieren“ öffnen. Hostname, Benutzer, WLAN, SSH und Region im eigenen Dialog eingeben. Nach der Löschbestätigung fordert Windows ausschließlich für den Kartenworker Administratorrechte an.
