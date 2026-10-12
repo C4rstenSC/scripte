@@ -1,9 +1,12 @@
-# Witty Add-on 0.8.1
+# Witty Add-on 0.8.2
 
-Witty Add-on 0.8.1 – 12.10.2026
+Witty Add-on 0.8.2 – 12.10.2026
 
-- WURB/WIRC installieren kompatible Python-Webpakete direkt; unnötiges Installieren neuer Versionen mit anschließendem Downgrade entfällt.
-- Vorhandene pip-Downloads werden wiederverwendet; auch die optionale GPS-Zeitzonendatenbank nutzt ihren Cache.
-- Reparaturen ergänzen zunächst fehlende oder abweichende Pakete. Vollständige Neuinstallation ohne Cache nur bei weiterhin beschädigten Importen.
-- Getrennte Python-Umgebungen für WURB, WIRC und Witty bleiben erhalten.
-- Paketauflösung und wiederholte Installation ohne erneute Paketinstallation offline geprüft.
+- Offline-SD-Schrumpfen prüft das minimierte ext4-Dateisystem vor der Änderung der Partitionsgrenze erneut.
+- Abschließend werden Dateisystem- und Partitionsgröße gegengeprüft. Größen vorher/nachher und tatsächliche Verkleinerung stehen in witty-sd-result.json auf der Bootpartition.
+- Ergebnistext unterscheidet eine erfolgte Verkleinerung von „keine weitere Verkleinerung mit 512 MiB Reserve möglich“.
+- Wartungsimage enthält die erforderlichen Hilfsprogramme ausdrücklich; BusyBox aus initramfs-tools wird ebenfalls unterstützt.
+- Status weist ein Dateisystem zurück, das größer als seine Partition ist.
+- Alle bisherigen Installations-, GPS- und Paketkorrekturen bis 0.8.1 enthalten.
+- Windows 0.8.2 verwendet beim Backup die verifizierten Partitionsgrenzen.
+- Offline-Wartungsstart auf echter Raspberry-Hardware noch zu prüfen.

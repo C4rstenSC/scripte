@@ -137,3 +137,11 @@ Windows Raspi-Scripte 0.8.0 – Build 1 – 12.10.2026
 
 ## SD-Karte ab Build 4
 Raspberry Pi Imager wird nicht mehr benötigt. Oben die Ziel-SD-Karte auswählen und „Ausgewählte Konfig installieren“ öffnen. Hostname, Benutzer, WLAN, SSH und Region im eigenen Dialog eingeben. Nach der Löschbestätigung fordert Windows ausschließlich für den Kartenworker Administratorrechte an.
+
+
+## Version 0.8.2 – SD und IMG
+Bereiche heißen „mSD-Karten IMG erstellen“ und „IMG auf SD-Karte schreiben“. Ein bereits geschrumpftes Raspberry-Pi-MBR-System wird bis zum Ende seiner letzten Partition gesichert. Die Anzeige nennt IMG- und Kartengröße; bei nicht bestätigter Verkleinerung wird vor dem Kopieren nachgefragt. Nicht zugeordneter Platz am Kartenende wird bei bestätigter Verkleinerung ausgelassen. Ein Dateisystem ohne verkleinerte Partition reicht dafür nicht aus. GPT/andere Layouts werden vollständig gesichert.
+
+„Hostname setzen“ im Schreibbereich ändert den Erststartauftrag auf der ausgewählten Karte. Der neue Hostname wird beim nächsten Raspberry-Start gesetzt. Vorhandene Witty-Expandieraufträge werden mit ausgeführt.
+
+Entpackte Original-Images bleiben unverändert im geprüften Cache. Persönliche Einstellungen werden in einer temporären Arbeitskopie vorgenommen. Bei neuer Imageversion ersetzt das fertig geprüfte IMG den alten Cache derselben OS-Familie.

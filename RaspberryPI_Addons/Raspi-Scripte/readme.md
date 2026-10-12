@@ -1,12 +1,13 @@
-# Raspi-Scripte 0.8.1
+# Raspi-Scripte 0.8.2
 
-Windows Raspi-Scripte 0.8.1 – 12.10.2026
+Windows Raspi-Scripte 0.8.2 – 12.10.2026
 
-- „Ausgewählte Konfig installieren“ ersetzt die bisherigen Imager-Buttons und öffnet den originalen Raspberry-Pi-Imager-Assistenten mit Modell und Linux-Auswahl.
-- Imager ab 2.0.12 wird automatisch gesucht; aktueller Installationspfad ergänzt. Bei fehlender/älterer Version wird das signaturgeprüfte offizielle Setup geöffnet.
-- SD-Karten werden beim Öffnen des Bereichs und der Laufwerksauswahl automatisch abgefragt.
-- USB-C-/UASP-Kartenleser werden über ihre Gerätehierarchie auch bei SCSI-Meldung berücksichtigt.
-- Beschriebene SD-Karten und Karten ohne Windows-Laufwerksbuchstaben können ausgewählt werden. System-/Bootlaufwerke bleiben ausgeschlossen.
-- Gleichzeitige Image-Operationen werden gesperrt; Schreiben erst nach Laufwerksauswahl und Löschbestätigung im Imager.
-- Optimiertes Witty Add-on 0.8.1 im Update enthalten.
-- Kein physischer SD-Schreibtest und kein Windows-Imager-Oberflächentest in dieser Linux-Umgebung.
+- Entpackte IMG-Dateien bleiben geprüft im lokalen Cache; unveränderte Images werden wiederverwendet. Eigene unkomprimierte IMG-Dateien werden nicht erneut entpackt oder gelöscht.
+- Trixie-Fehler „Invalid path: user-data“ korrigiert: VFAT-Dateinamen user-data, meta-data und network-config werden korrekt angelegt und zurückgelesen.
+- Vor dem IMG-Backup werden Partitionen und ext4-Dateisystem gegen die tatsächliche Kartengröße geprüft. Bereits verkleinerte Standard-MBR-Installationen werden bis zum Ende der letzten Partition gesichert, statt die gesamte Karte zu lesen.
+- Ohne bestätigte Verkleinerung erscheint die vollständige IMG-Größe vor dem Kopieren; Fortsetzen erfordert eine bewusste Auswahl. Widersprüchliche Partitions-/Dateisystemgrößen verhindern das Backup.
+- „Hostname setzen“ links neben „Abbrechen“ unter „IMG auf SD-Karte schreiben“: Hostname auf der gewählten Karte für den nächsten Raspberry-Start vorbereiten. Kein vollständiges Neuschreiben der Karte; vorhandene Expandieraufträge bleiben erhalten.
+- Überschriften: „mSD-Karten IMG erstellen“ und „IMG auf SD-Karte schreiben“.
+- Abbruchtexte unterscheiden IMG-Erstellung, Kartenschreiben und Hostname. Bei Backup bleibt die Karte unverändert; unvollständige IMG-Dateien werden entfernt.
+- Schrumpfhelfer erhält zusätzliche Dateisystemprüfung vor der Partitionsänderung und klare Vorher-/Nachher-Größen im Ergebnis. Keine Verkleinerung wird als durchgeführt gemeldet, wenn mit Reserve keine weitere Reduktion möglich ist.
+- Tests mit FAT16/FAT32, ext4, sektorgebundenen Testlaufwerken, Caches und Windows-Build. Tests mit echter SD-Karte, Raspberry-Wartungsboot und erstem Start weiterhin erforderlich.
