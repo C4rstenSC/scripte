@@ -1,17 +1,16 @@
-# Raspi-Scripte 0.7.1
+# Raspi-Scripte 0.8.0
 
-Release: 10.10.2026
+Windows Raspi-Scripte 0.8.0 – Build 1 – 12.10.2026
 
-Direkt vom letzten 0.7.0-Build über die Updatefunktion aktualisieren. Das zusätzliche Zwischenupdate wurde entfernt.
-
-- Programmupdate: `Raspi-Scripte-Programm.zip.enc`
-- Inhaltsupdate: `Raspi-Scripte-Modular-Content.zip.enc`
-- Versionsprüfung: `modular-version.txt` und `modular-update-manifest.json`
-
-Pakete sind AES-256-GCM-verschlüsselt; die Anwendung entschlüsselt und prüft sie automatisch.
-
-Enthalten: Allsky-Installation mit Versionswahl und Trixie-Anpassungen, GS-Kamera IMX296 mit empfohlenen 15 Sekunden, Belichtungseinstellungen auf der Zusatzwebseite und vollständige Kameraeinstellungen in Backups.
-
-English: Update directly from the latest 0.7.0 build using the application update button. The intermediate package has been removed. Includes Allsky version selection, Trixie fixes, GS camera support, exposure controls and configuration backups.
-
-[Deutsche Bedienungsanleitung](Bedienungsanleitung.de.md) · [English user guide](User-guide.en-AU.md)
+- Neue Tabs: Raspberry Pi enthält alle bisherigen Bereiche einschließlich Verbindung und Terminal. mSD Karte enthält SD-Karte beschreiben, mSD Image erstellen und Image wieder einspielen.
+- Raspberry-Pi-Auswahl ab Modell 4 mit Modell 5 und zugehörigen 400/500-/Compute-Module-Varianten. Bookworm und Trixie ausschließlich als offizielle 64-Bit-Lite-Images.
+- Offizieller Raspberry Pi Imager ab Version 2.x wird im Windows-Programm eingebettet. Laufwerksauswahl, Hostname, Benutzerkonto, WLAN, SSH, Region, unterstützte Connect-Funktionen, Schreiben und Prüfen bleiben Funktionen des originalen Imagers. Der Imager muss auf Windows installiert sein; Auswahl einer vorhandenen EXE und Link zum offiziellen Download enthalten.
+- Eigene Linux-Images können eingebunden werden. Deren Aktualität und ARM64-/Modell-Kompatibilität werden nicht als geprüft ausgegeben; unbekannte Images erhalten keine geratenen OS-Voreinstellungen.
+- Automatischer lokaler Cache pro Bookworm-/Trixie-Lite-Version: Offizielle Liste beim Laden auf Aktualität prüfen, vorhandenes aktuelles Image wiederverwenden. Neuen Stand vollständig herunterladen und gegen die offizielle unkomprimierte SHA256-Prüfsumme prüfen, danach alten Cache löschen. Fremde eigene Images bleiben erhalten. Ohne Internet vorhandenen Cache verwenden und fehlende Onlineprüfung kenntlich machen.
+- Gesamte SD-Karte als unkomprimierte IMG-Datei sichern, anschließend Bytevergleich. Image niemals auf derselben Karte ablegen. Nicht genug freier Speicher, FAT32-Größenlimit, vorhandene Zieldateien und unvollständige Kopien werden erkannt.
+- IMG-Dateien auf ein ausgewähltes externes Ziellaufwerk zurückschreiben und vollständig prüfen. Windows-Start-/Systemlaufwerke ausgeschlossen; Karte vor Datenträgerzugriff erneut identifizieren. Alle Daten des Zielmediums werden erst nach ausdrücklicher Bestätigung gelöscht. Windows fordert die erforderlichen Administratorrechte an.
+- Fortschritt, Geschwindigkeit und geschätzte Restzeit oberhalb der Bereiche. Imager-Messwerte werden aus seiner zugänglichen Oberfläche übernommen; nicht bereitgestellte Werte bleiben unbekannt und die Originalanzeige bleibt sichtbar. IMG-Operationen messen übertragene Bytes; 100 Prozent erst nach Prüfung.
+- Optional Partition und ext4-Dateisystem eines unterstützten Raspberry-Pi-OS-Images beim nächsten Raspberry-Start expandieren. Ein einmaliger Bootauftrag verwendet raspi-config und den folgenden Neustart; bestehende Konten und Netzwerke werden nicht neu eingerichtet. Sonderlayouts werden vor dem Schreiben abgewiesen, wenn Expandieren aktiviert ist.
+- Abbrechen für IMG-Sicherung/Wiederherstellung. Unvollständige Sicherungen werden nicht als fertige IMG-Datei ausgegeben; unterbrochene Zielkarten müssen erneut geschrieben werden. Gleichzeitige Schreibvorgänge werden verhindert.
+- Info-Menü: Versionsinfo entfernt. Windows 0.8.0, Witty Add-on unverändert auf 0.7.6; alle bisherigen RPi-/GPS-/Allsky-Funktionen enthalten.
+- Build und simulierte Stream-/FAT-/XZ-Cache-Tests durchgeführt. Kein physischer SD-Schreibtest oder Windows-Imager-Einbettungstest in dieser Linux-Umgebung; diese Funktionen benötigen Prüfung auf Windows.

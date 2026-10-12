@@ -101,3 +101,17 @@ Witty Add-on / Windows 0.7.3 – Build 1 – 10 October 2026
 - Previous GPS, Trixie, GS-camera and backup fixes and both archived Allsky versions remain included.
 
 Allsky initial setup: a missing lastchanged value in settings.json indicates pending setup. Successful installation then does not require a running capture service. Starting the service from Windows explains the required setup and offers to open Allsky Settings.
+
+
+Raspi-Scripte Windows 0.8.0 – Build 1 – 12 October 2026
+
+- Raspberry Pi and mSD card tabs, including the existing connection and terminal controls.
+- Pi 4/5-family selection and official Bookworm/Trixie 64-bit Lite images.
+- Embeds the installed official Raspberry Pi Imager 2.x, retaining its full write/customisation UI.
+- Supports local Linux images; their freshness and device compatibility are not claimed automatically.
+- Checks the official OS catalogue when loading an image; reuses a verified local cache and replaces old images only after successful download and SHA256 verification. User images are never removed.
+- Creates full uncompressed SD .img backups and verifies them; restores .img files to selected external disks with confirmation, system-disk exclusion, disk identity checks and verification.
+- Progress, speed and estimated remaining time; Imager values depend on its accessibility interface and remain unknown if unavailable.
+- Optional one-shot partition/filesystem expansion for supported Raspberry Pi OS images at the next boot, using raspi-config and a reboot.
+- Version information menu removed. Witty Add-on remains 0.7.6.
+- Build and simulated stream/FAT/XZ-cache tests; no physical Windows disk or Imager hosting test performed here.
