@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.8.9 – Bedienungsanleitung
+# Raspi-Scripte 0.9.0 – Bedienungsanleitung
 
 Stand: 13.10.2026
 
@@ -101,3 +101,17 @@ Bei erneut auftretenden Abschaltproblemen kann vor weiterer Schrumpfung `sudo ba
 Nach erfolgreicher Dateisystemprüfung beendet der RAM-Wartungsmodus den Witty-Heartbeat vor dem Aushängen der Bootpartition. Ein später Abschalt- oder Aushängefehler wird getrennt vom bereits geprüften Dateisystem protokolliert. Bei bestätigter Geometrie stellt der Hersteller-Abschlussmodus die normale Bootzeile vor den Herstellerprüfungen wieder her. Die Karte kann danach normal starten, ohne Wartungsparameter manuell zu entfernen.
 
 Für eine bereits betroffene ältere Karte zeigt `systemd.unit=witty-sd-finalise.target` in `cmdline.txt` zusammen mit dem Fehler an `umount /run/witty-boot` den vorliegenden Abschlussfehler. Nur nach Prüfung der zugehörigen Protokolle und Partitionskennung die eigene Wartungs-Bootoption und deren Masken entfernen. Die erzeugte Reparaturdatei für wurbi-n94 erhält PARTUUID und alle übrigen Bootparameter. Die ursprüngliche `config.txt` war bereits korrekt wiederhergestellt.
+
+## Bedienung ab 0.9.0
+
+**Abbild wiederherstellen:** IMG auswählen. Der angezeigte Hostname stammt aus dem Dateisystem im Abbild. „Hostname setzen“ merkt einen anderen Namen vor; die Karte bleibt dabei unverändert. Erst „Image schreiben und prüfen“ schreibt und prüft die vorbereitete Kopie. Der Pi setzt beim ersten Start den neuen Hostnamen samt den vorhandenen Installer-Hotspotnamen (wifi4bats-, allskywifi- oder wifi-). Das Original-IMG und WLAN-Passwörter bleiben erhalten.
+
+**Karten auswählen:** „Laufwerke aktualisieren“ gibt es in jedem der drei SD-Bereiche. Eine vorhandene Auswahl bleibt erhalten; andernfalls wird die erste gefundene Karte angezeigt. Vor einem Schreibauftrag die angezeigte Karte genau prüfen. Bei mehreren Windows-Partitionen werden deren Laufwerksbuchstaben gemeinsam angezeigt.
+
+**Schrumpfen und Sichern:** Den Schrumpfauftrag starten und den Hinweis abwarten. Stromversorgung und Karte bis zum vollständigen Ausschalten angeschlossen lassen. Danach die Karte für „SD-Karte Abbild erstellen“ am PC anschließen. Beim nächsten normalen Pi-Start expandiert ein ab 0.9.0 vorbereiteter und erfolgreich geprüfter Auftrag automatisch wieder. Vor der Sicherung deshalb nicht erneut im Pi starten. Ältere Schrumpfaufträge erhalten diese neue Vormerkung nicht rückwirkend.
+
+**Expandieren:** Der manuelle Vorgang verbindet nach dem Neustart höchstens 50 Sekunden lang automatisch neu. Bei längerer Bootdauer danach manuell verbinden. Installationen und andere geplante Neustarts verwenden weiterhin drei Minuten.
+
+**Programmupdate:** Eigene SD-Aufträge werden abgebrochen; das Update wartet auf das Ende aller Kartenzugriffe. Ein teilweise geschriebenes Abbild muss neu geschrieben werden. Weitere Programminstanzen aus demselben Ordner müssen ihre Vorgänge ebenfalls beenden und geschlossen werden. Wenn das sichere Beenden nicht gelingt, wird das Update nicht installiert.
+
+**Pakete:** Nur die ausgewählten Komponenten erhalten ihre Paketliste. APT und pip prüfen vorhandene Pakete und verwenden passende Downloads erneut. WURB und WIRC besitzen getrennte Laufzeitumgebungen mit gemeinsamem Benutzer-Cache. Entwicklerwerkzeuge black und pylint gehören nicht zur normalen Installation. Grafikfreie GPS-Abfragen benötigen keine grafischen Diagnoseprogramme; die WIRC-Kamera benötigt weiterhin Bild-/Videobibliotheken.

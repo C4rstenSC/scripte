@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.8.9 – User guide
+# Raspi-Scripte 0.9.0 – User guide
 
 Updated: 13 October 2026
 
