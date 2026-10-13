@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "version": "0.8.4",
-  "contentVersion": "0.8.4",
-  "buildRevision": "20261013.2",
+  "version": "0.8.5",
+  "contentVersion": "0.8.5",
+  "buildRevision": "20261013.3",
   "fullPackage": "Raspi-Scripte-Programm.zip",
-  "fullSha256": "f3fd58761b8b050d9783917d66f8bcd85aa8c2f9c72295f9887f7054eb6e9d7a",
+  "fullSha256": "24e0dcafa2619c29f2da18d49547553bac06fe009aa706f74b5014ac5e7c4c9b",
   "contentPackage": "Raspi-Scripte-Modular-Content.zip",
-  "contentSha256": "562575880d9e919a415d9d2e59fc7450d16938ba154460c96b2aa4edbe46f521"
+  "contentSha256": "ab8b379ab5332f23e3a4e5829718f83faca118fb5ce6f6582445ea2c1090c1d4"
 }

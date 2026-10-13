@@ -1,5 +1,12 @@
 [
   {
+    "Version": "0.8.5",
+    "Date": "2026-10-13",
+    "Build": "20261013.3",
+    "Notes": "Witty Add-on 0.8.5 | 13.10.2026\nÄnderungen gegenüber 0.8.4\n\nAbschaltung nach der SD-Verkleinerung\n- Der RAM-Wartungsmodus sendet den Hersteller-Heartbeat, beendet den Witty-Zustand STARTING und bedient den Watchdog während Dateisystemprüfung und Verkleinerung.\n- Der Abschalthelfer prüft den Wechsel in STOPPING. Ein zurückgelesener Befehlswert wird nicht länger fälschlich als Abschaltbestätigung gewertet.\n- Der Heartbeat endet vor der Abschaltmeldung. Die Bootpartition wird zuvor synchronisiert und ausgehängt.\n\nUpdate-Ausgabe und Hilfe\n- Das Terminal zeigt ausschließlich Änderungen seit der tatsächlich installierten Version und Build-Revision. Übersprungene Zwischenversionen werden berücksichtigt; bereits installierte Änderungen und spätere Builds entfallen.\n- Bedienungsanleitung und README auf 0.8.5 aktualisiert. Release Notes sind nach Themen gegliedert.\n\nPrüfstand\n- Herstellerprotokoll mit STARTING, ignoriertem Abschaltbefehl und bestätigtem STOPPING in Softwaretests geprüft.\n- Die tatsächliche Abschaltung von Pi und angeschlossenen Platinen erfordert einen Test an der Hardware.\n",
+    "Source": "Deutsche Witty-Versionshinweise"
+  },
+  {
     "Version": "0.8.4",
     "Date": "2026-10-13",
     "Build": "20261013.2",

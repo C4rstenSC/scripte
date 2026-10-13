@@ -1,10 +1,17 @@
-# Witty Add-on 0.8.4
+# Witty Add-on 0.8.5
 
-Witty Add-on 0.8.4 – 13.10.2026
+Witty Add-on 0.8.5 | 13.10.2026
+Änderungen gegenüber 0.8.4
 
-- Witty Pi 5 wird im Offline-Wartungsmodus vor dem Verkleinern direkt auf I2C-Erreichbarkeit geprüft.
-- Eigener Abschalthelfer sendet die Hersteller-Abschaltmeldung und prüft die Rückmeldung. Der bisherige alleinige wp5d-Aufruf konnte einen fehlgeschlagenen I2C-Zugriff nicht zuverlässig melden.
-- Wartungsimage enthält I2C-Werkzeuge, Controller-Module, Sperrverzeichnisse und den Abschalthelfer. Rechte und Aufruf des über Windows übertragenen Helfers werden ausdrücklich vorbereitet.
-- Windows-Backup kann Schrumpfergebnis und Fehlerprotokoll von der Bootpartition auslesen und anzeigen.
-- Bisherige GPS-, Installations-, Firmware- und Neustartkorrekturen unverändert enthalten.
-- Bestätigte, abgewiesene und nicht bestätigte Abschaltmeldungen im Test geprüft; tatsächliche Abschaltung und Wartungsboot sind hardwareabhängig zu testen.
+Abschaltung nach der SD-Verkleinerung
+- Der RAM-Wartungsmodus sendet den Hersteller-Heartbeat, beendet den Witty-Zustand STARTING und bedient den Watchdog während Dateisystemprüfung und Verkleinerung.
+- Der Abschalthelfer prüft den Wechsel in STOPPING. Ein zurückgelesener Befehlswert wird nicht länger fälschlich als Abschaltbestätigung gewertet.
+- Der Heartbeat endet vor der Abschaltmeldung. Die Bootpartition wird zuvor synchronisiert und ausgehängt.
+
+Update-Ausgabe und Hilfe
+- Das Terminal zeigt ausschließlich Änderungen seit der tatsächlich installierten Version und Build-Revision. Übersprungene Zwischenversionen werden berücksichtigt; bereits installierte Änderungen und spätere Builds entfallen.
+- Bedienungsanleitung und README auf 0.8.5 aktualisiert. Release Notes sind nach Themen gegliedert.
+
+Prüfstand
+- Herstellerprotokoll mit STARTING, ignoriertem Abschaltbefehl und bestätigtem STOPPING in Softwaretests geprüft.
+- Die tatsächliche Abschaltung von Pi und angeschlossenen Platinen erfordert einen Test an der Hardware.

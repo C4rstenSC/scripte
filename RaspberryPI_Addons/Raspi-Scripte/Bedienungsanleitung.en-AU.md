@@ -1,117 +1,57 @@
-# Raspi-Scripte 0.7.3 – User guide (9 October 2026)
+# Raspi-Scripte 0.8.5 – User guide
 
-## Updates
-Use the Windows Update button. The modular program package includes the application DLLs, updater, help and Witty Add-on 0.7.2. Downloads are automatically decrypted and checked against SHA-256 checksums. Connection profiles and an existing activation are retained. Keep the computer and Raspberry Pi powered on until the updater finishes.
+Updated: 13 October 2026
 
-Program updates use Raspi-Scripte-Programm.zip.enc; content updates use Raspi-Scripte-Modular-Content.zip.enc and modular-update-manifest.json. A content update cannot replace compiled application code. Older single-EXE installations need a one-time migration: extract the complete small ZIP into a writable folder and run START.cmd, which installs the .NET 8 Desktop Runtime if needed. Normal small updates are available afterwards.
+## Connection and discovery
 
-Connect before using the Witty update button. Witty can also update through its web page. The latest package contains all GPS, RTC, web-page and software detection changes through 0.6.62, plus the Allsky source selection in 0.7.0.
+Enter the hostname or IP address, user and SSH credentials. Local discovery continues to display active address checks until they finish. Closing the discovery window cancels the scan.
 
-## Base installation and Allsky
-Connect to the new Raspberry Pi and open Base installation. Check the detected Pi and Witty models, country, timezone, keyboard, GPS and selected applications. Australia defaults to Australia/Sydney; adjust the timezone if you are elsewhere in Australia.
+After a restart requested by the application, including GPS changes, it retries the connection automatically for up to three minutes. Manual disconnect cancels reconnection.
 
-Enable Install Allsky, then select Current version – 01.10.2026 (v2026.10.01) or Previous version – 06.12.2024 (revision 06, v2024.12.06_06). Both are encrypted original snapshots from the author's GitHub. The current release is split into multiple files because of GitHub's size limit; the installer combines and decrypts them automatically. All checksums and the exact original Git commit are verified.
+## Program and Witty updates
 
-Allsky's official installer runs last. Internet access for dependencies and a supported connected camera are still required. The version selection applies to the base installer, not the separate application manager. A different existing Allsky version is never overwritten. Back up settings before uninstalling or reinstalling. On an already configured system the base installer may be disabled; this selection is then available on a fresh installation. Backups across different Allsky versions are not guaranteed compatible.
+Use the program update button. Packages are checked and decrypted automatically; the updater restarts the application. Connection profiles and activation are retained. Program changes require a program update; the content package updates texts and other resources.
 
-## GPS, clocks and software detection
-Select USB GPS, Waveshare L76X or No GPS. USB preparation does not require a connected receiver. Pi 4 lets WURB read the USB receiver directly; Pi 5 uses gpsd and the shared NMEA bridge. Complete original NMEA fields, satellite counts, HDOP and fix quality are retained. USB gpsd is read-only and the bridge reconnects after a gpsd restart. No additional USB driver is included.
+Use “Witty Addon Software update” for the Raspberry add-on. Terminal release notes include only changes newer than the installed version and build, including skipped intermediate releases. Add-on, manufacturer software and board firmware are separate versions.
 
-The Witty page distinguishes no receiver traffic, traffic without a position fix and a valid fix. Visible satellites alone do not imply a position fix. Use GPS diagnostics and inspect the terminal if readings are missing. The absent receiver stream on Dad's actual Raspberry Pi has not yet been proven fixed by the simulated tests.
+## Write an SD card
 
-Use GPS clock synchronisation with valid GPS time. An enabled Pi 5 RTC is included when present. Manually setting Linux time is a separate action. Required package tools, including hwclock where needed, are prepared automatically and package-manager errors are shown in the terminal.
+1. Select the Raspberry model and operating system, then choose the dated offline or online image.
+2. Offline uses a checked cached image. Online downloads the selected official release. “Linux-Image einbinden” allows a custom IMG or supported compressed image.
+3. Select the target card. Refresh and select again if it cannot be identified reliably.
+4. Open the configuration assistant and enter hostname, account, Wi-Fi, SSH and region.
+5. Check the target and confirm deletion. Windows requests elevation for the card worker even when your account belongs to Administrators.
 
-Witty Add-on and manufacturer software have separate status rows. Witty Pi 4 manufacturer software is labelled as Pi 4 even with an unknown version; WP5 is detected outside PATH. An unknown version no longer means the software is missing. Hardware and installed software models are detected separately.
+Writing overwrites the selected medium. System disks are excluded. Raspberry Pi Imager is not required. Image payload is written before partition discovery areas are restored. The entire written image is then read back and compared. Completion requires successful verification.
 
-## Backups, help and release notes
-Application settings backups can be downloaded and restored from Windows. Allsky backups include overlay layouts, settings, module and website configuration, and the storage path. Captures, dark frames and application files are not part of the settings backup. Check the overlay editor, storage path and service after restoring.
+Cancel stops the operation. An interrupted target must be written again in full. If Windows denies access again, retain the exact byte offset and Windows error code. Software tests cannot validate your physical card reader.
 
-The SSH terminal can be shown or hidden beside its heading. Status panels and installation controls require a connection. German release notes for Windows and Witty are included; Witty has its own version history and an offline bundled copy. Upstream application and manufacturer histories remain separate.
+## Create an IMG backup
 
-Package encryption, ZIP integrity, both original Allsky snapshots and the Windows x64 build were checked. Native Windows launch and physical Raspberry Pi tests remain pending. New main application files are unsigned.
+Select the card, a destination on another disk and a new IMG filename. The backup is compared with the source. Cancelled partial backups are removed and their progress is cleared.
 
-## Required Allsky backup version match
-New backups record the Allsky release and original Git revision. Restore is allowed only on the identical software revision. A mismatch displays the backup and installed versions before any files or services are changed. Old backups without a recorded version are rejected as unknown. This applies to Windows, the Witty web page and automatic post-update restores. Create a new backup after changing Allsky version. A previous-version backup can only be restored to its original matching version.
+A supported reduced MBR layout is backed up through the last partition end. A full-size partition requires confirmation before a full-card backup. Existing maintenance results and failure logs are read from the boot partition. Reducing only the filesystem does not produce a smaller partition-based backup. Other layouts are backed up in full.
 
-Standalone Allsky: Sunwait and additional modules are also included in an encrypted support package in the same repository. Installation uses local Git sources. Raspberry Pi OS and Python package repositories are still required.
+Provide sufficient free space. FAT32 cannot store files larger than 4 GiB; use NTFS, exFAT or a suitable network destination.
 
-The third Allsky source downloads the latest default branch directly from Allsky GitHub, including Sunwait. It requires upstream availability; the two encrypted archives remain independent. All sources receive the same camera, Trixie, navigation and first-boot adjustments. Software updates retain the selected source.
+## Shrink or expand the Raspberry SD card
 
-Pi 5 GPS: loss of the receiver or fix makes WURB use its saved Default position. A new valid fix automatically restores live GPS coordinates and the real satellite count. The manual position stays saved.
+Micro SD options check partitions and ext4 separately. Shrinking reboots into RAM with the root filesystem unmounted. Checks run before and after resizing, with 512 MiB reserve. Normal boot configuration is restored and the boot partition is synchronised and unmounted.
 
-## Micro SD card options and hostname
+For Witty Pi 5, maintenance sends manufacturer heartbeats to complete STARTING and service the watchdog. Shutdown requires the actual STOPPING state, rather than an echoed command value. The Pi halts afterwards. Physical power removal and successful shrinking must be checked on the device.
 
-The red framed group below installation/update contains a green indicator for expanded partitions, red for shrunk partitions and grey for an unknown or unsupported layout. Both partition actions require Yes/No confirmation.
+Failures are recorded on the boot partition. Inspect the result before retrying. Expansion uses a one-time boot job for supported images and preserves accounts and networks.
 
-Shrink prepares a verified RAM maintenance image and reboots once. All services stop during this maintenance reboot. The unmounted ext4 filesystem is shrunk first, then the root partition, retaining 512 MiB free space. The Pi powers off afterwards. Do not remove power during maintenance. The boot partition stores the log and original partition table (`witty-sd-result.txt`, `witty-sd-partitions.before`). Normal boot configuration is restored before changes. Only a standard Micro SD with exactly a FAT boot partition and a final ext4 root partition is supported. USB/NVMe/LVM/encrypted root systems are rejected. The installed tools from `initramfs-tools`, `e2fsprogs`, `util-linux` and `fdisk` are required; missing tools stop preparation before changes. Have a current backup.
+## Witty, GPS and applications
 
-Expand uses the same `raspi-config` method as the base installer and reboots the Pi. Reconnect to read the actual partition state.
+Status separates add-on version, manufacturer software and actual board firmware. Firmware detection does not need a GPS fix. The active GPS source is shown separately from your future installation choice. USB and Waveshare L76X GPS remain distinct configurations; valid data is required before time or position is used. Explicit RTC actions update the named clock.
 
-Adjust settings displays the current hostname beside the new hostname field. Apply changes updates hostname and existing managed hotspot SSIDs: WURB `wifi4bats-<hostname>`, Allsky `allskywifi-<hostname>`, otherwise `wifi-<hostname>`. The wireless password and other network settings remain unchanged. Active hotspots adopt the name after a short delay; wireless/SSH may disconnect briefly. Cancel makes no changes.
+Shutdown uses the configured manufacturer Witty hook. Loss of SSH alone does not confirm that electrical power has been removed.
 
-The actually active GPS receiver is highlighted light green independently of the selection for a future installation.
+Install, update and uninstall WURB, WIRC and Allsky through Windows. Necessary prompts appear in the SSH terminal. Web pages operate installed services. Allsky can use the offered archive releases or official online version. Restore a configuration only to its original software version and Git build.
 
+Select the IMX296 option for a GS camera. Day and night exposures are configured separately with a 15-second limit. Allsky Setup also manages backups and image storage.
 
-Both GPS buttons now synchronise Linux, the Witty RTC and the enabled Pi RTC through the same verified procedure. Witty display timing is measured when its RTC line is read, without a fixed seconds offset.
+## Help and release notes
 
-
-0.7.2: Allsky versions: archive 01.10.2026 and archive 06.12.2024 (Carsten Github); latest (Github ALLSKY). Software install/uninstall is available only in Windows. Web service controls show only installed services.
-
-### Global Shutter camera (IMX296)
-Connect the GS camera before installation and select the GS camera checkbox in the base installer or Allsky installation dialog. All three Allsky sources receive the IMX296 camera profile. No temporary replacement camera is required.
-Selecting the checkbox caps day/night auto exposure and initial manual exposure at 15,000 ms (15 seconds), preserving shorter values. Allsky uses its own auto-exposure algorithm within those limits. Allsky - Setup provides the same setting and shows actual day/night maximum exposure in seconds. A running service is stopped briefly to apply changes and then restarted. Turning the setting off retains current exposure values. Later manual Allsky changes are preserved, including during Allsky updates.
-
-### Exposure times on Allsky - Setup
-Four fields show the actual Allsky manual/starting exposure and maximum automatic exposure for day and night. All inputs use seconds. Separate checkboxes enable or disable day/night automatic exposure. Apply exposure times saves the values to Allsky, reads them back for confirmation and restarts a previously running capture service. A stopped service remains stopped. Startup errors restore the previous settings.
-A GS camera displays a red maximum 15 seconds recommended message, including on the native Allsky homepage. GS defaults cap both automatic maxima at 15 seconds. Location/sun-angle day/night switching and Allsky brightness-based exposure calculation use these limits. Later deliberate changes are permitted within camera capability limits.
-All four exposure values, automatic mode selection and GS profile flag are included in settings.json/options.json configuration backups and restores via the webpage and Windows, including update restores. Backups remain restricted to the exact same Allsky software version and Git revision.
-
-## Paketinstallation / Package installation
-
-Base installation uses the original foreground APT dialogs. Every 20 seconds the terminal reports package process states. Update directly from the latest 0.7.0 build; no intermediate package is needed.
-
-Micro-SD status checks the partition and ext4 filesystem separately. Green requires both to use available space. Linux updates on a fresh image run directly in the SSH terminal without first installing Witty.
-
-The Raspberry Pi connection is checked over SSH every 5 seconds. Loss turns the indicator red and displays one warning; acknowledging OK disconnects the session. Above the SSH terminal, base installation shows the current step, configured total and package downloads including dependencies. Percentages refer to completed steps, not remaining time.
-
-Base installation no longer expands the SD partition or filesystem. Raspberry Pi OS handles automatic expansion on first boot. Manual expansion remains available under Micro SD card options.
-
-After downloading, package progress also shows preparation, unpacking, configuration and finalisation with package names and counters. Cached packages are counted separately from downloads. Terminal process-group faults fixed in Witty add-on prerequisites, WURB/WIRC repair and individual installation, GPS configuration and Witty Pi 4 installation: outer and inner timed package calls preserve the foreground terminal. Missing Pi 5 hwclock is installed with base dependencies. Automatic expansion remains removed from base installation; manual SD controls are retained.
-
-Allsky archives use bounded-memory streaming decryption and checksum verification. Visible progress for archive parts, decryption, SD write completion, extraction and Git validation. Authentication remains mandatory; invalid packages never replace existing files.
-
-Installation progress detects Ctrl+C, KeyboardInterrupt, errors, a returned shell prompt and completion codes. Cancellation stops progress, turns it red and removes stale package messages. Allsky archive progress is displayed above the terminal. Connection text stays white in all states with a larger font; GPS radio controls are vertically centred.
-
-Individual Allsky installation checks that the backend update script exists and launches it explicitly with Bash. ZIP packages without an executable bit are supported. Error dialogs include the actual backend output as well as the exit code.
-
-Individual ALLSKY, WURB and WIRC installation/update progress includes the backend, packages, downloads, setup and completion. The completion message remains until the next action or terminal input. Allsky package commands use /dev/null for stdin to prevent nested sudo/terminal job-control stops in unattended package installation. Applies to both archived versions and the current Allsky GitHub source.
-
-Allsky 2026-10-01 archive refreshed to original commit 2b2c7b13 (6 October 2026); the 2024 archive is retained. Trixie package names corrected in PHP module installation too: libatlas-base-dev → libopenblas-dev, python-dev → python3-dev. Official installer APT output streams directly to the terminal; output pauses show a time message every 15 seconds. Progress shows total and current phase durations, refreshed every five seconds. Add-on release date corrected; GitHub update detection now compares build revisions within version 0.7.2.
-
-Backup/restore checks passed for the shared website and Windows archive function, including GS choice and day/night exposure settings. Different releases or Git builds are rejected before service/file changes, showing both identities, even when the release number matches. Create a new backup after installing the updated Allsky build; old-build backups cannot be restored onto it.
-
-
-Witty Add-on / Windows 0.7.3 – Build 1 – 10 October 2026
-
-- Removed phase timer; elapsed time follows completed steps and percentage. Automatic Allsky phases and Python package n/N advance progress within the installer step; percentages are weighted step fractions, not a time estimate.
-- Successful final Allsky reboot follows Witty final checks and completion feedback. Required locale reboots remain unchanged.
-- Reconnecting hides previous installation progress. The connection warning stays in front until OK; terminal focus cannot cover it.
-- Enlarge the terminal and send its real rows/columns to SSH before launching the first Allsky dialog.
-- Allsky header, status, sidebar and content sit below the Witty bar, with offsets adapting to wrapped links and GS warning.
-- Previous GPS, Trixie, GS-camera and backup fixes and both archived Allsky versions remain included.
-
-Allsky initial setup: a missing lastchanged value in settings.json indicates pending setup. Successful installation then does not require a running capture service. Starting the service from Windows explains the required setup and offers to open Allsky Settings.
-
-
-Raspi-Scripte Windows 0.8.0 – Build 1 – 12 October 2026
-
-- Raspberry Pi and mSD card tabs, including the existing connection and terminal controls.
-- Pi 4/5-family selection and official Bookworm/Trixie 64-bit Lite images.
-- Embeds the installed official Raspberry Pi Imager 2.x, retaining its full write/customisation UI.
-- Supports local Linux images; their freshness and device compatibility are not claimed automatically.
-- Checks the official OS catalogue when loading an image; reuses a verified local cache and replaces old images only after successful download and SHA256 verification. User images are never removed.
-- Creates full uncompressed SD .img backups and verifies them; restores .img files to selected external disks with confirmation, system-disk exclusion, disk identity checks and verification.
-- Progress, speed and estimated remaining time; Imager values depend on its accessibility interface and remain unknown if unavailable.
-- Optional one-shot partition/filesystem expansion for supported Raspberry Pi OS images at the next boot, using raspi-config and a reboot.
-- Version information menu removed. Witty Add-on remains 0.7.6.
-- Build and simulated stream/FAT/XZ-cache tests; no physical Windows disk or Imager hosting test performed here.
+Help uses the current application version. Current changes are grouped by topic; older releases remain in version history. The Witty website includes its own guide to schedules, services and recordings.

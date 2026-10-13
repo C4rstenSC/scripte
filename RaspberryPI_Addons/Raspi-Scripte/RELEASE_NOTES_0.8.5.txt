@@ -1,0 +1,24 @@
+Raspi-Scripte 0.8.5 | 13.10.2026
+Änderungen gegenüber 0.8.4
+
+SD-Karte schreiben
+- Neuer Ablauf: Image-Daten zuerst, Partitionstabellen zuletzt. Die Erkennungsbereiche für MBR/GPT bleiben während des Kopierens leer, damit Windows die unvollständige Karte nicht vorzeitig einbindet.
+- Eine alte GPT-Sicherung am physischen Kartenende wird beim Überschreiben entfernt. Danach wird das gesamte geschriebene Image byteweise zurückgelesen und verglichen.
+- Administratorrechte werden weiterhin nur für den Kartenworker angefordert.
+
+Kartenauswahl und IMG-Sicherung
+- Kartenprüfung verwendet die Hardwarekennung des Lesers statt einer Kennung aus der Partitionstabelle, die sich beim Schreiben ändern kann.
+- Meldungen zur nicht mehr erkennbaren Karte erscheinen auf Deutsch. Eine nicht eindeutig zuordenbare Karte bleibt gesperrt.
+
+Witty-Abschaltung nach dem Schrumpfen
+- Das enthaltene Witty Add-on sendet im Wartungsmodus den Hersteller-Heartbeat. Dadurch wird STARTING beendet und ein aktivierter Witty-Watchdog während der Wartung bedient.
+- Die Abschaltmeldung gilt erst als bestätigt, wenn der Witty tatsächlich STOPPING meldet. Das bloße Zurücklesen des Befehlswerts genügt nicht mehr.
+
+Hilfe und Release Notes
+- Menüeinträge lesen die aktuelle Programmversion; veraltete fest eingetragene Versionsnummern entfallen.
+- Bedienungsanleitungen beschreiben den aktuellen SD-, IMG-, Neustart- und Updateablauf.
+- Release Notes sind nach Themen gegliedert. Im Witty-Update-Terminal erscheinen nur Änderungen seit der installierten Version und Build-Revision, einschließlich übersprungener Zwischenstände.
+
+Prüfstand
+- Bytevergleich, simulierte Zugriffsverweigerung bei 40 MiB, kleine Images, Abbruch sowie Witty-Zustandswechsel werden in Softwaretests geprüft.
+- Der reale Windows-Kartenleser und die vollständige Stromabschaltung am Raspberry/Witty sind hier nicht zugänglich und müssen am Gerät bestätigt werden.

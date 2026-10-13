@@ -1,12 +1,26 @@
-# Raspi-Scripte 0.8.4
+# Raspi-Scripte 0.8.5
 
-Windows Raspi-Scripte 0.8.4 – 13.10.2026
+Raspi-Scripte 0.8.5 | 13.10.2026
+Änderungen gegenüber 0.8.4
 
-- SD-Schreiben öffnet das physische Ziellaufwerk mit exklusivem Schreibzugriff und erneutem Versuch bei kurzzeitigen Zugriffskonflikten. Ein geteiltes Schreibhandle wird nicht stillschweigend verwendet.
-- Vor dem vollständigen Überschreiben wird die vorhandene Partitionstabelle entfernt. Backup und Hostname-Änderung löschen keine Partitionstabelle; Datenträgeridentität wird vorher erneut geprüft.
-- Schreibfehler nennen Byteposition und Windows-Fehlercode. Aktive Defender-Modi für Datenträgeränderungen werden von reinen Audit-Modi unterschieden; Windows-Schutz wird nicht automatisch deaktiviert.
-- Versionen erscheinen ausschließlich in der Offline-/Online-Auswahl; die doppelte Anzeige neben dem Betriebssystem entfällt.
-- Backup liest vorhandenen Wartungsauftrag, Ergebnis und Fehlerprotokoll direkt von der FAT-Bootpartition. Ein fehlgeschlagener oder nicht ausgeführter Schrumpflauf erscheint in der Bestätigung anstelle einer unspezifischen Größenmeldung.
-- Witty-Pi-5-Abschaltung im RAM-Wartungsmodus verwendet einen eigenen I2C-Helfer mit Hardwareprüfung und Rücklesen der Abschaltmeldung. Erforderliche I2C-Werkzeuge, Treibermodule und Verzeichnisse werden vorbereitet; ein fehlender Helfer wird vor dem Wartungsneustart erkannt.
-- Alle Änderungen aus 0.8.3 einschließlich geplanter Wiederverbindung, Firmware-Abfrage und fortlaufender Netzwerksuche enthalten.
-- Image-, Zugriffsvorbereitungs-, Defender-Diagnose- und Bootprotokolltests bestanden. Reale Schreibzugriffe und die Ursache eines konkreten fehlgeschlagenen Schrumpflaufs benötigen den Hardwaretest bzw. dessen Wartungsprotokoll.
+SD-Karte schreiben
+- Neuer Ablauf: Image-Daten zuerst, Partitionstabellen zuletzt. Die Erkennungsbereiche für MBR/GPT bleiben während des Kopierens leer, damit Windows die unvollständige Karte nicht vorzeitig einbindet.
+- Eine alte GPT-Sicherung am physischen Kartenende wird beim Überschreiben entfernt. Danach wird das gesamte geschriebene Image byteweise zurückgelesen und verglichen.
+- Administratorrechte werden weiterhin nur für den Kartenworker angefordert.
+
+Kartenauswahl und IMG-Sicherung
+- Kartenprüfung verwendet die Hardwarekennung des Lesers statt einer Kennung aus der Partitionstabelle, die sich beim Schreiben ändern kann.
+- Meldungen zur nicht mehr erkennbaren Karte erscheinen auf Deutsch. Eine nicht eindeutig zuordenbare Karte bleibt gesperrt.
+
+Witty-Abschaltung nach dem Schrumpfen
+- Das enthaltene Witty Add-on sendet im Wartungsmodus den Hersteller-Heartbeat. Dadurch wird STARTING beendet und ein aktivierter Witty-Watchdog während der Wartung bedient.
+- Die Abschaltmeldung gilt erst als bestätigt, wenn der Witty tatsächlich STOPPING meldet. Das bloße Zurücklesen des Befehlswerts genügt nicht mehr.
+
+Hilfe und Release Notes
+- Menüeinträge lesen die aktuelle Programmversion; veraltete fest eingetragene Versionsnummern entfallen.
+- Bedienungsanleitungen beschreiben den aktuellen SD-, IMG-, Neustart- und Updateablauf.
+- Release Notes sind nach Themen gegliedert. Im Witty-Update-Terminal erscheinen nur Änderungen seit der installierten Version und Build-Revision, einschließlich übersprungener Zwischenstände.
+
+Prüfstand
+- Bytevergleich, simulierte Zugriffsverweigerung bei 40 MiB, kleine Images, Abbruch sowie Witty-Zustandswechsel werden in Softwaretests geprüft.
+- Der reale Windows-Kartenleser und die vollständige Stromabschaltung am Raspberry/Witty sind hier nicht zugänglich und müssen am Gerät bestätigt werden.
