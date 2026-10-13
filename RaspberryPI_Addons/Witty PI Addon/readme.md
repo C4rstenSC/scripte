@@ -1,12 +1,11 @@
-# Witty Add-on 0.8.2
+# Witty Add-on 0.8.3
 
-Witty Add-on 0.8.2 – 12.10.2026
+Witty Add-on 0.8.3 – 13.10.2026
 
-- Offline-SD-Schrumpfen prüft das minimierte ext4-Dateisystem vor der Änderung der Partitionsgrenze erneut.
-- Abschließend werden Dateisystem- und Partitionsgröße gegengeprüft. Größen vorher/nachher und tatsächliche Verkleinerung stehen in witty-sd-result.json auf der Bootpartition.
-- Ergebnistext unterscheidet eine erfolgte Verkleinerung von „keine weitere Verkleinerung mit 512 MiB Reserve möglich“.
-- Wartungsimage enthält die erforderlichen Hilfsprogramme ausdrücklich; BusyBox aus initramfs-tools wird ebenfalls unterstützt.
-- Status weist ein Dateisystem zurück, das größer als seine Partition ist.
-- Alle bisherigen Installations-, GPS- und Paketkorrekturen bis 0.8.1 enthalten.
-- Windows 0.8.2 verwendet beim Backup die verifizierten Partitionsgrenzen.
-- Offline-Wartungsstart auf echter Raspberry-Hardware noch zu prüfen.
+- Eigene kurze Firmware-Abfrage liest die Witty-Pi-5-Versionsregister beziehungsweise die Witty-Pi-4-Firmwarekennung. Keine GPS-Abfrage und kein Stoppen des Herstellerdienstes erforderlich; Buszugriffe verwenden Sperren und Zeitlimits.
+- Windows-Status nutzt die kurze Firmware-Abfrage statt des vollständigen GPS-/Witty-Status. Tatsächliche Firmware wird nicht durch die GitHub-Version ersetzt.
+- Sicheres Herunterfahren prüft die Witty-Herstellerdienste und verwendet shutdown -h now mit dem Witty-Pi-5-Abschaltdienst.
+- Offline-SD-Wartung zeigt bestätigte Partitionsverkleinerung, ausstehende Ausführung und fehlgeschlagene Wartung getrennt. Witty Pi 5 erhält vor der Wartungsabschaltung die Herstellermeldung.
+- Geplante automatische Neustarts werden an das Windows-Programm gemeldet, damit es nach dem Neustart erneut verbinden kann.
+- Alle bisherigen Installations-, Paketcache-, GPS-, Trixie- und Backup-Korrekturen enthalten.
+- Softwaretests und ext4-Test bestanden; der reale Raspberry-Wartungsboot ist weiterhin auf Hardware zu prüfen.

@@ -1,13 +1,14 @@
-# Raspi-Scripte 0.8.2
+# Raspi-Scripte 0.8.3
 
-Windows Raspi-Scripte 0.8.2 – 12.10.2026
+Windows Raspi-Scripte 0.8.3 – 13.10.2026
 
-- Entpackte IMG-Dateien bleiben geprüft im lokalen Cache; unveränderte Images werden wiederverwendet. Eigene unkomprimierte IMG-Dateien werden nicht erneut entpackt oder gelöscht.
-- Trixie-Fehler „Invalid path: user-data“ korrigiert: VFAT-Dateinamen user-data, meta-data und network-config werden korrekt angelegt und zurückgelesen.
-- Vor dem IMG-Backup werden Partitionen und ext4-Dateisystem gegen die tatsächliche Kartengröße geprüft. Bereits verkleinerte Standard-MBR-Installationen werden bis zum Ende der letzten Partition gesichert, statt die gesamte Karte zu lesen.
-- Ohne bestätigte Verkleinerung erscheint die vollständige IMG-Größe vor dem Kopieren; Fortsetzen erfordert eine bewusste Auswahl. Widersprüchliche Partitions-/Dateisystemgrößen verhindern das Backup.
-- „Hostname setzen“ links neben „Abbrechen“ unter „IMG auf SD-Karte schreiben“: Hostname auf der gewählten Karte für den nächsten Raspberry-Start vorbereiten. Kein vollständiges Neuschreiben der Karte; vorhandene Expandieraufträge bleiben erhalten.
-- Überschriften: „mSD-Karten IMG erstellen“ und „IMG auf SD-Karte schreiben“.
-- Abbruchtexte unterscheiden IMG-Erstellung, Kartenschreiben und Hostname. Bei Backup bleibt die Karte unverändert; unvollständige IMG-Dateien werden entfernt.
-- Schrumpfhelfer erhält zusätzliche Dateisystemprüfung vor der Partitionsänderung und klare Vorher-/Nachher-Größen im Ergebnis. Keine Verkleinerung wird als durchgeführt gemeldet, wenn mit Reserve keine weitere Reduktion möglich ist.
-- Tests mit FAT16/FAT32, ext4, sektorgebundenen Testlaufwerken, Caches und Windows-Build. Tests mit echter SD-Karte, Raspberry-Wartungsboot und erstem Start weiterhin erforderlich.
+- Abbrechen beendet SD-Aufträge einschließlich laufender Laufwerksabfragen. Status, Größenmeldung und Fortschrittsbalken werden nach einem Abbruch zurückgesetzt; ein verbliebener Fehler lässt sich separat löschen.
+- SD-Vorgänge erhalten eigene Statusanzeigen und Abbruchzustände. Kartenauswahlfelder besitzen dieselbe Höhe; unnötige Erklärungszeile und Aktualitätsbutton entfallen.
+- Offline- und Online-Version der offiziellen Bookworm-/Trixie-Images werden neben der Betriebssystemauswahl angezeigt und sind ausdrücklich auswählbar. Online-Abfrage lädt zunächst nur Metadaten. Offline-Auswahl arbeitet ohne Netzwerkzugriff; beschädigte Images werden erkannt. Eigene IMG-, XZ-, GZ- und ZIP-Dateien bleiben auswählbar.
+- SD-Schreibzugriff sperrt Windows-Volumes über ihre tatsächlichen Datenträgerbereiche statt ausschließlich über PowerShell-Zugriffspfade. Sperren bleiben während Schreiben und Rücklesen erhalten.
+- Schrumpfstatus richtet sich nach der tatsächlichen Partitionsgrenze. Kleineres Dateisystem in voller Partition sowie ausstehende und fehlgeschlagene Wartungsaufträge werden kenntlich gemacht.
+- Witty-Firmware wird unabhängig vom langsamen vollständigen GPS-/Witty-Status aus den Versionsregistern gelesen. Firmware und Herstellersoftware bleiben getrennte Angaben.
+- Lokale Raspberry-Suche prüft nutzbare Adressen .1 bis .254, überspringt den eigenen PC und zeigt auch während laufender DNS-/SSH-Prüfungen aktive IP-Adressen mit Prüfschritt und Zähler. DNS- und SSH-Abfragen sind begrenzt; Schließen bricht die Suche ab.
+- Nach geplanten Neustarts, auch nach erforderlichem GPS-Neustart und Partitionserweiterung, verbindet sich das Programm automatisch erneut. Bisherige Zugangsdaten sowie bekannte IP-Adresse werden verwendet; maximal drei Minuten warten. Danach werden installierte und online verfügbare Versionen neu abgefragt. Manuelles Trennen und Herunterfahren brechen die Wiederverbindung ab.
+- Herunterfahren berücksichtigt die Witty-Herstellerdienste. Die Wartungsabschaltung informiert beim Witty Pi 5 ebenfalls die Hardware.
+- C#-Regressionstests, Image-Prüfungen und ext4-Schrumpftest bestanden. Reale Windows-Kartenleser und Raspberry-Wartungsboot weiterhin hardwareabhängig zu prüfen.
