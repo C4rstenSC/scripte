@@ -1,12 +1,9 @@
-# Witty Add-on 0.9.1
+# Witty Add-on 0.9.2
 
-Witty Add-on 0.9.1 | 13.10.2026
-Änderungen gegenüber 0.9.0
+Witty Add-on 0.9.2 | 13.10.2026
+Änderungen gegenüber 0.9.1
 
-Herstellersoftware nachinstallieren
-- APP_ROOT wird über die Prozessumgebung an den Hersteller-Manager übergeben. Die Meldung „APP_ROOT: Schreibgeschützte Variable“ entfällt.
-- APT kann das temporäre wp5-Paket als Benutzer _apt lesen. Verzeichnis und Paket bleiben im Besitz von root und sind für andere Benutzer nicht schreibbar. Die Sandbox-Hinweismeldung entfällt.
-
-Prüfung
-- Hersteller-Manager und Installation über den Windows-Steuerbefehl mit schreibgeschützter APP_ROOT-Variable geprüft.
-- Verzeichnisrechte 0755, Paketrechte 0644 und unveränderte Hersteller-/GPS-Auswahl geprüft.
+Gemeinsamer Paketstand
+- Paketversion und eingebettetes Windows-Installationspaket auf 0.9.2 angehoben.
+- Enthält die Hersteller-Nachinstallation mit korrekter APP_ROOT-Übergabe und lesbaren APT-Paketrechten aus 0.9.1.
+- Die Verbesserungen für Laufwerksabfrage, Vorbereitung, direkten SD-Rücklesezugriff und zeitbasierte Fortschrittsanzeige befinden sich im Windows-Programm 0.9.2.

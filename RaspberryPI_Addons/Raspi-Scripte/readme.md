@@ -1,30 +1,31 @@
-# Raspi-Scripte 0.9.1
+# Raspi-Scripte 0.9.2
 
-Raspi-Scripte 0.9.1 | 13.10.2026
-Änderungen gegenüber 0.9.0
+Raspi-Scripte 0.9.2 | 13.10.2026
+Änderungen gegenüber 0.9.1
 
-SD-Karten und Abbilder
-- Beim Öffnen des SD-Tabs wird kein Laufwerk automatisch eingelesen. Jeder Aktualisieren-Button aktualisiert ausschließlich seinen eigenen Bereich und wählt die erste verfügbare Karte, wenn die bisherige Auswahl fehlt.
-- Die Hostnamenabfrage für Abbildsicherungen erfolgt über „Laufwerke aktualisieren“. Ein bloßer Wechsel der Auswahl startet keinen Hintergrundauftrag. Der Wiederherstellungsbereich liest den Hostnamen weiterhin ausschließlich aus dem ausgewählten IMG.
-- Laufwerksbuchstaben stehen am Anfang der Datenträgeranzeige. Erkannte Kartenleser, USB-Sticks, Festplatten und SSDs erhalten verständliche Namen. Wenn Windows den Typ nicht eindeutig meldet, erscheint „USB-Datenträger“.
-- Wiederherstellen mit geändertem Hostnamen verwendet weiterhin eine temporäre Abbildkopie und erhält die WLAN-/Hotspot-Anpassung sowie die gewünschte Erststart-Erweiterung.
+Schneller vorbereiten und Laufwerke einlesen
+- Sicherheitsprüfungen fragen nur den ausgewählten Datenträger ab. Die Hardwareidentität, Größe, Anschlussart und der Schreibschutz werden weiterhin aktuell geprüft.
+- Die Laufwerksliste benötigt keine wiederholten Abfragen aller physischen Medien und PnP-Elternnamen mehr. Laufwerksbuchstaben werden gesammelt eingelesen. Unklare Geräte bleiben als USB-Datenträger bezeichnet.
+- Beim Hostnamenlesen entfällt eine doppelte Sicherheitsabfrage vor dem separaten Kartenworker. Der Worker prüft die ausgewählte Karte weiterhin selbst.
+- Sektorausrichtete Metadatenzugriffe lesen vollständige zusammenhängende Bereiche statt jeden 512-Byte-Sektor einzeln.
 
-Schreibzugriff stabilisieren
-- Die Rückleseprüfung verwendet nach dem Schreiben einen frisch geöffneten Lesezugriff. Kurzzeitige Zugriffssperren beim Prüfen werden ebenfalls begrenzt wiederholt; abweichende Daten bleiben ein Fehler. Neuinstallation und Wiederherstellung nutzen diesen gemeinsamen Ablauf.
-- Vor dem Schreiben wird die ausgewählte Karte zusätzlich offline genommen, soweit der Kartenleser dies unterstützt. Dadurch kann Windows während des Schreibens keine neuen Volumes auf der Karte einbinden. Bei Lesern ohne Offline-Unterstützung bleiben die Volumes gesperrt.
-- Bei kurzzeitiger Zugriffssperre wird der Schreibzugriff auf dasselbe erneut geprüfte Gerät geöffnet und der gesamte betroffene Block höchstens dreimal neu geschrieben. Andere Schreibfehler und Abbrüche werden nicht übergangen.
-- Die Partitionstabelle wird erst nach dem vollständigen Schreiben veröffentlicht. Das gesamte geschriebene Abbild wird anschließend zurückgelesen und verglichen. Dauerhafte Sperren bleiben Fehler; eine unvollständige Karte wird nicht als erfolgreich gemeldet.
-- Nach dem Vorgang wird ein vom Programm gesetzter Offline-Zustand wieder aufgehoben. Laufwerksidentität, Schreibschutz und Schutz vor Systemlaufwerken bleiben geprüft.
+Bedienbare Oberfläche und nachvollziehbare Vorbereitung
+- Große Dateiprüfungen und IMG-Validierung laufen im Hintergrund. Die Oberfläche und die Abbruchbedienung bleiben dabei verfügbar.
+- Nach Bestätigung erscheint sofort „Vorbereitung – Zielkarte prüfen“. Die Aktualisieren-Buttons zeigen während der Abfrage „Laufwerke werden gelesen“.
+- Während der Kartenarbeit wird der konkrete Vorbereitungsschritt angezeigt, etwa Zielkarte prüfen, IMG mit Einstellungen vorbereiten, Partitionen sperren oder Rückleseprüfung starten.
+- Prüfsummenprüfungen zeigen laufend Prozent, Geschwindigkeit und Restzeit. Rückmeldungen beim Entpacken werden begrenzt, damit die Oberfläche nicht mit Meldungen überlastet wird.
+- Ein vorhandenes entpacktes offizielles IMG wird vollständig gegen seine erwartete Prüfsumme geprüft. Dafür entfällt das zusätzliche erneute Lesen der komprimierten Quelle; beschädigte Abbilder werden weiterhin neu aufgebaut.
 
-Oberfläche
-- In allen drei SD-Bereichen stehen Phase, Fortschritt, Geschwindigkeit und Restzeit direkt über dem zugehörigen Fortschrittsbalken innerhalb des Bereichs.
-- Deaktivierte Schaltflächen sind deutlich dunkler als bedienbare Schaltflächen. Die weiße Windows-Darstellung deaktivierter Buttons entfällt; Hover-, Druck- und Tastaturfokus bleiben sichtbar.
+Prüfung und Fortschritt
+- Schreiben und Rückleseprüfung nutzen direkten sektorausgerichteten Windows-Zugriff ohne den bisherigen Datei-/Systempuffer. Schreibzugriffe fordern zusätzlich WRITE_THROUGH an. Die Karte wird vollständig mit dem geschriebenen IMG verglichen.
+- Native Schreibzugriffe besitzen keinen verwalteten Schreibpuffer, der beim Schließen nach einem Zugriffsfehler erneut geschrieben wird. Wiederholungen überschreiben den ganzen betroffenen Block; neue Protokolle enthalten jede Wiederöffnung, Offline-Unterstützung und Anzahl gesperrter Volumes.
+- Schreiben und Prüfen verwenden getrennte gemessene Geschwindigkeiten. Fortschritt und Restzeit werden aus der bisher verbrauchten Übertragungszeit und der geschätzten verbleibenden Zeit berechnet.
+- Vor jedem Schreibauftrag wird die aktuelle Zielkarte kurz und ausschließlich lesend getestet. Bis zu 32 MiB werden an mehreren Stellen gelesen; nach etwa 1,5 Sekunden wird der Test beendet. Die gemessene Leserate und die tatsächliche IMG-Größe bestimmen die erwartete Prüfzeit.
+- Während des Schreibens wird dessen Geschwindigkeit separat gemessen. Aus abgeschätzter Schreib- und Prüfzeit entsteht die Gesamtanzeige. Während der vollständigen Prüfung aktualisiert die tatsächliche Leserate die Schätzung.
+- Unterschiedliche Karten werden vor ihrem aktuellen Schreibauftrag jeweils neu gemessen. Es gibt keine feste 50/50- oder 80/20-Aufteilung und keinen Rückgriff auf die Leserate einer früheren Karte.
+- 100 Prozent und die Erfolgsmeldung erscheinen erst nach erfolgreicher vollständiger Prüfung. Kurzzeitige Zugriffsfehler bleiben begrenzt wiederholbar; dauerhafte Fehler und abweichende Daten brechen ab.
 
-Witty-Nachinstallation
-- Der Hersteller-Manager erhält APP_ROOT als Prozessumgebung. Die Meldung über die schreibgeschützte Variable entfällt.
-- Das temporäre Herstellerpaket ist für den APT-Benutzer lesbar, aber nicht schreibbar. Die Meldung über den ungeschützten Download als root entfällt.
-
-Prüfung
-- Teilweise geschriebene Blöcke mit simuliertem Windows-Zugriffsfehler, begrenzter Abbruch bei dauerhafter Sperre und vollständige Rückleseprüfung getestet.
-- FAT/ext4-Abbilder, Hostnamenänderung samt Expansion, unveränderte Originaldatei, Kartenanzeige und manuelle Hostnamenabfrage geprüft.
-- Hersteller-Nachinstallation und Übergabe der schreibgeschützten APP_ROOT-Variable geprüft. Ob ein konkreter Windows-Filter die Karte weiterhin blockiert, muss beim nächsten Schreibversuch auf dem betroffenen PC bestätigt werden.
+Prüfung der Änderung
+- FAT/ext4-Abbilder, beschädigte Cache-Dateien, Abbruch, konkrete Statusmeldungen und unabhängige Schreib-/Leseraten getestet.
+- Direkte Leseranges für 512- und 4096-Byte-Sektoren auf Ausrichtung und Kartengrenzen geprüft.
+- Windows-Anwendung und Updater vollständig gebaut. Tatsächliche Zeiten für Laufwerksabfragen und Kartendurchsatz müssen auf dem betroffenen PC bestätigt werden.

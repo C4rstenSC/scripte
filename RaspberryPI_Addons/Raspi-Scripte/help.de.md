@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.9.1 – Bedienungsanleitung
+# Raspi-Scripte 0.9.2 – Bedienungsanleitung
 
 Stand: 13.10.2026
 
@@ -125,3 +125,11 @@ Die Laufwerksbuchstaben stehen am Anfang der Anzeige. „Ohne Laufwerksbuchstabe
 Ein kurzzeitig verweigerter Schreibzugriff wird begrenzt wiederholt. Erst das vollständige Zurücklesen und der Vergleich erlauben eine Erfolgsmeldung. Bei einem endgültigen Fehler die Karte erneut vollständig beschreiben; eine unvollständige Karte ist nicht startfähig.
 
 Die Fortschrittszeile mit Phase, Prozent, Geschwindigkeit und Restzeit steht innerhalb jedes SD-Bereichs unmittelbar über seinem Fortschrittsbalken.
+
+## Fortschritt und Vorbereitung ab 0.9.2
+
+Vor dem Schreiben wird die ausgewählte Karte mit einem kurzen Lesetest gemessen. Der Test liest bis zu 32 MiB an mehreren Stellen der Karte und verändert keine Kartendaten. Erst danach beginnt der freigegebene Schreibauftrag. Die Anzeige verwendet IMG-Größe und gemessene Leserate; die aktuelle Schreibrate wird beim Schreiben ergänzt. Fortschritt und Restzeit werden anhand des verbleibenden geschätzten Zeitaufwands berechnet. Es gibt keine feste 50/50- oder 80/20-Aufteilung.
+
+Die Vorbereitung zeigt ihren konkreten Schritt. Große Dateiprüfungen laufen im Hintergrund. Schreiben und vollständige Rückleseprüfung arbeiten direkt mit sektorausgerichteten Puffern. Eine Erfolgsmeldung erfordert die vollständig bestandene Prüfung.
+
+Kurzzeitige Zugriffssperren werden begrenzt wiederholt. Dauerhafte Windows-Sperren bleiben ein Fehler. Der neue native Schreibweg und detailliertere Protokolle müssen auf dem betroffenen PC bestätigt werden; aus früheren Fehlerprotokollen lässt sich der konkret blockierende Treiber nicht sicher bestimmen.
