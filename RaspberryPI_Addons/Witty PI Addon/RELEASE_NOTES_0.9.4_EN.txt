@@ -1,0 +1,17 @@
+Version 0.9.4 · Build 20261013.15
+Changes since 0.9.3
+
+Hardware and installation
+- Connection probes current USB names and read-only I2C identities independently of installed manufacturer software. Historical boot messages are shown only as unconfirmed hints.
+- Hardware status distinguishes an attached board from missing manufacturer software and preselects a confirmed model for installation. An old “No Witty” setting no longer hides installed manufacturer software.
+- APT download and dpkg installation percentages advance the current section of overall progress, including WURB, WIRC and Python/hardware sections. Overall progress displays decimal percentages.
+- WURB and WIRC reuse a shared local wheel store. Complete local dependencies install without querying package indexes again. Missing dependencies are prepared as reusable wheels; repair and custom options retain their original path.
+- Compatible binary wheels are preferred. Base installation does not unnecessarily upgrade installed Debian packages; system updates remain separate.
+- Base installation skips package-index translations and redundant WIRC package planning after the shared APT transaction.
+- The final summary lists service status, complete web addresses, GPS/Witty selection and hotspot configuration.
+
+Validation limits
+- Hardware detection, dependency resolution and progress parsing have software tests. Unavailable I2C and ambiguous USB identity do not falsely confirm a board.
+- Frequent status/cache polling reads Witty Pi 5 registers directly, without stopping or restarting wp5d or triggering another RTC-to-Linux copy. Administrative registers are excluded.
+- Base installation arms an early boot diagnostic log on the boot partition. Failed readiness retains diagnose.txt. After 60 seconds of stable SSH/web service readiness and unchanged process identities, the original boot parameters are restored and the diagnostic log is removed.
+- The original failed boot remains unconfirmed. The logged Button Click was identified by the user as a manual shutdown. The new diagnostic captures any recurrence.

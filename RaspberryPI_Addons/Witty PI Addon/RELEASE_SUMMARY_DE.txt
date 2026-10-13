@@ -1,3 +1,22 @@
+Version 0.9.4 · Build 20261013.15
+Änderungen gegenüber 0.9.3
+
+Hardware und Installation
+- Beim Verbinden wird gesteckte Witty-Pi-4-/5-Hardware unabhängig von der Herstellerinstallation über aktuelle USB-Namen und lesende I2C-Kennungen geprüft. Alte Bootmeldungen werden nur als unbestätigter Hinweis angezeigt.
+- Die Hardwarezeile unterscheidet erkannte Platine und fehlende Herstellersoftware. Eine sicher erkannte Platine wird im Installationsmodell vorausgewählt. „Kein Witty“ in einer alten Konfiguration versteckt vorhandene Herstellersoftware nicht mehr.
+- APT-Download- und dpkg-Installationsprozente fließen in den laufenden Abschnitt der Gesamtanzeige ein. WURB, WIRC und Python-/Hardware-Abschnitte werden berücksichtigt; die Anzeige zeigt Nachkommastellen.
+- WURB und WIRC teilen einen lokalen Wheel-Vorrat. Vollständig vorhandene Python-Pakete werden ohne erneute Indexabfragen installiert. Fehlende Pakete werden als wiederverwendbare Wheels vorbereitet; Reparatur- und Sonderoptionen behalten ihren bisherigen Weg.
+- Fertige kompatible Python-Wheels werden bevorzugt. Bereits installierte Debian-Pakete werden in der Basisinstallation nicht unnötig aktualisiert; Systemupdates bleiben ein eigener Vorgang.
+- Die Basisinstallation lädt keine Paketlistenübersetzungen und führt keine zweite WIRC-Paketplanung nach der gemeinsamen APT-Installation aus.
+- Die Abschlussübersicht nennt Dienststatus, vollständige Webadressen, GPS-/Witty-Auswahl und Hotspot-Konfiguration.
+
+Prüfgrenzen
+- Die neue Hardwareerkennung, Paketauflösung und Fortschrittsauswertung sind in Softwaretests geprüft. Ohne erreichbaren I2C-Bus und eindeutige USB-Kennung wird eine Platine nicht als sicher erkannt behauptet.
+- Häufige Status- und Abschaltcache-Abfragen lesen Witty-Pi-5-Register direkt. Sie stoppen oder starten wp5d nicht mehr und lösen keine erneute RTC-Übernahme nach Linux aus. Administrative Register werden nicht gelesen.
+- Der Basisinstaller aktiviert vor dem Neustart eine frühe Startdiagnose: diagnose.txt auf der Bootpartition bleibt bei fehlender Bereitschaft erhalten. Nach 60 Sekunden stabiler SSH-/Webdienstbereitschaft mit unveränderten Prozesskennungen werden die ursprünglichen Bootparameter wiederhergestellt und das Diagnoseprotokoll gelöscht.
+- Die Ursache des zuvor gemeldeten Fehlstarts ist noch nicht bestätigt. Der Herstellerlogeintrag „Button Click“ gehörte laut Nutzer zur manuellen Abschaltung. Die neue Diagnose soll einen erneuten Fehler dokumentieren.
+
+
 Witty Add-on 0.9.3 | 13.10.2026
 Änderungen gegenüber 0.9.2.1
 

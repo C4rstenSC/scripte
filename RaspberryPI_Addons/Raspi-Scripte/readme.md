@@ -1,35 +1,19 @@
-# Raspi-Scripte 0.9.3
+# Raspi-Scripte 0.9.4
 
-Raspi-Scripte 0.9.3 | 13.10.2026
-Änderungen gegenüber 0.9.2.1
+Version 0.9.4 · Build 20261013.15
+Änderungen gegenüber 0.9.3
 
-SD-Wartung ohne Add-on
-- Ein getrenntes sd-maintenance.sh enthält alle gemeinsamen Wartungshelfer und wird mit Programm- und Inhaltsupdates ausgeliefert. Eine Homepage- oder Modulinstallation ist für die SD-Wartung nicht erforderlich.
-- Die Wartungshelfer werden mit einem einzigen Upload in einem geschützten, dauerhaften Verzeichnis auf dem Pi bereitgestellt. Fehlende Wartungswerkzeuge werden beim Schrumpfauftrag ohne APT-Empfehlungen nachinstalliert.
-- Vorhandene Witty-Pi-4- und Witty-Pi-5-Herstellerdienste werden auch ohne Add-on-Konfiguration erkannt. Der geprüfte Wartungsabschluss nutzt die passende Herstellerabschaltung; ohne Witty wird normal heruntergefahren.
-- Die automatische Erweiterung beim nächsten normalen Start verwendet dauerhaft gespeicherte Helfer. Sie benötigt keinen zuvor installierten globalen Add-on-Befehl und behält die Prüfung von Schrumpfergebnis und Kartenkennungen bei.
+Hardware und Installation
+- Beim Verbinden wird gesteckte Witty-Pi-4-/5-Hardware unabhängig von der Herstellerinstallation über aktuelle USB-Namen und lesende I2C-Kennungen geprüft. Alte Bootmeldungen werden nur als unbestätigter Hinweis angezeigt.
+- Die Hardwarezeile unterscheidet erkannte Platine und fehlende Herstellersoftware. Eine sicher erkannte Platine wird im Installationsmodell vorausgewählt. „Kein Witty“ in einer alten Konfiguration versteckt vorhandene Herstellersoftware nicht mehr.
+- APT-Download- und dpkg-Installationsprozente fließen in den laufenden Abschnitt der Gesamtanzeige ein. WURB, WIRC und Python-/Hardware-Abschnitte werden berücksichtigt; die Anzeige zeigt Nachkommastellen.
+- WURB und WIRC teilen einen lokalen Wheel-Vorrat. Vollständig vorhandene Python-Pakete werden ohne erneute Indexabfragen installiert. Fehlende Pakete werden als wiederverwendbare Wheels vorbereitet; Reparatur- und Sonderoptionen behalten ihren bisherigen Weg.
+- Fertige kompatible Python-Wheels werden bevorzugt. Bereits installierte Debian-Pakete werden in der Basisinstallation nicht unnötig aktualisiert; Systemupdates bleiben ein eigener Vorgang.
+- Die Basisinstallation lädt keine Paketlistenübersetzungen und führt keine zweite WIRC-Paketplanung nach der gemeinsamen APT-Installation aus.
+- Die Abschlussübersicht nennt Dienststatus, vollständige Webadressen, GPS-/Witty-Auswahl und Hotspot-Konfiguration.
 
-Karten lesen und sicher auswerfen
-- Eine rote Warnung erklärt vor vollständiger Abbildsicherung, dass die Karte nicht geschrumpft ist und zuvor auf dem Raspberry Pi geschrumpft werden muss. Auf Wunsch bleibt die vollständige Sicherung möglich; Windows verändert die Kartengröße nicht.
-- Auch die Abbildsicherung versucht, die Karte während des Zugriffs gegenüber Windows zu isolieren, wie beim Schreiben. Bei nicht unterstützten Lesern bleiben die Volumes gesperrt.
-- Vor dem Auswurf werden alle Karten- und Volumehandles geschlossen und ein vom Programm offline gesetzter Datenträger wieder online gestellt. Die vorhandene sichere Auswurfprüfung wird anschließend verwendet.
-- Ein Fehler beim Schreiben des Auswurfprotokolls darf eine erfolgreiche Abbildsicherung nicht zum Fehler machen. Wenn Windows den Auswurf weiter ablehnt, bleibt der verständliche Hinweis zum sicheren Entfernen erhalten.
-- Beim erneuten Einlesen einer Karte wird der vorherige benutzerdefinierte oder fortgezählte Dateiname verworfen. Die Vorgabe wird erneut aus aktuellem Datum und ausgelesenem Hostnamen gebildet; der Zielordner bleibt erhalten.
-
-Anzeige und Terminal
-- Verbleibende deutsche Beschriftungen des ersten SD-Bereichs, Datenträgernamen, Fortschrittsdetails, Vorbereitung, Größenprüfung und Auswurfmeldungen sind für die englische Oberfläche übersetzt. Ein Sprachwechsel aktualisiert vorhandene Anzeigen ohne erneuten Kartenzugriff; Release Notes 0.9.3 sind auch auf Englisch vorhanden.
-- Der Add-on-Update-Button bleibt ohne vorhandene Basisinstallation deaktiviert und zeigt den Hinweis „Bitte zuerst Basisinstallation ausführen“. Der Windows-Updateweg prüft dies zusätzlich im Launcher und beginnt keine automatische Grundinstallation.
-- Der Partitionsstatus steht wieder rechts neben „Status Partitionen“ in derselben Zeile. Längere Angaben umbrechen innerhalb der Statusspalte und überdecken keine Buttons.
-- Nach erfolgreichem Umbenennen und erneutem Einlesen des Geräts wird eine neue Terminal-Sitzung geöffnet. Prompt und Verbindungsanzeige verwenden den aktuellen Hostnamen.
-
-Prüfung
-- Herstellererkennung ohne Add-on für Witty Pi 4, Witty Pi 5 und normale Pis sowie dauerhaft gespeicherte Erweiterungshelfer getestet.
-- Selbstentpackendes Wartungspaket, Dateigleichheit mit den gemeinsamen Helfern und aktualisierte Windows-Kartenfunktionen geprüft.
-- Hardwareabhängige Abschaltung und der automatische Auswurf nach einer Sicherung sind anschließend auf dem konkreten Pi und Kartenleser zu testen.
-
-Update-Neustart – Build 20261013.14
-- Der Windows-Updater wird aus dem geprüften Updatepaket in einen temporären Ordner entpackt und dort gestartet. Seine laufenden Module liegen damit außerhalb des zu ersetzenden Programmordners.
-- Ein geschützter Installationsordner fordert bei Bedarf Windows-Administratorrechte an. Bei abgelehntem Start bleibt die Anwendung offen.
-- Anwendung und Updater bestätigen die Übergabe gegenseitig, bevor die Anwendung schließt. Ohne Bestätigung verändert der Updater keine Dateien.
-- Nach erfolgreichem Austausch startet der Updater direkt die neue EXE. Bei Fehlern bleiben Updatepaket und Rückrollinformationen erhalten; der Fehlerdialog läuft auf einem eigenen STA-Thread.
-- Native Windows-Integration prüft Übergabe, Dateiaustausch, den tatsächlichen Neustart des neuen Builds sowie Rückrollen und erhaltenes Paket bei Schreibfehlern.
+Prüfgrenzen
+- Die neue Hardwareerkennung, Paketauflösung und Fortschrittsauswertung sind in Softwaretests geprüft. Ohne erreichbaren I2C-Bus und eindeutige USB-Kennung wird eine Platine nicht als sicher erkannt behauptet.
+- Häufige Status- und Abschaltcache-Abfragen lesen Witty-Pi-5-Register direkt. Sie stoppen oder starten wp5d nicht mehr und lösen keine erneute RTC-Übernahme nach Linux aus. Administrative Register werden nicht gelesen.
+- Der Basisinstaller aktiviert vor dem Neustart eine frühe Startdiagnose: diagnose.txt auf der Bootpartition bleibt bei fehlender Bereitschaft erhalten. Nach 60 Sekunden stabiler SSH-/Webdienstbereitschaft mit unveränderten Prozesskennungen werden die ursprünglichen Bootparameter wiederhergestellt und das Diagnoseprotokoll gelöscht.
+- Die Ursache des zuvor gemeldeten Fehlstarts ist noch nicht bestätigt. Der Herstellerlogeintrag „Button Click“ gehörte laut Nutzer zur manuellen Abschaltung. Die neue Diagnose soll einen erneuten Fehler dokumentieren.
