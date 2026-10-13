@@ -11,3 +11,10 @@ Gemeinsame SD-Wartung
 
 Prüfung
 - Herstellererkennung ohne Add-on und dauerhafte Erweiterungshelfer in Softwaretests geprüft. Abschaltung und Auswurf benötigen den anschließenden Test auf der jeweiligen Hardware.
+
+Update-Neustart – Build 20261013.14
+- Der Windows-Updater wird aus dem geprüften Updatepaket in einen temporären Ordner entpackt und dort gestartet. Seine laufenden Module liegen damit außerhalb des zu ersetzenden Programmordners.
+- Ein geschützter Installationsordner fordert bei Bedarf Windows-Administratorrechte an. Bei abgelehntem Start bleibt die Anwendung offen.
+- Anwendung und Updater bestätigen die Übergabe gegenseitig, bevor die Anwendung schließt. Ohne Bestätigung verändert der Updater keine Dateien.
+- Nach erfolgreichem Austausch startet der Updater direkt die neue EXE. Bei Fehlern bleiben Updatepaket und Rückrollinformationen erhalten; der Fehlerdialog läuft auf einem eigenen STA-Thread.
+- Native Windows-Integration prüft Übergabe, Dateiaustausch, den tatsächlichen Neustart des neuen Builds sowie Rückrollen und erhaltenes Paket bei Schreibfehlern.

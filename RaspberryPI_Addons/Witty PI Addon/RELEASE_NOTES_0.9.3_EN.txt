@@ -11,3 +11,10 @@ Shared SD maintenance
 
 Validation
 - Software tests cover manufacturer detection and persistent expansion helpers. Shutdown and safe ejection require subsequent device-specific hardware tests.
+
+Update restart – build 20261013.14
+- The updater is extracted from the verified update archive and runs from a temporary directory, outside the application files it replaces.
+- Protected installation folders request administrator permission when needed. A rejected startup leaves the application open.
+- The application and updater acknowledge the handoff before the application closes. Missing acknowledgement prevents any file replacement.
+- Successful installation restarts the new EXE directly. Failed installation retains the update archive and rollback data; error dialogs run on a dedicated STA thread.
+- Native Windows integration covers handoff, replacement, actual restart of the new build, rollback and retained archive on write failure.
