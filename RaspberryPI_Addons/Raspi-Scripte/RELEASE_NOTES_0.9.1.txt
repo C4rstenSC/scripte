@@ -1,0 +1,28 @@
+Raspi-Scripte 0.9.1 | 13.10.2026
+Änderungen gegenüber 0.9.0
+
+SD-Karten und Abbilder
+- Beim Öffnen des SD-Tabs wird kein Laufwerk automatisch eingelesen. Jeder Aktualisieren-Button aktualisiert ausschließlich seinen eigenen Bereich und wählt die erste verfügbare Karte, wenn die bisherige Auswahl fehlt.
+- Die Hostnamenabfrage für Abbildsicherungen erfolgt über „Laufwerke aktualisieren“. Ein bloßer Wechsel der Auswahl startet keinen Hintergrundauftrag. Der Wiederherstellungsbereich liest den Hostnamen weiterhin ausschließlich aus dem ausgewählten IMG.
+- Laufwerksbuchstaben stehen am Anfang der Datenträgeranzeige. Erkannte Kartenleser, USB-Sticks, Festplatten und SSDs erhalten verständliche Namen. Wenn Windows den Typ nicht eindeutig meldet, erscheint „USB-Datenträger“.
+- Wiederherstellen mit geändertem Hostnamen verwendet weiterhin eine temporäre Abbildkopie und erhält die WLAN-/Hotspot-Anpassung sowie die gewünschte Erststart-Erweiterung.
+
+Schreibzugriff stabilisieren
+- Die Rückleseprüfung verwendet nach dem Schreiben einen frisch geöffneten Lesezugriff. Kurzzeitige Zugriffssperren beim Prüfen werden ebenfalls begrenzt wiederholt; abweichende Daten bleiben ein Fehler. Neuinstallation und Wiederherstellung nutzen diesen gemeinsamen Ablauf.
+- Vor dem Schreiben wird die ausgewählte Karte zusätzlich offline genommen, soweit der Kartenleser dies unterstützt. Dadurch kann Windows während des Schreibens keine neuen Volumes auf der Karte einbinden. Bei Lesern ohne Offline-Unterstützung bleiben die Volumes gesperrt.
+- Bei kurzzeitiger Zugriffssperre wird der Schreibzugriff auf dasselbe erneut geprüfte Gerät geöffnet und der gesamte betroffene Block höchstens dreimal neu geschrieben. Andere Schreibfehler und Abbrüche werden nicht übergangen.
+- Die Partitionstabelle wird erst nach dem vollständigen Schreiben veröffentlicht. Das gesamte geschriebene Abbild wird anschließend zurückgelesen und verglichen. Dauerhafte Sperren bleiben Fehler; eine unvollständige Karte wird nicht als erfolgreich gemeldet.
+- Nach dem Vorgang wird ein vom Programm gesetzter Offline-Zustand wieder aufgehoben. Laufwerksidentität, Schreibschutz und Schutz vor Systemlaufwerken bleiben geprüft.
+
+Oberfläche
+- In allen drei SD-Bereichen stehen Phase, Fortschritt, Geschwindigkeit und Restzeit direkt über dem zugehörigen Fortschrittsbalken innerhalb des Bereichs.
+- Deaktivierte Schaltflächen sind deutlich dunkler als bedienbare Schaltflächen. Die weiße Windows-Darstellung deaktivierter Buttons entfällt; Hover-, Druck- und Tastaturfokus bleiben sichtbar.
+
+Witty-Nachinstallation
+- Der Hersteller-Manager erhält APP_ROOT als Prozessumgebung. Die Meldung über die schreibgeschützte Variable entfällt.
+- Das temporäre Herstellerpaket ist für den APT-Benutzer lesbar, aber nicht schreibbar. Die Meldung über den ungeschützten Download als root entfällt.
+
+Prüfung
+- Teilweise geschriebene Blöcke mit simuliertem Windows-Zugriffsfehler, begrenzter Abbruch bei dauerhafter Sperre und vollständige Rückleseprüfung getestet.
+- FAT/ext4-Abbilder, Hostnamenänderung samt Expansion, unveränderte Originaldatei, Kartenanzeige und manuelle Hostnamenabfrage geprüft.
+- Hersteller-Nachinstallation und Übergabe der schreibgeschützten APP_ROOT-Variable geprüft. Ob ein konkreter Windows-Filter die Karte weiterhin blockiert, muss beim nächsten Schreibversuch auf dem betroffenen PC bestätigt werden.

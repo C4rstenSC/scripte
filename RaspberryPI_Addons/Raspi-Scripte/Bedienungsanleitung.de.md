@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.9.0 – Bedienungsanleitung
+# Raspi-Scripte 0.9.1 – Bedienungsanleitung
 
 Stand: 13.10.2026
 
@@ -115,3 +115,13 @@ Für eine bereits betroffene ältere Karte zeigt `systemd.unit=witty-sd-finalise
 **Programmupdate:** Eigene SD-Aufträge werden abgebrochen; das Update wartet auf das Ende aller Kartenzugriffe. Ein teilweise geschriebenes Abbild muss neu geschrieben werden. Weitere Programminstanzen aus demselben Ordner müssen ihre Vorgänge ebenfalls beenden und geschlossen werden. Wenn das sichere Beenden nicht gelingt, wird das Update nicht installiert.
 
 **Pakete:** Nur die ausgewählten Komponenten erhalten ihre Paketliste. APT und pip prüfen vorhandene Pakete und verwenden passende Downloads erneut. WURB und WIRC besitzen getrennte Laufzeitumgebungen mit gemeinsamem Benutzer-Cache. Entwicklerwerkzeuge black und pylint gehören nicht zur normalen Installation. Grafikfreie GPS-Abfragen benötigen keine grafischen Diagnoseprogramme; die WIRC-Kamera benötigt weiterhin Bild-/Videobibliotheken.
+
+## Kartenabfrage ab 0.9.1
+
+Beim Öffnen des SD-Tabs findet keine automatische Kartenabfrage statt. Den passenden Button „Laufwerke aktualisieren“ im gewünschten Bereich drücken. Nur dieser Bereich wird aktualisiert. Bei „SD-Karte Abbild erstellen“ wird dabei auch der Hostname der ausgewählten Karte gelesen. Nach einem manuellen Auswahlwechsel erneut aktualisieren, um den Hostnamen einzulesen.
+
+Die Laufwerksbuchstaben stehen am Anfang der Anzeige. „Ohne Laufwerksbuchstaben“ bedeutet, dass Windows keine Partition mit einem Buchstaben eingebunden hat. „USB-Datenträger“ wird verwendet, wenn der Kartenleser oder das USB-Gerät keinen eindeutigen Typ meldet. Geräteart und Größe vor dem Schreiben prüfen.
+
+Ein kurzzeitig verweigerter Schreibzugriff wird begrenzt wiederholt. Erst das vollständige Zurücklesen und der Vergleich erlauben eine Erfolgsmeldung. Bei einem endgültigen Fehler die Karte erneut vollständig beschreiben; eine unvollständige Karte ist nicht startfähig.
+
+Die Fortschrittszeile mit Phase, Prozent, Geschwindigkeit und Restzeit steht innerhalb jedes SD-Bereichs unmittelbar über seinem Fortschrittsbalken.
