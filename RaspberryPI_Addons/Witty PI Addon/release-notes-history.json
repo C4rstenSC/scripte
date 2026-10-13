@@ -1,5 +1,12 @@
 [
   {
+    "Version": "0.8.6",
+    "Date": "2026-10-13",
+    "Build": "20261013.4",
+    "Notes": "Witty Add-on 0.8.6 | 13.10.2026\nÄnderungen gegenüber 0.8.5\n\nVerkleinern und vollständig abschalten\n- Neuer Abschlussweg nach erfolgreicher Offline-Verkleinerung: Neustart in ein eigenes systemd-Ziel mit der installierten Witty-Herstellersoftware, anschließend shutdown -h now über den Hersteller-Abschaltdienst.\n- Vor der Abschaltung werden Boot-/Root-UUID und tatsächliche Partitionsgröße mit dem Wartungsergebnis verglichen. Fehlerhafte oder ungeprüfte Ergebnisse werden nicht als erfolgreicher Abschluss behandelt.\n- WURB, WIRC und Allsky werden im eigenen Abschlussziel nicht gestartet. Bekannte automatische Erweiterungsdienste werden für diesen einen Start maskiert; die ursprüngliche Kommandozeile wird vor dem Abschalten wiederhergestellt.\n- Vorhandene init-/systemd-Erststartaufträge werden vor der Vorbereitung erkannt und abgewiesen.\n\nI2C und Diagnose\n- Kombinierte I2C-Transfers entsprechen dem Herstellerzugriff. Die Firmware-Version erscheint im Wartungsprotokoll.\n- Ungültige Zustände, einschließlich des gemeldeten Werts 10, werden nicht als ON ausgelegt. Laut Herstellerprotokoll sind nur 0 bis 3 gültig.\n- Abschlussanforderung und Abschlussfehler stehen getrennt vom Schrumpfergebnis im Bootprotokoll. Eine angeforderte Abschaltung beweist noch keinen tatsächlichen Stromabschluss.\n\nDokumentation\n- Anleitung und Release Notes beschreiben den neuen Ablauf und die Grenzen des Softwaretests. Terminal-Ausgabe bleibt auf Änderungen seit dem installierten Stand begrenzt.\n\nPrüfstand\n- I2C- und Abschlussabläufe mit simulierten Geräten geprüft. Hersteller-Abschluss, tatsächliche Stromabschaltung und das Verhalten bei der gemeldeten ungültigen Antwort benötigen den Test am Gerät.\n",
+    "Source": "Deutsche Witty-Versionshinweise"
+  },
+  {
     "Version": "0.8.5",
     "Date": "2026-10-13",
     "Build": "20261013.3",

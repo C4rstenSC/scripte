@@ -1,17 +1,17 @@
 {
   "version": "0.8.4",
   "de": [
-    "SD-Karte schreiben: - Neuer Ablauf: Image-Daten zuerst, Partitionstabellen zuletzt. Die Erkennungsbereiche für MBR/GPT bleiben während des Kopierens leer, damit Windows die unvollständige Karte nicht vorzeitig einbindet.\n- Eine alte GPT-Sicherung am physischen Kartenende wird beim Überschreiben entfernt. Danach wird das gesamte geschriebene Image byteweise zurückgelesen und verglichen.\n- Administratorrechte werden weiterhin nur für den Kartenworker angefordert.",
-    "Kartenauswahl und IMG: - Kartenprüfung verwendet die Hardwarekennung des Lesers statt einer Kennung aus der Partitionstabelle, die sich beim Schreiben ändern kann.\n- Meldungen zur nicht mehr erkennbaren Karte erscheinen auf Deutsch. Eine nicht eindeutig zuordenbare Karte bleibt gesperrt.",
-    "Witty-Abschaltung: - Das enthaltene Witty Add-on sendet im Wartungsmodus den Hersteller-Heartbeat. Dadurch wird STARTING beendet und ein aktivierter Witty-Watchdog während der Wartung bedient.\n- Die Abschaltmeldung gilt erst als bestätigt, wenn der Witty tatsächlich STOPPING meldet. Das bloße Zurücklesen des Befehlswerts genügt nicht mehr.",
-    "Hilfe und Updates: - Menüeinträge lesen die aktuelle Programmversion; veraltete fest eingetragene Versionsnummern entfallen.\n- Bedienungsanleitungen beschreiben den aktuellen SD-, IMG-, Neustart- und Updateablauf.\n- Release Notes sind nach Themen gegliedert. Im Witty-Update-Terminal erscheinen nur Änderungen seit der installierten Version und Build-Revision, einschließlich übersprungener Zwischenstände.",
-    "Prüfstand: - Bytevergleich, simulierte Zugriffsverweigerung bei 40 MiB, kleine Images, Abbruch sowie Witty-Zustandswechsel werden in Softwaretests geprüft.\n- Der reale Windows-Kartenleser und die vollständige Stromabschaltung am Raspberry/Witty sind hier nicht zugänglich und müssen am Gerät bestätigt werden.\n"
+    "SD-Karte beschreiben: - Nach vollständigem Schreiben und Bytevergleich werden die Kartenhandles geschlossen und Windows um sicheres Auswerfen des ausgewählten Geräts gebeten.\n- Bei Erfolg werden Fortschritt und Kartenauswahl zurückgesetzt. Meldung: „SD Karte wurde korrekt beschrieben. Die Karte wurde sicher ausgeworfen.“\n- Eine Windows-Ablehnung des Auswerfens wird ausdrücklich gemeldet; sie gilt nicht als erfolgreicher Auswurf.",
+    "IMG erstellen: - Oberhalb der Buttons zeigt „Ausgelesener Hostname“ den tatsächlichen Namen aus /etc/hostname der ausgewählten SD-Karte. Die Abfrage liest die Karte ausschließlich; Windows kann dafür erhöhte Rechte anfordern.\n- Ein fehlender oder nicht lesbarer Name wird gemeldet. Unbestätigte Schrumpfung bleibt erkennbar und erfordert weiterhin eine Bestätigung vor einer vollständigen Kartensicherung.",
+    "Neuinstallation: - Vorgaben für den eigenen SD-Einrichtungsdialog: Hostname wurbi-neu, Benutzerpasswort wURbi. Beides bleibt änderbar.",
+    "Witty-Schrumpfabschluss: - Enthält den neuen Hersteller-Abschlussmodus des Witty Add-ons. Nach verifizierter Verkleinerung startet Linux mit einem eigenen Ziel und fährt über den installierten Witty-Herstellerdienst herunter.\n- Anwendungsstart und bekannte Erweiterungsdienste werden für diesen Abschlussstart unterdrückt; vorhandene spezielle Erststartaufträge blockieren die Wartungsvorbereitung.\n- Witty-I2C-Abfragen verwenden kombinierte Transfers entsprechend dem Hersteller-Code statt SMBus-Bytezugriffen. Firmware und ungültige Antworten bleiben sichtbar.",
+    "Prüfstand: - Softwaretests für Abschlussfreigabe, Partitionsgrößen, Bootoptionen, I2C, IMG, Hostname und Windows-Oberflächenabläufe durchgeführt.\n- Der auf Hardware gemeldete Witty-Wert 10 ist laut Firmwareprotokoll kein gültiger Betriebszustand. Der neue Transport und der vollständige Wartungs-/Stromabschluss müssen am Gerät bestätigt werden."
   ],
   "en-AU": [
-    "SD writing: image payload is written before MBR/GPT discovery areas. An old backup GPT is removed. The complete image is read back and compared.",
-    "Card selection: hardware identity replaces a partition-table identifier which can change during writing. Ambiguous targets remain blocked.",
-    "Witty maintenance: manufacturer heartbeats complete STARTING and service the watchdog. Shutdown confirmation requires STOPPING.",
-    "Help and updates: current menu versions, revised guides and grouped release notes. Terminal output includes only changes newer than the installed version and build.",
-    "Validation: simulated disk and protocol tests; physical Windows SD writing and Witty power removal still require hardware verification."
+    "SD writing: Windows safe eject after full verification; reset progress and selection only after successful ejection.",
+    "IMG backups: read the actual hostname from /etc/hostname; show missing or unreadable values.",
+    "Setup defaults: hostname wurbi-neu and account password wURbi, both editable.",
+    "Witty maintenance: dedicated manufacturer shutdown target with application and expansion services suppressed for its one-time boot.",
+    "Validation: software tests completed; reported invalid Witty state 10 and physical power removal require hardware confirmation."
   ]
 }

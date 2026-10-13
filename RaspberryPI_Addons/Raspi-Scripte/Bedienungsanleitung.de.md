@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.8.5 – Bedienungsanleitung
+# Raspi-Scripte 0.8.6 – Bedienungsanleitung
 
 Stand: 13.10.2026
 
@@ -42,7 +42,7 @@ Ausreichend Platz bereitstellen. FAT32 kann Dateien über 4 GiB nicht aufnehmen;
 
 „Micro SD Karten Optionen“ prüft Partition und ext4-Dateisystem getrennt. Beim Verkleinern startet der Raspberry in einen RAM-Wartungsmodus. Das Root-Dateisystem bleibt ausgehängt. Nach Prüfung, Verkleinerung und erneuter Prüfung bleibt eine Reserve von 512 MiB. Anschließend wird die normale Bootkonfiguration wiederhergestellt und die Bootpartition synchronisiert und ausgehängt.
 
-Bei Witty Pi 5 hält ein Hersteller-Heartbeat den Witty während der Wartung im Betriebszustand. Zum Abschalten wird die Herstellermeldung gesendet und der Wechsel in STOPPING geprüft. Erst danach hält der Pi an. Ein bloß zurückgelesener Befehlswert gilt nicht als Bestätigung für die aktivierte Stromabschaltung. Tatsächlicher Stromabschluss und Kartenverkleinerung müssen am Gerät bestätigt werden.
+Bei Witty Pi 5 hält ein Hersteller-Heartbeat den Witty während der Wartung im Betriebszustand. Nach verifizierter Verkleinerung startet ein eigener Abschlussmodus mit den installierten Herstellerdiensten. Dieser prüft erneut UUID und Partitionsgröße und fordert anschließend die Hersteller-Abschaltung an. Anwendungs- und bekannte Erweiterungsdienste bleiben bei diesem Abschlussstart gesperrt. Ein bloß zurückgelesener Befehlswert gilt nicht als Bestätigung für die aktivierte Stromabschaltung. Tatsächlicher Stromabschluss und Kartenverkleinerung müssen am Gerät bestätigt werden.
 
 Bei einem Fehler wird das Wartungsprotokoll auf der Bootpartition gespeichert. Vor einem neuen Versuch das Ergebnis prüfen. Expandieren verwendet bei unterstützten Images einen einmaligen Bootauftrag; Benutzerkonto und Netzwerke werden dabei nicht neu eingerichtet.
 
@@ -65,3 +65,9 @@ Für die IMX296-GS-Kamera die entsprechende Option auswählen. Manuelle und auto
 ## Hilfe und Release Notes
 
 Die Hilfe zeigt die aktuelle Programmversion. Die aktuelle Änderungsübersicht ist nach Themen gegliedert; ältere Versionsstände stehen in der Versionshistorie. Die Witty-Webseite bietet eine eigene Bedienungsanleitung für Zeitpläne, Dienste und Aufnahmen.
+
+## Änderungen am Ablauf in 0.8.6
+
+Nach erfolgreichem Schreiben und Prüfen fordert das Programm Windows zum sicheren Auswerfen auf und setzt bei Erfolg die Anzeige zurück. Wird das Auswerfen verweigert, die Karte über Windows sicher entfernen. Beim IMG-Erstellen wird der tatsächliche Hostname von der Karte gelesen. Neue Konfigurationen schlagen wurbi-neu und wURbi vor; beide Vorgaben sind änderbar.
+
+Nach einer bestätigten Verkleinerung übernimmt ein eigener Abschlussstart den installierten Witty-Herstellerdienst. WURB/WIRC/Allsky werden dabei nicht gestartet. Bekannte Erweiterungsdienste sind für diesen Start gesperrt; vorhandene spezielle Erststartaufträge verhindern schon die Vorbereitung. Vor der Abschaltung werden UUID und tatsächliche Partitionsgröße erneut geprüft. Das Ergebnisprotokoll unterscheidet verifiziertes Schrumpfen, angeforderte Abschaltung und Abschaltfehler. Ein ungültiger Witty-Wert 10 gilt weiterhin als Fehler und darf nicht als ON behandelt werden.

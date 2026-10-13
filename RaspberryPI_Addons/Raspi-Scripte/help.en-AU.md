@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.8.5 – User guide
+# Raspi-Scripte 0.8.6 – User guide
 
 Updated: 13 October 2026
 
@@ -55,3 +55,9 @@ Select the IMX296 option for a GS camera. Day and night exposures are configured
 ## Help and release notes
 
 Help uses the current application version. Current changes are grouped by topic; older releases remain in version history. The Witty website includes its own guide to schedules, services and recordings.
+
+## Changes in 0.8.6
+
+After verified shrinking, a dedicated systemd target starts the installed manufacturer daemon and requests shutdown through its poweroff hook. Normal applications and known expansion services are excluded from this completion boot. Existing special first-boot commands block preparation. Boot/root identities and partition geometry are checked again. Physical power removal still needs device verification. Invalid Witty state 10 remains an error.
+
+SD writing now requests Windows safe eject after complete readback. Progress and target selection reset on success. The backup panel reads the actual ext4 hostname. Setup defaults are wurbi-neu and wURbi, both editable.

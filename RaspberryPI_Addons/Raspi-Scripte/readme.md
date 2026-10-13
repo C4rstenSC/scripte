@@ -1,26 +1,25 @@
-# Raspi-Scripte 0.8.5
+# Raspi-Scripte 0.8.6
 
-Raspi-Scripte 0.8.5 | 13.10.2026
-Änderungen gegenüber 0.8.4
+Raspi-Scripte 0.8.6 | 13.10.2026
+Änderungen gegenüber 0.8.5
 
-SD-Karte schreiben
-- Neuer Ablauf: Image-Daten zuerst, Partitionstabellen zuletzt. Die Erkennungsbereiche für MBR/GPT bleiben während des Kopierens leer, damit Windows die unvollständige Karte nicht vorzeitig einbindet.
-- Eine alte GPT-Sicherung am physischen Kartenende wird beim Überschreiben entfernt. Danach wird das gesamte geschriebene Image byteweise zurückgelesen und verglichen.
-- Administratorrechte werden weiterhin nur für den Kartenworker angefordert.
+SD-Karte beschreiben
+- Nach vollständigem Schreiben und Bytevergleich werden die Kartenhandles geschlossen und Windows um sicheres Auswerfen des ausgewählten Geräts gebeten.
+- Bei Erfolg werden Fortschritt und Kartenauswahl zurückgesetzt. Meldung: „SD Karte wurde korrekt beschrieben. Die Karte wurde sicher ausgeworfen.“
+- Eine Windows-Ablehnung des Auswerfens wird ausdrücklich gemeldet; sie gilt nicht als erfolgreicher Auswurf.
 
-Kartenauswahl und IMG-Sicherung
-- Kartenprüfung verwendet die Hardwarekennung des Lesers statt einer Kennung aus der Partitionstabelle, die sich beim Schreiben ändern kann.
-- Meldungen zur nicht mehr erkennbaren Karte erscheinen auf Deutsch. Eine nicht eindeutig zuordenbare Karte bleibt gesperrt.
+IMG erstellen
+- Oberhalb der Buttons zeigt „Ausgelesener Hostname“ den tatsächlichen Namen aus /etc/hostname der ausgewählten SD-Karte. Die Abfrage liest die Karte ausschließlich; Windows kann dafür erhöhte Rechte anfordern.
+- Ein fehlender oder nicht lesbarer Name wird gemeldet. Unbestätigte Schrumpfung bleibt erkennbar und erfordert weiterhin eine Bestätigung vor einer vollständigen Kartensicherung.
 
-Witty-Abschaltung nach dem Schrumpfen
-- Das enthaltene Witty Add-on sendet im Wartungsmodus den Hersteller-Heartbeat. Dadurch wird STARTING beendet und ein aktivierter Witty-Watchdog während der Wartung bedient.
-- Die Abschaltmeldung gilt erst als bestätigt, wenn der Witty tatsächlich STOPPING meldet. Das bloße Zurücklesen des Befehlswerts genügt nicht mehr.
+Neuinstallation
+- Vorgaben für den eigenen SD-Einrichtungsdialog: Hostname wurbi-neu, Benutzerpasswort wURbi. Beides bleibt änderbar.
 
-Hilfe und Release Notes
-- Menüeinträge lesen die aktuelle Programmversion; veraltete fest eingetragene Versionsnummern entfallen.
-- Bedienungsanleitungen beschreiben den aktuellen SD-, IMG-, Neustart- und Updateablauf.
-- Release Notes sind nach Themen gegliedert. Im Witty-Update-Terminal erscheinen nur Änderungen seit der installierten Version und Build-Revision, einschließlich übersprungener Zwischenstände.
+Witty-Schrumpfabschluss
+- Enthält den neuen Hersteller-Abschlussmodus des Witty Add-ons. Nach verifizierter Verkleinerung startet Linux mit einem eigenen Ziel und fährt über den installierten Witty-Herstellerdienst herunter.
+- Anwendungsstart und bekannte Erweiterungsdienste werden für diesen Abschlussstart unterdrückt; vorhandene spezielle Erststartaufträge blockieren die Wartungsvorbereitung.
+- Witty-I2C-Abfragen verwenden kombinierte Transfers entsprechend dem Hersteller-Code statt SMBus-Bytezugriffen. Firmware und ungültige Antworten bleiben sichtbar.
 
 Prüfstand
-- Bytevergleich, simulierte Zugriffsverweigerung bei 40 MiB, kleine Images, Abbruch sowie Witty-Zustandswechsel werden in Softwaretests geprüft.
-- Der reale Windows-Kartenleser und die vollständige Stromabschaltung am Raspberry/Witty sind hier nicht zugänglich und müssen am Gerät bestätigt werden.
+- Softwaretests für Abschlussfreigabe, Partitionsgrößen, Bootoptionen, I2C, IMG, Hostname und Windows-Oberflächenabläufe durchgeführt.
+- Der auf Hardware gemeldete Witty-Wert 10 ist laut Firmwareprotokoll kein gültiger Betriebszustand. Der neue Transport und der vollständige Wartungs-/Stromabschluss müssen am Gerät bestätigt werden.
