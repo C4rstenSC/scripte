@@ -1,0 +1,20 @@
+Raspi-Scripte 0.8.9 | 13.10.2026
+Änderungen gegenüber 0.8.8
+
+Normaler Start nach erfolgreicher Schrumpfung
+- Der konkrete Fehler aus dem Geräteprotokoll wurde reproduziert: Der Witty-Heartbeat hielt das Bootprotokoll offen. Das Aushängen schlug nach erfolgreicher Dateisystemprüfung fehl und hinterließ den Wartungs-Abschlussmodus.
+- Der Heartbeat schreibt nicht mehr in das Bootprotokoll und wird vor dem Aushängen beendet.
+- Ein später Abschlussfehler überschreibt nicht mehr das erfolgreich geprüfte Schrumpfergebnis. Geometrie und Ergebnis bleiben erhalten; die normale Bootzeile wird wiederhergestellt.
+- Im Hersteller-Abschlussmodus wird die normale Bootkonfiguration direkt nach UUID-/Partitionsprüfung wiederhergestellt, bevor Herstellerprüfungen fehlschlagen oder warten können.
+- Fehlschlagende Herstellerdienste verhindern nicht mehr die Ausführung dieser abgesicherten Bootwiederherstellung. Nicht verifizierte oder widersprüchliche Dateisystemzustände bleiben geschützt.
+- Künftige erfolgreiche Wartungen benötigen keine manuelle Bootdatei-Reparatur. Bereits mit älteren Versionen festhängende Karten benötigen einmalig die entfernten Wartungs-Bootparameter; für die vorliegende Karte wurde eine separate Reparaturdatei erstellt.
+
+Windows-Oberfläche
+- Die Tab-Anpassung von 0.8.8 hatte den gesamten Seiteninhalt zentriert und auf Mindestbreite zusammengeschoben. Beide Reiter verwenden wieder die volle Fensterbreite.
+- Schwarze Tab-Rahmen, Abstände und die separate Zentrierung des Tab-Kopftexts bleiben erhalten.
+- Die Verbindungszeile enthält nur noch die aktuelle IPv4-Adresse; doppelte Beschriftung und Textüberlagerung entfallen.
+
+Prüfung
+- Alter Aushängefehler mit offenem Hintergrund-Protokoll reproduziert, korrigierter Abschluss geprüft sowie später Fehler mit automatisch wiederhergestellter Bootzeile getestet.
+- Verifiziertes Dateisystem bleibt nach Herstellerfehler startbar; unbestätigte Geometrie wird nicht als Erfolg freigegeben.
+- Softwaretests und kompletter Windows-Build geprüft. Der normale nächste Start muss anschließend am Pi bestätigt werden.

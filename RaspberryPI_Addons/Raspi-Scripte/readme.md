@@ -1,34 +1,22 @@
-# Raspi-Scripte 0.8.8
+# Raspi-Scripte 0.8.9
 
-Raspi-Scripte 0.8.8 | 13.10.2026
-Änderungen gegenüber 0.8.7
+Raspi-Scripte 0.8.9 | 13.10.2026
+Änderungen gegenüber 0.8.8
 
-SD-Karte schreiben und sicher auswerfen
-- Alte Partitionstabelle mit einem eigenen Vorbereitungshandle entfernen. Dieser wird vor dem Öffnen des neuen Schreibhandles geschlossen; die Hardwarekennung wird erneut geprüft.
-- Schreibphasen, Bytebereiche und Windows-Fehler werden unter %LOCALAPPDATA%/Raspi-Scripte/SdJobs/Logs protokolliert. Die vollständige Prüfung der geschriebenen Karte bleibt erhalten.
-- Bei Auswurf-Veto 8 wird nur der unmittelbar zugehörige USB-Kartenleser angefordert, wenn er ausschließlich diese Karte enthält. USB-Hubs und andere Geräte werden nicht mit ausgeworfen.
-- Vorübergehende offene Windows-Zugriffe werden begrenzt abgewartet. Abschlüsse erscheinen im Fenster ohne Popup. Eine abgelehnte Auswurfanforderung wird getrennt vom erfolgreichen Schreiben angezeigt.
-- Erfolgreiche IMG-Erstellung und Hostnamenänderung werfen ebenfalls sicher aus und setzen Fortschritt und Laufwerksauswahl zurück. Das Backup-Zielverzeichnis bleibt erhalten; ein freier Folgedateiname wird vorgeschlagen.
+Normaler Start nach erfolgreicher Schrumpfung
+- Der konkrete Fehler aus dem Geräteprotokoll wurde reproduziert: Der Witty-Heartbeat hielt das Bootprotokoll offen. Das Aushängen schlug nach erfolgreicher Dateisystemprüfung fehl und hinterließ den Wartungs-Abschlussmodus.
+- Der Heartbeat schreibt nicht mehr in das Bootprotokoll und wird vor dem Aushängen beendet.
+- Ein später Abschlussfehler überschreibt nicht mehr das erfolgreich geprüfte Schrumpfergebnis. Geometrie und Ergebnis bleiben erhalten; die normale Bootzeile wird wiederhergestellt.
+- Im Hersteller-Abschlussmodus wird die normale Bootkonfiguration direkt nach UUID-/Partitionsprüfung wiederhergestellt, bevor Herstellerprüfungen fehlschlagen oder warten können.
+- Fehlschlagende Herstellerdienste verhindern nicht mehr die Ausführung dieser abgesicherten Bootwiederherstellung. Nicht verifizierte oder widersprüchliche Dateisystemzustände bleiben geschützt.
+- Künftige erfolgreiche Wartungen benötigen keine manuelle Bootdatei-Reparatur. Bereits mit älteren Versionen festhängende Karten benötigen einmalig die entfernten Wartungs-Bootparameter; für die vorliegende Karte wurde eine separate Reparaturdatei erstellt.
 
-Hostname und Hotspot
-- Nach Hostnamenänderung am verbundenen Pi werden Geräteinformationen, IP-Adresse und Verbindungsliste neu eingelesen.
-- Im Bereich „SD-Karte von Abbild beschreiben“ erscheint der ausgelesene Hostname über den Buttons. Ein offline vorbereiteter neuer Name wird als für den nächsten Pi-Start vorbereitet gekennzeichnet.
-- Hostnamenänderungen beim Schreiben passen vorhandene Installer-Hotspotprofile auf wifi4bats-, allskywifi- bzw. wifi- plus Hostname an. Passwörter, UUIDs, normale WLAN-Profile und weitere Einstellungen bleiben erhalten.
-- Zu lange Hotspotnamen werden vor Änderung der Bootdateien abgelehnt.
+Windows-Oberfläche
+- Die Tab-Anpassung von 0.8.8 hatte den gesamten Seiteninhalt zentriert und auf Mindestbreite zusammengeschoben. Beide Reiter verwenden wieder die volle Fensterbreite.
+- Schwarze Tab-Rahmen, Abstände und die separate Zentrierung des Tab-Kopftexts bleiben erhalten.
+- Die Verbindungszeile enthält nur noch die aktuelle IPv4-Adresse; doppelte Beschriftung und Textüberlagerung entfallen.
 
-Basisinstallation, Updates und Witty
-- Wiederverbindung auch bei verlorener Neustartmeldung während Basisinstallation oder Update. Lange Installationen verbrauchen nicht die Drei-Minuten-Frist; diese beginnt beim Verbindungsabbruch. Abbrechen schließt die Sitzung.
-- Witty-Herstellersoftware kann nach einer Basisinstallation mit „Kein Witty“ nachinstalliert werden. Die Zeile bleibt sichtbar und bietet Witty Pi 4/5 sowie einen Installationsbutton.
-- Installation prüft die angeschlossene Hardware, korrigiert WP4-Auswahl bei erkanntem WP5 und richtet Hersteller-, Abschalt-, I2C- und Zeitdienste gezielt ein. Andere Module werden nicht erneut installiert.
-- Hersteller-Deinstallation entfernt ausschließlich die Herstellerkomponente und lässt Add-on-Homepage und Anwendungen bestehen.
-- Ohne installierten Witty bleibt der normale Linux-Abschaltweg verfügbar. Wartung verwendet ohne Witty keinen Hersteller-Abschlussmodus.
-
-Oberfläche
-- Beide Tabs besitzen einen dickeren schwarzen Rahmen und gleiche Innenabstände.
-- „Ausgewählte Konfig installieren“ steht direkt links neben „Abbrechen“.
-- Überschriften: „SD-Karte mit neuem Abbild beschreiben“, „SD-Karte Abbild erstellen“ und „SD-Karte von Abbild beschreiben“.
-- Während Erweiterung und Neustart wird der alte Partitionszustand nicht als aktuell angezeigt; der tatsächliche Zustand wird nach Wiederverbindung gelesen.
-
-Prüfstand und offene Hardwareprüfung
-- Lokale Software-, Dateisystem-, Übertragungs- und Wiederverbindungstests erfolgreich. Der zweite Schreibversuch wurde am Gerät als erfolgreich gemeldet; die neue Handle-Trennung benötigt noch den Gerätetest.
-- Korrekte Witty-Abschaltung wurde nachfolgend vom Nutzer am Gerät bestätigt. Abschaltdienst muss im poweroff.target eingebunden sein; sein Protokoll wird auf der Bootpartition gespeichert. Diagnoseskript liest Herstellerdienste, Firmware, Witty-Zustand und Abschaltverzögerung ohne Abschaltung.
+Prüfung
+- Alter Aushängefehler mit offenem Hintergrund-Protokoll reproduziert, korrigierter Abschluss geprüft sowie später Fehler mit automatisch wiederhergestellter Bootzeile getestet.
+- Verifiziertes Dateisystem bleibt nach Herstellerfehler startbar; unbestätigte Geometrie wird nicht als Erfolg freigegeben.
+- Softwaretests und kompletter Windows-Build geprüft. Der normale nächste Start muss anschließend am Pi bestätigt werden.

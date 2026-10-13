@@ -1,21 +1,17 @@
-# Witty Add-on 0.8.8
+# Witty Add-on 0.8.9
 
-Witty Add-on 0.8.8 | 13.10.2026
-Änderungen gegenüber 0.8.7
+Witty Add-on 0.8.9 | 13.10.2026
+Änderungen gegenüber 0.8.8
 
-Witty später nachinstallieren
-- Neuer Hersteller-Manager für eine bestehende Basisinstallation mit „Kein Witty“.
-- Witty Pi 4/5 wird vor dem Herstellerdownload an I2C identifiziert. Erkannter WP5 korrigiert eine WP4-Auswahl; fehlende oder unpassende Hardware stoppt vor Installation.
-- Herstellerpaket, I2C-Voraussetzungen, Gruppenrechte, Zeithelfer und Abschaltdienst werden gezielt eingerichtet. Bestehende GPS-Auswahl, Zeitzone, Homepage und Anwendungen bleiben erhalten.
-- Hersteller-Deinstallation betrifft ausschließlich die Herstellerkomponente. WP4-Dateien werden gesichert; WP5 wird über seine Paketverwaltung entfernt.
-- Tatsächlich vorhandene Herstellersoftware wird auch bei einer veralteten „Kein Witty“-Konfiguration im Status erkannt.
+Normaler Start nach erfolgreicher Schrumpfung
+- Der konkrete Fehler aus dem Geräteprotokoll wurde reproduziert: Der Witty-Heartbeat hielt das Bootprotokoll offen. Das Aushängen schlug nach erfolgreicher Dateisystemprüfung fehl und hinterließ den Wartungs-Abschlussmodus.
+- Der Heartbeat schreibt nicht mehr in das Bootprotokoll und wird vor dem Aushängen beendet.
+- Ein später Abschlussfehler überschreibt nicht mehr das erfolgreich geprüfte Schrumpfergebnis. Geometrie und Ergebnis bleiben erhalten; die normale Bootzeile wird wiederhergestellt.
+- Im Hersteller-Abschlussmodus wird die normale Bootkonfiguration direkt nach UUID-/Partitionsprüfung wiederhergestellt, bevor Herstellerprüfungen fehlschlagen oder warten können.
+- Fehlschlagende Herstellerdienste verhindern nicht mehr die Ausführung dieser abgesicherten Bootwiederherstellung. Nicht verifizierte oder widersprüchliche Dateisystemzustände bleiben geschützt.
+- Künftige erfolgreiche Wartungen benötigen keine manuelle Bootdatei-Reparatur. Bereits mit älteren Versionen festhängende Karten benötigen einmalig die entfernten Wartungs-Bootparameter; für die vorliegende Karte wurde eine separate Reparaturdatei erstellt.
 
-Abschaltung und Wartung
-- Vor shutdown now wird geprüft, dass wp5d_poweroff.service tatsächlich in poweroff.target eingebunden ist.
-- Ausgabe des Hersteller-Abschaltdienstes und seiner I2C-Bestätigung wird als witty-sd-poweroff.log auf der Bootpartition gespeichert.
-- Ohne Witty bleibt reguläre Linux-Abschaltung verfügbar. Hersteller-Abschluss ist für eine Verkleinerung ohne Witty nicht erforderlich.
-- Witty Pi 4 ohne GPS verwendet seine eigene Hersteller- und einmalige RTC-Anbindung statt wp5d.
-
-Diagnose
-- witty-shutdown-diagnose.sh sammelt Boot-/Wartungsprotokolle, Herstellerdienste, Helfer-Prüfsummen sowie Firmware, Witty-Zustand und Abschaltverzögerung.
-- Die Diagnose führt weder Shutdown noch Resize oder Registerwertänderungen aus. Die korrekte Abschaltung wurde nachfolgend vom Nutzer am Gerät bestätigt.
+Prüfung
+- Fehlerfall aus dem Geräteprotokoll mit offenem Heartbeat-Protokoll reproduziert.
+- Korrigierter Ablauf und erzwungener später Aushängefehler geprüft: Erfolgreiches Schrumpfergebnis erhalten, normale Bootoptionen wiederhergestellt.
+- Herstellerfehler erst nach gesicherter normaler Bootkonfiguration; unbestätigte Geometrie bleibt geschützt. Normaler nächster Pi-Start muss am Gerät bestätigt werden.

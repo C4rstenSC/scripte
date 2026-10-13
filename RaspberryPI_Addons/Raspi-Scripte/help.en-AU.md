@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.8.8 – User guide
+# Raspi-Scripte 0.8.9 – User guide
 
 Updated: 13 October 2026
 
@@ -71,3 +71,7 @@ Expansion preserves other partition fields and grows ext4 online or through a va
 Manufacturer software can be added after a homepage-only base installation by selecting Witty Pi 4/5 in its visible row. The manager verifies hardware and retains application/GPS configuration. Windows reconnects after planned installation/update reboots for up to three minutes. Normal Linux poweroff remains available without Witty.
 
 Successful SD jobs eject the card and reset their progress/selection with inline completion messages. Ejection refusal is reported separately. Raw write diagnostics are under `%LOCALAPPDATA%/Raspi-Scripte/SdJobs/Logs`. Card hostname boot jobs rename existing installer hotspots while retaining passwords and profile UUIDs. Correct Witty shutdown was subsequently confirmed by the user; shutdown diagnostics remain available if needed.
+
+## Shrink completion fix in 0.8.9
+
+The RAM heartbeat no longer holds the boot log open and stops before boot partition unmounting. Late shutdown/handoff errors preserve verified geometry. Normal boot parameters are restored before manufacturer checks after successful UUID/geometry verification. Already affected older cards need a one-time checked boot-command repair; new successful maintenance completes automatically.

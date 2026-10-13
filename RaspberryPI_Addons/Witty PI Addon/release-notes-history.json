@@ -1,5 +1,11 @@
 [
   {
+    "Version": "0.8.9",
+    "Date": "2026-10-13",
+    "Build": "20261013.7",
+    "Notes": "Witty Add-on 0.8.9 | 13.10.2026\nÄnderungen gegenüber 0.8.8\n\nNormaler Start nach erfolgreicher Schrumpfung\n- Der konkrete Fehler aus dem Geräteprotokoll wurde reproduziert: Der Witty-Heartbeat hielt das Bootprotokoll offen. Das Aushängen schlug nach erfolgreicher Dateisystemprüfung fehl und hinterließ den Wartungs-Abschlussmodus.\n- Der Heartbeat schreibt nicht mehr in das Bootprotokoll und wird vor dem Aushängen beendet.\n- Ein später Abschlussfehler überschreibt nicht mehr das erfolgreich geprüfte Schrumpfergebnis. Geometrie und Ergebnis bleiben erhalten; die normale Bootzeile wird wiederhergestellt.\n- Im Hersteller-Abschlussmodus wird die normale Bootkonfiguration direkt nach UUID-/Partitionsprüfung wiederhergestellt, bevor Herstellerprüfungen fehlschlagen oder warten können.\n- Fehlschlagende Herstellerdienste verhindern nicht mehr die Ausführung dieser abgesicherten Bootwiederherstellung. Nicht verifizierte oder widersprüchliche Dateisystemzustände bleiben geschützt.\n- Künftige erfolgreiche Wartungen benötigen keine manuelle Bootdatei-Reparatur. Bereits mit älteren Versionen festhängende Karten benötigen einmalig die entfernten Wartungs-Bootparameter; für die vorliegende Karte wurde eine separate Reparaturdatei erstellt.\n\nPrüfung\n- Fehlerfall aus dem Geräteprotokoll mit offenem Heartbeat-Protokoll reproduziert.\n- Korrigierter Ablauf und erzwungener später Aushängefehler geprüft: Erfolgreiches Schrumpfergebnis erhalten, normale Bootoptionen wiederhergestellt.\n- Herstellerfehler erst nach gesicherter normaler Bootkonfiguration; unbestätigte Geometrie bleibt geschützt. Normaler nächster Pi-Start muss am Gerät bestätigt werden.\n"
+  },
+  {
     "Version": "0.8.8",
     "Date": "2026-10-13",
     "Build": "20261013.6",

@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.8.8 – Bedienungsanleitung
+# Raspi-Scripte 0.8.9 – Bedienungsanleitung
 
 Stand: 13.10.2026
 
@@ -95,3 +95,9 @@ Erfolgreiches Schreiben, IMG-Erstellen und Hostnamen-Vorbereiten schließen die 
 „Hostname setzen“ im Kartenbereich bereitet eine einmalige Änderung beim nächsten Pi-Start vor. Vorhandene WURB-, Allsky- und Basis-Hotspots erhalten den passenden Installer-Präfix vor dem neuen Hostnamen; Passwörter und übrige Verbindungsdaten bleiben bestehen. Ein Hostname darf zusammen mit dem Hotspot-Präfix höchstens 32 Zeichen lang sein.
 
 Bei erneut auftretenden Abschaltproblemen kann vor weiterer Schrumpfung `sudo bash witty-shutdown-diagnose.sh` ausführen und die erzeugte `.tar.gz` sichern. Nach der Wartung `witty-sd-result.json`, `witty-sd-result.txt` und – falls vorhanden – `witty-sd-poweroff.log` von der Bootpartition sichern. Das Abschaltprotokoll bestätigt nur die beobachtete Hersteller/I2C-Rückmeldung; LEDs oder 5V-Versorgung müssen am Gerät geprüft werden.
+
+## Start nach Schrumpfung (Korrektur 0.8.9)
+
+Nach erfolgreicher Dateisystemprüfung beendet der RAM-Wartungsmodus den Witty-Heartbeat vor dem Aushängen der Bootpartition. Ein später Abschalt- oder Aushängefehler wird getrennt vom bereits geprüften Dateisystem protokolliert. Bei bestätigter Geometrie stellt der Hersteller-Abschlussmodus die normale Bootzeile vor den Herstellerprüfungen wieder her. Die Karte kann danach normal starten, ohne Wartungsparameter manuell zu entfernen.
+
+Für eine bereits betroffene ältere Karte zeigt `systemd.unit=witty-sd-finalise.target` in `cmdline.txt` zusammen mit dem Fehler an `umount /run/witty-boot` den vorliegenden Abschlussfehler. Nur nach Prüfung der zugehörigen Protokolle und Partitionskennung die eigene Wartungs-Bootoption und deren Masken entfernen. Die erzeugte Reparaturdatei für wurbi-n94 erhält PARTUUID und alle übrigen Bootparameter. Die ursprüngliche `config.txt` war bereits korrekt wiederhergestellt.
