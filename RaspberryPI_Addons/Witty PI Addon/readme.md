@@ -1,21 +1,29 @@
-# Witty Add-on 0.8.6
+# Witty Add-on 0.8.7
 
-Witty Add-on 0.8.6 | 13.10.2026
-Änderungen gegenüber 0.8.5
+Witty Add-on 0.8.7 | 13.10.2026
+Änderungen gegenüber 0.8.6
 
-Verkleinern und vollständig abschalten
-- Neuer Abschlussweg nach erfolgreicher Offline-Verkleinerung: Neustart in ein eigenes systemd-Ziel mit der installierten Witty-Herstellersoftware, anschließend shutdown -h now über den Hersteller-Abschaltdienst.
-- Vor der Abschaltung werden Boot-/Root-UUID und tatsächliche Partitionsgröße mit dem Wartungsergebnis verglichen. Fehlerhafte oder ungeprüfte Ergebnisse werden nicht als erfolgreicher Abschluss behandelt.
-- WURB, WIRC und Allsky werden im eigenen Abschlussziel nicht gestartet. Bekannte automatische Erweiterungsdienste werden für diesen einen Start maskiert; die ursprüngliche Kommandozeile wird vor dem Abschalten wiederhergestellt.
-- Vorhandene init-/systemd-Erststartaufträge werden vor der Vorbereitung erkannt und abgewiesen.
+Pakete nach Auswahl
+- Die Basisinstallation bildet eine einzige, eindeutige Paketliste aus WURB, WIRC, Allsky, GPS und Witty. Gemeinsame Pakete stehen darin nur einmal.
+- Ohne Module werden nur Homepage-/Update-/Hotspot-Voraussetzungen verarbeitet. Audio-, Video-, GPS- und Entwicklungsstacks entfallen.
+- Die GPS-Zeitzonendatenbank wird nur bei ausgewähltem GPS installiert. Ohne Witty/GPS bleiben RTC und Zeitdienste unverändert.
+- I2C und Witty-Sperrdateien werden nur für ausgewählten Witty eingerichtet. Ungewählte bestehende Anwendungen werden im Basislauf nicht repariert oder umkonfiguriert.
+- Allsky-Basispakete werden in der gemeinsamen Paketphase berücksichtigt. Gemeinsamer pip-Cache und erhaltene APT-Archive vermeiden erneute Downloads derselben bereits verfügbaren Pakete.
 
-I2C und Diagnose
-- Kombinierte I2C-Transfers entsprechen dem Herstellerzugriff. Die Firmware-Version erscheint im Wartungsprotokoll.
-- Ungültige Zustände, einschließlich des gemeldeten Werts 10, werden nicht als ON ausgelegt. Laut Herstellerprotokoll sind nur 0 bis 3 gültig.
-- Abschlussanforderung und Abschlussfehler stehen getrennt vom Schrumpfergebnis im Bootprotokoll. Eine angeforderte Abschaltung beweist noch keinen tatsächlichen Stromabschluss.
+Witty-Abschaltung
+- Bereits installierte Herstellersoftware wird auch berücksichtigt, wenn die Homepage aktuell auf „Kein Witty“ eingestellt ist. Die reine Homepage-Installation installiert weiterhin keine Herstellerpakete.
+- Hersteller-Abschluss fordert shutdown now an. Ein zusätzlicher Schritt nach wp5d --poweroff prüft den tatsächlichen Zustand STOPPING.
+- Falls der Herstelleraufruf ohne Abschaltwirkung zurückkehrt und Witty weiterhin ON ist, sendet der kombinierte I2C-Helfer die Abschaltmeldung und prüft sie erneut.
+- „Kein Witty“ installiert keinen Herstellerdienst; damit kann der Pi allein herunterfahren, aber keine Witty-Stromabschaltung auslösen.
 
-Dokumentation
-- Anleitung und Release Notes beschreiben den neuen Ablauf und die Grenzen des Softwaretests. Terminal-Ausgabe bleibt auf Änderungen seit dem installierten Stand begrenzt.
+Status und Oberfläche
+- Neue Wartungsprotokolle enthalten Hostname und Partitions-UUIDs. Alte oder kopierte Protokolle werden nicht als aktuelle Wartungsfehler eines anderen Geräts behandelt.
+- Aktive Homepage-Buttons sind dunkler und besitzen sichtbare Ränder, Hover- und Tastaturfokuszustände. Deaktivierte Buttons bleiben heller.
+
+Erweitern und Deinstallieren
+- Partitionsvergrößerung setzt nur die neue Größe der letzten Partition. Vorhandene Kennungen bleiben erhalten; ext4 wird online oder über einen verifizierten einmaligen Bootdienst erweitert.
+- Der Witty-Hersteller-Neustarthook wird während Wartungsneustarts nur im aktuellen Laufzeitsystem maskiert. Dadurch wird kein zusätzlicher Stromzyklus während Dateisystemarbeiten angefordert.
+- Deinstallation wird auch bei unvollständiger Installation ausgeführt. Projektordner unter mehreren Benutzern werden gesichert und bereinigt; externe Einstellungen bleiben erhalten.
 
 Prüfstand
-- I2C- und Abschlussabläufe mit simulierten Geräten geprüft. Hersteller-Abschluss, tatsächliche Stromabschaltung und das Verhalten bei der gemeldeten ungültigen Antwort benötigen den Test am Gerät.
+- Auswahlkombinationen und Abschaltbestätigung in Softwaretests geprüft. Erfolgreiche Verkleinerung wurde am Gerät gemeldet; tatsächliche Stromabschaltung benötigt weiterhin den Hardwaretest.

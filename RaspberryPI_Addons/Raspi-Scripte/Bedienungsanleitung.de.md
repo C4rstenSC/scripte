@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.8.6 – Bedienungsanleitung
+# Raspi-Scripte 0.8.7 – Bedienungsanleitung
 
 Stand: 13.10.2026
 
@@ -71,3 +71,17 @@ Die Hilfe zeigt die aktuelle Programmversion. Die aktuelle Änderungsübersicht 
 Nach erfolgreichem Schreiben und Prüfen fordert das Programm Windows zum sicheren Auswerfen auf und setzt bei Erfolg die Anzeige zurück. Wird das Auswerfen verweigert, die Karte über Windows sicher entfernen. Beim IMG-Erstellen wird der tatsächliche Hostname von der Karte gelesen. Neue Konfigurationen schlagen wurbi-neu und wURbi vor; beide Vorgaben sind änderbar.
 
 Nach einer bestätigten Verkleinerung übernimmt ein eigener Abschlussstart den installierten Witty-Herstellerdienst. WURB/WIRC/Allsky werden dabei nicht gestartet. Bekannte Erweiterungsdienste sind für diesen Start gesperrt; vorhandene spezielle Erststartaufträge verhindern schon die Vorbereitung. Vor der Abschaltung werden UUID und tatsächliche Partitionsgröße erneut geprüft. Das Ergebnisprotokoll unterscheidet verifiziertes Schrumpfen, angeforderte Abschaltung und Abschaltfehler. Ein ungültiger Witty-Wert 10 gilt weiterhin als Fehler und darf nicht als ON behandelt werden.
+
+## Ablauf ab 0.8.7
+
+IMG-Sicherungen lesen die Karte einmal und erfassen dabei SHA-256. Danach wird die gespeicherte Datei unabhängig zurückgelesen und mit dieser Prüfsumme verglichen. Die Prüfung schreibt nichts auf die Karte. Nach dem Auslesen des Hostnamens lautet der Vorschlag Datum-Hostname.img; eigene Dateinamen bleiben erhalten.
+
+Die Basisinstallation verarbeitet nur die gewählten Module und ihre gemeinsamen Voraussetzungen. Ohne Witty und GPS werden nur Homepage-/Update-/Hotspot-Funktionen eingerichtet; Witty-Hardware- und Zeitänderungen entfallen. Für eine Stromabschaltung über Witty muss dessen Herstellerdienst installiert sein. Ein zusätzlicher Prüfhelfer kontrolliert nach dem Hersteller-Abschaltaufruf STOPPING und kann einen wirkungslosen Aufruf durch eine bestätigte I2C-Meldung ergänzen. Die tatsächliche Stromabschaltung ist am Gerät zu prüfen.
+
+Partitionszustand und aktuelle Wartung werden getrennt angezeigt. Alte oder kopierte Wartungsberichte ohne passende Gerätekennung erscheinen nur als historische Information im Hinweis.
+
+## Erweitern, Abbrechen und Deinstallieren
+
+Erweitern verändert nur die letzte Partitionsgröße und vergrößert anschließend ext4. Kann der laufende Kernel die neue Grenze nicht übernehmen, erledigt ein einmaliger Dienst die Dateisystemarbeit nach dem Neustart. Der Witty-Neustarthook löst bei diesem Wartungsneustart keinen zusätzlichen Stromzyklus aus. Ein bereits fehlgeschlagener Boot benötigt eine Prüfung der Bootdateien und des Geräteprotokolls; die LED allein liefert keine Ursache.
+
+„Abbrechen“ neben „Warte auf Raspberry“ beendet die Wiederverbindung und schließt die Verbindung. WURB/WIRC-Deinstallation läuft nach einer Backend-Aktualisierung sichtbar im Terminal und kann auch unvollständige Installationen entfernen. Projektordner werden gesichert; Einstellungen außerhalb dieser Ordner bleiben erhalten.

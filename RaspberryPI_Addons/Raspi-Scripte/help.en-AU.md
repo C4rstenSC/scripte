@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.8.6 – User guide
+# Raspi-Scripte 0.8.7 – User guide
 
 Updated: 13 October 2026
 
@@ -61,3 +61,7 @@ Help uses the current application version. Current changes are grouped by topic;
 After verified shrinking, a dedicated systemd target starts the installed manufacturer daemon and requests shutdown through its poweroff hook. Normal applications and known expansion services are excluded from this completion boot. Existing special first-boot commands block preparation. Boot/root identities and partition geometry are checked again. Physical power removal still needs device verification. Invalid Witty state 10 remains an error.
 
 SD writing now requests Windows safe eject after complete readback. Progress and target selection reset on success. The backup panel reads the actual ext4 hostname. Setup defaults are wurbi-neu and wURbi, both editable.
+
+## Expansion and removal
+
+Expansion preserves other partition fields and grows ext4 online or through a validated one-shot boot service. Maintenance reboot suppresses an additional manufacturer power cycle. A visible reconnect Cancel button stops retries and closes the connection. Removal updates the backend first and shows live terminal output; partial projects under different users are archived while external settings remain.
