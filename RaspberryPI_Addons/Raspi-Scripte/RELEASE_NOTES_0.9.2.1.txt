@@ -1,0 +1,25 @@
+Raspi-Scripte 0.9.2.1 | 13.10.2026
+Änderungen gegenüber 0.9.2
+
+Statusdateien und Abbrüche
+- Die Oberfläche öffnet die Fortschrittsdatei mit Freigabe für den atomaren Dateiaustausch. Der Kartenworker kann seinen Status auch während des Einlesens aktualisieren.
+- Fehler beim Aktualisieren der Fortschrittsdatei und beim Schreiben von Diagnoseprotokollen dürfen den Datentransfer und die Rückleseprüfung nicht mehr abbrechen.
+- Abgeschlossene Aufträge schreiben eine zusätzliche Ergebnisdatei. Die Oberfläche liest dieses Ergebnis nach Ende des Workers, damit eine kurz blockierte Fortschrittsdatei das Endergebnis nicht verdeckt.
+- Echte Schreib-, Lese- und Vergleichsfehler bleiben Fehler. Der neue direkte Kartenweg, der Lesetest vor dem Schreiben und die Berechnung mit getrennten Leseraten und Schreibraten bleiben aktiv.
+- Protokolle echter Schreibfehler enthalten zusätzlich die genaue Ausnahmestelle. Die Bereinigung temporärer Dateien darf eine bereits erfolgreich abgeschlossene Kartenarbeit nicht nachträglich zum Fehler machen.
+
+Image-Vorbereitung
+- Bei vorhandenen offiziellen IMG-Dateien wird die vollständige Quellprüfsumme während des ohnehin nötigen Kopierens für die gewählten Einstellungen berechnet. Der zusätzliche komplette IMG-Prüflauf davor entfällt.
+- Der unveränderte Cache- und Originalinhalt bleibt erhalten. Beschädigte vorbereitete Quelldaten werden vor jedem Kartenschreiben erkannt; der Anwendungscache wird für eine erneute Prüfung und Wiederherstellung markiert.
+- Die Anzeige unterscheidet das Wiederverwenden des vorhandenen IMG von der anschließenden Vorbereitung der konkreten Einstellungen.
+
+Versionsanzeige und Abstände
+- Die voreingestellten Trixie-Versionen werden direkt nach dem Laden des Programms und bei Bedarf beim Öffnen des SD-Tabs angezeigt. Ein Wechsel über Bookworm ist dafür nicht mehr nötig.
+- Die Laufwerksliste wird weiterhin nur über den jeweiligen Aktualisieren-Button eingelesen.
+- Unter den Tabreitern erhalten beide Seiten etwa 3 mm zusätzlichen Abstand zum Inhalt. Die übrige Fensteranordnung bleibt erhalten.
+
+Prüfung
+- Gleichzeitiges Lesen und Ersetzen von Statusdateien sowie Übertragen und Prüfen bei blockierter Statusdatei getestet.
+- Kombinierter Quellprüfsummen-/Kopiervorgang, beschädigte Cache-Kandidaten und Wiederherstellung getestet.
+- Initiale Versionsanzeige ohne automatische Laufwerksabfrage und Windows-Anwendung/Updater geprüft.
+- Das alte Fehlerprotokoll enthält keine Ausnahmestelle. Ob dort der behobene Statusdateikonflikt den Abbruch verursacht hat, muss der nächste Vorgang auf dem betroffenen PC bestätigen.

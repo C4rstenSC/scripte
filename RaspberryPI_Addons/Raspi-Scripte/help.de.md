@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.9.2 – Bedienungsanleitung
+# Raspi-Scripte 0.9.2.1 – Bedienungsanleitung
 
 Stand: 13.10.2026
 
@@ -133,3 +133,9 @@ Vor dem Schreiben wird die ausgewählte Karte mit einem kurzen Lesetest gemessen
 Die Vorbereitung zeigt ihren konkreten Schritt. Große Dateiprüfungen laufen im Hintergrund. Schreiben und vollständige Rückleseprüfung arbeiten direkt mit sektorausgerichteten Puffern. Eine Erfolgsmeldung erfordert die vollständig bestandene Prüfung.
 
 Kurzzeitige Zugriffssperren werden begrenzt wiederholt. Dauerhafte Windows-Sperren bleiben ein Fehler. Der neue native Schreibweg und detailliertere Protokolle müssen auf dem betroffenen PC bestätigt werden; aus früheren Fehlerprotokollen lässt sich der konkret blockierende Treiber nicht sicher bestimmen.
+
+## Status und Vorbereitung ab 0.9.2.1
+
+Die voreingestellten OS-Versionen werden beim Start geladen. „Laufwerke aktualisieren“ bleibt für die Kartenabfrage erforderlich. Bei einem vorhandenen offiziellen IMG wird die vollständige Quellprüfung mit dem Kopieren für die gewählten Einstellungen verbunden. Beschädigte Daten werden vor dem Kartenschreiben zurückgewiesen.
+
+Die Fortschrittsanzeige ist vom Ergebnis des Kartenzugriffs getrennt. Eine kurzzeitig blockierte Statusdatei beendet den Datentransfer nicht; die separate Ergebnisdatei bestätigt den abgeschlossenen Vorgang. Erfolg setzt weiterhin die vollständige Rückleseprüfung voraus.

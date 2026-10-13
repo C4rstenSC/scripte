@@ -1,31 +1,27 @@
-# Raspi-Scripte 0.9.2
+# Raspi-Scripte 0.9.2.1
 
-Raspi-Scripte 0.9.2 | 13.10.2026
-Änderungen gegenüber 0.9.1
+Raspi-Scripte 0.9.2.1 | 13.10.2026
+Änderungen gegenüber 0.9.2
 
-Schneller vorbereiten und Laufwerke einlesen
-- Sicherheitsprüfungen fragen nur den ausgewählten Datenträger ab. Die Hardwareidentität, Größe, Anschlussart und der Schreibschutz werden weiterhin aktuell geprüft.
-- Die Laufwerksliste benötigt keine wiederholten Abfragen aller physischen Medien und PnP-Elternnamen mehr. Laufwerksbuchstaben werden gesammelt eingelesen. Unklare Geräte bleiben als USB-Datenträger bezeichnet.
-- Beim Hostnamenlesen entfällt eine doppelte Sicherheitsabfrage vor dem separaten Kartenworker. Der Worker prüft die ausgewählte Karte weiterhin selbst.
-- Sektorausrichtete Metadatenzugriffe lesen vollständige zusammenhängende Bereiche statt jeden 512-Byte-Sektor einzeln.
+Statusdateien und Abbrüche
+- Die Oberfläche öffnet die Fortschrittsdatei mit Freigabe für den atomaren Dateiaustausch. Der Kartenworker kann seinen Status auch während des Einlesens aktualisieren.
+- Fehler beim Aktualisieren der Fortschrittsdatei und beim Schreiben von Diagnoseprotokollen dürfen den Datentransfer und die Rückleseprüfung nicht mehr abbrechen.
+- Abgeschlossene Aufträge schreiben eine zusätzliche Ergebnisdatei. Die Oberfläche liest dieses Ergebnis nach Ende des Workers, damit eine kurz blockierte Fortschrittsdatei das Endergebnis nicht verdeckt.
+- Echte Schreib-, Lese- und Vergleichsfehler bleiben Fehler. Der neue direkte Kartenweg, der Lesetest vor dem Schreiben und die Berechnung mit getrennten Leseraten und Schreibraten bleiben aktiv.
+- Protokolle echter Schreibfehler enthalten zusätzlich die genaue Ausnahmestelle. Die Bereinigung temporärer Dateien darf eine bereits erfolgreich abgeschlossene Kartenarbeit nicht nachträglich zum Fehler machen.
 
-Bedienbare Oberfläche und nachvollziehbare Vorbereitung
-- Große Dateiprüfungen und IMG-Validierung laufen im Hintergrund. Die Oberfläche und die Abbruchbedienung bleiben dabei verfügbar.
-- Nach Bestätigung erscheint sofort „Vorbereitung – Zielkarte prüfen“. Die Aktualisieren-Buttons zeigen während der Abfrage „Laufwerke werden gelesen“.
-- Während der Kartenarbeit wird der konkrete Vorbereitungsschritt angezeigt, etwa Zielkarte prüfen, IMG mit Einstellungen vorbereiten, Partitionen sperren oder Rückleseprüfung starten.
-- Prüfsummenprüfungen zeigen laufend Prozent, Geschwindigkeit und Restzeit. Rückmeldungen beim Entpacken werden begrenzt, damit die Oberfläche nicht mit Meldungen überlastet wird.
-- Ein vorhandenes entpacktes offizielles IMG wird vollständig gegen seine erwartete Prüfsumme geprüft. Dafür entfällt das zusätzliche erneute Lesen der komprimierten Quelle; beschädigte Abbilder werden weiterhin neu aufgebaut.
+Image-Vorbereitung
+- Bei vorhandenen offiziellen IMG-Dateien wird die vollständige Quellprüfsumme während des ohnehin nötigen Kopierens für die gewählten Einstellungen berechnet. Der zusätzliche komplette IMG-Prüflauf davor entfällt.
+- Der unveränderte Cache- und Originalinhalt bleibt erhalten. Beschädigte vorbereitete Quelldaten werden vor jedem Kartenschreiben erkannt; der Anwendungscache wird für eine erneute Prüfung und Wiederherstellung markiert.
+- Die Anzeige unterscheidet das Wiederverwenden des vorhandenen IMG von der anschließenden Vorbereitung der konkreten Einstellungen.
 
-Prüfung und Fortschritt
-- Schreiben und Rückleseprüfung nutzen direkten sektorausgerichteten Windows-Zugriff ohne den bisherigen Datei-/Systempuffer. Schreibzugriffe fordern zusätzlich WRITE_THROUGH an. Die Karte wird vollständig mit dem geschriebenen IMG verglichen.
-- Native Schreibzugriffe besitzen keinen verwalteten Schreibpuffer, der beim Schließen nach einem Zugriffsfehler erneut geschrieben wird. Wiederholungen überschreiben den ganzen betroffenen Block; neue Protokolle enthalten jede Wiederöffnung, Offline-Unterstützung und Anzahl gesperrter Volumes.
-- Schreiben und Prüfen verwenden getrennte gemessene Geschwindigkeiten. Fortschritt und Restzeit werden aus der bisher verbrauchten Übertragungszeit und der geschätzten verbleibenden Zeit berechnet.
-- Vor jedem Schreibauftrag wird die aktuelle Zielkarte kurz und ausschließlich lesend getestet. Bis zu 32 MiB werden an mehreren Stellen gelesen; nach etwa 1,5 Sekunden wird der Test beendet. Die gemessene Leserate und die tatsächliche IMG-Größe bestimmen die erwartete Prüfzeit.
-- Während des Schreibens wird dessen Geschwindigkeit separat gemessen. Aus abgeschätzter Schreib- und Prüfzeit entsteht die Gesamtanzeige. Während der vollständigen Prüfung aktualisiert die tatsächliche Leserate die Schätzung.
-- Unterschiedliche Karten werden vor ihrem aktuellen Schreibauftrag jeweils neu gemessen. Es gibt keine feste 50/50- oder 80/20-Aufteilung und keinen Rückgriff auf die Leserate einer früheren Karte.
-- 100 Prozent und die Erfolgsmeldung erscheinen erst nach erfolgreicher vollständiger Prüfung. Kurzzeitige Zugriffsfehler bleiben begrenzt wiederholbar; dauerhafte Fehler und abweichende Daten brechen ab.
+Versionsanzeige und Abstände
+- Die voreingestellten Trixie-Versionen werden direkt nach dem Laden des Programms und bei Bedarf beim Öffnen des SD-Tabs angezeigt. Ein Wechsel über Bookworm ist dafür nicht mehr nötig.
+- Die Laufwerksliste wird weiterhin nur über den jeweiligen Aktualisieren-Button eingelesen.
+- Unter den Tabreitern erhalten beide Seiten etwa 3 mm zusätzlichen Abstand zum Inhalt. Die übrige Fensteranordnung bleibt erhalten.
 
-Prüfung der Änderung
-- FAT/ext4-Abbilder, beschädigte Cache-Dateien, Abbruch, konkrete Statusmeldungen und unabhängige Schreib-/Leseraten getestet.
-- Direkte Leseranges für 512- und 4096-Byte-Sektoren auf Ausrichtung und Kartengrenzen geprüft.
-- Windows-Anwendung und Updater vollständig gebaut. Tatsächliche Zeiten für Laufwerksabfragen und Kartendurchsatz müssen auf dem betroffenen PC bestätigt werden.
+Prüfung
+- Gleichzeitiges Lesen und Ersetzen von Statusdateien sowie Übertragen und Prüfen bei blockierter Statusdatei getestet.
+- Kombinierter Quellprüfsummen-/Kopiervorgang, beschädigte Cache-Kandidaten und Wiederherstellung getestet.
+- Initiale Versionsanzeige ohne automatische Laufwerksabfrage und Windows-Anwendung/Updater geprüft.
+- Das alte Fehlerprotokoll enthält keine Ausnahmestelle. Ob dort der behobene Statusdateikonflikt den Abbruch verursacht hat, muss der nächste Vorgang auf dem betroffenen PC bestätigen.
