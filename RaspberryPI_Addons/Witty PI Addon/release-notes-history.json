@@ -1,5 +1,12 @@
 [
   {
+    "Version": "0.8.4",
+    "Date": "2026-10-13",
+    "Build": "20261013.2",
+    "Notes": "Witty Add-on 0.8.4 – 13.10.2026\n\n- Witty Pi 5 wird im Offline-Wartungsmodus vor dem Verkleinern direkt auf I2C-Erreichbarkeit geprüft.\n- Eigener Abschalthelfer sendet die Hersteller-Abschaltmeldung und prüft die Rückmeldung. Der bisherige alleinige wp5d-Aufruf konnte einen fehlgeschlagenen I2C-Zugriff nicht zuverlässig melden.\n- Wartungsimage enthält I2C-Werkzeuge, Controller-Module, Sperrverzeichnisse und den Abschalthelfer. Rechte und Aufruf des über Windows übertragenen Helfers werden ausdrücklich vorbereitet.\n- Windows-Backup kann Schrumpfergebnis und Fehlerprotokoll von der Bootpartition auslesen und anzeigen.\n- Bisherige GPS-, Installations-, Firmware- und Neustartkorrekturen unverändert enthalten.\n- Bestätigte, abgewiesene und nicht bestätigte Abschaltmeldungen im Test geprüft; tatsächliche Abschaltung und Wartungsboot sind hardwareabhängig zu testen.\n",
+    "Source": "Deutsche Witty-Versionshinweise"
+  },
+  {
     "Version": "0.8.3",
     "Date": "2026-10-13",
     "Build": "20261013.1",

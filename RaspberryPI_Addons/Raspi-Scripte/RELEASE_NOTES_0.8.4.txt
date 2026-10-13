@@ -1,0 +1,10 @@
+Windows Raspi-Scripte 0.8.4 – 13.10.2026
+
+- SD-Schreiben öffnet das physische Ziellaufwerk mit exklusivem Schreibzugriff und erneutem Versuch bei kurzzeitigen Zugriffskonflikten. Ein geteiltes Schreibhandle wird nicht stillschweigend verwendet.
+- Vor dem vollständigen Überschreiben wird die vorhandene Partitionstabelle entfernt. Backup und Hostname-Änderung löschen keine Partitionstabelle; Datenträgeridentität wird vorher erneut geprüft.
+- Schreibfehler nennen Byteposition und Windows-Fehlercode. Aktive Defender-Modi für Datenträgeränderungen werden von reinen Audit-Modi unterschieden; Windows-Schutz wird nicht automatisch deaktiviert.
+- Versionen erscheinen ausschließlich in der Offline-/Online-Auswahl; die doppelte Anzeige neben dem Betriebssystem entfällt.
+- Backup liest vorhandenen Wartungsauftrag, Ergebnis und Fehlerprotokoll direkt von der FAT-Bootpartition. Ein fehlgeschlagener oder nicht ausgeführter Schrumpflauf erscheint in der Bestätigung anstelle einer unspezifischen Größenmeldung.
+- Witty-Pi-5-Abschaltung im RAM-Wartungsmodus verwendet einen eigenen I2C-Helfer mit Hardwareprüfung und Rücklesen der Abschaltmeldung. Erforderliche I2C-Werkzeuge, Treibermodule und Verzeichnisse werden vorbereitet; ein fehlender Helfer wird vor dem Wartungsneustart erkannt.
+- Alle Änderungen aus 0.8.3 einschließlich geplanter Wiederverbindung, Firmware-Abfrage und fortlaufender Netzwerksuche enthalten.
+- Image-, Zugriffsvorbereitungs-, Defender-Diagnose- und Bootprotokolltests bestanden. Reale Schreibzugriffe und die Ursache eines konkreten fehlgeschlagenen Schrumpflaufs benötigen den Hardwaretest bzw. dessen Wartungsprotokoll.

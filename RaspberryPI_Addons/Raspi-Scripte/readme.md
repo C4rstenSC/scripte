@@ -1,14 +1,12 @@
-# Raspi-Scripte 0.8.3
+# Raspi-Scripte 0.8.4
 
-Windows Raspi-Scripte 0.8.3 – 13.10.2026
+Windows Raspi-Scripte 0.8.4 – 13.10.2026
 
-- Abbrechen beendet SD-Aufträge einschließlich laufender Laufwerksabfragen. Status, Größenmeldung und Fortschrittsbalken werden nach einem Abbruch zurückgesetzt; ein verbliebener Fehler lässt sich separat löschen.
-- SD-Vorgänge erhalten eigene Statusanzeigen und Abbruchzustände. Kartenauswahlfelder besitzen dieselbe Höhe; unnötige Erklärungszeile und Aktualitätsbutton entfallen.
-- Offline- und Online-Version der offiziellen Bookworm-/Trixie-Images werden neben der Betriebssystemauswahl angezeigt und sind ausdrücklich auswählbar. Online-Abfrage lädt zunächst nur Metadaten. Offline-Auswahl arbeitet ohne Netzwerkzugriff; beschädigte Images werden erkannt. Eigene IMG-, XZ-, GZ- und ZIP-Dateien bleiben auswählbar.
-- SD-Schreibzugriff sperrt Windows-Volumes über ihre tatsächlichen Datenträgerbereiche statt ausschließlich über PowerShell-Zugriffspfade. Sperren bleiben während Schreiben und Rücklesen erhalten.
-- Schrumpfstatus richtet sich nach der tatsächlichen Partitionsgrenze. Kleineres Dateisystem in voller Partition sowie ausstehende und fehlgeschlagene Wartungsaufträge werden kenntlich gemacht.
-- Witty-Firmware wird unabhängig vom langsamen vollständigen GPS-/Witty-Status aus den Versionsregistern gelesen. Firmware und Herstellersoftware bleiben getrennte Angaben.
-- Lokale Raspberry-Suche prüft nutzbare Adressen .1 bis .254, überspringt den eigenen PC und zeigt auch während laufender DNS-/SSH-Prüfungen aktive IP-Adressen mit Prüfschritt und Zähler. DNS- und SSH-Abfragen sind begrenzt; Schließen bricht die Suche ab.
-- Nach geplanten Neustarts, auch nach erforderlichem GPS-Neustart und Partitionserweiterung, verbindet sich das Programm automatisch erneut. Bisherige Zugangsdaten sowie bekannte IP-Adresse werden verwendet; maximal drei Minuten warten. Danach werden installierte und online verfügbare Versionen neu abgefragt. Manuelles Trennen und Herunterfahren brechen die Wiederverbindung ab.
-- Herunterfahren berücksichtigt die Witty-Herstellerdienste. Die Wartungsabschaltung informiert beim Witty Pi 5 ebenfalls die Hardware.
-- C#-Regressionstests, Image-Prüfungen und ext4-Schrumpftest bestanden. Reale Windows-Kartenleser und Raspberry-Wartungsboot weiterhin hardwareabhängig zu prüfen.
+- SD-Schreiben öffnet das physische Ziellaufwerk mit exklusivem Schreibzugriff und erneutem Versuch bei kurzzeitigen Zugriffskonflikten. Ein geteiltes Schreibhandle wird nicht stillschweigend verwendet.
+- Vor dem vollständigen Überschreiben wird die vorhandene Partitionstabelle entfernt. Backup und Hostname-Änderung löschen keine Partitionstabelle; Datenträgeridentität wird vorher erneut geprüft.
+- Schreibfehler nennen Byteposition und Windows-Fehlercode. Aktive Defender-Modi für Datenträgeränderungen werden von reinen Audit-Modi unterschieden; Windows-Schutz wird nicht automatisch deaktiviert.
+- Versionen erscheinen ausschließlich in der Offline-/Online-Auswahl; die doppelte Anzeige neben dem Betriebssystem entfällt.
+- Backup liest vorhandenen Wartungsauftrag, Ergebnis und Fehlerprotokoll direkt von der FAT-Bootpartition. Ein fehlgeschlagener oder nicht ausgeführter Schrumpflauf erscheint in der Bestätigung anstelle einer unspezifischen Größenmeldung.
+- Witty-Pi-5-Abschaltung im RAM-Wartungsmodus verwendet einen eigenen I2C-Helfer mit Hardwareprüfung und Rücklesen der Abschaltmeldung. Erforderliche I2C-Werkzeuge, Treibermodule und Verzeichnisse werden vorbereitet; ein fehlender Helfer wird vor dem Wartungsneustart erkannt.
+- Alle Änderungen aus 0.8.3 einschließlich geplanter Wiederverbindung, Firmware-Abfrage und fortlaufender Netzwerksuche enthalten.
+- Image-, Zugriffsvorbereitungs-, Defender-Diagnose- und Bootprotokolltests bestanden. Reale Schreibzugriffe und die Ursache eines konkreten fehlgeschlagenen Schrumpflaufs benötigen den Hardwaretest bzw. dessen Wartungsprotokoll.
