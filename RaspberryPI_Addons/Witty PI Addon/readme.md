@@ -1,29 +1,21 @@
-# Witty Add-on 0.8.7
+# Witty Add-on 0.8.8
 
-Witty Add-on 0.8.7 | 13.10.2026
-Änderungen gegenüber 0.8.6
+Witty Add-on 0.8.8 | 13.10.2026
+Änderungen gegenüber 0.8.7
 
-Pakete nach Auswahl
-- Die Basisinstallation bildet eine einzige, eindeutige Paketliste aus WURB, WIRC, Allsky, GPS und Witty. Gemeinsame Pakete stehen darin nur einmal.
-- Ohne Module werden nur Homepage-/Update-/Hotspot-Voraussetzungen verarbeitet. Audio-, Video-, GPS- und Entwicklungsstacks entfallen.
-- Die GPS-Zeitzonendatenbank wird nur bei ausgewähltem GPS installiert. Ohne Witty/GPS bleiben RTC und Zeitdienste unverändert.
-- I2C und Witty-Sperrdateien werden nur für ausgewählten Witty eingerichtet. Ungewählte bestehende Anwendungen werden im Basislauf nicht repariert oder umkonfiguriert.
-- Allsky-Basispakete werden in der gemeinsamen Paketphase berücksichtigt. Gemeinsamer pip-Cache und erhaltene APT-Archive vermeiden erneute Downloads derselben bereits verfügbaren Pakete.
+Witty später nachinstallieren
+- Neuer Hersteller-Manager für eine bestehende Basisinstallation mit „Kein Witty“.
+- Witty Pi 4/5 wird vor dem Herstellerdownload an I2C identifiziert. Erkannter WP5 korrigiert eine WP4-Auswahl; fehlende oder unpassende Hardware stoppt vor Installation.
+- Herstellerpaket, I2C-Voraussetzungen, Gruppenrechte, Zeithelfer und Abschaltdienst werden gezielt eingerichtet. Bestehende GPS-Auswahl, Zeitzone, Homepage und Anwendungen bleiben erhalten.
+- Hersteller-Deinstallation betrifft ausschließlich die Herstellerkomponente. WP4-Dateien werden gesichert; WP5 wird über seine Paketverwaltung entfernt.
+- Tatsächlich vorhandene Herstellersoftware wird auch bei einer veralteten „Kein Witty“-Konfiguration im Status erkannt.
 
-Witty-Abschaltung
-- Bereits installierte Herstellersoftware wird auch berücksichtigt, wenn die Homepage aktuell auf „Kein Witty“ eingestellt ist. Die reine Homepage-Installation installiert weiterhin keine Herstellerpakete.
-- Hersteller-Abschluss fordert shutdown now an. Ein zusätzlicher Schritt nach wp5d --poweroff prüft den tatsächlichen Zustand STOPPING.
-- Falls der Herstelleraufruf ohne Abschaltwirkung zurückkehrt und Witty weiterhin ON ist, sendet der kombinierte I2C-Helfer die Abschaltmeldung und prüft sie erneut.
-- „Kein Witty“ installiert keinen Herstellerdienst; damit kann der Pi allein herunterfahren, aber keine Witty-Stromabschaltung auslösen.
+Abschaltung und Wartung
+- Vor shutdown now wird geprüft, dass wp5d_poweroff.service tatsächlich in poweroff.target eingebunden ist.
+- Ausgabe des Hersteller-Abschaltdienstes und seiner I2C-Bestätigung wird als witty-sd-poweroff.log auf der Bootpartition gespeichert.
+- Ohne Witty bleibt reguläre Linux-Abschaltung verfügbar. Hersteller-Abschluss ist für eine Verkleinerung ohne Witty nicht erforderlich.
+- Witty Pi 4 ohne GPS verwendet seine eigene Hersteller- und einmalige RTC-Anbindung statt wp5d.
 
-Status und Oberfläche
-- Neue Wartungsprotokolle enthalten Hostname und Partitions-UUIDs. Alte oder kopierte Protokolle werden nicht als aktuelle Wartungsfehler eines anderen Geräts behandelt.
-- Aktive Homepage-Buttons sind dunkler und besitzen sichtbare Ränder, Hover- und Tastaturfokuszustände. Deaktivierte Buttons bleiben heller.
-
-Erweitern und Deinstallieren
-- Partitionsvergrößerung setzt nur die neue Größe der letzten Partition. Vorhandene Kennungen bleiben erhalten; ext4 wird online oder über einen verifizierten einmaligen Bootdienst erweitert.
-- Der Witty-Hersteller-Neustarthook wird während Wartungsneustarts nur im aktuellen Laufzeitsystem maskiert. Dadurch wird kein zusätzlicher Stromzyklus während Dateisystemarbeiten angefordert.
-- Deinstallation wird auch bei unvollständiger Installation ausgeführt. Projektordner unter mehreren Benutzern werden gesichert und bereinigt; externe Einstellungen bleiben erhalten.
-
-Prüfstand
-- Auswahlkombinationen und Abschaltbestätigung in Softwaretests geprüft. Erfolgreiche Verkleinerung wurde am Gerät gemeldet; tatsächliche Stromabschaltung benötigt weiterhin den Hardwaretest.
+Diagnose
+- witty-shutdown-diagnose.sh sammelt Boot-/Wartungsprotokolle, Herstellerdienste, Helfer-Prüfsummen sowie Firmware, Witty-Zustand und Abschaltverzögerung.
+- Die Diagnose führt weder Shutdown noch Resize oder Registerwertänderungen aus. Die korrekte Abschaltung wurde nachfolgend vom Nutzer am Gerät bestätigt.

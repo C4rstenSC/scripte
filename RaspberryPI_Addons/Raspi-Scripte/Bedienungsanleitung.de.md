@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.8.7 – Bedienungsanleitung
+# Raspi-Scripte 0.8.8 – Bedienungsanleitung
 
 Stand: 13.10.2026
 
@@ -16,7 +16,7 @@ Den Update-Knopf im Programm verwenden. Der Updater prüft und entschlüsselt da
 
 „Witty Addon Software update“ lädt das aktuelle Paket und aktualisiert die vorhandene Installation. Das Terminal zeigt Version und Build sowie nur Änderungen seit dem installierten Stand. Beim Überspringen mehrerer Versionen werden deren Änderungen mit angezeigt. Hersteller-Software und Witty-Firmware sind eigene Komponenten; die Add-on-Version ist keine Firmware-Version.
 
-## SD-Karte beschreiben
+## SD-Karte mit neuem Abbild beschreiben
 
 1. Raspberry-Modell und Betriebssystem auswählen. Offline- und Online-Version stehen mit ihrem Veröffentlichungsdatum in der Versionsauswahl.
 2. Offline verwendet ein vorhandenes geprüftes Image. Online lädt den ausgewählten offiziellen Stand. „Linux-Image einbinden“ erlaubt ein eigenes IMG beziehungsweise unterstütztes komprimiertes Image.
@@ -30,7 +30,7 @@ Der neue Schreibablauf schreibt zuerst die Image-Daten und gibt die Partitionsta
 
 „Abbrechen“ beendet den Auftrag. Eine unterbrochene Zielkarte muss vollständig neu geschrieben werden. Bei einer erneut auftretenden Windows-Zugriffsverweigerung die genaue Meldung mit Byteposition und Fehlercode festhalten; ein erfolgreicher Softwaretest beweist noch keine Schreibfähigkeit des konkreten Kartenlesers.
 
-## mSD-Karten IMG erstellen
+## SD-Karte Abbild erstellen
 
 Die Karte auswählen, ein Zielverzeichnis auf einem anderen Laufwerk und einen neuen IMG-Dateinamen angeben. Das Programm liest die Karte und vergleicht das Image danach mit dem Original. Unvollständige Sicherungen werden bei Abbruch entfernt; Status und Fortschritt des abgebrochenen Auftrags werden zurückgesetzt.
 
@@ -72,7 +72,7 @@ Nach erfolgreichem Schreiben und Prüfen fordert das Programm Windows zum sicher
 
 Nach einer bestätigten Verkleinerung übernimmt ein eigener Abschlussstart den installierten Witty-Herstellerdienst. WURB/WIRC/Allsky werden dabei nicht gestartet. Bekannte Erweiterungsdienste sind für diesen Start gesperrt; vorhandene spezielle Erststartaufträge verhindern schon die Vorbereitung. Vor der Abschaltung werden UUID und tatsächliche Partitionsgröße erneut geprüft. Das Ergebnisprotokoll unterscheidet verifiziertes Schrumpfen, angeforderte Abschaltung und Abschaltfehler. Ein ungültiger Witty-Wert 10 gilt weiterhin als Fehler und darf nicht als ON behandelt werden.
 
-## Ablauf ab 0.8.7
+## Ablauf ab 0.8.8
 
 IMG-Sicherungen lesen die Karte einmal und erfassen dabei SHA-256. Danach wird die gespeicherte Datei unabhängig zurückgelesen und mit dieser Prüfsumme verglichen. Die Prüfung schreibt nichts auf die Karte. Nach dem Auslesen des Hostnamens lautet der Vorschlag Datum-Hostname.img; eigene Dateinamen bleiben erhalten.
 
@@ -85,3 +85,13 @@ Partitionszustand und aktuelle Wartung werden getrennt angezeigt. Alte oder kopi
 Erweitern verändert nur die letzte Partitionsgröße und vergrößert anschließend ext4. Kann der laufende Kernel die neue Grenze nicht übernehmen, erledigt ein einmaliger Dienst die Dateisystemarbeit nach dem Neustart. Der Witty-Neustarthook löst bei diesem Wartungsneustart keinen zusätzlichen Stromzyklus aus. Ein bereits fehlgeschlagener Boot benötigt eine Prüfung der Bootdateien und des Geräteprotokolls; die LED allein liefert keine Ursache.
 
 „Abbrechen“ neben „Warte auf Raspberry“ beendet die Wiederverbindung und schließt die Verbindung. WURB/WIRC-Deinstallation läuft nach einer Backend-Aktualisierung sichtbar im Terminal und kann auch unvollständige Installationen entfernen. Projektordner werden gesichert; Einstellungen außerhalb dieser Ordner bleiben erhalten.
+
+## Neu in 0.8.8: spätere Witty-Installation und SD-Abschluss
+
+Wenn die Basisinstallation ohne Witty ausgeführt wurde, bleibt die Herstellerzeile sichtbar. Witty Pi 4/5 wählen und „Software installieren“ drücken. Der Manager aktiviert I2C, prüft die Hardware und installiert ausschließlich passende Herstellerkomponenten. Auf einem Pi 5 ist Witty Pi 4 nicht unterstützt; ein erkannter Witty Pi 5 korrigiert die Auswahl. Während eines anschließenden Neustarts wartet Windows bis zu drei Minuten und verbindet sich erneut. Ohne Witty erfolgt normales Linux-Herunterfahren.
+
+Erfolgreiches Schreiben, IMG-Erstellen und Hostnamen-Vorbereiten schließen die Kartenhandles und werfen die Karte automatisch aus. Fortschritt und Laufwerksauswahl werden zurückgesetzt; Abschlussmeldungen stehen im Fenster ohne Popup. Lehnt Windows das Auswerfen weiterhin ab, wird das ausdrücklich angezeigt. Nicht allein anhand einer Erfolgsmeldung der Datenübertragung abziehen. Schreibdiagnosen liegen unter `%LOCALAPPDATA%/Raspi-Scripte/SdJobs/Logs`.
+
+„Hostname setzen“ im Kartenbereich bereitet eine einmalige Änderung beim nächsten Pi-Start vor. Vorhandene WURB-, Allsky- und Basis-Hotspots erhalten den passenden Installer-Präfix vor dem neuen Hostnamen; Passwörter und übrige Verbindungsdaten bleiben bestehen. Ein Hostname darf zusammen mit dem Hotspot-Präfix höchstens 32 Zeichen lang sein.
+
+Bei erneut auftretenden Abschaltproblemen kann vor weiterer Schrumpfung `sudo bash witty-shutdown-diagnose.sh` ausführen und die erzeugte `.tar.gz` sichern. Nach der Wartung `witty-sd-result.json`, `witty-sd-result.txt` und – falls vorhanden – `witty-sd-poweroff.log` von der Bootpartition sichern. Das Abschaltprotokoll bestätigt nur die beobachtete Hersteller/I2C-Rückmeldung; LEDs oder 5V-Versorgung müssen am Gerät geprüft werden.

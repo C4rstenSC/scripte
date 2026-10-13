@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.8.7 – User guide
+# Raspi-Scripte 0.8.8 – User guide
 
 Updated: 13 October 2026
 
@@ -65,3 +65,9 @@ SD writing now requests Windows safe eject after complete readback. Progress and
 ## Expansion and removal
 
 Expansion preserves other partition fields and grows ext4 online or through a validated one-shot boot service. Maintenance reboot suppresses an additional manufacturer power cycle. A visible reconnect Cancel button stops retries and closes the connection. Removal updates the backend first and shows live terminal output; partial projects under different users are archived while external settings remain.
+
+## Changes in 0.8.8
+
+Manufacturer software can be added after a homepage-only base installation by selecting Witty Pi 4/5 in its visible row. The manager verifies hardware and retains application/GPS configuration. Windows reconnects after planned installation/update reboots for up to three minutes. Normal Linux poweroff remains available without Witty.
+
+Successful SD jobs eject the card and reset their progress/selection with inline completion messages. Ejection refusal is reported separately. Raw write diagnostics are under `%LOCALAPPDATA%/Raspi-Scripte/SdJobs/Logs`. Card hostname boot jobs rename existing installer hotspots while retaining passwords and profile UUIDs. Correct Witty shutdown was subsequently confirmed by the user; shutdown diagnostics remain available if needed.

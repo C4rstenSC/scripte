@@ -1,40 +1,34 @@
-# Raspi-Scripte 0.8.7
+# Raspi-Scripte 0.8.8
 
-Raspi-Scripte 0.8.7 | 13.10.2026
-Änderungen gegenüber 0.8.6
+Raspi-Scripte 0.8.8 | 13.10.2026
+Änderungen gegenüber 0.8.7
 
-IMG-Sicherung und Prüfung
-- Die SD-Karte wird einmal gelesen. Dabei entsteht eine SHA-256-Prüfsumme ihrer kopierten Daten. Nach dem Schließen und Flush der Zieldatei wird das gespeicherte IMG erneut geöffnet, vollständig gelesen und gegen diese Prüfsumme geprüft.
-- Die Prüfung benötigt keinen zweiten Rohzugriff auf die Karte. Beschädigte, verkürzte und abgebrochene Sicherungen werden nicht als fertig ausgegeben.
-- Nach erfolgreicher Hostname-Abfrage lautet der vorgeschlagene Dateiname Datum-Hostname.img, beispielsweise 2026-10-13-wurbi-n99.img. Eigene Dateinamen werden erhalten.
+SD-Karte schreiben und sicher auswerfen
+- Alte Partitionstabelle mit einem eigenen Vorbereitungshandle entfernen. Dieser wird vor dem Öffnen des neuen Schreibhandles geschlossen; die Hardwarekennung wird erneut geprüft.
+- Schreibphasen, Bytebereiche und Windows-Fehler werden unter %LOCALAPPDATA%/Raspi-Scripte/SdJobs/Logs protokolliert. Die vollständige Prüfung der geschriebenen Karte bleibt erhalten.
+- Bei Auswurf-Veto 8 wird nur der unmittelbar zugehörige USB-Kartenleser angefordert, wenn er ausschließlich diese Karte enthält. USB-Hubs und andere Geräte werden nicht mit ausgeworfen.
+- Vorübergehende offene Windows-Zugriffe werden begrenzt abgewartet. Abschlüsse erscheinen im Fenster ohne Popup. Eine abgelehnte Auswurfanforderung wird getrennt vom erfolgreichen Schreiben angezeigt.
+- Erfolgreiche IMG-Erstellung und Hostnamenänderung werfen ebenfalls sicher aus und setzen Fortschritt und Laufwerksauswahl zurück. Das Backup-Zielverzeichnis bleibt erhalten; ein freier Folgedateiname wird vorgeschlagen.
 
-Partitionsstatus
-- Neue Wartungsberichte sind an Hostname und Boot-/Root-UUID gebunden. Alte oder kopierte Berichte gelten nicht automatisch als aktueller Fehler eines anderen Raspberry.
-- Expandiert, verkleinert und der Zustand einer tatsächlich zugeordneten Wartung werden getrennt angezeigt. Ältere nicht zuordenbare Protokolle bleiben im Hinweis verfügbar.
+Hostname und Hotspot
+- Nach Hostnamenänderung am verbundenen Pi werden Geräteinformationen, IP-Adresse und Verbindungsliste neu eingelesen.
+- Im Bereich „SD-Karte von Abbild beschreiben“ erscheint der ausgelesene Hostname über den Buttons. Ein offline vorbereiteter neuer Name wird als für den nächsten Pi-Start vorbereitet gekennzeichnet.
+- Hostnamenänderungen beim Schreiben passen vorhandene Installer-Hotspotprofile auf wifi4bats-, allskywifi- bzw. wifi- plus Hostname an. Passwörter, UUIDs, normale WLAN-Profile und weitere Einstellungen bleiben erhalten.
+- Zu lange Hotspotnamen werden vor Änderung der Bootdateien abgelehnt.
 
-Installation und Homepage
-- Enthält die Auswahloptimierung des Witty Add-ons: gemeinsame Paketliste aus den gewählten Modulen, GPS nur bei GPS-Auswahl, Witty-Hardwareänderungen nur bei gewähltem Witty.
-- Reine Homepage-Installation erhält keinen Audio-, Video-, GPS- oder Compiler-Gesamtumfang und keine Witty-Zeitpolitik.
-- Aktive Homepage-Buttons sind dunkler und deutlicher umrandet; deaktivierte Buttons bleiben heller.
+Basisinstallation, Updates und Witty
+- Wiederverbindung auch bei verlorener Neustartmeldung während Basisinstallation oder Update. Lange Installationen verbrauchen nicht die Drei-Minuten-Frist; diese beginnt beim Verbindungsabbruch. Abbrechen schließt die Sitzung.
+- Witty-Herstellersoftware kann nach einer Basisinstallation mit „Kein Witty“ nachinstalliert werden. Die Zeile bleibt sichtbar und bietet Witty Pi 4/5 sowie einen Installationsbutton.
+- Installation prüft die angeschlossene Hardware, korrigiert WP4-Auswahl bei erkanntem WP5 und richtet Hersteller-, Abschalt-, I2C- und Zeitdienste gezielt ein. Andere Module werden nicht erneut installiert.
+- Hersteller-Deinstallation entfernt ausschließlich die Herstellerkomponente und lässt Add-on-Homepage und Anwendungen bestehen.
+- Ohne installierten Witty bleibt der normale Linux-Abschaltweg verfügbar. Wartung verwendet ohne Witty keinen Hersteller-Abschlussmodus.
 
-Abschaltung
-- Bereits installierte Herstellersoftware wird auch berücksichtigt, wenn die Homepage aktuell auf „Kein Witty“ eingestellt ist. Die reine Homepage-Installation installiert weiterhin keine Herstellerpakete.
-- Der Wartungsabschluss verwendet shutdown now. Nach dem Hersteller-Aufruf wird STOPPING geprüft; bei einem ignorierten Herstellerbefehl sendet der geprüfte I2C-Helfer die Abschaltmeldung.
-- Ohne installierte Witty-Herstellersoftware kann ein normaler Raspberry-Shutdown keine Witty-Stromabschaltung auslösen.
+Oberfläche
+- Beide Tabs besitzen einen dickeren schwarzen Rahmen und gleiche Innenabstände.
+- „Ausgewählte Konfig installieren“ steht direkt links neben „Abbrechen“.
+- Überschriften: „SD-Karte mit neuem Abbild beschreiben“, „SD-Karte Abbild erstellen“ und „SD-Karte von Abbild beschreiben“.
+- Während Erweiterung und Neustart wird der alte Partitionszustand nicht als aktuell angezeigt; der tatsächliche Zustand wird nach Wiederverbindung gelesen.
 
-Erweiterung und Wiederverbindung
-- Erweiterung verändert gezielt die Größe der letzten Partition und erhält deren übrige Felder. ext4 wächst direkt online oder über einen geprüften einmaligen Dienst nach dem Kernel-Neustart.
-- Zurückgebliebene eigene Wartungs-Bootoptionen werden bereinigt. Ein zusätzlicher Witty-Stromzyklus während des Wartungsneustarts wird durch eine nur für den aktuellen Start gültige Sperre des Hersteller-Neustarthooks verhindert.
-- „Abbrechen“ neben „Warte auf Raspberry“ stoppt die Wiederverbindung und schließt die Verbindung. Der Button ist nur während des Wartens sichtbar.
-
-Deinstallation
-- WURB/WIRC-Deinstallation aktualisiert zuerst das Backend und läuft sichtbar im SSH-Terminal.
-- Die Erkennung „nicht vollständig installiert“ blockiert das Entfernen nicht mehr. Auch unvollständige Projektordner unter anderen Benutzern werden berücksichtigt, gesichert und anschließend aus den aktiven Installationspfaden entfernt.
-- Befehlsfehler enthalten ihre tatsächliche Ausgabe statt nur einer Exit-Code-Zahl.
-
-Tabs und mSD-Karten-Seite
-- mSD-Reiter erhält die Logozeile mit passenden Texten. Die Tabs besitzen sichtbare Rahmen, eine erkennbare Auswahl und etwa 4 mm Abstand.
-
-Prüfstand
-- Softwaretests für 96 Auswahlkombinationen, Prüfsummenfehler, Dateinamen-/Oberflächenabläufe und Witty-Abschaltbestätigung durchgeführt.
-- Verkleinerung am Gerät vom Nutzer bestätigt. Die vollständige Stromabschaltung bleibt am angeschlossenen Witty zu überprüfen.
+Prüfstand und offene Hardwareprüfung
+- Lokale Software-, Dateisystem-, Übertragungs- und Wiederverbindungstests erfolgreich. Der zweite Schreibversuch wurde am Gerät als erfolgreich gemeldet; die neue Handle-Trennung benötigt noch den Gerätetest.
+- Korrekte Witty-Abschaltung wurde nachfolgend vom Nutzer am Gerät bestätigt. Abschaltdienst muss im poweroff.target eingebunden sein; sein Protokoll wird auf der Bootpartition gespeichert. Diagnoseskript liest Herstellerdienste, Firmware, Witty-Zustand und Abschaltverzögerung ohne Abschaltung.

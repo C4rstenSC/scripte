@@ -1,5 +1,11 @@
 [
   {
+    "Version": "0.8.8",
+    "Date": "2026-10-13",
+    "Build": "20261013.6",
+    "Notes": "Witty Add-on 0.8.8 | 13.10.2026\nÄnderungen gegenüber 0.8.7\n\nWitty später nachinstallieren\n- Neuer Hersteller-Manager für eine bestehende Basisinstallation mit „Kein Witty“.\n- Witty Pi 4/5 wird vor dem Herstellerdownload an I2C identifiziert. Erkannter WP5 korrigiert eine WP4-Auswahl; fehlende oder unpassende Hardware stoppt vor Installation.\n- Herstellerpaket, I2C-Voraussetzungen, Gruppenrechte, Zeithelfer und Abschaltdienst werden gezielt eingerichtet. Bestehende GPS-Auswahl, Zeitzone, Homepage und Anwendungen bleiben erhalten.\n- Hersteller-Deinstallation betrifft ausschließlich die Herstellerkomponente. WP4-Dateien werden gesichert; WP5 wird über seine Paketverwaltung entfernt.\n- Tatsächlich vorhandene Herstellersoftware wird auch bei einer veralteten „Kein Witty“-Konfiguration im Status erkannt.\n\nAbschaltung und Wartung\n- Vor shutdown now wird geprüft, dass wp5d_poweroff.service tatsächlich in poweroff.target eingebunden ist.\n- Ausgabe des Hersteller-Abschaltdienstes und seiner I2C-Bestätigung wird als witty-sd-poweroff.log auf der Bootpartition gespeichert.\n- Ohne Witty bleibt reguläre Linux-Abschaltung verfügbar. Hersteller-Abschluss ist für eine Verkleinerung ohne Witty nicht erforderlich.\n- Witty Pi 4 ohne GPS verwendet seine eigene Hersteller- und einmalige RTC-Anbindung statt wp5d.\n\nDiagnose\n- witty-shutdown-diagnose.sh sammelt Boot-/Wartungsprotokolle, Herstellerdienste, Helfer-Prüfsummen sowie Firmware, Witty-Zustand und Abschaltverzögerung.\n- Die Diagnose führt weder Shutdown noch Resize oder Registerwertänderungen aus. Die korrekte Abschaltung wurde nachfolgend vom Nutzer am Gerät bestätigt.\n"
+  },
+  {
     "Version": "0.8.7",
     "Date": "2026-10-13",
     "Build": "20261013.5",
