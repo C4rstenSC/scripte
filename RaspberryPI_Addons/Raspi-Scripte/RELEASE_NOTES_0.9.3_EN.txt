@@ -1,0 +1,26 @@
+Raspi-Scripte 0.9.3 | 13 October 2026
+Changes since 0.9.2.1
+
+Standalone SD maintenance
+- Windows program and content updates include a separate sd-maintenance.sh containing the shared maintenance helpers. The Pi does not need the Add-on homepage or any application modules installed.
+- One upload installs the helpers into a protected, persistent directory. Shrink requests install missing Linux maintenance tools without recommended packages.
+- Existing Witty Pi 4 and Witty Pi 5 manufacturer services are detected independently of Add-on configuration. Maintenance completion uses the appropriate manufacturer shutdown; a Pi without Witty powers off normally.
+- Automatic expansion on the next normal boot uses retained helpers, without relying on a previously installed global Add-on command. Verified shrink results and matching card UUIDs remain required.
+
+Card backup and safe ejection
+- Image creation attempts the same Windows disk isolation as writing. Readers that do not support offline mode retain volume locks instead.
+- All raw card and volume handles are closed before ejection. A disk taken offline by this job is brought online again before Windows safe removal is requested.
+- Ejection diagnostic logging cannot turn a successful image backup into a failure. If Windows still refuses removal, the application clearly asks the user to remove the card safely through Windows.
+- Refreshing backup disks discards the previous card's custom or numbered filename and derives the default from the current date and newly read hostname. The destination folder is retained.
+- A red warning explains that an unshrunk card must first be shrunk on a Raspberry Pi to create a small image. A full-card backup remains available if explicitly confirmed. Windows does not shrink the card directly.
+
+Interface, language and terminal
+- Partition state appears beside its label, wrapping inside the status column without covering buttons.
+- After a successful hostname change and status refresh, a fresh terminal session displays the current hostname and prompt.
+- The Add-on update button is disabled when no base installation exists, with the hint “Run the base installation first”. The Windows update launcher rejects missing or incomplete installations before installing prerequisites.
+- The remaining German SD controls, disk labels, preparation actions, size details, ejection warnings and error messages have English translations. Switching language refreshes existing displays without rereading the card. Release notes for 0.9.3 are available in English.
+
+Validation
+- Software tests cover manufacturer detection without the Add-on, retained expansion helpers, standalone extraction and shared helper contents.
+- English/German switching, unchanged hostname/path values, card services and Windows application/updater builds are checked.
+- Power cutoff and reader-specific ejection after image creation require subsequent tests on the actual Pi and card reader.

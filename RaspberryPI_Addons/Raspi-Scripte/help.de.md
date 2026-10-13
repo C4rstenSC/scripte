@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.9.2.1 – Bedienungsanleitung
+# Raspi-Scripte 0.9.3 – Bedienungsanleitung
 
 Stand: 13.10.2026
 
@@ -139,3 +139,9 @@ Kurzzeitige Zugriffssperren werden begrenzt wiederholt. Dauerhafte Windows-Sperr
 Die voreingestellten OS-Versionen werden beim Start geladen. „Laufwerke aktualisieren“ bleibt für die Kartenabfrage erforderlich. Bei einem vorhandenen offiziellen IMG wird die vollständige Quellprüfung mit dem Kopieren für die gewählten Einstellungen verbunden. Beschädigte Daten werden vor dem Kartenschreiben zurückgewiesen.
 
 Die Fortschrittsanzeige ist vom Ergebnis des Kartenzugriffs getrennt. Eine kurzzeitig blockierte Statusdatei beendet den Datentransfer nicht; die separate Ergebnisdatei bestätigt den abgeschlossenen Vorgang. Erfolg setzt weiterhin die vollständige Rückleseprüfung voraus.
+
+## SD-Wartung ohne Add-on ab 0.9.3
+
+Der Windows-Client enthält die vollständigen Wartungshelfer in sd-maintenance.sh. Die Karte bleibt beim Schrumpfen im Raspberry Pi; eine vorherige Installation des Witty Add-ons ist nicht erforderlich. Nach Bestätigung werden fehlende Wartungswerkzeuge nachinstalliert und vorhandene Witty-Pi-4-/5-Herstellerdienste für die Abschaltung verwendet. Ohne Herstellerinstallation fährt der Pi normal herunter. Die Karte vor der Abbildsicherung nicht erneut im Pi starten: Der nächste normale Start erweitert sie automatisch wieder.
+
+„Laufwerke aktualisieren“ bei der Abbildsicherung liest den Hostnamen erneut und setzt die Dateinamenvorgabe auf Datum-Hostname.img zurück. Automatischer Auswurf folgt nach vollständiger Sicherung und Prüfung; lehnt Windows ihn ab, die Karte über Windows sicher entfernen.

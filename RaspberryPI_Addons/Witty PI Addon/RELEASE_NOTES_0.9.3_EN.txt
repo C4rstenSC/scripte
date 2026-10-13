@@ -1,0 +1,13 @@
+Witty Add-on 0.9.3 | 13 October 2026
+Changes since 0.9.2.1
+
+Shared SD maintenance
+- Existing Witty Pi 4/5 manufacturer services are detected without Add-on configuration. Verified maintenance completion uses the matching shutdown path; a Pi without Witty uses normal shutdown.
+- Missing Linux maintenance tools are installed only for shrink requests. Homepage modules and manufacturer packages are not installed automatically.
+- Automatic expansion after a verified shrink uses retained helpers rather than requiring a previously installed global Add-on command. UUID/result checks and separation from the poweroff boot remain intact.
+- Windows 0.9.3 also ships these helpers as a standalone sd-maintenance.sh inside its encrypted updates, enabling card maintenance without prior Add-on installation.
+- The Windows update launcher rejects missing or incomplete base installations with “Run the base installation first” before downloading prerequisites or initiating installation.
+- Windows changes include inline partition status, a fresh terminal after hostname changes, a fresh backup filename after reading a new card, adjusted backup ejection, an unshrunk-card warning and English interface/message translations.
+
+Validation
+- Software tests cover manufacturer detection and persistent expansion helpers. Shutdown and safe ejection require subsequent device-specific hardware tests.

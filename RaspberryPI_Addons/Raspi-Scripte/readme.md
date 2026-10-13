@@ -1,27 +1,28 @@
-# Raspi-Scripte 0.9.2.1
+# Raspi-Scripte 0.9.3
 
-Raspi-Scripte 0.9.2.1 | 13.10.2026
-Änderungen gegenüber 0.9.2
+Raspi-Scripte 0.9.3 | 13.10.2026
+Änderungen gegenüber 0.9.2.1
 
-Statusdateien und Abbrüche
-- Die Oberfläche öffnet die Fortschrittsdatei mit Freigabe für den atomaren Dateiaustausch. Der Kartenworker kann seinen Status auch während des Einlesens aktualisieren.
-- Fehler beim Aktualisieren der Fortschrittsdatei und beim Schreiben von Diagnoseprotokollen dürfen den Datentransfer und die Rückleseprüfung nicht mehr abbrechen.
-- Abgeschlossene Aufträge schreiben eine zusätzliche Ergebnisdatei. Die Oberfläche liest dieses Ergebnis nach Ende des Workers, damit eine kurz blockierte Fortschrittsdatei das Endergebnis nicht verdeckt.
-- Echte Schreib-, Lese- und Vergleichsfehler bleiben Fehler. Der neue direkte Kartenweg, der Lesetest vor dem Schreiben und die Berechnung mit getrennten Leseraten und Schreibraten bleiben aktiv.
-- Protokolle echter Schreibfehler enthalten zusätzlich die genaue Ausnahmestelle. Die Bereinigung temporärer Dateien darf eine bereits erfolgreich abgeschlossene Kartenarbeit nicht nachträglich zum Fehler machen.
+SD-Wartung ohne Add-on
+- Ein getrenntes sd-maintenance.sh enthält alle gemeinsamen Wartungshelfer und wird mit Programm- und Inhaltsupdates ausgeliefert. Eine Homepage- oder Modulinstallation ist für die SD-Wartung nicht erforderlich.
+- Die Wartungshelfer werden mit einem einzigen Upload in einem geschützten, dauerhaften Verzeichnis auf dem Pi bereitgestellt. Fehlende Wartungswerkzeuge werden beim Schrumpfauftrag ohne APT-Empfehlungen nachinstalliert.
+- Vorhandene Witty-Pi-4- und Witty-Pi-5-Herstellerdienste werden auch ohne Add-on-Konfiguration erkannt. Der geprüfte Wartungsabschluss nutzt die passende Herstellerabschaltung; ohne Witty wird normal heruntergefahren.
+- Die automatische Erweiterung beim nächsten normalen Start verwendet dauerhaft gespeicherte Helfer. Sie benötigt keinen zuvor installierten globalen Add-on-Befehl und behält die Prüfung von Schrumpfergebnis und Kartenkennungen bei.
 
-Image-Vorbereitung
-- Bei vorhandenen offiziellen IMG-Dateien wird die vollständige Quellprüfsumme während des ohnehin nötigen Kopierens für die gewählten Einstellungen berechnet. Der zusätzliche komplette IMG-Prüflauf davor entfällt.
-- Der unveränderte Cache- und Originalinhalt bleibt erhalten. Beschädigte vorbereitete Quelldaten werden vor jedem Kartenschreiben erkannt; der Anwendungscache wird für eine erneute Prüfung und Wiederherstellung markiert.
-- Die Anzeige unterscheidet das Wiederverwenden des vorhandenen IMG von der anschließenden Vorbereitung der konkreten Einstellungen.
+Karten lesen und sicher auswerfen
+- Eine rote Warnung erklärt vor vollständiger Abbildsicherung, dass die Karte nicht geschrumpft ist und zuvor auf dem Raspberry Pi geschrumpft werden muss. Auf Wunsch bleibt die vollständige Sicherung möglich; Windows verändert die Kartengröße nicht.
+- Auch die Abbildsicherung versucht, die Karte während des Zugriffs gegenüber Windows zu isolieren, wie beim Schreiben. Bei nicht unterstützten Lesern bleiben die Volumes gesperrt.
+- Vor dem Auswurf werden alle Karten- und Volumehandles geschlossen und ein vom Programm offline gesetzter Datenträger wieder online gestellt. Die vorhandene sichere Auswurfprüfung wird anschließend verwendet.
+- Ein Fehler beim Schreiben des Auswurfprotokolls darf eine erfolgreiche Abbildsicherung nicht zum Fehler machen. Wenn Windows den Auswurf weiter ablehnt, bleibt der verständliche Hinweis zum sicheren Entfernen erhalten.
+- Beim erneuten Einlesen einer Karte wird der vorherige benutzerdefinierte oder fortgezählte Dateiname verworfen. Die Vorgabe wird erneut aus aktuellem Datum und ausgelesenem Hostnamen gebildet; der Zielordner bleibt erhalten.
 
-Versionsanzeige und Abstände
-- Die voreingestellten Trixie-Versionen werden direkt nach dem Laden des Programms und bei Bedarf beim Öffnen des SD-Tabs angezeigt. Ein Wechsel über Bookworm ist dafür nicht mehr nötig.
-- Die Laufwerksliste wird weiterhin nur über den jeweiligen Aktualisieren-Button eingelesen.
-- Unter den Tabreitern erhalten beide Seiten etwa 3 mm zusätzlichen Abstand zum Inhalt. Die übrige Fensteranordnung bleibt erhalten.
+Anzeige und Terminal
+- Verbleibende deutsche Beschriftungen des ersten SD-Bereichs, Datenträgernamen, Fortschrittsdetails, Vorbereitung, Größenprüfung und Auswurfmeldungen sind für die englische Oberfläche übersetzt. Ein Sprachwechsel aktualisiert vorhandene Anzeigen ohne erneuten Kartenzugriff; Release Notes 0.9.3 sind auch auf Englisch vorhanden.
+- Der Add-on-Update-Button bleibt ohne vorhandene Basisinstallation deaktiviert und zeigt den Hinweis „Bitte zuerst Basisinstallation ausführen“. Der Windows-Updateweg prüft dies zusätzlich im Launcher und beginnt keine automatische Grundinstallation.
+- Der Partitionsstatus steht wieder rechts neben „Status Partitionen“ in derselben Zeile. Längere Angaben umbrechen innerhalb der Statusspalte und überdecken keine Buttons.
+- Nach erfolgreichem Umbenennen und erneutem Einlesen des Geräts wird eine neue Terminal-Sitzung geöffnet. Prompt und Verbindungsanzeige verwenden den aktuellen Hostnamen.
 
 Prüfung
-- Gleichzeitiges Lesen und Ersetzen von Statusdateien sowie Übertragen und Prüfen bei blockierter Statusdatei getestet.
-- Kombinierter Quellprüfsummen-/Kopiervorgang, beschädigte Cache-Kandidaten und Wiederherstellung getestet.
-- Initiale Versionsanzeige ohne automatische Laufwerksabfrage und Windows-Anwendung/Updater geprüft.
-- Das alte Fehlerprotokoll enthält keine Ausnahmestelle. Ob dort der behobene Statusdateikonflikt den Abbruch verursacht hat, muss der nächste Vorgang auf dem betroffenen PC bestätigen.
+- Herstellererkennung ohne Add-on für Witty Pi 4, Witty Pi 5 und normale Pis sowie dauerhaft gespeicherte Erweiterungshelfer getestet.
+- Selbstentpackendes Wartungspaket, Dateigleichheit mit den gemeinsamen Helfern und aktualisierte Windows-Kartenfunktionen geprüft.
+- Hardwareabhängige Abschaltung und der automatische Auswurf nach einer Sicherung sind anschließend auf dem konkreten Pi und Kartenleser zu testen.

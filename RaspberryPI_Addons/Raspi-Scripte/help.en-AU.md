@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.9.2.1 – User guide
+# Raspi-Scripte 0.9.3 – User guide
 
 Updated: 13 October 2026
 
@@ -75,3 +75,7 @@ Successful SD jobs eject the card and reset their progress/selection with inline
 ## Shrink completion fix in 0.8.9
 
 The RAM heartbeat no longer holds the boot log open and stops before boot partition unmounting. Late shutdown/handoff errors preserve verified geometry. Normal boot parameters are restored before manufacturer checks after successful UUID/geometry verification. Already affected older cards need a one-time checked boot-command repair; new successful maintenance completes automatically.
+
+## Standalone SD maintenance in 0.9.3
+
+Shrinking runs on the Pi and does not require the Add-on. Windows ships the maintenance helpers separately. Missing maintenance tools are installed on request; existing Witty Pi 4/5 manufacturer services handle shutdown. A normal Pi uses normal poweroff. The next normal boot expands the verified shrunk card; create the backup before that boot. Refreshing backup disks resets the suggested filename from the new hostname and date.
