@@ -1,3 +1,24 @@
+Version 0.9.7.1 · Build 4
+Änderungen gegenüber 0.9.7.1 Build 3
+
+Neustart und Windows-Anzeige
+- Nach dem Verbindungsabbruch wartet Windows zehn Sekunden ohne SSH- oder Statusabfragen. Die Startpause zeigt einen Countdown und bleibt abbrechbar.
+- Ein angekündigter Neustart pausiert den vollständigen Abschluss-Statusabgleich und Hintergrundabfragen von Allsky. Pro Host läuft höchstens eine automatische Wiederverbindung.
+- Die hostbezogene Verbindungsanzeige aktualisiert den Countdown laufend. Status und Abbruchbutton haben getrennte Spalten; längerer Text kann umbrechen.
+
+Gezieltes Add-on-Update
+- GPS und Zeiteinrichtung laufen nur bei Änderungen ihrer relevanten Dateien oder Einstellungen. Unveränderte Komponenten werden übersprungen. Fehlgeschlagene beziehungsweise unterbrochene Einrichtung wird beim nächsten Update erneut versucht.
+- Unveränderte Allsky-Komponenten überspringen die Kompatibilitäts-, Rechte- und Login-Reparaturen. Unverändertes WIRC überspringt Laufzeitprüfung und Dienstneustart. Vorhandene Navigation wird nur bei geänderten Vorlagen oder fehlendem Link ergänzt.
+- Bereits aktivierte Dienste und vorhandene Gruppenmitgliedschaften werden nicht erneut eingerichtet.
+
+Allsky und Startdiagnose
+- Die eigene ältere Allsky-Quelle und ihre Downloadnamen heißen v2025.07.25. Die Git-Revision bleibt 171b15ca; alte Quell- und Downloadnamen bleiben kompatible Aliase.
+- Die frühe Diagnose wartet auf den System-D-Bus und verbindet sich nach einem Abbruch erneut. In der ersten Minute werden Spannungs-/Drosselungswerte sekündlich aufgezeichnet.
+
+Diagnosestand
+- Der Bootabbruch tritt laut Nutzer auch beim normalen Neustart und bei geschlossenem Windows-Programm auf. Seine Ursache ist weiterhin nicht bestätigt. Die Wiederverbindungspause ist keine nachgewiesene Behebung dieses Bootfehlers.
+
+
 Version 0.9.7.1 · Build 3
 Änderungen gegenüber 0.9.7.1 Build 2
 

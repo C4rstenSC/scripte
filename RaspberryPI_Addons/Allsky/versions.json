@@ -3,33 +3,37 @@
   "baseUrl": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/RaspberryPI_Addons/Allsky",
   "versions": [
     {
-      "version": "v2024.12.06_06",
+      "version": "v2025.07.25",
       "commit": "171b15cac1eb5ec972fea85e596ab8e2b74e2ba1",
-      "package": "allsky-v2024.12.06_06.zip.enc",
+      "package": "allsky-v2025.07.25.zip.enc",
       "sha256": "2e388def98a00d44c6603b75d37a5459f995fff275530e08ef70f6e4bc121241",
       "sizeBytes": 48555678,
       "parts": [
         {
-          "package": "allsky-v2024.12.06_06.zip.enc.part01",
+          "package": "allsky-v2025.07.25.zip.enc.part01",
           "sha256": "be5eea1740f729de5339ddeca9701e1c39fae258905fd470b709e5094650a5fb",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2024.12.06_06.zip.enc.part02",
+          "package": "allsky-v2025.07.25.zip.enc.part02",
           "sha256": "17a04fb4fbe5eb33658be9a64e0e1200bc52d39a2cabfe2b2b270cd22f01a194",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2024.12.06_06.zip.enc.part03",
+          "package": "allsky-v2025.07.25.zip.enc.part03",
           "sha256": "521af0da4537d23d974f45a861d2da1eaec72eda51bc1b2cc023e6126051cdd5",
           "sizeBytes": 15728640
         },
         {
-          "package": "allsky-v2024.12.06_06.zip.enc.part04",
+          "package": "allsky-v2025.07.25.zip.enc.part04",
           "sha256": "72a5bf400c3895ca0efd155dd19dc071b7f3a71a332e366ef35480fb638e0bcc",
           "sizeBytes": 1369758
         }
-      ]
+      ],
+      "aliases": [
+        "v2024.12.06_06"
+      ],
+      "upstreamVersion": "v2024.12.06_06"
     },
     {
       "version": "v2026.10.01",

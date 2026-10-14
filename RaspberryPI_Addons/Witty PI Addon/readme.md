@@ -1,25 +1,21 @@
 # Witty Add-on 0.9.7.1
 
-Version 0.9.7.1 · Build 3
-Änderungen gegenüber 0.9.7.1 Build 2
+Version 0.9.7.1 · Build 4
+Änderungen gegenüber 0.9.7.1 Build 3
 
-Erweiterte Startdiagnose
-- Der Beobachter startet im frühen normalen Systemstart nach Root-Remount und Journald, ohne auf die FAT-Bootpartition zu warten oder Herstellerdienste aufzuhalten. Er bleibt auch nach stabiler Bereitschaft aktiv und dokumentiert den nächsten Neustart beziehungsweise Abbruch.
-- Journal, sekündliche Lebenszeichen und Stoppsignale werden kontinuierlich aufgezeichnet. Dienst-/HTTP-Statusabfragen laufen getrennt und blockieren die Logaufzeichnung nicht.
-- Jeder Boot erhält ein dauerhaftes Linux-Protokoll. diagnose.txt wird auf die Bootpartition gespiegelt; bei fehlendem oder schreibgeschütztem FAT bleibt die Linux-Sicherung aktiv. Frühere Bootversuche werden beim nächsten verfügbaren FAT-Zugriff wiederhergestellt.
-- Zustandsaufnahmen enthalten alle Systemdienste mit Start-/Endzeiten und Rückgabestatus, laufende Prozesse, Startaufträge, Einhängungen, SD-Kartenkennungen, Spannungs-/Drosselungszustand und verfügbare PMIC-/Bootloaderwerte. Gespeicherte Kernel-Crashprotokolle werden übernommen, falls vorhanden.
-- Der Bootsektor und die FAT-Clean-/Fehlerkennzeichen werden ausschließlich lesend erfasst. Die Diagnose repariert und mountet keine Karte. D-Bus-Abschalt-/Neustartanforderungen sowie verfügbare PID-/Dienstinformationen der Aufrufer werden protokolliert.
-- Das Systemjournal bleibt größenbegrenzt dauerhaft gespeichert und wird schneller synchronisiert. Linux-/FAT-Protokolle werden begrenzt rotiert. Unbekannte oder nicht verfügbare Sensoren werden nicht als Messwerte erfunden.
+Neustart und Windows-Anzeige
+- Nach dem Verbindungsabbruch wartet Windows zehn Sekunden ohne SSH- oder Statusabfragen. Die Startpause zeigt einen Countdown und bleibt abbrechbar.
+- Ein angekündigter Neustart pausiert den vollständigen Abschluss-Statusabgleich und Hintergrundabfragen von Allsky. Pro Host läuft höchstens eine automatische Wiederverbindung.
+- Die hostbezogene Verbindungsanzeige aktualisiert den Countdown laufend. Status und Abbruchbutton haben getrennte Spalten; längerer Text kann umbrechen.
 
-Windows und Allsky
-- Die normale Allsky-Installation über install erhält jetzt denselben Neustart-Kontext wie reinstall. Der empfangene Neustartmarker kann damit die hostbezogene Meldung auslösen.
-- Beide eigenen Offline-Allsky-Versionen zeigen keine technischen Entschlüsselungs-, Klon-, Branch- oder Checkout-Hinweise mehr. Die sichtbaren Installationsschritte und echte Fehler bleiben erhalten; Archiv-/Git-Prüfungen laufen weiterhin.
+Gezieltes Add-on-Update
+- GPS und Zeiteinrichtung laufen nur bei Änderungen ihrer relevanten Dateien oder Einstellungen. Unveränderte Komponenten werden übersprungen. Fehlgeschlagene beziehungsweise unterbrochene Einrichtung wird beim nächsten Update erneut versucht.
+- Unveränderte Allsky-Komponenten überspringen die Kompatibilitäts-, Rechte- und Login-Reparaturen. Unverändertes WIRC überspringt Laufzeitprüfung und Dienstneustart. Vorhandene Navigation wird nur bei geänderten Vorlagen oder fehlendem Link ergänzt.
+- Bereits aktivierte Dienste und vorhandene Gruppenmitgliedschaften werden nicht erneut eingerichtet.
 
-- Die ältere eigene Allsky-Archiv-Auswahl heißt jetzt 25.07.2025. Archiv, Quellkennung und Prüfsumme bleiben unverändert.
+Allsky und Startdiagnose
+- Die eigene ältere Allsky-Quelle und ihre Downloadnamen heißen v2025.07.25. Die Git-Revision bleibt 171b15ca; alte Quell- und Downloadnamen bleiben kompatible Aliase.
+- Die frühe Diagnose wartet auf den System-D-Bus und verbindet sich nach einem Abbruch erneut. In der ersten Minute werden Spannungs-/Drosselungswerte sekündlich aufgezeichnet.
 
-- Windows unterscheidet Softwareinstallation, Softwareupdate und Softwaredeinstallation in der Fortschrittsanzeige. Backend-Abgleich zeigt die laufenden Ausgaben, Paketübertragung, Dateiübernahme und Steuerbefehlsprüfung statt einer unveränderten Sammelmeldung. Ein erfolgreicher Vorgang beendet die unbestimmte Fortschrittsanzeige.
-- Während eines Bestätigungsdialogs werden Terminal-Eingabe und automatisches Zurückholen des Fokus unterbrochen; verschachtelte Dialoge geben den Terminal-Fokus erst nach dem letzten Schließen frei.
-
-Prüfgrenzen
-- Prozesstest prüft weiterlaufende Journalaufzeichnung bei blockierter Statusprüfung, Root-/FAT-Sicherung und SIGTERM-Abschluss. Tests prüfen FAT-Ausfall, Wiederherstellung früherer Boots und ausschließlich lesende Bootsektoraufnahme.
-- Die tatsächliche Ursache des reproduzierbaren Bootabbruchs ist noch nicht bewiesen. Die erweiterten Protokolle sollen Strom-/Dateisystemfehler von ausgelösten Neustarts oder Abschaltungen unterscheiden. Ein vollständiger Stromverlust vor Linux-Start kann nicht durch einen Linux-Dienst aufgezeichnet werden.
+Diagnosestand
+- Der Bootabbruch tritt laut Nutzer auch beim normalen Neustart und bei geschlossenem Windows-Programm auf. Seine Ursache ist weiterhin nicht bestätigt. Die Wiederverbindungspause ist keine nachgewiesene Behebung dieses Bootfehlers.

@@ -1,23 +1,19 @@
-Version 0.9.7.1 · Build 3
-Changes since 0.9.7.1 Build 2
+Version 0.9.7.1 · Build 4
+Changes since 0.9.7.1 Build 3
 
-Extended boot diagnosis
-- The observer starts during normal early startup after root remount and Journald, without waiting for the FAT boot partition or gating manufacturer services. It remains active after stable readiness and records subsequent restart or failure.
-- Journal output, one-second heartbeat and stop signals are recorded continuously. Service/HTTP checks run separately and cannot block journal collection.
-- Each boot has a persistent Linux log mirrored to diagnose.txt on the boot partition. Missing/read-only FAT does not stop Linux recording; earlier boot attempts are recovered when FAT becomes available.
-- Snapshots include all service start/exit times and results, processes, jobs, mounts, SD identity, voltage/throttling state and available PMIC/bootloader data. Stored kernel crash logs are included when available.
-- Boot sectors and FAT clean/error flags are read without changing, repairing or mounting the card. D-Bus restart/shutdown requests and available caller PID/service metadata are recorded.
-- Persistent journals use bounded storage and faster synchronization. Linux/FAT logs rotate with limits. Unavailable sensors are reported rather than inventing values.
+Restart and Windows display
+- After connection loss Windows waits ten seconds without SSH or status requests. The startup pause has a live countdown and remains cancellable.
+- An announced restart suspends completion status refresh and Allsky background requests. Each host has at most one automatic reconnection in progress.
+- Host indicators refresh the countdown continuously. Status and Cancel use separate columns and long text can wrap.
 
-Windows and Allsky
-- Normal Allsky install now retains restart context like reinstall, allowing its received reboot marker to trigger the host-specific notification.
-- Both private offline Allsky versions omit technical decryption, clone, branch and checkout messages. Human-readable phases and actual errors remain visible; archive/Git verification is retained.
+Targeted add-on updates
+- GPS/time configuration runs only when relevant files or settings change. Unchanged components are skipped. Failed or interrupted setup remains pending for the next update.
+- Unchanged Allsky components skip compatibility, permissions and login repairs. Unchanged WIRC skips runtime verification and service restart. Existing navigation is rebuilt only after template changes or when its link is missing.
+- Already enabled services and existing group memberships are not configured again.
 
-- The older private Allsky archive choice is now labelled 25.07.2025. Archive, source identifier and checksum remain unchanged.
+Allsky and boot diagnosis
+- The older private Allsky source and download names are v2025.07.25. Git revision 171b15ca is unchanged; legacy source/download names remain compatible aliases.
+- Early diagnosis waits for the system D-Bus and reconnects if its monitor exits. Voltage/throttling samples are recorded every second during the first minute.
 
-- Windows distinguishes software installation, update and uninstallation in progress labels. Backend synchronization streams live output and reports upload, file transfer and control-command checks. Successful completion stops the indeterminate progress bar.
-- Confirmation dialogs suspend terminal input and automatic focus reclamation; nested dialogs restore terminal input only after the last dialog closes.
-
-Validation limits
-- Process tests check journal collection during a blocked status check, root/FAT persistence and SIGTERM cleanup. Tests cover FAT failure, earlier boot recovery and read-only boot-sector capture.
-- The reproducible boot failure remains unconfirmed. Expanded logs help distinguish power/filesystem faults from requested reboot or shutdown. A Linux service cannot record complete power loss before Linux starts.
+Diagnostic status
+- The user reproduced boot failure during normal restart and with Windows closed. The cause remains unconfirmed. The reconnect pause is not a proven fix for the boot failure.
