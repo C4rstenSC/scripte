@@ -1,17 +1,23 @@
-Version 0.9.7.1 · Build 2
-Changes since 0.9.7
+Version 0.9.7.1 · Build 3
+Changes since 0.9.7.1 Build 2
 
-- GPS choices are hidden without base installation. Micro-SD maintenance remains available and host tabs retain independent states.
-- Allsky settings backups now cross RAM/disk filesystem boundaries safely: verified copying, syncing and atomic publication. Failures retain the source backup.
-- Allsky omits Git default-branch advice and redundant package-selection messages. Errors, download/installation progress and complete manufacturer logs remain available.
-- Successfully scheduled Allsky reboots explicitly notify Windows. A host-specific window explains reboot and reconnection.
-- Software installation and updates create diagnose.txt on the boot partition before reboot. An independent service observes normal startup; logs remain after successful startup and rotate with a size limit.
-- Previous boot journals are retained with bounded storage. Diagnosis includes boot parameters, filesystem mounts, disks, kernel errors, failed services and Witty service restart counts, plus start/exit times, exit status and restart counts for every system service. Linux updates without base installation upload only the diagnosis helper.
-- Legacy systemd.run diagnosis parameters are removed only with an exactly matching original backup. Unrelated maintenance jobs and mismatched backups are preserved.
+Extended boot diagnosis
+- The observer starts during normal early startup after root remount and Journald, without waiting for the FAT boot partition or gating manufacturer services. It remains active after stable readiness and records subsequent restart or failure.
+- Journal output, one-second heartbeat and stop signals are recorded continuously. Service/HTTP checks run separately and cannot block journal collection.
+- Each boot has a persistent Linux log mirrored to diagnose.txt on the boot partition. Missing/read-only FAT does not stop Linux recording; earlier boot attempts are recovered when FAT becomes available.
+- Snapshots include all service start/exit times and results, processes, jobs, mounts, SD identity, voltage/throttling state and available PMIC/bootloader data. Stored kernel crash logs are included when available.
+- Boot sectors and FAT clean/error flags are read without changing, repairing or mounting the card. D-Bus restart/shutdown requests and available caller PID/service metadata are recorded.
+- Persistent journals use bounded storage and faster synchronization. Linux/FAT logs rotate with limits. Unavailable sensors are reported rather than inventing values.
 
-- Base installation orders Raspberry/Witty models from newest to oldest, selects detected hardware and locks both model selectors. Unconfirmed Witty hardware does not enable manufacturer installation. Allsky is separated from WIRC by two blank lines.
+Windows and Allsky
+- Normal Allsky install now retains restart context like reinstall, allowing its received reboot marker to trigger the host-specific notification.
+- Both private offline Allsky versions omit technical decryption, clone, branch and checkout messages. Human-readable phases and actual errors remain visible; archive/Git verification is retained.
 
-- Network discovery uses a consistent snapshot for progress reporting, fixing the crash observed in repeated Windows tests during concurrent device changes.
+- The older private Allsky archive choice is now labelled 25.07.2025. Archive, source identifier and checksum remain unchanged.
+
+- Windows distinguishes software installation, update and uninstallation in progress labels. Backend synchronization streams live output and reports upload, file transfer and control-command checks. Successful completion stops the indeterminate progress bar.
+- Confirmation dialogs suspend terminal input and automatic focus reclamation; nested dialogs restore terminal input only after the last dialog closes.
 
 Validation limits
-- Software tests cover backup/migration, boot diagnosis, isolated Windows hosts and reboot notices. The reported boot failure remains unconfirmed; no filesystem repair is performed on a mounted card. Physical Witty reboot and camera operation still require device tests.
+- Process tests check journal collection during a blocked status check, root/FAT persistence and SIGTERM cleanup. Tests cover FAT failure, earlier boot recovery and read-only boot-sector capture.
+- The reproducible boot failure remains unconfirmed. Expanded logs help distinguish power/filesystem faults from requested reboot or shutdown. A Linux service cannot record complete power loss before Linux starts.
