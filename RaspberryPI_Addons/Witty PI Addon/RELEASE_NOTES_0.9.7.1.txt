@@ -1,19 +1,11 @@
-Version 0.9.7.1 · Build 4
-Änderungen gegenüber 0.9.7.1 Build 3
+Version 0.9.7.1 · Build 5
+Änderungen gegenüber 0.9.7.1 Build 4
 
-Neustart und Windows-Anzeige
-- Nach dem Verbindungsabbruch wartet Windows zehn Sekunden ohne SSH- oder Statusabfragen. Die Startpause zeigt einen Countdown und bleibt abbrechbar.
-- Ein angekündigter Neustart pausiert den vollständigen Abschluss-Statusabgleich und Hintergrundabfragen von Allsky. Pro Host läuft höchstens eine automatische Wiederverbindung.
-- Die hostbezogene Verbindungsanzeige aktualisiert den Countdown laufend. Status und Abbruchbutton haben getrennte Spalten; längerer Text kann umbrechen.
-
-Gezieltes Add-on-Update
-- GPS und Zeiteinrichtung laufen nur bei Änderungen ihrer relevanten Dateien oder Einstellungen. Unveränderte Komponenten werden übersprungen. Fehlgeschlagene beziehungsweise unterbrochene Einrichtung wird beim nächsten Update erneut versucht.
-- Unveränderte Allsky-Komponenten überspringen die Kompatibilitäts-, Rechte- und Login-Reparaturen. Unverändertes WIRC überspringt Laufzeitprüfung und Dienstneustart. Vorhandene Navigation wird nur bei geänderten Vorlagen oder fehlendem Link ergänzt.
-- Bereits aktivierte Dienste und vorhandene Gruppenmitgliedschaften werden nicht erneut eingerichtet.
-
-Allsky und Startdiagnose
-- Die eigene ältere Allsky-Quelle und ihre Downloadnamen heißen v2025.07.25. Die Git-Revision bleibt 171b15ca; alte Quell- und Downloadnamen bleiben kompatible Aliase.
-- Die frühe Diagnose wartet auf den System-D-Bus und verbindet sich nach einem Abbruch erneut. In der ersten Minute werden Spannungs-/Drosselungswerte sekündlich aufgezeichnet.
+Windows-Oberfläche
+- Beim Öffnen und Schließen von Meldungsfenstern wird die Maussteuerung freigegeben und ein sichtbarer Mauszeiger wiederhergestellt. Auch bei Rückkehr in das Hauptfenster und Mausbewegungen wird ein von WebView2 verborgen gebliebener Zeiger wieder eingeblendet. Die Windows-Mauseinstellungen werden nicht verändert.
+- Bestätigungsdialoge sperren Terminaleingabe und automatische Fokusübernahme direkt in der Anwendung und im Terminal. Das eingebettete Terminalfenster wird dafür nicht mehr deaktiviert und erneut aktiviert.
+- Der Witty-Add-on-Updatebutton ist abgedunkelt und nicht anklickbar, wenn keine neuere Version beziehungsweise kein neuerer Build verfügbar ist. Fehlende Basisinstallation und laufende Vorgänge sperren ihn weiterhin.
 
 Diagnosestand
-- Der Bootabbruch tritt laut Nutzer auch beim normalen Neustart und bei geschlossenem Windows-Programm auf. Seine Ursache ist weiterhin nicht bestätigt. Die Wiederverbindungspause ist keine nachgewiesene Behebung dieses Bootfehlers.
+- Laut Nutzer bootet der Pi ohne Ethernet. Mit Ethernet und blockiertem GPS-Zeitdienst war ein Neustart ebenfalls erfolgreich. Ein einzelner erfolgreicher Vergleich beweist die Ursache noch nicht; der GPS-/RTC-Zeitpfad wird weiter isoliert geprüft.
+- Build 5 verändert die GPS-Zeitroutine nicht. Die zehnsekündige Wiederverbindungspause und die gezielten Update-Schritte aus Build 4 bleiben enthalten.

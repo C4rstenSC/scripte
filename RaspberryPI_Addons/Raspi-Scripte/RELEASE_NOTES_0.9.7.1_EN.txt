@@ -1,19 +1,11 @@
-Version 0.9.7.1 · Build 4
-Changes since 0.9.7.1 Build 3
+Version 0.9.7.1 · Build 5
+Changes since 0.9.7.1 Build 4
 
-Restart and Windows display
-- After connection loss Windows waits ten seconds without SSH or status requests. The startup pause has a live countdown and remains cancellable.
-- An announced restart suspends completion status refresh and Allsky background requests. Each host has at most one automatic reconnection in progress.
-- Host indicators refresh the countdown continuously. Status and Cancel use separate columns and long text can wrap.
-
-Targeted add-on updates
-- GPS/time configuration runs only when relevant files or settings change. Unchanged components are skipped. Failed or interrupted setup remains pending for the next update.
-- Unchanged Allsky components skip compatibility, permissions and login repairs. Unchanged WIRC skips runtime verification and service restart. Existing navigation is rebuilt only after template changes or when its link is missing.
-- Already enabled services and existing group memberships are not configured again.
-
-Allsky and boot diagnosis
-- The older private Allsky source and download names are v2025.07.25. Git revision 171b15ca is unchanged; legacy source/download names remain compatible aliases.
-- Early diagnosis waits for the system D-Bus and reconnects if its monitor exits. Voltage/throttling samples are recorded every second during the first minute.
+Windows interface
+- Opening and closing application messages releases mouse capture and restores pointer visibility. Returning to the main window or moving the mouse also restores a pointer left hidden by WebView2. Windows mouse preferences are unchanged.
+- Confirmation dialogs suspend terminal input and automatic focus reclamation in both the application and terminal page. The embedded terminal control is no longer disabled and re-enabled for this purpose.
+- The Witty add-on update button is darkened and disabled when neither a newer version nor a newer build is available. Missing base installation and busy operations still disable it.
 
 Diagnostic status
-- The user reproduced boot failure during normal restart and with Windows closed. The cause remains unconfirmed. The reconnect pause is not a proven fix for the boot failure.
+- The user reported successful startup without Ethernet and a successful restart with Ethernet while the GPS time service was masked. One successful comparison does not prove the cause; the GPS/RTC path remains under investigation.
+- Build 5 does not change GPS time synchronization. Build 4's ten-second reconnection pause and targeted update logic remain included.
