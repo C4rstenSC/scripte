@@ -1,0 +1,21 @@
+Version 0.9.9 · Build 1
+Changes since 0.9.8 Build 3
+
+Allsky update and reboot
+- Remove the fixed 30-second delay after the Allsky update. Once configuration restoration and completion reporting succeed, request the regular reboot immediately.
+- Report completion and the expected reboot before requesting shutdown so Windows can prepare reconnection. A failed reboot request still produces a warning.
+
+Windows after reconnection
+- Successful automatic reconnection hides completed installation/update progress and collapses the SSH terminal.
+- Successful manual reconnection also resets progress and collapses the terminal. The shell remains usable when expanded again.
+
+Startup pause and scrolling
+- After detecting a reboot, Windows waits 20 seconds without connection probes, followed by a separate 60-second reconnection budget. The pause does not consume the reconnection budget.
+- Expanding the SSH terminal scrolls the application page to the bottom; collapsing it, announcing reboot and reconnecting successfully scrolls to the top. Other Raspberry tabs retain their scroll position.
+
+Pi connection status
+- Announced reboot and reconnection shade the Pi status gray, render text black, gray out status lights and disable its controls. Active connections restore the original colors.
+
+Validation
+- Test immediate reboot requests on success, failure and operations requiring no reboot. Completion precedes the reboot command; no delay timer is used.
+- Witty tests and native Windows compilation validate the software. Reconnection UI behavior requires a Windows interaction test.

@@ -1,18 +1,23 @@
-# Witty Add-on 0.9.8
+# Witty Add-on 0.9.9
 
-Version 0.9.8 · Build 3
-Änderungen gegenüber 0.9.8 Build 2
+Version 0.9.9 · Build 1
+Änderungen gegenüber 0.9.8 Build 3
 
-Ethernet-Freigabe nach dem Start
-- Die Freigaberoutine setzt eth0 ausdrücklich administrativ auf UP. Die NetworkManager-Verwaltung allein ließ den Port im gemeldeten Boot auf DOWN stehen.
-- Das von unserer Verzögerungsregel gespeicherte Ethernet-Profil erhält Autoconnect, damit NetworkManager es auch nach später abgeschlossener Link-Aushandlung aktiviert.
-- Ein noch nicht verfügbarer Link wird nicht mehr fälschlich als fehlendes Kabel gemeldet. Es gibt keine zusätzliche feste Startpause; die automatische Verbindung erfolgt bei verfügbarem Link. Allsky, WURB, WLAN und Hotspot werden dadurch nicht auf Ethernet warten gelassen.
-- Der separate Ethernet-Timer bleibt unverändert. Die Terminalkorrekturen aus Build 2 bleiben enthalten.
+Allsky-Update und Neustart
+- Die feste 30-Sekunden-Pause nach dem Allsky-Update entfällt. Nach erfolgreicher Konfigurationswiederherstellung und Abschlussmeldung wird der reguläre Neustart direkt ausgelöst.
+- Abschluss und erwarteter Neustart werden vor dem Neustartbefehl gemeldet, damit Windows die automatische Wiederverbindung vorbereiten kann. Ein fehlgeschlagener Neustartbefehl wird weiterhin als Warnung ausgegeben.
 
-Release Notes im Update-Terminal
-- Der Update-Starter verwendet vollständig geschlossene WITTY-CONTROL-Blöcke. Dadurch werden die folgenden Release Notes und Update-Ausgaben auch vom älteren Windows-Filter nicht verschluckt.
+Windows nach der Wiederverbindung
+- Nach erfolgreicher automatischer Wiederverbindung wird die abgeschlossene Installations- oder Update-Fortschrittsanzeige ausgeblendet und das SSH-Terminal eingeklappt.
+- Auch eine erfolgreiche manuelle Neuverbindung setzt die Fortschrittsanzeige zurück und klappt das Terminal ein. Die normale Shell bleibt bei erneutem Aufklappen bedienbar.
+
+Startpause und Scrollposition
+- Nach erkanntem Neustart wartet Windows 20 Sekunden ohne Verbindungsprüfungen. Anschließend stehen 60 Sekunden für die automatische Wiederverbindung zur Verfügung; die Startpause wird nicht davon abgezogen.
+- Beim Aufklappen des SSH-Terminals scrollt die Programmoberfläche ganz nach unten. Beim Einklappen, beim angekündigten Neustart und nach erfolgreicher Wiederverbindung scrollt sie nach oben. Andere Raspberry-Tabs werden dabei nicht umgescrollt.
+
+Verbindungszustand im Pi-Status
+- Während des angekündigten Neustarts und der Wiederverbindung liegt ein grauer Schleier über dem Pi-Status. Schrift wird schwarz, Statuspunkte werden grau und die Statusbedienung gesperrt. Nach aktiver Verbindung werden die Originalfarben wiederhergestellt.
 
 Prüfung
-- Der manuelle Vergleich am gemeldeten Pi ergab nach dem Hochsetzen von eth0 einen Link nach rund vier Sekunden und anschließend die Ethernet-Adresse 192.168.178.181.
-- Softwaretests prüfen einen zunächst DOWN stehenden Port, ausstehende Link-Aushandlung, eine bestehende Verbindung und die Profilaktivierung. Der automatische Ablauf nach dem nächsten Boot benötigt weiterhin den Test am Pi.
-- Die Ursache der zusätzlich gemeldeten Hotspot-SSH-Abbrüche ist noch offen.
+- Der unmittelbare Neustartablauf wurde mit erfolgreichen und fehlgeschlagenen Befehlen sowie ohne benötigten Neustart getestet. Die Abschlussmeldung kommt vor dem Neustartbefehl; es wird kein Warte-Timer verwendet.
+- Witty-Tests und nativer Windows-Build prüfen die Software. Die geänderte Anzeige nach Wiederverbindung benötigt den Bedienungstest unter Windows.
