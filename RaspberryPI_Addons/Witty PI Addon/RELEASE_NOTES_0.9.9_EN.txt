@@ -1,5 +1,10 @@
-Witty Add-on 0.9.9 – Build 3
+Version 0.9.9 · Build 4
+Changes since Build 3
 
-- Windows permits WURB/WIRC updates for the current version and stopped services.
-- Service actions bypass the Witty hardware lock and use systemd directly.
-- Stopping disables automatic service startup; starting enables it again on Witty Pi 3, 4 and 5.
+- Center schedule events and deactivate button beside Raspberry/Witty hardware details.
+- Restore original status styles when connected; grey status only while disconnected or rebooting.
+- Compact homepage service status row. Read operations retain script identity; recover missing names only through unique content matching. One read-only recovery attempt per boot if identity is missing.
+- Read schedules only on connection; local PC countdown, visible read errors.
+- Remove extra BEGIN/END rows from the homepage.
+- Service actions disable only their own button, bypass the hardware queue and update cached service state immediately after confirmation.
+- Hide status buttons and firmware/version/schedule readings while disconnected. Successful Witty updates clear and collapse the terminal after status refresh and scroll to the top.

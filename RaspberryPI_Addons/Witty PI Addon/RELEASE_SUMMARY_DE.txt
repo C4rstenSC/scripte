@@ -1,3 +1,17 @@
+Version 0.9.9 · Build 4
+Änderungen gegenüber Build 3
+
+- Zeitplan und Deaktivieren-Button stehen oben mittig neben den Raspberry-/Witty-Hardwareangaben.
+- Graue Statusdarstellung nur ohne Verbindung beziehungsweise während des Neustarts; ursprüngliche Farben und Stile werden bei Verbindung wiederhergestellt.
+- Homepage-Dienststatus wieder kompakt nebeneinander.
+- Zeitplan-Lesen entfernt keine gespeicherten Skriptnamen. Fehlende Namen werden nur bei eindeutigem Inhaltsvergleich wiederhergestellt; interne schedule.wpi wird nicht als ursprünglicher Name angezeigt. Einmalige lesende Wiederherstellung vom Witty bei fehlender Identität, ohne Zeitplanänderung.
+- Zeitplanwerte weiterhin ausschließlich beim Neuverbinden; Minuten laufen lokal mit der Windows-Uhr weiter. Bei Lesefehlern bleibt ein sichtbarer Hinweis.
+- Homepage: zusätzliche BEGIN-/END-Anzeigezeilen entfernt.
+- Homepage-Dienstaktionen sperren nur ihren eigenen Button, warten nicht auf Witty-Abfragen und übernehmen bestätigte Start-/Stoppergebnisse sofort in den Dienststatus-Cache.
+- Ohne bestätigte Verbindung sind alle Statusbuttons sowie Firmware-/Versions-/Zeitplananzeigen ausgeblendet.
+- Erfolgreiches Witty-Update leert und klappt das Terminal nach Statusabgleich ein und scrollt ganz nach oben. Fehlerausgaben bleiben sichtbar.
+
+
 Witty Add-on 0.9.9 – Build 3
 
 - WURB und WIRC können im Windows-Programm auch bei aktueller Version und gestopptem Dienst erneut aktualisiert werden.
