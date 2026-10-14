@@ -1,0 +1,10 @@
+Version 0.9.5 · Build 20261014.2
+Changes since 0.9.4
+
+Allsky and software updates – build 20261014.2
+- Allsky updates and reinstalls offer all three source choices. The update button remains available for switching versions even when the current GitHub revision is installed. Updates retain existing camera settings.
+- The Pi controller accepts the selected version for reinstall. Before success and configuration migration, the installed Git revision is checked against the selected archive or manufacturer source.
+- Confirmed update migration may restore configuration from the previous release. Ordinary restores retain strict release/Git checks. Newly generated option and camera schemas are preserved.
+- Allsky installations outside /home/wurb retain the original project for manufacturer migration. Archive updates are checked against the chosen archive revision after reboot; the installed release is displayed alongside the Git revision.
+- Backend synchronisation identifies executable scripts by their shebang and repairs missing execution permission even for identical files. This fixes software-manager startup for WURB, WIRC and Allsky. Windows checks manager readiness before starting installation.
+- WURB/WIRC Git updates, command routing, version selection, configuration migration and permission repair tested. Actual manufacturer/Linux package updates and camera capture still require the respective Pi hardware.

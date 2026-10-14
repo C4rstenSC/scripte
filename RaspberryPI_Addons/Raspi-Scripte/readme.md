@@ -1,19 +1,12 @@
-# Raspi-Scripte 0.9.4
+# Raspi-Scripte 0.9.5
 
-Version 0.9.4 · Build 20261013.15
-Änderungen gegenüber 0.9.3
+Version 0.9.5 · Build 20261014.2
+Änderungen gegenüber 0.9.4
 
-Hardware und Installation
-- Beim Verbinden wird gesteckte Witty-Pi-4-/5-Hardware unabhängig von der Herstellerinstallation über aktuelle USB-Namen und lesende I2C-Kennungen geprüft. Alte Bootmeldungen werden nur als unbestätigter Hinweis angezeigt.
-- Die Hardwarezeile unterscheidet erkannte Platine und fehlende Herstellersoftware. Eine sicher erkannte Platine wird im Installationsmodell vorausgewählt. „Kein Witty“ in einer alten Konfiguration versteckt vorhandene Herstellersoftware nicht mehr.
-- APT-Download- und dpkg-Installationsprozente fließen in den laufenden Abschnitt der Gesamtanzeige ein. WURB, WIRC und Python-/Hardware-Abschnitte werden berücksichtigt; die Anzeige zeigt Nachkommastellen.
-- WURB und WIRC teilen einen lokalen Wheel-Vorrat. Vollständig vorhandene Python-Pakete werden ohne erneute Indexabfragen installiert. Fehlende Pakete werden als wiederverwendbare Wheels vorbereitet; Reparatur- und Sonderoptionen behalten ihren bisherigen Weg.
-- Fertige kompatible Python-Wheels werden bevorzugt. Bereits installierte Debian-Pakete werden in der Basisinstallation nicht unnötig aktualisiert; Systemupdates bleiben ein eigener Vorgang.
-- Die Basisinstallation lädt keine Paketlistenübersetzungen und führt keine zweite WIRC-Paketplanung nach der gemeinsamen APT-Installation aus.
-- Die Abschlussübersicht nennt Dienststatus, vollständige Webadressen, GPS-/Witty-Auswahl und Hotspot-Konfiguration.
-
-Prüfgrenzen
-- Die neue Hardwareerkennung, Paketauflösung und Fortschrittsauswertung sind in Softwaretests geprüft. Ohne erreichbaren I2C-Bus und eindeutige USB-Kennung wird eine Platine nicht als sicher erkannt behauptet.
-- Häufige Status- und Abschaltcache-Abfragen lesen Witty-Pi-5-Register direkt. Sie stoppen oder starten wp5d nicht mehr und lösen keine erneute RTC-Übernahme nach Linux aus. Administrative Register werden nicht gelesen.
-- Der Basisinstaller aktiviert vor dem Neustart eine frühe Startdiagnose: diagnose.txt auf der Bootpartition bleibt bei fehlender Bereitschaft erhalten. Nach 60 Sekunden stabiler SSH-/Webdienstbereitschaft mit unveränderten Prozesskennungen werden die ursprünglichen Bootparameter wiederhergestellt und das Diagnoseprotokoll gelöscht.
-- Die Ursache des zuvor gemeldeten Fehlstarts ist noch nicht bestätigt. Der Herstellerlogeintrag „Button Click“ gehörte laut Nutzer zur manuellen Abschaltung. Die neue Diagnose soll einen erneuten Fehler dokumentieren.
+Allsky- und Softwareupdates – Build 20261014.2
+- Allsky zeigt beim Update und bei der Neuinstallation die Auswahl der drei Quellen. Der Updatebutton bleibt auch bei gleichem GitHub-Stand für einen Versionswechsel anwählbar. Bestehende Kameraeinstellungen werden beim Update übernommen.
+- Der Raspberry-Steuerbefehl akzeptiert die Auswahl auch für reinstall. Vor Erfolg und Konfigurationsmigration wird die tatsächliche Git-Revision gegen die gewählte Archiv-/Herstellerquelle geprüft.
+- Die bestätigte Update-Migration darf die gesicherte Konfiguration des vorherigen Softwarestands übernehmen. Normale Wiederherstellungen behalten die strenge Versions-/Git-Prüfung. Neue options-/Kameraschemata bleiben erhalten.
+- Updates bestehender Allsky-Installationen außerhalb /home/wurb erhalten den bisherigen Projektordner für die Herstellermigration. Archivupdates werden nach dem Neustart gegen die ausgewählte Archivrevision geprüft; die installierte Release-Version wird zusätzlich zum Git-Stand angezeigt.
+- Der Backend-Abgleich erkennt ausführbare Skripte anhand ihrer Shebang. Fehlende Ausführungsrechte werden auch bei identischen Dateien repariert; dies behebt den Softwaremanager-Fehler für WURB, WIRC und Allsky. Vor dem Start prüft Windows die einsatzbereite Softwareverwaltung.
+- WURB-/WIRC-Gitupdates, Updatebefehle, Versionsauswahl, Konfigurationsmigration und Rechtekorrektur geprüft. Tatsächliche Hersteller-/Linux-Paketupdates und Kameraaufnahme benötigen weiterhin den Test am jeweiligen Pi.
