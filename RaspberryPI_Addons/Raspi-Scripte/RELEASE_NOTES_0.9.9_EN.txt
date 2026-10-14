@@ -1,21 +1,13 @@
-Version 0.9.9 · Build 1
-Changes since 0.9.8 Build 3
+Version 0.9.9 · Build 2
+Changes since 0.9.9 Build 1
 
-Allsky update and reboot
-- Remove the fixed 30-second delay after the Allsky update. Once configuration restoration and completion reporting succeed, request the regular reboot immediately.
-- Report completion and the expected reboot before requesting shutdown so Windows can prepare reconnection. A failed reboot request still produces a warning.
-
-Windows after reconnection
-- Successful automatic reconnection hides completed installation/update progress and collapses the SSH terminal.
-- Successful manual reconnection also resets progress and collapses the terminal. The shell remains usable when expanded again.
-
-Startup pause and scrolling
-- After detecting a reboot, Windows waits 20 seconds without connection probes, followed by a separate 60-second reconnection budget. The pause does not consume the reconnection budget.
-- Expanding the SSH terminal scrolls the application page to the bottom; collapsing it, announcing reboot and reconnecting successfully scrolls to the top. Other Raspberry tabs retain their scroll position.
-
-Pi connection status
-- Announced reboot and reconnection shade the Pi status gray, render text black, gray out status lights and disable its controls. Active connections restore the original colors.
+Witty schedule in Windows status
+- Show schedule information only for attached Witty Pi 3, 4 or 5 hardware with matching installed manufacturer software.
+- Display next shutdown and startup on separate lines as HH:MM      DD.MM.YYYY, followed by minutes until shutdown.
+- Read schedule data only on successful connection/reconnection. Thereafter compute the countdown locally from the shutdown time and current Windows PC clock, without additional SSH or Witty queries.
+- Reuse homepage readings up to 30 seconds old. Without a recent cache, obtain one shared backend status reading on connection.
+- Deactivate schedule uses the existing homepage backend. Clear displayed events/countdown only after confirmed success; saved schedule files are retained.
 
 Validation
-- Test immediate reboot requests on success, failure and operations requiring no reboot. Completion precedes the reboot command; no delay timer is used.
-- Witty tests and native Windows compilation validate the software. Reconnection UI behavior requires a Windows interaction test.
+- Tests cover Witty 3/4/5 hardware/install gating, date format, PC countdown, inactive schedules, success/failure of deactivation and cache storage/invalidation.
+- Native Windows compilation validates the build. Verify the new row and event times against the homepage on the device.

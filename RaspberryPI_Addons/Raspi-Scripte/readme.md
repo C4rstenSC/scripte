@@ -1,23 +1,15 @@
 # Raspi-Scripte 0.9.9
 
-Version 0.9.9 · Build 1
-Änderungen gegenüber 0.9.8 Build 3
+Version 0.9.9 · Build 2
+Änderungen gegenüber 0.9.9 Build 1
 
-Allsky-Update und Neustart
-- Die feste 30-Sekunden-Pause nach dem Allsky-Update entfällt. Nach erfolgreicher Konfigurationswiederherstellung und Abschlussmeldung wird der reguläre Neustart direkt ausgelöst.
-- Abschluss und erwarteter Neustart werden vor dem Neustartbefehl gemeldet, damit Windows die automatische Wiederverbindung vorbereiten kann. Ein fehlgeschlagener Neustartbefehl wird weiterhin als Warnung ausgegeben.
-
-Windows nach der Wiederverbindung
-- Nach erfolgreicher automatischer Wiederverbindung wird die abgeschlossene Installations- oder Update-Fortschrittsanzeige ausgeblendet und das SSH-Terminal eingeklappt.
-- Auch eine erfolgreiche manuelle Neuverbindung setzt die Fortschrittsanzeige zurück und klappt das Terminal ein. Die normale Shell bleibt bei erneutem Aufklappen bedienbar.
-
-Startpause und Scrollposition
-- Nach erkanntem Neustart wartet Windows 20 Sekunden ohne Verbindungsprüfungen. Anschließend stehen 60 Sekunden für die automatische Wiederverbindung zur Verfügung; die Startpause wird nicht davon abgezogen.
-- Beim Aufklappen des SSH-Terminals scrollt die Programmoberfläche ganz nach unten. Beim Einklappen, beim angekündigten Neustart und nach erfolgreicher Wiederverbindung scrollt sie nach oben. Andere Raspberry-Tabs werden dabei nicht umgescrollt.
-
-Verbindungszustand im Pi-Status
-- Während des angekündigten Neustarts und der Wiederverbindung liegt ein grauer Schleier über dem Pi-Status. Schrift wird schwarz, Statuspunkte werden grau und die Statusbedienung gesperrt. Nach aktiver Verbindung werden die Originalfarben wiederhergestellt.
+Witty-Zeitplan in der Windows-Statuszeile
+- Bei bestätigter montierter Hardware und installierter passender Hersteller-Software für Witty Pi 3, 4 oder 5 werden Zeitplan und Schalttermine angezeigt. Ohne Witty-Hardware bleibt die Anzeige verborgen.
+- Nächstes Herunterfahren und nächstes Hochfahren stehen untereinander im Format HH:MM      DD.MM.YYYY. Darunter stehen die Minuten bis zum Shutdown.
+- Die Zeitplandaten werden ausschließlich bei erfolgreicher Verbindung beziehungsweise Wiederverbindung gelesen. Der Minuten-Countdown wird anschließend lokal aus der Shutdownzeit und der aktuellen Windows-PC-Uhrzeit berechnet; dafür gibt es keine weiteren SSH- oder Witty-Abfragen.
+- Aktuelle bereits von der Homepage gelesene Werte werden bis zu 30 Sekunden lang wiederverwendet. Falls kein aktueller Cache vorliegt, wird beim Verbinden einmalig der gemeinsame Witty-Status gelesen.
+- Der Button „Zeitplan deaktivieren“ verwendet die gemeinsame Homepage-Backendfunktion. Erst nach bestätigtem Erfolg werden Termine und Countdown deaktiviert; gespeicherte Zeitplandateien bleiben erhalten.
 
 Prüfung
-- Der unmittelbare Neustartablauf wurde mit erfolgreichen und fehlgeschlagenen Befehlen sowie ohne benötigten Neustart getestet. Die Abschlussmeldung kommt vor dem Neustartbefehl; es wird kein Warte-Timer verwendet.
-- Witty-Tests und nativer Windows-Build prüfen die Software. Die geänderte Anzeige nach Wiederverbindung benötigt den Bedienungstest unter Windows.
+- Softwaretests prüfen Witty 3/4/5, Hardware- und Installationsprüfung, Datumsformat, lokalen Countdown, inaktive Zeitpläne, erfolgreiche und fehlgeschlagene Deaktivierung sowie Cacheablage und Löschung.
+- Der native Windows-Build prüft die Kompilierung. Die neue Statuszeile und die Schaltzeiten benötigen den Vergleich mit der Homepage am Gerät.
