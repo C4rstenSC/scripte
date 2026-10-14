@@ -2,6 +2,13 @@
   {
     "Version": "0.9.9",
     "Date": "2026-10-14",
+    "Build": "20261014.3",
+    "Notes": "Witty Add-on 0.9.9 – Build 3\n\n- WURB und WIRC können im Windows-Programm auch bei aktueller Version und gestopptem Dienst erneut aktualisiert werden.\n- Dienstaktionen warten nicht auf die Witty-Hardware-Sperre und benötigen keine separaten Dienst-Wrapper.\n- WURB/WIRC stoppen deaktiviert auch den automatischen Start; Starten aktiviert ihn wieder, für Witty Pi 3, 4 und 5.\n",
+    "BuildRevision": "20261014.3"
+  },
+  {
+    "Version": "0.9.9",
+    "Date": "2026-10-14",
     "Build": "20261014.2",
     "Notes": "Version 0.9.9 · Build 2\nÄnderungen gegenüber 0.9.9 Build 1\n\nWitty-Zeitplan in der Windows-Statuszeile\n- Bei bestätigter montierter Hardware und installierter passender Hersteller-Software für Witty Pi 3, 4 oder 5 werden Zeitplan und Schalttermine angezeigt. Ohne Witty-Hardware bleibt die Anzeige verborgen.\n- Nächstes Herunterfahren und nächstes Hochfahren stehen untereinander im Format HH:MM      DD.MM.YYYY. Darunter stehen die Minuten bis zum Shutdown.\n- Die Zeitplandaten werden ausschließlich bei erfolgreicher Verbindung beziehungsweise Wiederverbindung gelesen. Der Minuten-Countdown wird anschließend lokal aus der Shutdownzeit und der aktuellen Windows-PC-Uhrzeit berechnet; dafür gibt es keine weiteren SSH- oder Witty-Abfragen.\n- Aktuelle bereits von der Homepage gelesene Werte werden bis zu 30 Sekunden lang wiederverwendet. Falls kein aktueller Cache vorliegt, wird beim Verbinden einmalig der gemeinsame Witty-Status gelesen.\n- Der Button „Zeitplan deaktivieren“ verwendet die gemeinsame Homepage-Backendfunktion. Erst nach bestätigtem Erfolg werden Termine und Countdown deaktiviert; gespeicherte Zeitplandateien bleiben erhalten.\n\nPrüfung\n- Softwaretests prüfen Witty 3/4/5, Hardware- und Installationsprüfung, Datumsformat, lokalen Countdown, inaktive Zeitpläne, erfolgreiche und fehlgeschlagene Deaktivierung sowie Cacheablage und Löschung.\n- Der native Windows-Build prüft die Kompilierung. Die neue Statuszeile und die Schaltzeiten benötigen den Vergleich mit der Homepage am Gerät.\n"
   },

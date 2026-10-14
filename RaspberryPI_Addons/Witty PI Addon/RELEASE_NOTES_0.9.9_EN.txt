@@ -1,13 +1,5 @@
-Version 0.9.9 · Build 2
-Changes since 0.9.9 Build 1
+Witty Add-on 0.9.9 – Build 3
 
-Witty schedule in Windows status
-- Show schedule information only for attached Witty Pi 3, 4 or 5 hardware with matching installed manufacturer software.
-- Display next shutdown and startup on separate lines as HH:MM      DD.MM.YYYY, followed by minutes until shutdown.
-- Read schedule data only on successful connection/reconnection. Thereafter compute the countdown locally from the shutdown time and current Windows PC clock, without additional SSH or Witty queries.
-- Reuse homepage readings up to 30 seconds old. Without a recent cache, obtain one shared backend status reading on connection.
-- Deactivate schedule uses the existing homepage backend. Clear displayed events/countdown only after confirmed success; saved schedule files are retained.
-
-Validation
-- Tests cover Witty 3/4/5 hardware/install gating, date format, PC countdown, inactive schedules, success/failure of deactivation and cache storage/invalidation.
-- Native Windows compilation validates the build. Verify the new row and event times against the homepage on the device.
+- Windows permits WURB/WIRC updates for the current version and stopped services.
+- Service actions bypass the Witty hardware lock and use systemd directly.
+- Stopping disables automatic service startup; starting enables it again on Witty Pi 3, 4 and 5.
