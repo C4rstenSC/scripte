@@ -88,7 +88,7 @@ Erweitern verändert nur die letzte Partitionsgröße und vergrößert anschlie�
 
 ## Neu in 0.8.8: spätere Witty-Installation und SD-Abschluss
 
-Wenn die Basisinstallation ohne Witty ausgeführt wurde, bleibt die Herstellerzeile sichtbar. Witty Pi 4/5 wählen und „Software installieren“ drücken. Der Manager aktiviert I2C, prüft die Hardware und installiert ausschließlich passende Herstellerkomponenten. Auf einem Pi 5 ist Witty Pi 4 nicht unterstützt; ein erkannter Witty Pi 5 korrigiert die Auswahl. Während eines anschließenden Neustarts wartet Windows bis zu drei Minuten und verbindet sich erneut. Ohne Witty erfolgt normales Linux-Herunterfahren.
+Wenn die Basisinstallation ohne Witty ausgeführt wurde, bleibt die Herstellerzeile sichtbar. Witty Pi 3/4/5 passend zum erkannten Raspberry wählen und „Software installieren“ drücken. Der Manager aktiviert I2C, prüft die Hardware und installiert ausschließlich passende Herstellerkomponenten. Auf einem Pi 5 ist Witty Pi 4 nicht unterstützt; ein erkannter Witty Pi 5 korrigiert die Auswahl. Während eines anschließenden Neustarts wartet Windows bis zu drei Minuten und verbindet sich erneut. Ohne Witty erfolgt normales Linux-Herunterfahren.
 
 Erfolgreiches Schreiben, IMG-Erstellen und Hostnamen-Vorbereiten schließen die Kartenhandles und werfen die Karte automatisch aus. Fortschritt und Laufwerksauswahl werden zurückgesetzt; Abschlussmeldungen stehen im Fenster ohne Popup. Lehnt Windows das Auswerfen weiterhin ab, wird das ausdrücklich angezeigt. Nicht allein anhand einer Erfolgsmeldung der Datenübertragung abziehen. Schreibdiagnosen liegen unter `%LOCALAPPDATA%/Raspi-Scripte/SdJobs/Logs`.
 
@@ -145,3 +145,14 @@ Die Fortschrittsanzeige ist vom Ergebnis des Kartenzugriffs getrennt. Eine kurzz
 Der Windows-Client enthält die vollständigen Wartungshelfer in sd-maintenance.sh. Die Karte bleibt beim Schrumpfen im Raspberry Pi; eine vorherige Installation des Witty Add-ons ist nicht erforderlich. Nach Bestätigung werden fehlende Wartungswerkzeuge nachinstalliert und vorhandene Witty-Pi-4-/5-Herstellerdienste für die Abschaltung verwendet. Ohne Herstellerinstallation fährt der Pi normal herunter. Die Karte vor der Abbildsicherung nicht erneut im Pi starten: Der nächste normale Start erweitert sie automatisch wieder.
 
 „Laufwerke aktualisieren“ bei der Abbildsicherung liest den Hostnamen erneut und setzt die Dateinamenvorgabe auf Datum-Hostname.img zurück. Automatischer Auswurf folgt nach vollständiger Sicherung und Prüfung; lehnt Windows ihn ab, die Karte über Windows sicher entfernen.
+
+
+## Mehrere Raspberry-Verbindungen und Basisinstallation
+
+Jeder verbundene Raspberry erhält unter dem Verbindungsbereich einen eigenen Host-Tab mit Ampel und Schließen-Button. Alle Aktionen und Terminalausgaben gehören zu diesem Host. Ein Tabwechsel ändert kein laufendes Ziel. Schließen trennt diese Verbindung und entfernt den Tab. Der Kopfbereich zeigt die Verbindungen untereinander. Die Netzwerksuche verbindet per Doppelklick; ein einfacher Klick wählt aus. Bereits verbundene Hosts werden nicht erneut angeboten.
+
+Ohne Basisinstallation bleiben die Micro-SD-Optionen verfügbar. Einzelne Software-Installationsbuttons und die Release-Notes-Buttons in den Statuszeilen sind ausgeblendet. Zuerst „Basis Installation“ ausführen. Danach werden passende Einzelaktionen verfügbar.
+
+## Raspberry Pi 3B/3B+ und Witty Pi 3
+
+WURB und WIRC unterstützen Pi 3B/3B+ mit Raspberry Pi OS Lite Bookworm oder Trixie in 64 Bit. Witty Pi 3 verwendet MCU 0x69 und DS3231-RTC 0x68 sowie klassische WPI-Skripte. GPIO 4 darf nicht durch einen 1-Wire-Sensor belegt sein. Die Herstellerinstallation prüft diesen Konflikt und richtet I2C/UART ein; der abschließende Neustart ist erforderlich. Witty Pi 3 und 4 werden auf Pi 3/4 angeboten, Witty Pi 5 auf Pi 4/5. Hardware und Herstellerinstallation werden getrennt angezeigt. Allsky wird ausschließlich auf Raspberry Pi 5 angeboten.

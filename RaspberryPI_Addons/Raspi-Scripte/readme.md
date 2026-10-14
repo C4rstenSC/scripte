@@ -1,12 +1,27 @@
-# Raspi-Scripte 0.9.5
+# Raspi-Scripte 0.9.7
 
-Version 0.9.5 · Build 20261014.2
-Änderungen gegenüber 0.9.4
+Version 0.9.7 · Build 1
+Änderungen gegenüber 0.9.5
 
-Allsky- und Softwareupdates – Build 20261014.2
-- Allsky zeigt beim Update und bei der Neuinstallation die Auswahl der drei Quellen. Der Updatebutton bleibt auch bei gleichem GitHub-Stand für einen Versionswechsel anwählbar. Bestehende Kameraeinstellungen werden beim Update übernommen.
-- Der Raspberry-Steuerbefehl akzeptiert die Auswahl auch für reinstall. Vor Erfolg und Konfigurationsmigration wird die tatsächliche Git-Revision gegen die gewählte Archiv-/Herstellerquelle geprüft.
-- Die bestätigte Update-Migration darf die gesicherte Konfiguration des vorherigen Softwarestands übernehmen. Normale Wiederherstellungen behalten die strenge Versions-/Git-Prüfung. Neue options-/Kameraschemata bleiben erhalten.
-- Updates bestehender Allsky-Installationen außerhalb /home/wurb erhalten den bisherigen Projektordner für die Herstellermigration. Archivupdates werden nach dem Neustart gegen die ausgewählte Archivrevision geprüft; die installierte Release-Version wird zusätzlich zum Git-Stand angezeigt.
-- Der Backend-Abgleich erkennt ausführbare Skripte anhand ihrer Shebang. Fehlende Ausführungsrechte werden auch bei identischen Dateien repariert; dies behebt den Softwaremanager-Fehler für WURB, WIRC und Allsky. Vor dem Start prüft Windows die einsatzbereite Softwareverwaltung.
-- WURB-/WIRC-Gitupdates, Updatebefehle, Versionsauswahl, Konfigurationsmigration und Rechtekorrektur geprüft. Tatsächliche Hersteller-/Linux-Paketupdates und Kameraaufnahme benötigen weiterhin den Test am jeweiligen Pi.
+Mehrere Raspberry-Verbindungen
+- Host-Tabs unter dem Verbindungsbereich besitzen eigene SSH-Verbindungen, Terminals, Statusanzeigen, Konfigurationen, Installationsdateien und Neustartüberwachung. Ein Tabwechsel ändert kein Ziel einer laufenden Aktion.
+- Jeder Tab zeigt Hostname, Verbindungsampel und einen Schließen-Button. Schließen trennt nur diesen Host; verbleibende Tabs rücken nach links. Der Kopfbereich zeigt die Verbindungen untereinander.
+- Die Netzwerksuche verbindet per Doppelklick. Ein einfacher Klick wählt weiterhin aus. Bereits offene Hosts werden anhand Hostname und IP ausgefiltert.
+
+Basisinstallation und Updateausgabe
+- Ohne Basisinstallation bleiben die Micro-SD-Wartungsfunktionen verfügbar. Einzelne Software-Installationsbuttons und Release-Notes-Buttons sind ausgeblendet. Die Witty-Softwarezeile zeigt keinen nicht-installiert-Text. Installationsaktionen prüfen die Voraussetzung zusätzlich.
+- Add-on-Updates zeigen die laufenden Arbeitsschritte, Dateiübernahme und Ausgaben länger laufender Unterprogramme. Doppelte Releaseüberschriften entfallen.
+- Die Windows-Anzeige des Add-ons verwendet Version und laufende Buildnummer ohne Datum.
+
+Pi 3 und Witty Pi 3
+- Raspberry Pi 3B und 3B+ werden für WURB/WIRC auf Bookworm/Trixie Lite mit 64-Bit-System unterstützt. Die SD-Modellauswahl enthält 3B, 3B+, 4/4B und 5.
+- Gesteckte Witty-Pi-3-Hardware wird getrennt von installierter Software über MCU-Adresse 0x69 und RTC 0x68 erkannt. Herstellerinstallation und Homepage-Skriptverwaltung verwenden die klassischen WPI-Skripte. Pi-4-Registerzugriffe werden nicht auf Pi 3 übertragen.
+- Die Witty-Pi-3-Installation passt den GPIO-Zugriff an pinctrl an, prüft GPIO-4-Konflikte, aktiviert I2C/UART-Einstellungen und wartet auf einen bereiten Herstellerdienst. Der Dienst wird bei der Basisinstallation erst nach dem Neustart gestartet.
+- USB-GPS nutzt auf Pi 3 den Pi-4-Datenweg. Partitionwartung und Herstellerabschaltung unterstützen Modell 3; UUID- und Dateisystemprüfungen bleiben erhalten.
+
+Allsky
+- Allsky wird ausschließlich für Raspberry Pi 5 angeboten. Installer und Backend prüfen diese Einschränkung zusätzlich.
+- Der ältere Archivinstaller aktiviert seine vorhandene Python-Umgebung auch auf Trixie. Damit wird der beobachtete PEP-668-Abbruch bei NumPy vermieden, ohne System-Python-Schutz zu umgehen. Alle drei Allsky-Quellen werden auf wiederholbare Vorbereitung geprüft.
+
+Prüfgrenzen
+- Softwareprüfungen umfassen Hardwarekennung, Skriptverwaltung, GPS-Auswahl, Wartungsablauf, Allsky-Pythonpfade und isolierte Windows-Host-Tabs. Reale Witty-Pi-3-Abschaltung, Kameraaufnahme und vollständige Installation auf Raspberry-Hardware benötigen den Gerätetest.

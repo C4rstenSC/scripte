@@ -68,7 +68,7 @@ Expansion preserves other partition fields and grows ext4 online or through a va
 
 ## Changes in 0.8.8
 
-Manufacturer software can be added after a homepage-only base installation by selecting Witty Pi 4/5 in its visible row. The manager verifies hardware and retains application/GPS configuration. Windows reconnects after planned installation/update reboots for up to three minutes. Normal Linux poweroff remains available without Witty.
+Manufacturer software can be added after a homepage-only base installation by selecting the appropriate Witty Pi 3/4/5 in its visible row. The manager verifies hardware and retains application/GPS configuration. Windows reconnects after planned installation/update reboots for up to three minutes. Normal Linux poweroff remains available without Witty.
 
 Successful SD jobs eject the card and reset their progress/selection with inline completion messages. Ejection refusal is reported separately. Raw write diagnostics are under `%LOCALAPPDATA%/Raspi-Scripte/SdJobs/Logs`. Card hostname boot jobs rename existing installer hotspots while retaining passwords and profile UUIDs. Correct Witty shutdown was subsequently confirmed by the user; shutdown diagnostics remain available if needed.
 
@@ -78,4 +78,15 @@ The RAM heartbeat no longer holds the boot log open and stops before boot partit
 
 ## Standalone SD maintenance in 0.9.3
 
-Shrinking runs on the Pi and does not require the Add-on. Windows ships the maintenance helpers separately. Missing maintenance tools are installed on request; existing Witty Pi 4/5 manufacturer services handle shutdown. A normal Pi uses normal poweroff. The next normal boot expands the verified shrunk card; create the backup before that boot. Refreshing backup disks resets the suggested filename from the new hostname and date.
+Shrinking runs on the Pi and does not require the Add-on. Windows ships the maintenance helpers separately. Missing maintenance tools are installed on request; existing Witty Pi 3/4/5 manufacturer services handle shutdown. A normal Pi uses normal poweroff. The next normal boot expands the verified shrunk card; create the backup before that boot. Refreshing backup disks resets the suggested filename from the new hostname and date.
+
+
+## Multiple Raspberry connections and base installation
+
+Each Raspberry has a hostname tab below the connection panel, with a connection indicator and close button. Actions and terminal output belong to that host. Switching tabs does not retarget a running operation. Closing disconnects only that host and removes its tab. The header lists connections vertically. Double-click a discovery row to connect; single-click still selects. Already connected hosts are excluded.
+
+Micro-SD maintenance remains available without base installation. Individual software installation and status-row release-notes buttons are hidden until the base installation is present. Run Base installation first.
+
+## Raspberry Pi 3B/3B+ and Witty Pi 3
+
+WURB and WIRC support Pi 3B/3B+ with 64-bit Raspberry Pi OS Lite Bookworm or Trixie. Witty Pi 3 uses MCU 0x69, DS3231 RTC 0x68 and classic WPI scripts. GPIO 4 must not be used by a 1-Wire sensor. Manufacturer installation checks this conflict, configures I2C/UART and requires the final reboot. Witty Pi 3/4 are offered on Pi 3/4, and Witty Pi 5 on Pi 4/5. Hardware and manufacturer installation are reported separately. Allsky is offered only on Raspberry Pi 5.
