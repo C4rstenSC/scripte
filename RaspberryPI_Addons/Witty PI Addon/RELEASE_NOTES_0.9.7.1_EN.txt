@@ -1,0 +1,17 @@
+Version 0.9.7.1 · Build 2
+Changes since 0.9.7
+
+- GPS choices are hidden without base installation. Micro-SD maintenance remains available and host tabs retain independent states.
+- Allsky settings backups now cross RAM/disk filesystem boundaries safely: verified copying, syncing and atomic publication. Failures retain the source backup.
+- Allsky omits Git default-branch advice and redundant package-selection messages. Errors, download/installation progress and complete manufacturer logs remain available.
+- Successfully scheduled Allsky reboots explicitly notify Windows. A host-specific window explains reboot and reconnection.
+- Software installation and updates create diagnose.txt on the boot partition before reboot. An independent service observes normal startup; logs remain after successful startup and rotate with a size limit.
+- Previous boot journals are retained with bounded storage. Diagnosis includes boot parameters, filesystem mounts, disks, kernel errors, failed services and Witty service restart counts, plus start/exit times, exit status and restart counts for every system service. Linux updates without base installation upload only the diagnosis helper.
+- Legacy systemd.run diagnosis parameters are removed only with an exactly matching original backup. Unrelated maintenance jobs and mismatched backups are preserved.
+
+- Base installation orders Raspberry/Witty models from newest to oldest, selects detected hardware and locks both model selectors. Unconfirmed Witty hardware does not enable manufacturer installation. Allsky is separated from WIRC by two blank lines.
+
+- Network discovery uses a consistent snapshot for progress reporting, fixing the crash observed in repeated Windows tests during concurrent device changes.
+
+Validation limits
+- Software tests cover backup/migration, boot diagnosis, isolated Windows hosts and reboot notices. The reported boot failure remains unconfirmed; no filesystem repair is performed on a mounted card. Physical Witty reboot and camera operation still require device tests.
