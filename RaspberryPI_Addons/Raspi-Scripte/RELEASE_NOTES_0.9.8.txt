@@ -1,25 +1,11 @@
-Version 0.9.8 · Build 1
-Änderungen gegenüber 0.9.7.1 Build 7
+Version 0.9.8 · Build 2
+Änderungen gegenüber 0.9.8 Build 1
 
-Ethernet-Verbindung
-- Die zeitversetzte Freigabe aktiviert bei angeschlossenem Kabel zusätzlich das zuvor verwendete Ethernet-Profil. Nur die NetworkManager-Verwaltung freizugeben hatte im gemeldeten Test nicht für eine Verbindung gereicht.
-- Der zuvor auf eth0 aktive Profilbezug wird gespeichert. Ohne Kabel wird keine DHCP-Verbindung erzwungen. Die automatische Geräteverbindung wird freigegeben; das betroffene aktive Profil wird bei vorhandener eigener Verzögerungsregel wieder auf Autoconnect gestellt.
-- Der Timer bleibt unabhängig von multi-user.target und hält Allsky nicht auf. Die 15 Sekunden bleiben ein Testwert, keine bestätigte Mindestwartezeit.
+SSH-Terminal nach Witty-Update
+- Der Ausgabefilter unterscheidet einzeilige Witty-Kontrollmeldungen des Update-Starters von mehrzeiligen Kontrollblöcken. Die einzeilige Meldung hatte bisher sämtliche folgenden Ausgaben einschließlich Shell-Prompt verborgen.
+- Normale Update-Ausgaben, Eingaben und Antworten bleiben sichtbar. Interne Befehlszeilen und Kontrollmeldungen werden weiterhin nur für die Darstellung ausgeblendet; die Abschlussprüfung wertet sie unverändert aus.
+- Jede neue Terminalverbindung setzt den Filter zurück, damit ein zuvor unvollständiger Kontrollblock die neue Sitzung nicht verbirgt.
 
-Windows-Verbindung
-- Eine laufende SSH-Verbindung wird nicht mehr nach einer einzigen verzögerten Statusantwort getrennt. Die Prüfung erhält zehn Sekunden und toleriert zwei aufeinanderfolgende Fehlschläge bei weiterhin bestehender SSH-Verbindung. Eine erfolgreiche Antwort setzt den Fehlerzähler zurück.
-
-Eigene Allsky-Archive
-- Bei beiden eigenen Archivversionen entfällt das erzwungene Ignorieren vorhandener Python-Pakete und das pauschale Upgrade jeder Abhängigkeit. Pip berücksichtigt weiterhin die Versionsanforderungen und benötigten Abhängigkeiten.
-- Die vorherige Python-Umgebung wird bei passender Python-Version, kompatiblen Wheel-Kennungen und verwendbaren numerischen Modulen als Paketquelle übernommen. Interpreter und alte absolute Aktivierungspfade werden nicht übernommen. Ungeeignete Umgebungen verwenden den normalen Installationsweg.
-- Konsolenprogramme erhalten den neuen Python-Pfad. Fehlende beziehungsweise nicht passende Paketanforderungen werden regulär eingerichtet. Der aktuelle Hersteller-GitHub-Installer wird durch diese Archivoptimierung nicht verändert.
-
-Windows-Oberfläche
-- Nach erfolgreicher Deinstallation werden Softwarestatus und Versionen neu eingelesen, die Fortschrittsanzeige ausgeblendet und das Terminal geleert und eingeklappt. Bei fehlgeschlagener Deinstallation oder Statusabfrage bleibt die Ausgabe sichtbar.
-- Neustartmeldungen werden einmalig verarbeitet. Ein abgelaufener Neustartstatus wird bei weiterhin erreichbarem Pi einschließlich Hinweisfenster zurückgesetzt.
-- Die Raspberry-Suche prüft alle aktiven IPv4-Netze des PCs und ausdrücklich die Hotspot-IP 10.42.0.1. Gefundene Geräte werden über die geprüfte IP verbunden, auch bei gleichzeitig aktivem Ethernet und WLAN.
-
-- Interne Befehlszeilen, Abschlussmarkierungen und WITTY-CONTROL-Blöcke werden im Terminal ausgeblendet. Normale Programmausgaben und Fehler bleiben sichtbar; die interne Auswertung bleibt erhalten.
-
-Prüfgrenzen
-- Beide Archiv-Installationsskripte wurden nach der Anpassung auf Bash-Syntax und entfernte Zwangsinstallationsoptionen geprüft. Der native Windows-Build prüft die Kompilierung. Ethernet-Automatik, Paketübernahme und Kameraaufnahme benötigen den Test am Pi. Der ursprüngliche Bootfehler ist nicht abschließend erklärt.
+Prüfung
+- Der tatsächliche Meldungsablauf des Witty-Starters einschließlich nachfolgender Shell-Eingabe und Antwort wurde an allen Byte-Aufteilungen geprüft. Ein neuer Terminalstart nach einem unvollständigen Kontrollblock wurde ebenfalls geprüft.
+- Die Kompilierung von Windows-Anwendung und Updater wird im nativen Build geprüft. Der Bedienungstest über den Pi-Hotspot bleibt erforderlich.
