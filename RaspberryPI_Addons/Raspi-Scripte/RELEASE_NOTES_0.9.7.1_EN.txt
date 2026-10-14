@@ -1,11 +1,16 @@
-Version 0.9.7.1 · Build 5
-Changes since 0.9.7.1 Build 4
+Version 0.9.7.1 · Build 6
+Changes since 0.9.7.1 Build 5
 
-Windows interface
-- Opening and closing application messages releases mouse capture and restores pointer visibility. Returning to the main window or moving the mouse also restores a pointer left hidden by WebView2. Windows mouse preferences are unchanged.
-- Confirmation dialogs suspend terminal input and automatic focus reclamation in both the application and terminal page. The embedded terminal control is no longer disabled and re-enabled for this purpose.
-- The Witty add-on update button is darkened and disabled when neither a newer version nor a newer build is available. Missing base installation and busy operations still disable it.
+GPS time service at startup
+- The GPS time service waits twenty seconds before automatic synchronization. The user reported a successful restart with this delay after earlier reproducible boot failures. The exact cause remains unproven.
+- Base installation, add-on update and manufacturer installation use the same delayed service definition. The startup timeout includes the extra wait; manual time synchronization remains immediate.
+- The exact startup-test.conf override created during the joint test is removed when the default unit takes over. The delay is not applied twice. Other custom overrides are preserved.
+
+Time configuration
+- Already disabled network time synchronization and persistently masked time services are not configured again.
+- Time-service changes suppress individual automatic systemd reloads and perform one explicit reload only when changes occur. Missing time services remain persistently masked to cover later package installation.
+- Obsolete time-service files are removed only when present. Unchanged state does not cause another service reload.
 
 Diagnostic status
-- The user reported successful startup without Ethernet and a successful restart with Ethernet while the GPS time service was masked. One successful comparison does not prove the cause; the GPS/RTC path remains under investigation.
-- Build 5 does not change GPS time synchronization. Build 4's ten-second reconnection pause and targeted update logic remain included.
+- Logs show boot failures after approximately nine to ten seconds and a successful cold boot with the GPS time service running. Undervoltage was recorded during both successful and failed starts.
+- Manual GPS synchronization succeeded. The startup delay is based on the user's successful test; it does not establish the full cause or rule out power-supply problems.
