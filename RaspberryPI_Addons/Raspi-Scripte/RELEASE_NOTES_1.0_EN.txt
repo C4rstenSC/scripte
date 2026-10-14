@@ -1,0 +1,9 @@
+Version 1.0 · Build 1
+First full release – changes since 0.9.9 Build 4
+
+- Centered Current Witty configuration heading and thin frame around schedule details and deactivate button.
+- Loaded script name from the same connection snapshot as the event times.
+- Startup above shutdown, both timestamps aligned in one shared column as HH:MM      DD.MM.YYYY; minutes until shutdown below.
+- Read schedule data on connection and receive updates after successful homepage activation. Countdown uses the Windows PC clock without additional hardware requests.
+- Retain all corrections from 0.9.9 Build 4.
+- Homepage notifications deliver its fresh schedule snapshot to connected Windows sessions. Refresh only script name, event times and countdown; no additional SSH/hardware requests or reconnection.

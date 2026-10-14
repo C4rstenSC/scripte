@@ -1,5 +1,11 @@
 [
   {
+    "Version": "1.0",
+    "Date": "2026-10-14",
+    "Build": "20261014.1",
+    "Notes": "Version 1.0 · Build 1\nErste Vollversion – Änderungen gegenüber 0.9.9 Build 4\n\n- Mittiger Statusblock mit Überschrift Aktuelle Witty Konfiguration und schmalem Rahmen um Angaben und Zeitplan-deaktivieren-Button.\n- Geladenes Script mit Skriptnamen aus derselben Verbindungsabfrage wie auf der Homepage.\n- Hochfahren steht über Herunterfahren; beide Zeitangaben sind in einer gemeinsamen Spalte exakt untereinander ausgerichtet. Format HH:MM      DD.MM.YYYY. Darunter stehen die Minuten bis zum Shutdown.\n- Zeitplandaten beim Neuverbinden oder nach erfolgreicher Zeitplan-Aktivierung auf der Homepage aktualisieren. Der Countdown läuft lokal mit der Windows-PC-Uhr weiter, ohne zusätzliche Witty-Abfragen.\n- Alle Korrekturen aus 0.9.9 Build 4 bleiben enthalten.\n- Die Homepage benachrichtigt verbundene Windows-Sitzungen nach erfolgreicher Aktivierung mit den frisch eingelesenen Zeitplandaten. Nur Skriptname, Schaltzeiten und Countdown werden aktualisiert; keine zusätzliche SSH-/Witty-Abfrage und kein Neuaufbau der Verbindung.\n"
+  },
+  {
     "Version": "0.9.9",
     "Date": "2026-10-14",
     "Build": "20261014.4",

@@ -1,14 +1,11 @@
-# Witty Add-on 0.9.9
+# Witty Add-on 1.0
 
-Version 0.9.9 · Build 4
-Änderungen gegenüber Build 3
+Version 1.0 · Build 1
+Erste Vollversion – Änderungen gegenüber 0.9.9 Build 4
 
-- Zeitplan und Deaktivieren-Button stehen oben mittig neben den Raspberry-/Witty-Hardwareangaben.
-- Graue Statusdarstellung nur ohne Verbindung beziehungsweise während des Neustarts; ursprüngliche Farben und Stile werden bei Verbindung wiederhergestellt.
-- Homepage-Dienststatus wieder kompakt nebeneinander.
-- Zeitplan-Lesen entfernt keine gespeicherten Skriptnamen. Fehlende Namen werden nur bei eindeutigem Inhaltsvergleich wiederhergestellt; interne schedule.wpi wird nicht als ursprünglicher Name angezeigt. Einmalige lesende Wiederherstellung vom Witty bei fehlender Identität, ohne Zeitplanänderung.
-- Zeitplanwerte weiterhin ausschließlich beim Neuverbinden; Minuten laufen lokal mit der Windows-Uhr weiter. Bei Lesefehlern bleibt ein sichtbarer Hinweis.
-- Homepage: zusätzliche BEGIN-/END-Anzeigezeilen entfernt.
-- Homepage-Dienstaktionen sperren nur ihren eigenen Button, warten nicht auf Witty-Abfragen und übernehmen bestätigte Start-/Stoppergebnisse sofort in den Dienststatus-Cache.
-- Ohne bestätigte Verbindung sind alle Statusbuttons sowie Firmware-/Versions-/Zeitplananzeigen ausgeblendet.
-- Erfolgreiches Witty-Update leert und klappt das Terminal nach Statusabgleich ein und scrollt ganz nach oben. Fehlerausgaben bleiben sichtbar.
+- Mittiger Statusblock mit Überschrift Aktuelle Witty Konfiguration und schmalem Rahmen um Angaben und Zeitplan-deaktivieren-Button.
+- Geladenes Script mit Skriptnamen aus derselben Verbindungsabfrage wie auf der Homepage.
+- Hochfahren steht über Herunterfahren; beide Zeitangaben sind in einer gemeinsamen Spalte exakt untereinander ausgerichtet. Format HH:MM      DD.MM.YYYY. Darunter stehen die Minuten bis zum Shutdown.
+- Zeitplandaten beim Neuverbinden oder nach erfolgreicher Zeitplan-Aktivierung auf der Homepage aktualisieren. Der Countdown läuft lokal mit der Windows-PC-Uhr weiter, ohne zusätzliche Witty-Abfragen.
+- Alle Korrekturen aus 0.9.9 Build 4 bleiben enthalten.
+- Die Homepage benachrichtigt verbundene Windows-Sitzungen nach erfolgreicher Aktivierung mit den frisch eingelesenen Zeitplandaten. Nur Skriptname, Schaltzeiten und Countdown werden aktualisiert; keine zusätzliche SSH-/Witty-Abfrage und kein Neuaufbau der Verbindung.

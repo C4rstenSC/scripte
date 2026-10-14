@@ -1,15 +1,11 @@
-# Raspi-Scripte 0.9.9
+# Raspi-Scripte 1.0
 
-Version 0.9.9 · Build 2
-Änderungen gegenüber 0.9.9 Build 1
+Version 1.0 · Build 1
+Erste Vollversion – Änderungen gegenüber 0.9.9 Build 4
 
-Witty-Zeitplan in der Windows-Statuszeile
-- Bei bestätigter montierter Hardware und installierter passender Hersteller-Software für Witty Pi 3, 4 oder 5 werden Zeitplan und Schalttermine angezeigt. Ohne Witty-Hardware bleibt die Anzeige verborgen.
-- Nächstes Herunterfahren und nächstes Hochfahren stehen untereinander im Format HH:MM      DD.MM.YYYY. Darunter stehen die Minuten bis zum Shutdown.
-- Die Zeitplandaten werden ausschließlich bei erfolgreicher Verbindung beziehungsweise Wiederverbindung gelesen. Der Minuten-Countdown wird anschließend lokal aus der Shutdownzeit und der aktuellen Windows-PC-Uhrzeit berechnet; dafür gibt es keine weiteren SSH- oder Witty-Abfragen.
-- Aktuelle bereits von der Homepage gelesene Werte werden bis zu 30 Sekunden lang wiederverwendet. Falls kein aktueller Cache vorliegt, wird beim Verbinden einmalig der gemeinsame Witty-Status gelesen.
-- Der Button „Zeitplan deaktivieren“ verwendet die gemeinsame Homepage-Backendfunktion. Erst nach bestätigtem Erfolg werden Termine und Countdown deaktiviert; gespeicherte Zeitplandateien bleiben erhalten.
-
-Prüfung
-- Softwaretests prüfen Witty 3/4/5, Hardware- und Installationsprüfung, Datumsformat, lokalen Countdown, inaktive Zeitpläne, erfolgreiche und fehlgeschlagene Deaktivierung sowie Cacheablage und Löschung.
-- Der native Windows-Build prüft die Kompilierung. Die neue Statuszeile und die Schaltzeiten benötigen den Vergleich mit der Homepage am Gerät.
+- Mittiger Statusblock mit Überschrift Aktuelle Witty Konfiguration und schmalem Rahmen um Angaben und Zeitplan-deaktivieren-Button.
+- Geladenes Script mit Skriptnamen aus derselben Verbindungsabfrage wie auf der Homepage.
+- Hochfahren steht über Herunterfahren; beide Zeitangaben sind in einer gemeinsamen Spalte exakt untereinander ausgerichtet. Format HH:MM      DD.MM.YYYY. Darunter stehen die Minuten bis zum Shutdown.
+- Zeitplandaten beim Neuverbinden oder nach erfolgreicher Zeitplan-Aktivierung auf der Homepage aktualisieren. Der Countdown läuft lokal mit der Windows-PC-Uhr weiter, ohne zusätzliche Witty-Abfragen.
+- Alle Korrekturen aus 0.9.9 Build 4 bleiben enthalten.
+- Die Homepage benachrichtigt verbundene Windows-Sitzungen nach erfolgreicher Aktivierung mit den frisch eingelesenen Zeitplandaten. Nur Skriptname, Schaltzeiten und Countdown werden aktualisiert; keine zusätzliche SSH-/Witty-Abfrage und kein Neuaufbau der Verbindung.
