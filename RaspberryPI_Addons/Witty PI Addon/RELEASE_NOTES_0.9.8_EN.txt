@@ -1,11 +1,16 @@
-Version 0.9.8 · Build 2
-Changes since 0.9.8 Build 1
+Version 0.9.8 · Build 3
+Changes since 0.9.8 Build 2
 
-SSH terminal after Witty update
-- Distinguish inline Witty launcher events from multiline control blocks. Inline events previously hid all subsequent output including the shell prompt.
-- Normal update output, keyboard input and shell replies remain visible. Internal commands and control records remain hidden only from rendering; completion handling retains the protocol.
-- Opening a new terminal resets the filter so an incomplete prior block cannot hide the new session.
+Delayed Ethernet release
+- Explicitly bring eth0 administratively UP. Restoring NetworkManager management alone left the reported interface DOWN.
+- Enable autoconnect on the profile remembered by our delay policy so NetworkManager activates it after link negotiation completes.
+- A pending link is no longer reported as an unplugged cable. No additional fixed startup wait is added. Allsky, WURB, Wi-Fi and the hotspot do not wait for Ethernet.
+- The separate Ethernet timer and Build 2 terminal fixes remain unchanged.
+
+Release notes in the update terminal
+- The update launcher emits complete WITTY-CONTROL blocks, preventing older Windows filters from hiding subsequent release notes and update output.
 
 Validation
-- The actual launcher event flow and subsequent shell input/reply were tested across all byte chunk sizes, including reconnect after an incomplete block.
-- Native compilation checks the Windows application and updater. Pi hotspot interaction still requires a device test.
+- Manually bringing the reported Pi interface UP established carrier after about four seconds and then obtained Ethernet address 192.168.178.181.
+- Software tests cover initially DOWN interfaces, pending negotiation, existing connections and profile activation. Automatic behavior on the next boot requires Pi testing.
+- The cause of the separately reported hotspot SSH resets remains unresolved.
