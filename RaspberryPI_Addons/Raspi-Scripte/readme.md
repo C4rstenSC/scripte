@@ -1,16 +1,27 @@
-# Raspi-Scripte 0.9.7.1
+# Raspi-Scripte 0.9.8
 
-Version 0.9.7.1 · Build 7
-Änderungen gegenüber 0.9.7.1 Build 6
+Version 0.9.8 · Build 1
+Änderungen gegenüber 0.9.7.1 Build 7
 
-Ethernet und lokaler Start
-- Beim Raspberry Pi 5 wird Ethernet über einen eigenen Timer frühestens 15 Sekunden nach Bootbeginn und nach den eingeordneten lokalen Startdiensten freigegeben. Der Timer hält multi-user.target nicht auf; Allsky darf davor starten.
-- Ohne Netzwerkkabel wird keine Verbindung mit langer Wartezeit erzwungen. Nach der Freigabe übernimmt NetworkManager wieder die Verwaltung; spätes Einstecken bleibt mit automatisch verbindenden Profilen möglich. WLAN und Hotspot werden nicht verzögert.
-- Der exakt passende manuelle 20-Sekunden-Testdienst wird übernommen und dessen Ethernet-Profil wieder auf automatische Verbindung gestellt. Die laufende SSH-Verbindung wird beim Update nicht getrennt; die neue Regel gilt beim nächsten Boot. Andere Profilentscheidungen bleiben erhalten.
+Ethernet-Verbindung
+- Die zeitversetzte Freigabe aktiviert bei angeschlossenem Kabel zusätzlich das zuvor verwendete Ethernet-Profil. Nur die NetworkManager-Verwaltung freizugeben hatte im gemeldeten Test nicht für eine Verbindung gereicht.
+- Der zuvor auf eth0 aktive Profilbezug wird gespeichert. Ohne Kabel wird keine DHCP-Verbindung erzwungen. Die automatische Geräteverbindung wird freigegeben; das betroffene aktive Profil wird bei vorhandener eigener Verzögerungsregel wieder auf Autoconnect gestellt.
+- Der Timer bleibt unabhängig von multi-user.target und hält Allsky nicht auf. Die 15 Sekunden bleiben ein Testwert, keine bestätigte Mindestwartezeit.
+
+Windows-Verbindung
+- Eine laufende SSH-Verbindung wird nicht mehr nach einer einzigen verzögerten Statusantwort getrennt. Die Prüfung erhält zehn Sekunden und toleriert zwei aufeinanderfolgende Fehlschläge bei weiterhin bestehender SSH-Verbindung. Eine erfolgreiche Antwort setzt den Fehlerzähler zurück.
+
+Eigene Allsky-Archive
+- Bei beiden eigenen Archivversionen entfällt das erzwungene Ignorieren vorhandener Python-Pakete und das pauschale Upgrade jeder Abhängigkeit. Pip berücksichtigt weiterhin die Versionsanforderungen und benötigten Abhängigkeiten.
+- Die vorherige Python-Umgebung wird bei passender Python-Version, kompatiblen Wheel-Kennungen und verwendbaren numerischen Modulen als Paketquelle übernommen. Interpreter und alte absolute Aktivierungspfade werden nicht übernommen. Ungeeignete Umgebungen verwenden den normalen Installationsweg.
+- Konsolenprogramme erhalten den neuen Python-Pfad. Fehlende beziehungsweise nicht passende Paketanforderungen werden regulär eingerichtet. Der aktuelle Hersteller-GitHub-Installer wird durch diese Archivoptimierung nicht verändert.
 
 Windows-Oberfläche
-- Terminal-Größenänderungen übertragen die SSH-Fenstergröße im Hintergrund und bündeln aufeinanderfolgende Änderungen. Ein langsamer SSH-Schreibvorgang blockiert dadurch nicht mehr den UI-Thread beim Verkleinern des Fensters.
-- Auch das Allsky-Auswahlfenster unterbricht Terminal-Eingabe und automatische Fokusübernahme. Inaktive oder durch Dialoge gesperrte Hauptfenster erhalten keinen automatischen Terminal-Fokus; Tastatureingaben bleiben beim Dialog.
+- Nach erfolgreicher Deinstallation werden Softwarestatus und Versionen neu eingelesen, die Fortschrittsanzeige ausgeblendet und das Terminal geleert und eingeklappt. Bei fehlgeschlagener Deinstallation oder Statusabfrage bleibt die Ausgabe sichtbar.
+- Neustartmeldungen werden einmalig verarbeitet. Ein abgelaufener Neustartstatus wird bei weiterhin erreichbarem Pi einschließlich Hinweisfenster zurückgesetzt.
+- Die Raspberry-Suche prüft alle aktiven IPv4-Netze des PCs und ausdrücklich die Hotspot-IP 10.42.0.1. Gefundene Geräte werden über die geprüfte IP verbunden, auch bei gleichzeitig aktivem Ethernet und WLAN.
+
+- Interne Befehlszeilen, Abschlussmarkierungen und WITTY-CONTROL-Blöcke werden im Terminal ausgeblendet. Normale Programmausgaben und Fehler bleiben sichtbar; die interne Auswertung bleibt erhalten.
 
 Prüfgrenzen
-- Der Nutzer bestätigte einen Neustart nach Allsky-Installation mit der bisherigen Ethernet-Verzögerung. Der kürzere Timer und die Windows-Korrekturen benötigen den anschließenden Test am Gerät. Die Ursache des Bootabbruchs und des beobachteten Rahmenblinkens ist weiterhin nicht bewiesen.
+- Beide Archiv-Installationsskripte wurden nach der Anpassung auf Bash-Syntax und entfernte Zwangsinstallationsoptionen geprüft. Der native Windows-Build prüft die Kompilierung. Ethernet-Automatik, Paketübernahme und Kameraaufnahme benötigen den Test am Pi. Der ursprüngliche Bootfehler ist nicht abschließend erklärt.

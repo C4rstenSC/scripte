@@ -1,0 +1,25 @@
+Version 0.9.8 · Build 1
+Changes since 0.9.7.1 Build 7
+
+Ethernet
+- Delayed release now explicitly activates the previously used Ethernet profile when a cable is present. Merely restoring NetworkManager management did not establish the connection in the reported test.
+- The profile previously active on eth0 is remembered. No DHCP attempt is forced without a cable. Device autoconnect is enabled; the active profile's autoconnect is repaired when our earlier delay policy exists.
+- The timer remains independent of multi-user.target and does not hold Allsky startup. Fifteen seconds remains a test value, not a proven minimum delay.
+
+Windows connection
+- An established SSH session survives one delayed probe. Probes allow ten seconds and tolerate two consecutive failures while the SSH client remains connected. Successful replies reset the counter.
+
+Private Allsky archives
+- Both private archive installers stop ignoring installed Python packages and stop upgrading every requirement unconditionally. Pip still resolves version requirements and dependencies.
+- Packages from the previous environment are reused only with matching Python version, supported wheel tags and usable numerical modules. The interpreter and old activation paths are not copied. Unsuitable environments fall back to normal installation.
+- Python console entry points receive the new interpreter path. Missing or incompatible requirements are installed normally. This optimization does not modify the latest upstream GitHub installer.
+
+Windows interface
+- Successful uninstall refreshes software status and versions, hides progress, clears and collapses the terminal. Failed uninstall or status refresh retains diagnostic output.
+- Reboot markers are consumed once. An expired reboot expectation on a reachable Pi clears its status and notice.
+- Discovery scans all active IPv4 networks and explicitly checks hotspot address 10.42.0.1. Connections use the verified address, including simultaneous Ethernet and Wi-Fi.
+
+- Internal command echoes, completion markers and WITTY-CONTROL blocks are hidden from terminal rendering. Normal output and errors remain visible; protocol handling remains active.
+
+Validation limits
+- Both patched archive scripts passed Bash syntax and dependency-command checks. The native Windows build checks compilation. Automatic Ethernet, package reuse and camera operation require Pi testing; the original boot failure is not conclusively explained.
