@@ -1,3 +1,12 @@
+Version 1.0.1 · Build 2
+Änderungen gegenüber Build 1
+
+- Ethernet wird beim Booten nach 30 statt 15 Sekunden freigegeben.
+- Die Freigabe wartet nur auf NetworkManager, nicht mehr auf den Startabschluss von Allsky, WURB, WIRC, GPS- oder Witty-Diensten. Lang laufende Anwendungsstarts können Ethernet dadurch nicht weiter zurückhalten.
+- Gilt für Neuinstallation und Witty-Update; das Windows-Paket enthält denselben aktualisierten Installer.
+- Beim Update wird die bestehende Netzwerkverbindung nicht unterbrochen. Die neue Verzögerung gilt nach dem nächsten regulären Neustart.
+
+
 Version 1.0.1 · Build 1
 
 - Internet-Vorprüfung vor Basisinstallation, Linux-, Witty-, Hersteller-, GPS- und Softwareinstallationen/Updates.

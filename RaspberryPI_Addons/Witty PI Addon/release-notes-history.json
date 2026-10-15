@@ -2,6 +2,12 @@
   {
     "Version": "1.0.1",
     "Date": "2026-10-15",
+    "Build": "20261015.2",
+    "Notes": "Version 1.0.1 · Build 2\nÄnderungen gegenüber Build 1\n\n- Ethernet wird beim Booten nach 30 statt 15 Sekunden freigegeben.\n- Die Freigabe wartet nur auf NetworkManager, nicht mehr auf den Startabschluss von Allsky, WURB, WIRC, GPS- oder Witty-Diensten. Lang laufende Anwendungsstarts können Ethernet dadurch nicht weiter zurückhalten.\n- Gilt für Neuinstallation und Witty-Update; das Windows-Paket enthält denselben aktualisierten Installer.\n- Beim Update wird die bestehende Netzwerkverbindung nicht unterbrochen. Die neue Verzögerung gilt nach dem nächsten regulären Neustart.\n"
+  },
+  {
+    "Version": "1.0.1",
+    "Date": "2026-10-15",
     "Build": "20261015.1",
     "Notes": "Version 1.0.1 · Build 1\n\n- Internet-Vorprüfung vor Basisinstallation, Linux-, Witty-, Hersteller-, GPS- und Softwareinstallationen/Updates.\n- Internet am Windows-PC ODER Raspberry genügt. Sind beide offline, startet keine Installation und kein Update. Hotspot-Verbindung allein gilt nicht als Internetzugang.\n- Ist nur Windows online, lädt der Raspberry Pakete und Abhängigkeiten über eine temporäre Downloadverbindung im bestehenden SSH-Kanal. Windows und SSH müssen bis zum Abschluss aktiv bleiben. HTTPS-Prüfung und Paketprüfsummen bleiben erhalten.\n- Ist nur der Raspberry online, lädt er auch die vom Windows-Programm benötigten Pakete; die Übertragung zurück erfolgt über SFTP. Bei eigenem Internet lädt der Raspberry seine Abhängigkeiten direkt.\n- Temporäre APT-/Proxy-Einstellungen werden nach Erfolg oder Fehler entfernt. Fehler beim Aktualisieren der Paketquellen werden nicht als Erfolg behandelt.\n- Vorprüfung umfasst auch den Backend-Abgleich vor Allsky-/WURB-/WIRC-Aktionen. Deinstallation und lokale Dienstaktionen benötigen kein Internet.\n- Installer nach Programmneustart und manuellem Neuverbinden vollständig zurücksetzen: Fortschritt, Fehlertext, Zeitmessung und alte Abschluss-/Versionsprüfungen. Keine laufenden Pi-Prozesse oder Paketsperren löschen.\n- Flackern des Statusrahmens beim Vergrößern verringern: absolute statt kumulative Größenberechnung, gerundetes Layout und gebündelte Statusanzeige.\n"
   },

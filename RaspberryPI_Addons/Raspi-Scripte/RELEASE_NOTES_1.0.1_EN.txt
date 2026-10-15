@@ -1,10 +1,7 @@
-Version 1.0.1 · Build 1
+Version 1.0.1 · Build 2
+Changes since Build 1
 
-- Check internet access before base installation and Linux, Witty, manufacturer, GPS and software installs/updates.
-- Internet on EITHER Windows OR Raspberry is sufficient. If both are offline, installation/update does not start. A hotspot connection alone is not internet access.
-- With Windows-only internet, route Raspberry packages and dependencies through a temporary download bridge in the existing SSH connection. Keep Windows and SSH active until completion. TLS validation and package checksums remain enabled.
-- With Raspberry-only internet, fetch Windows application packages on Raspberry and transfer them back over SFTP. Raspberry dependencies use its own internet connection when available.
-- Remove temporary APT/proxy settings after success or failure. Package index download failures are treated as errors.
-- Preflight also covers backend synchronisation before Allsky/WURB/WIRC actions. Uninstall and local service actions remain available offline.
-- Fully reset installer UI state on program restart and manual reconnect: progress, error text, elapsed time and old completion/version checks. Do not clear active Raspberry processes or package locks.
-- Reduce status-frame flicker on resize with absolute sizing, layout rounding and consolidated status updates.
+- Release Ethernet 30 seconds after boot instead of 15 seconds.
+- Wait only for NetworkManager, no longer for completion of Allsky, WURB, WIRC, GPS or Witty service startup. Long-running application starts can no longer hold Ethernet back.
+- Applies to new installations and Witty updates; the Windows package bundles the same updated installer.
+- Updating preserves the current network connection. The delay applies after the next normal reboot.
