@@ -1,0 +1,9 @@
+Version 1.0.2 · Build 1
+Changes since 1.0.1 Build 5
+
+- Disable the internal Raspberry Pi 5 RTC during installation and Add-on updates in every GPS mode, explicitly in the global [all] boot section. A changed boot policy requires a reboot.
+- Before the first Allsky service start in each boot, transfer Witty RTC to Linux and verify Witty Pi 5 readback. Failed synchronisation or a difference exceeding ten seconds blocks Allsky startup.
+- Add required startup ordering for Allsky services and its periodic timer. The clock oneshot remains active so normal application restarts do not repeatedly reset the clock.
+- Allsky uses Witty RTC exclusively. Suppress automatic GPS clock and GPS-DST jobs for Allsky; separate installations without Allsky may still use GPS time.
+- New installations, component reinstallations, manufacturer installation and Add-on updates establish the same startup clock path. Do not require unavailable Witty hardware when none is configured.
+- Retain USB mounting and manufacturer installation clock protection from 1.0.1 Build 5.

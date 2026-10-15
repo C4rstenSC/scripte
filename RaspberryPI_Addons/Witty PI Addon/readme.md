@@ -1,10 +1,11 @@
-# Witty Add-on 1.0.1
+# Witty Add-on 1.0.2
 
-Version 1.0.1 · Build 5
+Version 1.0.2 · Build 1
+Änderungen gegenüber 1.0.1 Build 5
 
-- Gemeinsame USB-Mount-Einrichtung für WURB und alle angebotenen Allsky-Versionen. Basis + Allsky ohne WURB installiert ebenfalls pmount und die Mount-Regeln; kein zusätzliches WURB-Repository für Mount-Dateien nötig.
-- USB-Datenträger erscheinen nach WURB-Konvention unter /media/USB-<Gerät>, zum Beispiel /media/USB-sda1. Hotplug, Neustart und bereits eingesteckte Sticks werden berücksichtigt.
-- Ein Witty-Add-on-Update rüstet die USB-Einrichtung auch bei unveränderter vorhandener Allsky-/WURB-Installation nach. Bereits eingehängte Datenträger bleiben unverändert; interne Datenträger und Partitionen ohne unterstütztes Dateisystem werden nicht eingebunden.
-- Allsky-Nachinstallation, Versionswechsel, Neuinstallation und Erststart nach automatischem Installer-Neustart verwenden denselben Mount-Weg.
-- Witty-Pi-5-Herstellerinstallation und Herstellerupdate sichern zuvor Linux-Zeit und Zeitzone. Eine durch die Installation verschobene Uhr wird mit der gesicherten Ausgangszeit plus verstrichener Laufzeit wiederhergestellt; danach wird System → Witty-RTC synchronisiert und geprüft.
-- Keine pauschale Stundenkorrektur und keine neue periodische Zeitsynchronisation. Ausgangspunkt ist die vor der Herstellerinstallation vorhandene Linux-Zeit.
+- Die interne Raspberry-Pi-5-RTC wird bei jeder Installation und beim Add-on-Update deaktiviert, unabhängig vom GPS-Modus. Die Bootkonfiguration erhält die Einstellung ausdrücklich im globalen [all]-Abschnitt. Nach einer Änderung ist ein Neustart erforderlich.
+- Vor dem ersten Start der Allsky-Dienste pro Boot wird die Witty-RTC in die Linux-Systemzeit übernommen und beim Witty Pi 5 zurückgelesen. Bei fehlgeschlagenem Abgleich oder mehr als zehn Sekunden Abweichung startet Allsky nicht mit unbestätigter Zeit.
+- Allsky, Allsky-Periodik und der zugehörige Timer erhalten eine verbindliche Startabhängigkeit zum einmaligen Zeitabgleich. Ein normaler Dienstneustart löst keine wiederholte Uhrzeitänderung aus.
+- Allsky nutzt ausschließlich die Witty-RTC als Zeitquelle. Automatische GPS-Zeitübernahme und GPS-DST-Zeitjobs werden für Allsky unterbunden. GPS als Zeitquelle bleibt für Installationen ohne Allsky separat verfügbar.
+- Nachinstallation, Neuinstallation, Herstellerinstallation und Add-on-Update richten denselben Boot-Zeitpfad ein. Ohne konfigurierte Witty-Hardware wird keine Abhängigkeit auf eine nicht verfügbare Witty-Uhr gesetzt.
+- USB-Mount-Nachrüstung und Zeitschutz der Herstellerinstallation aus 1.0.1 Build 5 bleiben enthalten.
