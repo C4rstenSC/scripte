@@ -1,7 +1,8 @@
-Version 1.0.1 · Build 2
-Changes since Build 1
+Version 1.0.1 · Build 4
 
-- Release Ethernet 30 seconds after boot instead of 15 seconds.
-- Wait only for NetworkManager, no longer for completion of Allsky, WURB, WIRC, GPS or Witty service startup. Long-running application starts can no longer hold Ethernet back.
-- Applies to new installations and Witty updates; the Windows package bundles the same updated installer.
-- Updating preserves the current network connection. The delay applies after the next normal reboot.
+- After reinstalling, compare the internal active schedule.wpi against named WPI scripts, including source files stored only on Witty.
+- Persist and display the original script name on the homepage and in Windows only for one unique content match. Normalise line endings; do not guess between identical scripts.
+- Script listing, reading the active script and the one-time Windows connection query can recover a missing identity. Failed downloads no longer suppress retries for the entire boot.
+- Incomplete downloads cannot establish an identity. Recovery does not activate a schedule or modify switching times.
+- Homepage: highlight the identified active script in green and label its activation button Active; other scripts remain available for activation.
+- Forward a recovered name to connected Windows sessions using existing recent schedule readings without an extra hardware time query.

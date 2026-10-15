@@ -1,7 +1,8 @@
-Version 1.0.1 · Build 2
-Änderungen gegenüber Build 1
+Version 1.0.1 · Build 4
 
-- Ethernet wird beim Booten nach 30 statt 15 Sekunden freigegeben.
-- Die Freigabe wartet nur auf NetworkManager, nicht mehr auf den Startabschluss von Allsky, WURB, WIRC, GPS- oder Witty-Diensten. Lang laufende Anwendungsstarts können Ethernet dadurch nicht weiter zurückhalten.
-- Gilt für Neuinstallation und Witty-Update; das Windows-Paket enthält denselben aktualisierten Installer.
-- Beim Update wird die bestehende Netzwerkverbindung nicht unterbrochen. Die neue Verzögerung gilt nach dem nächsten regulären Neustart.
+- Nach Neuinstallation die aktive interne schedule.wpi mit den benannten WPI-Skripten vergleichen, auch wenn die Quelldateien nur auf dem Witty gespeichert sind.
+- Bei genau einem inhaltsgleichen Treffer den ursprünglichen Skriptnamen speichern und auf Homepage sowie im Windows-Programm anzeigen. Unterschiedliche Zeilenenden werden beim Vergleich berücksichtigt; bei mehreren identischen Skripten wird kein Name geraten.
+- Die Skriptliste, das Lesen des aktiven Skripts und die einmalige Windows-Verbindungsabfrage können eine fehlende Zuordnung wiederherstellen. Fehlgeschlagene Downloads sperren weitere Versuche nicht mehr bis zum nächsten Boot.
+- Unvollständige Downloads führen zu keiner Zuordnung. Die Wiederherstellung aktiviert keinen Zeitplan und ändert dessen Schaltzeiten nicht.
+- Homepage: erkanntes aktives Skript grün markieren; nur sein Aktivieren-Button zeigt Aktiv. Die übrigen Skripte bleiben aktivierbar.
+- Ein wiederhergestellter Name wird mit den bereits gelesenen, noch aktuellen Zeitplandaten an verbundene Windows-Sitzungen weitergegeben; dafür ist keine zusätzliche Zeitabfrage erforderlich.
