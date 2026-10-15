@@ -1,7 +1,6 @@
-Version 1.0.1 · Build 2
-Änderungen gegenüber Build 1
+Version 1.0.1 · Build 3
+Änderungen gegenüber Build 2
 
-- Ethernet wird beim Booten nach 30 statt 15 Sekunden freigegeben.
-- Die Freigabe wartet nur auf NetworkManager, nicht mehr auf den Startabschluss von Allsky, WURB, WIRC, GPS- oder Witty-Diensten. Lang laufende Anwendungsstarts können Ethernet dadurch nicht weiter zurückhalten.
-- Gilt für Neuinstallation und Witty-Update; das Windows-Paket enthält denselben aktualisierten Installer.
-- Beim Update wird die bestehende Netzwerkverbindung nicht unterbrochen. Die neue Verzögerung gilt nach dem nächsten regulären Neustart.
+- Unicode-Fehler beim automatischen Auswerfen der SD-Karte behoben: ungültige Zeichen in Windows-/Treiber-Fehlertexten werden im Diagnoseprotokoll ersetzt.
+- Ein bereits erfolgreich geschriebener oder geprüfter Datenträger wird durch einen Protokollierungsfehler beim Auswerfen nicht mehr als fehlgeschlagener SD-Auftrag gemeldet.
+- Lehnt Windows das Auswerfen ab, bleibt der Hinweis zum sicheren Entfernen über Windows erhalten. Technische Auswerffehler bleiben im Protokoll nachvollziehbar.

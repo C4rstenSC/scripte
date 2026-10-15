@@ -1,7 +1,6 @@
-Version 1.0.1 · Build 2
-Changes since Build 1
+Version 1.0.1 · Build 3
+Changes since Build 2
 
-- Release Ethernet 30 seconds after boot instead of 15 seconds.
-- Wait only for NetworkManager, no longer for completion of Allsky, WURB, WIRC, GPS or Witty service startup. Long-running application starts can no longer hold Ethernet back.
-- Applies to new installations and Witty updates; the Windows package bundles the same updated installer.
-- Updating preserves the current network connection. The delay applies after the next normal reboot.
+- Fix Unicode failures during automatic SD-card ejection: replace malformed characters in Windows/driver error text when writing diagnostics.
+- Logging an ejection error no longer turns a successfully written or verified card into a failed SD job.
+- If Windows rejects ejection, retain the instruction to safely remove the card through Windows and keep technical details in diagnostics.

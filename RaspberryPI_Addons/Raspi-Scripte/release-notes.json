@@ -1,9 +1,9 @@
 {
   "version": "1.0.1",
   "de": [
-    "Version 1.0.1 · Build 2\nÄnderungen gegenüber Build 1\n\n- Ethernet wird beim Booten nach 30 statt 15 Sekunden freigegeben.\n- Die Freigabe wartet nur auf NetworkManager, nicht mehr auf den Startabschluss von Allsky, WURB, WIRC, GPS- oder Witty-Diensten. Lang laufende Anwendungsstarts können Ethernet dadurch nicht weiter zurückhalten.\n- Gilt für Neuinstallation und Witty-Update; das Windows-Paket enthält denselben aktualisierten Installer.\n- Beim Update wird die bestehende Netzwerkverbindung nicht unterbrochen. Die neue Verzögerung gilt nach dem nächsten regulären Neustart.\n"
+    "Version 1.0.1 · Build 3\nÄnderungen gegenüber Build 2\n\n- Unicode-Fehler beim automatischen Auswerfen der SD-Karte behoben: ungültige Zeichen in Windows-/Treiber-Fehlertexten werden im Diagnoseprotokoll ersetzt.\n- Ein bereits erfolgreich geschriebener oder geprüfter Datenträger wird durch einen Protokollierungsfehler beim Auswerfen nicht mehr als fehlgeschlagener SD-Auftrag gemeldet.\n- Lehnt Windows das Auswerfen ab, bleibt der Hinweis zum sicheren Entfernen über Windows erhalten. Technische Auswerffehler bleiben im Protokoll nachvollziehbar.\n"
   ],
   "en-AU": [
-    "Version 1.0.1 · Build 2\nChanges since Build 1\n\n- Release Ethernet 30 seconds after boot instead of 15 seconds.\n- Wait only for NetworkManager, no longer for completion of Allsky, WURB, WIRC, GPS or Witty service startup. Long-running application starts can no longer hold Ethernet back.\n- Applies to new installations and Witty updates; the Windows package bundles the same updated installer.\n- Updating preserves the current network connection. The delay applies after the next normal reboot.\n"
+    "Version 1.0.1 · Build 3\nChanges since Build 2\n\n- Fix Unicode failures during automatic SD-card ejection: replace malformed characters in Windows/driver error text when writing diagnostics.\n- Logging an ejection error no longer turns a successfully written or verified card into a failed SD job.\n- If Windows rejects ejection, retain the instruction to safely remove the card through Windows and keep technical details in diagnostics.\n"
   ]
 }
