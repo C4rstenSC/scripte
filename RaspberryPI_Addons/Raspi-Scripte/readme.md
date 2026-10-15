@@ -1,10 +1,10 @@
 # Raspi-Scripte 1.0.1
 
-Version 1.0.1 · Build 4
+Version 1.0.1 · Build 5
 
-- Nach Neuinstallation die aktive interne schedule.wpi mit den benannten WPI-Skripten vergleichen, auch wenn die Quelldateien nur auf dem Witty gespeichert sind.
-- Bei genau einem inhaltsgleichen Treffer den ursprünglichen Skriptnamen speichern und auf Homepage sowie im Windows-Programm anzeigen. Unterschiedliche Zeilenenden werden beim Vergleich berücksichtigt; bei mehreren identischen Skripten wird kein Name geraten.
-- Die Skriptliste, das Lesen des aktiven Skripts und die einmalige Windows-Verbindungsabfrage können eine fehlende Zuordnung wiederherstellen. Fehlgeschlagene Downloads sperren weitere Versuche nicht mehr bis zum nächsten Boot.
-- Unvollständige Downloads führen zu keiner Zuordnung. Die Wiederherstellung aktiviert keinen Zeitplan und ändert dessen Schaltzeiten nicht.
-- Homepage: erkanntes aktives Skript grün markieren; nur sein Aktivieren-Button zeigt Aktiv. Die übrigen Skripte bleiben aktivierbar.
-- Ein wiederhergestellter Name wird mit den bereits gelesenen, noch aktuellen Zeitplandaten an verbundene Windows-Sitzungen weitergegeben; dafür ist keine zusätzliche Zeitabfrage erforderlich.
+- Gemeinsame USB-Mount-Einrichtung für WURB und alle angebotenen Allsky-Versionen. Basis + Allsky ohne WURB installiert ebenfalls pmount und die Mount-Regeln; kein zusätzliches WURB-Repository für Mount-Dateien nötig.
+- USB-Datenträger erscheinen nach WURB-Konvention unter /media/USB-<Gerät>, zum Beispiel /media/USB-sda1. Hotplug, Neustart und bereits eingesteckte Sticks werden berücksichtigt.
+- Ein Witty-Add-on-Update rüstet die USB-Einrichtung auch bei unveränderter vorhandener Allsky-/WURB-Installation nach. Bereits eingehängte Datenträger bleiben unverändert; interne Datenträger und Partitionen ohne unterstütztes Dateisystem werden nicht eingebunden.
+- Allsky-Nachinstallation, Versionswechsel, Neuinstallation und Erststart nach automatischem Installer-Neustart verwenden denselben Mount-Weg.
+- Witty-Pi-5-Herstellerinstallation und Herstellerupdate sichern zuvor Linux-Zeit und Zeitzone. Eine durch die Installation verschobene Uhr wird mit der gesicherten Ausgangszeit plus verstrichener Laufzeit wiederhergestellt; danach wird System → Witty-RTC synchronisiert und geprüft.
+- Keine pauschale Stundenkorrektur und keine neue periodische Zeitsynchronisation. Ausgangspunkt ist die vor der Herstellerinstallation vorhandene Linux-Zeit.

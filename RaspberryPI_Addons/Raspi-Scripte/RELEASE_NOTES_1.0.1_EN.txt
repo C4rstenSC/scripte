@@ -1,8 +1,8 @@
-Version 1.0.1 · Build 4
+Version 1.0.1 · Build 5
 
-- After reinstalling, compare the internal active schedule.wpi against named WPI scripts, including source files stored only on Witty.
-- Persist and display the original script name on the homepage and in Windows only for one unique content match. Normalise line endings; do not guess between identical scripts.
-- Script listing, reading the active script and the one-time Windows connection query can recover a missing identity. Failed downloads no longer suppress retries for the entire boot.
-- Incomplete downloads cannot establish an identity. Recovery does not activate a schedule or modify switching times.
-- Homepage: highlight the identified active script in green and label its activation button Active; other scripts remain available for activation.
-- Forward a recovered name to connected Windows sessions using existing recent schedule readings without an extra hardware time query.
+- Shared USB mounting for WURB and all offered Allsky versions. Base + Allsky without WURB also installs pmount and mount rules, without downloading a WURB repository just for those files.
+- USB data filesystems use the existing WURB /media/USB-<device> convention, including hotplug, reboot and already connected sticks.
+- Witty Add-on updates retrofit the mount integration even for unchanged existing Allsky/WURB installations. Already mounted storage remains untouched; internal disks and unsupported filesystems are skipped.
+- Allsky add-on installation, version changes, reinstallation and first boot after an immediate installer reboot use the same mount integration.
+- Witty Pi 5 manufacturer installation/update preserves the pre-install Linux epoch and timezone, restores installation-induced clock jumps using monotonic elapsed time, then synchronises and verifies the Witty RTC.
+- No fixed hour correction or new periodic clock service; the source is the Linux time present before manufacturer installation.
