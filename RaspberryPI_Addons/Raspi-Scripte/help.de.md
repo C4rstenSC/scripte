@@ -1,6 +1,6 @@
-# Raspi-Scripte 0.9.3 – Bedienungsanleitung
+# Raspi-Scripte 1.0.1 – Bedienungsanleitung
 
-Stand: 13.10.2026
+Stand: 15.10.2026
 
 ## Verbinden und lokale Raspberries suchen
 
@@ -156,3 +156,8 @@ Ohne Basisinstallation bleiben die Micro-SD-Optionen verfügbar. Einzelne Softwa
 ## Raspberry Pi 3B/3B+ und Witty Pi 3
 
 WURB und WIRC unterstützen Pi 3B/3B+ mit Raspberry Pi OS Lite Bookworm oder Trixie in 64 Bit. Witty Pi 3 verwendet MCU 0x69 und DS3231-RTC 0x68 sowie klassische WPI-Skripte. GPIO 4 darf nicht durch einen 1-Wire-Sensor belegt sein. Die Herstellerinstallation prüft diesen Konflikt und richtet I2C/UART ein; der abschließende Neustart ist erforderlich. Witty Pi 3 und 4 werden auf Pi 3/4 angeboten, Witty Pi 5 auf Pi 4/5. Hardware und Herstellerinstallation werden getrennt angezeigt. Allsky wird ausschließlich auf Raspberry Pi 5 angeboten.
+
+
+## Internet bei Hotspot-Verbindung
+
+Installation und Update prüfen die Downloadquellen vor dem Start. Internet am Windows-PC oder am Raspberry genügt; ohne Internet auf beiden Geräten startet kein Update. Ist nur Windows online, lädt der Raspberry Pakete über den vorhandenen SSH-Kanal durch Windows. PC und Verbindung bis zum Abschluss aktiv lassen. Ist nur der Raspberry online, lädt dieser auch die Windows-Pakete und überträgt sie per SFTP zurück. Neue Verbindungen übernehmen keine alte Installer-Fehleranzeige. Laufende Pi-Prozesse und Paketsperren werden dabei nicht gelöscht.

@@ -1,4 +1,4 @@
-# Raspi-Scripte 0.9.3 – User guide
+# Raspi-Scripte 1.0.1 – User guide
 
 Updated: 13 October 2026
 
@@ -90,3 +90,8 @@ Micro-SD maintenance remains available without base installation. Individual sof
 ## Raspberry Pi 3B/3B+ and Witty Pi 3
 
 WURB and WIRC support Pi 3B/3B+ with 64-bit Raspberry Pi OS Lite Bookworm or Trixie. Witty Pi 3 uses MCU 0x69, DS3231 RTC 0x68 and classic WPI scripts. GPIO 4 must not be used by a 1-Wire sensor. Manufacturer installation checks this conflict, configures I2C/UART and requires the final reboot. Witty Pi 3/4 are offered on Pi 3/4, and Witty Pi 5 on Pi 4/5. Hardware and manufacturer installation are reported separately. Allsky is offered only on Raspberry Pi 5.
+
+
+## Internet while connected to the hotspot
+
+Install/update checks its download sources before starting. Internet on Windows or Raspberry is sufficient. When both are offline, updates are blocked. With Windows-only internet, Raspberry downloads through the existing SSH connection; keep the PC and connection active. With Raspberry-only internet, Raspberry also fetches Windows packages and transfers them over SFTP. Reconnecting clears stale installer UI state without clearing running Pi processes or package locks.
