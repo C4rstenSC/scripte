@@ -1,11 +1,17 @@
-# Raspi-Scripte 1.0.2
+# Raspi-Scripte 1.0.3
 
-Version 1.0.2 · Build 1
-Änderungen gegenüber 1.0.1 Build 5
+Version 1.0.3 · Build 1
+Änderungen gegenüber 1.0.2
 
-- Die interne Raspberry-Pi-5-RTC wird bei jeder Installation und beim Add-on-Update deaktiviert, unabhängig vom GPS-Modus. Die Bootkonfiguration erhält die Einstellung ausdrücklich im globalen [all]-Abschnitt. Nach einer Änderung ist ein Neustart erforderlich.
-- Vor dem ersten Start der Allsky-Dienste pro Boot wird die Witty-RTC in die Linux-Systemzeit übernommen und beim Witty Pi 5 zurückgelesen. Bei fehlgeschlagenem Abgleich oder mehr als zehn Sekunden Abweichung startet Allsky nicht mit unbestätigter Zeit.
-- Allsky, Allsky-Periodik und der zugehörige Timer erhalten eine verbindliche Startabhängigkeit zum einmaligen Zeitabgleich. Ein normaler Dienstneustart löst keine wiederholte Uhrzeitänderung aus.
-- Allsky nutzt ausschließlich die Witty-RTC als Zeitquelle. Automatische GPS-Zeitübernahme und GPS-DST-Zeitjobs werden für Allsky unterbunden. GPS als Zeitquelle bleibt für Installationen ohne Allsky separat verfügbar.
-- Nachinstallation, Neuinstallation, Herstellerinstallation und Add-on-Update richten denselben Boot-Zeitpfad ein. Ohne konfigurierte Witty-Hardware wird keine Abhängigkeit auf eine nicht verfügbare Witty-Uhr gesetzt.
-- USB-Mount-Nachrüstung und Zeitschutz der Herstellerinstallation aus 1.0.1 Build 5 bleiben enthalten.
+Zeitprüfung im Windows-Programm
+- Vor Installation und Updates werden Linux-Systemzeit und die vorhandene Witty-RTC geprüft. Bei einer Abweichung fragt das Programm ausdrücklich nach, ob die angezeigte Windows-PC-Zeit übernommen werden soll.
+- Nach Zustimmung wird Linux gesetzt und die vorhandene Witty-RTC über den Herstellerpfad synchronisiert und zurückgelesen. Ohne Zustimmung oder bei fehlgeschlagener Prüfung wird der Vorgang abgebrochen. GPS wird dafür nicht verwendet.
+
+Firmware-Download
+- Neben einer verfügbaren neuen Witty-Pi-5-Firmware erscheint ein Downloadbutton mit Speicherdialog für den Windows-PC. Die Original-UF2-Datei für HAT+ wird über die Internetverbindung des PCs vom Hersteller geladen.
+- Dateigröße, UF2-Struktur und vorhandene Hersteller-Prüfsumme werden vor dem Speichern geprüft. Eine vorhandene Zieldatei wird erst nach erfolgreicher Prüfung ersetzt. Die Mini-Firmware wird nicht als HAT+-Firmware angeboten.
+
+Homepage-Datumsanzeige
+- Zeitplantermine und laufende Uhren verwenden explizite numerische Datumsfelder. Unvollständige oder ungültige Termine werden nicht mit vom Browser ergänzten Monats- oder Jahreswerten angezeigt. Die Geräte-Zeitzone bleibt maßgeblich.
+- Der Datumsparser wird mit einer Versionskennung geladen; Datumsfelder sind von automatischer Browser-Übersetzung ausgenommen. Gültige vom Gerät gemeldete Jahreszahlen werden unverändert angezeigt.
+- Pi-RTC-Deaktivierung, Allsky-Zeitabgleich aus der Witty-RTC und USB-Mount-Nachrüstung aus 1.0.2 bleiben enthalten.

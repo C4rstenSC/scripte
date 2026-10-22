@@ -1,0 +1,15 @@
+Version 1.0.3 · Build 1
+Changes since 1.0.2
+
+Windows clock preflight
+- Check Linux and the installed Witty RTC before installations and updates. A mismatch prompts before copying the displayed Windows time.
+- After approval, set Linux and synchronize/read back the installed Witty RTC through its manufacturer backend. Declining or failed verification cancels the operation. GPS is not used.
+
+Firmware download
+- A download button beside newer Witty Pi 5 firmware opens a Windows save dialog. Download the original HAT+ UF2 through the PC's internet connection.
+- Verify length, UF2 structure and the manufacturer's checksum when present before replacing the destination. Mini firmware is excluded from HAT+ selection.
+
+Homepage dates
+- Parse schedule dates and running clocks from explicit numeric fields. Never let the browser infer missing month or year values. Preserve device wall-clock values and valid reported years.
+- Load the date parser with a versioned URL and exclude date fields from automatic browser translation.
+- Retain Pi RTC disabling, the Witty-only Allsky startup clock path and USB mounting changes from 1.0.2.
