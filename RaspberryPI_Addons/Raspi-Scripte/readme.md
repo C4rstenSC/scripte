@@ -1,17 +1,15 @@
-# Raspi-Scripte 1.0.3
+# Raspi-Scripte 1.0.4
 
-Version 1.0.3 · Build 1
-Änderungen gegenüber 1.0.2
+Version 1.0.4 · Build 1
+Änderungen gegenüber 1.0.3
 
-Zeitprüfung im Windows-Programm
-- Vor Installation und Updates werden Linux-Systemzeit und die vorhandene Witty-RTC geprüft. Bei einer Abweichung fragt das Programm ausdrücklich nach, ob die angezeigte Windows-PC-Zeit übernommen werden soll.
-- Nach Zustimmung wird Linux gesetzt und die vorhandene Witty-RTC über den Herstellerpfad synchronisiert und zurückgelesen. Ohne Zustimmung oder bei fehlgeschlagener Prüfung wird der Vorgang abgebrochen. GPS wird dafür nicht verwendet.
+Zeiten im Windows-Programm
+- Zwischen „Aktuelle Witty Konfiguration“ und den Neustart-/Herunterfahren-Buttons werden Raspberry-Systemzeit und Witty-Pi-Zeit mit Datum und Sekunden angezeigt.
+- Unter den Uhrzeiten werden – sofern vorhanden – GPS-Position mit Breitengrad/Längengrad und die verwendeten/sichtbaren Satelliten aus der Homepage angezeigt. Fehlende Angaben werden nicht als Null dargestellt.
+- Eine gültige GPS-Zeit wird als dritte Zeile eingeblendet. Ohne verfügbaren GPS-Zeitwert bleibt diese Zeile verborgen.
+- Die Werte werden aus derselben Homepage-Schnittstelle wie die Geräte-Webseite gelesen. Die Zeitzone des Raspberry bleibt erhalten; Windows-PC-Zeit und Windows-Zeitzone ersetzen die Gerätewerte nicht.
+- Die Sekunden laufen zwischen den Abfragen mit einer monotonen Zeitmessung weiter. Messzeitstempel gleichen das Alter der einzelnen Quellen aus. Raspberry-/Witty-Werte werden regelmäßig neu gelesen, GPS wird unabhängig abgefragt.
+- Fehlgeschlagene oder veraltete Messwerte werden nicht unbegrenzt weitergezählt. Beim Trennen, Schließen eines Host-Tabs und geplanten Neustart werden die Abfragen beendet. Nach Wiederverbindung wird die Anzeige neu eingelesen.
+- Jede Raspberry-Verbindung besitzt eigene Uhrwerte und Abfragen. Die Beschriftung folgt der gewählten Sprache.
 
-Firmware-Download
-- Neben einer verfügbaren neuen Witty-Pi-5-Firmware erscheint ein Downloadbutton mit Speicherdialog für den Windows-PC. Die Original-UF2-Datei für HAT+ wird über die Internetverbindung des PCs vom Hersteller geladen.
-- Dateigröße, UF2-Struktur und vorhandene Hersteller-Prüfsumme werden vor dem Speichern geprüft. Eine vorhandene Zieldatei wird erst nach erfolgreicher Prüfung ersetzt. Die Mini-Firmware wird nicht als HAT+-Firmware angeboten.
-
-Homepage-Datumsanzeige
-- Zeitplantermine und laufende Uhren verwenden explizite numerische Datumsfelder. Unvollständige oder ungültige Termine werden nicht mit vom Browser ergänzten Monats- oder Jahreswerten angezeigt. Die Geräte-Zeitzone bleibt maßgeblich.
-- Der Datumsparser wird mit einer Versionskennung geladen; Datumsfelder sind von automatischer Browser-Übersetzung ausgenommen. Gültige vom Gerät gemeldete Jahreszahlen werden unverändert angezeigt.
-- Pi-RTC-Deaktivierung, Allsky-Zeitabgleich aus der Witty-RTC und USB-Mount-Nachrüstung aus 1.0.2 bleiben enthalten.
+Die Funktionen aus 1.0.3 – PC-Zeitabgleich, Original-Firmwaredownload und Datumsparser – bleiben enthalten.
