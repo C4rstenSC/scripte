@@ -1,13 +1,12 @@
-Version 1.0.4 · Build 1
-Changes since 1.0.3
+Version 1.0.4 · Build 2
+Changes since 1.0.4 Build 1
 
-Windows device clocks
-- Show Raspberry system time and Witty Pi time, including date and seconds, between the current Witty configuration and the restart/shutdown buttons.
-- Below the clocks, show homepage GPS latitude/longitude and used/visible satellite counts when available. Missing values are not replaced with zero.
-- Show a third row only while valid GPS time is available.
-- Read the same homepage API as the device web interface. Preserve the device timezone; never replace readings with Windows time or timezone.
-- Advance seconds between polls using monotonic elapsed time and compensate individual measurement ages. Refresh Raspberry/Witty readings periodically and GPS independently.
-- Invalidate failed or stale readings. Stop polling on disconnect, host-tab closure and planned reboot; restart with fresh readings after reconnection.
-- Each host retains its own readings and polling. Labels follow the selected language.
+Restored homepage status
+- Initialize the date parser directly in the page so status rendering no longer depends on loading an additional script.
+- Install witty-time.js and serve it through its explicit web asset route, fixing the “window.WittyTime is undefined” error.
+- Exercise the installed page through its HTTP server in WebKit with simulated Raspberry Pi 4 / Witty Pi 5 firmware 1.5 readings: system, Witty and GPS clocks, position, satellites and schedule.
 
-Retain the 1.0.3 PC clock preflight, original firmware download and explicit date parser.
+Windows layout
+- Place device clocks, position and satellites to the left of the current Witty configuration. Move both blocks left beside device information while keeping power buttons on the right.
+
+This correction leaves GPS configuration and the running WURB GPS path unchanged. A firmware update is not required to fix this JavaScript error.
