@@ -1,14 +1,10 @@
-# Witty Add-on 1.0.4
+# Witty Add-on 1.0.5
 
-Version 1.0.4 · Build 2
-Änderungen gegenüber 1.0.4 Build 1
+Version 1.0.5 · Build 1
+Änderungen gegenüber 1.0.4 Build 2
 
-Homepage-Status wiederhergestellt
-- Der Datumsparser wird beim Seitenaufbau direkt initialisiert. Die Statusanzeige hängt damit nicht mehr vom erfolgreichen Nachladen einer zusätzlichen JavaScript-Datei ab.
-- Der Installer übernimmt witty-time.js jetzt ebenfalls, und der Webserver liefert die Datei über die passende Asset-Route aus. Damit ist die Meldung „window.WittyTime is undefined“ behoben.
-- Vollständiger Seitenaufruf über den installierten Webserver in WebKit geprüft: Linux-/Witty-/GPS-Zeit, Position, Satelliten und Zeitplan werden mit nachgebildeten Statusdaten eines Raspberry Pi 4 mit Witty Pi 5 und Firmware 1.5 angezeigt.
+Zeitprüfung vor Installation und Update
+- Im Popup steht die Windows-PC-Zeit jetzt ganz oben. Nach einer Leerzeile folgen die Raspberry-Systemzeit und direkt darunter die Witty-Pi-Zeit.
+- Die Reihenfolge wurde für Deutsch und Englisch angepasst. Zeitwerte, Zeitabgleich, Bestätigungsfrage und Abbruchverhalten bleiben unverändert.
 
-Windows-Anordnung
-- Die Gerätezeiten mit Position und Satelliten stehen jetzt links neben „Aktuelle Witty Konfiguration“. Beide Blöcke rücken neben die Geräteinformationen nach links; Neustart und Herunterfahren bleiben rechts.
-
-GPS-Konfiguration und laufender WURB-Datenweg werden durch diese Korrektur nicht geändert. Ein Firmware-Update ist für die Behebung des JavaScript-Fehlers nicht erforderlich.
+Die Homepage-Korrektur und die nach links gerückte Anordnung aus 1.0.4 Build 2 sind enthalten.
