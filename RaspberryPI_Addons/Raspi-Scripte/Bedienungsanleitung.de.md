@@ -161,3 +161,8 @@ WURB und WIRC unterstützen Pi 3B/3B+ mit Raspberry Pi OS Lite Bookworm oder Tri
 ## Internet bei Hotspot-Verbindung
 
 Installation und Update prüfen die Downloadquellen vor dem Start. Internet am Windows-PC oder am Raspberry genügt; ohne Internet auf beiden Geräten startet kein Update. Ist nur Windows online, lädt der Raspberry Pakete über den vorhandenen SSH-Kanal durch Windows. PC und Verbindung bis zum Abschluss aktiv lassen. Ist nur der Raspberry online, lädt dieser auch die Windows-Pakete und überträgt sie per SFTP zurück. Neue Verbindungen übernehmen keine alte Installer-Fehleranzeige. Laufende Pi-Prozesse und Paketsperren werden dabei nicht gelöscht.
+
+
+## Allsky: Aufnahmetag und feste Zeitzone
+
+Ganz oben auf **Allsky - Setup** stehen zwei getrennte Schalter mit Status. **Aufnahmetag ab 12:00 Uhr** ordnet neue Morgenbilder vor 12 Uhr dem Vortag zu. Vorhandene Dateien werden nicht umsortiert. Ausschalten stellt den Allsky-Standard wieder her. **Festen Witty-UTC-Offset übernehmen** verwendet den auf der Witty-Homepage eingestellten festen Offset für Allsky ohne Sommer-/Winterzeit; dafür muss dort der feste Zeitmodus aktiv sein. Nach Änderung des Witty-Offsets erneut übernehmen. Ausschalten verwendet die Systemzeitzone. Laufende Allsky-Dienste werden kurz neu gestartet, gestoppte bleiben gestoppt. Bei der Windows-Zeitprüfung können Sie **Ohne Zeitabgleich fortfahren** wählen; nur **Abbrechen** beendet den Vorgang.

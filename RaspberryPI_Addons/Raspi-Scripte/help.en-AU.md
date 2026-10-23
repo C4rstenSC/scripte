@@ -95,3 +95,8 @@ WURB and WIRC support Pi 3B/3B+ with 64-bit Raspberry Pi OS Lite Bookworm or Tri
 ## Internet while connected to the hotspot
 
 Install/update checks its download sources before starting. Internet on Windows or Raspberry is sufficient. When both are offline, updates are blocked. With Windows-only internet, Raspberry downloads through the existing SSH connection; keep the PC and connection active. With Raspberry-only internet, Raspberry also fetches Windows packages and transfers them over SFTP. Reconnecting clears stale installer UI state without clearing running Pi processes or package locks.
+
+
+## Allsky: observing day and fixed time zone
+
+Two separate switches and their status appear at the top of **Allsky - Setup**. **Observing days starting at 12:00 noon** assigns new morning captures before noon to the previous day. Existing files are not reorganized. Disable it to restore Allsky defaults. **Apply fixed Witty UTC offset** uses the fixed offset selected on the Witty homepage for Allsky without daylight saving time; fixed time mode must be enabled there. Reapply after changing the Witty offset. Disable to use the system time zone. Running Allsky services are briefly restarted; stopped services remain stopped. At the Windows clock check, choose **Continue without synchronization** to attempt the update with existing clocks; only **Cancel** aborts.
