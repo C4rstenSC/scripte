@@ -1,7 +1,7 @@
 # Witty Add-on 1.0.5
 
-Version 1.0.5 · Build 3
-Änderungen gegenüber 1.0.5 Build 2
+Version 1.0.5 · Build 4
+Änderungen gegenüber 1.0.5 Build 3
 
-- Zeitanzeige noch etwas weiter nach rechts verschoben und den Abstand zur Witty-Konfiguration vergrößert.
-- GPS-Satelliten direkt unterhalb der GPS-Position anzeigen: verwendet / sichtbar. Bei konfiguriertem GPS bleibt die Zeile sichtbar und zeigt bei fehlenden oder veralteten Daten „Nicht verfügbar“.
+- Bei installiertem GPS bleiben GPS-Zeit, Position und Satelliten sichtbar. Fehlende oder veraltete Daten werden als „Nicht verfügbar“ angezeigt. Ohne installiertes GPS werden alle drei GPS-Zeilen ausgeblendet.
+- Enthält die weiter nach rechts gerückte Zeitanzeige, den größeren Abstand zur Witty-Konfiguration und die Satellitenzeile direkt unter der Position.

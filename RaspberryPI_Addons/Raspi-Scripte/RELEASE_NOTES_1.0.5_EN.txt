@@ -1,5 +1,5 @@
-Version 1.0.5 · Build 3
-Changes since 1.0.5 Build 2
+Version 1.0.5 · Build 4
+Changes since 1.0.5 Build 3
 
-- Move device clocks slightly further right and increase spacing before Witty configuration.
-- Display GPS satellites directly below GPS position: used / visible. Keep the row visible for configured GPS and show Unavailable for missing or stale readings.
+- Keep GPS time, position and satellites visible when GPS is installed; show Unavailable for missing or stale readings. Hide all three rows when GPS is not installed.
+- Includes the adjusted clock/configuration spacing and satellite row directly below position.

@@ -1,9 +1,9 @@
 {
   "version": "1.0.5",
   "de": [
-    "Version 1.0.5 · Build 3\nÄnderungen gegenüber 1.0.5 Build 2\n\n- Zeitanzeige noch etwas weiter nach rechts verschoben und den Abstand zur Witty-Konfiguration vergrößert.\n- GPS-Satelliten direkt unterhalb der GPS-Position anzeigen: verwendet / sichtbar. Bei konfiguriertem GPS bleibt die Zeile sichtbar und zeigt bei fehlenden oder veralteten Daten „Nicht verfügbar“.\n"
+    "Version 1.0.5 · Build 4\nÄnderungen gegenüber 1.0.5 Build 3\n\n- Bei installiertem GPS bleiben GPS-Zeit, Position und Satelliten sichtbar. Fehlende oder veraltete Daten werden als „Nicht verfügbar“ angezeigt. Ohne installiertes GPS werden alle drei GPS-Zeilen ausgeblendet.\n- Enthält die weiter nach rechts gerückte Zeitanzeige, den größeren Abstand zur Witty-Konfiguration und die Satellitenzeile direkt unter der Position.\n"
   ],
   "en-AU": [
-    "Version 1.0.5 · Build 3\nChanges since 1.0.5 Build 2\n\n- Move device clocks slightly further right and increase spacing before Witty configuration.\n- Display GPS satellites directly below GPS position: used / visible. Keep the row visible for configured GPS and show Unavailable for missing or stale readings.\n"
+    "Version 1.0.5 · Build 4\nChanges since 1.0.5 Build 3\n\n- Keep GPS time, position and satellites visible when GPS is installed; show Unavailable for missing or stale readings. Hide all three rows when GPS is not installed.\n- Includes the adjusted clock/configuration spacing and satellite row directly below position.\n"
   ]
 }
