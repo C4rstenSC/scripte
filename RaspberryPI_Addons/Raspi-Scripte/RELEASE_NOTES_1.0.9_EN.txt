@@ -1,0 +1,17 @@
+Version 1.0.9 · Build 1
+
+Allsky: image folders and Witty time mode
+- Clear on/off labels with an example: 23 Oct, 5 pm to 24 Oct, 8 am → all new images in folder 20261023.
+- When enabled, observing days run from noon until just before noon the next day, including daylight-saving transition days. Existing images are not moved.
+- The second switch follows the time mode selected on Witty: fixed UTC offset without daylight saving, or the selected named zone and its daylight-saving rules. GPS coordinates do not select another time mode.
+- Witty time-mode changes also apply to Allsky while following is enabled. Only running Allsky services are restarted.
+
+Windows: GPS display
+- Read satellite counts from checked NMEA GGA/GSV via gpsd when JSON SKY is absent. GPS time and position remain independent.
+- Preserve still-fresh GPS readings through short data/network gaps; explicit fix loss and expired samples are hidden.
+- Update position and satellite readings separately; shorter status polling avoids unnecessary display gaps.
+- Fixed-width time/GPS frame keeps the Witty configuration in place when GPS position is missing.
+- Read GitHub version and build together from one release metadata file.
+
+Validation
+- Automated folder, both time-mode, bilingual wording, delayed satellite and NMEA checksum tests. Not tested on physical Raspberry Pi hardware.

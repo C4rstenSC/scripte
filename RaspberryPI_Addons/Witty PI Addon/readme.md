@@ -1,22 +1,19 @@
-# Witty Add-on 1.0.8
+# Witty Add-on 1.0.9
 
-Version 1.0.8 · Build 2
+Version 1.0.9 · Build 1
 
-Zeitprüfung bei Installation und Update
-- Drei Möglichkeiten bei abweichenden Zeiten: Zeit abgleichen und fortfahren; ohne Zeitabgleich fortfahren; abbrechen. Ohne Zeitabgleich wird das Update mit den vorhandenen Zeiten versucht. Die feste Zeitzone bleibt erhalten.
+Allsky: Bilderordner und Witty-Zeitmodus
+- Verständliche Ein-/Aus-Anzeigen mit Beispiel: 23.10., 17 Uhr bis 24.10., 8 Uhr → alle neuen Bilder im Ordner 20261023.
+- Bei eingeschalteter Ordnerregel beginnt der Aufnahmetag um 12 Uhr mittags und endet vor 12 Uhr am Folgetag, auch an Tagen mit Zeitumstellung. Vorhandene Bilder werden nicht verschoben.
+- Der zweite Schalter übernimmt den auf Witty gewählten Zeitmodus: feste UTC-Abweichung ohne Sommer-/Winterzeit oder die gewählte Zeitzone mit deren Sommer-/Winterzeitregeln. Die GPS-Position wählt keinen anderen Zeitmodus.
+- Änderungen des Witty-Zeitmodus werden bei eingeschalteter Übernahme auch für Allsky angewendet. Nur laufende Allsky-Dienste werden dazu neu gestartet.
 
-Allsky: Aufnahmetag und feste Zeitzone
-- Ganz oben auf Allsky - Setup stehen zwei getrennte Zeilen mit Button und aktuellem Status, auf Deutsch und Englisch.
-- Optional alle neuen Aufnahmen nach der Mittagsgrenze 12:00 zuordnen. Morgenaufnahmen vor 12:00 gehören dadurch zum Ordner des Vortags. Ausschalten stellt die bisherige Allsky-Zuordnung wieder her. Vorhandene Dateien werden nicht verändert.
-- Optional den bereits auf der Witty-Homepage gewählten festen UTC-Offset für den Allsky-Aufnahmeprozess übernehmen, etwa UTC+10:00 ohne Sommer-/Winterzeit. Ausschalten verwendet wieder die Systemzeitzone. Ein geänderter Witty-Offset kann erneut übernommen werden.
-- Laufende Allsky-Dienste werden zur Übernahme kurz neu gestartet; gestoppte Dienste bleiben gestoppt. Bei einem fehlgeschlagenen Neustart werden die vorherigen Einstellungen wiederhergestellt. Die Mittagsanpassung wird nach Allsky-Updates beim Dienststart erneut angewendet; unbekannte Quellformate werden nicht blind verändert.
-- Keine Änderung an Systemzeit, RTC oder echten Standortkoordinaten durch die Allsky-Schalter. Eine Änderung der Längengrade als Zeitzonen-Umgehung wird nicht vorgenommen.
+Windows: GPS-Anzeige
+- Satellitenzahlen zusätzlich aus geprüften NMEA-GGA/GSV-Daten über gpsd lesen, wenn JSON-SKY-Daten fehlen. GPS-Zeit und Position bleiben unabhängig davon.
+- Letzte noch aktuelle GPS-Werte bei kurzen Daten-/Verbindungslücken erhalten; ausdrücklich gemeldeter Fixverlust und veraltete Messwerte werden ausgeblendet.
+- Position und Satellitenwerte getrennt aktualisieren; kürzere Statusabfrage verhindert unnötige Anzeigelücken.
+- Feste Breite des Zeit-/GPS-Rahmens: Die Witty-Konfiguration springt bei fehlender GPS-Position nicht mehr seitlich.
+- GitHub-Version und Buildnummer gemeinsam aus einer Versionsdatei lesen.
 
 Prüfung
-- Automatisierte Tests für Mittags-/Monats-/Jahres-/Schaltjahresgrenzen, feste positive und negative UTC-Offsets, Rücknahme nach Fehlern und Deutsch/Englisch im Browser. Windows-Anwendung und Updater lokal gebaut. Physischer Raspberry-Pi-Test steht noch aus.
-
-GPS-Satellitenanzeige (Build 2)
-- GPS-Abfrage wartet auf verzögert eintreffende SKY-Satellitendaten, auch bei laufenden Positionsmeldungen.
-- Die allgemeine Windows-Statusabfrage überschreibt keine aktuellen Satellitenwerte mehr.
-- WURB-Bridge ergänzt eine fehlende Satellitenzahl in gültigen GGA-Fixes aus frischen GPSD-SKY-Daten; echte vorhandene Werte und ungültige Fixes bleiben erhalten.
-- Regressionstests mit verzögerten Satellitendaten, parallelen GPS-Abfragen und GGA-Prüfsummen bestanden. Raspberry-Pi-Hardwaretest steht aus.
+- Automatisierte Tests für Ordnerzuordnung, beide Zeitmodi, deutsche/englische Texte, verzögerte Satellitendaten und NMEA-Prüfsummen. Kein Test an physischer Raspberry-Pi-Hardware.
