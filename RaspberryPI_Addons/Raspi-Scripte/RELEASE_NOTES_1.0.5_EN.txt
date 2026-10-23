@@ -1,8 +1,5 @@
-Version 1.0.5 · Build 1
-Changes since 1.0.4 Build 2
+Version 1.0.5 · Build 2
+Changes since 1.0.5 Build 1
 
-Clock check before installation/update
-- Place Windows PC time first in the popup. After a blank line show Raspberry system time, followed immediately by Witty Pi time.
-- Apply the same order in German and English. Time values, synchronization, confirmation and cancellation behavior are unchanged.
-
-Includes the restored homepage and left-aligned clock/configuration layout from 1.0.4 Build 2.
+- Move device clocks/GPS and Current Witty configuration together to the right to leave space above the firmware download button. Clocks remain to the left of Witty configuration.
+- Includes the homepage fix and clock dialog order: Windows time, blank line, Raspberry system time, Witty Pi time.

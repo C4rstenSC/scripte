@@ -1,9 +1,9 @@
 {
   "version": "1.0.5",
   "de": [
-    "Version 1.0.5 · Build 1\nÄnderungen gegenüber 1.0.4 Build 2\n\nZeitprüfung vor Installation und Update\n- Im Popup steht die Windows-PC-Zeit jetzt ganz oben. Nach einer Leerzeile folgen die Raspberry-Systemzeit und direkt darunter die Witty-Pi-Zeit.\n- Die Reihenfolge wurde für Deutsch und Englisch angepasst. Zeitwerte, Zeitabgleich, Bestätigungsfrage und Abbruchverhalten bleiben unverändert.\n\nDie Homepage-Korrektur und die nach links gerückte Anordnung aus 1.0.4 Build 2 sind enthalten.\n"
+    "Version 1.0.5 · Build 2\nÄnderungen gegenüber 1.0.5 Build 1\n\n- Zeitanzeige/GPS und Aktuelle Witty Konfiguration gemeinsam weiter nach rechts verschoben, damit sie oberhalb des Firmware-Downloadbuttons Platz lassen. Die Zeiten stehen weiterhin links neben der Witty-Konfiguration.\n- Enthält die Homepage-Korrektur und die Popup-Reihenfolge: Windows-Zeit, Leerzeile, Raspberry-Systemzeit, Witty-Pi-Zeit.\n"
   ],
   "en-AU": [
-    "Version 1.0.5 · Build 1\nChanges since 1.0.4 Build 2\n\nClock check before installation/update\n- Place Windows PC time first in the popup. After a blank line show Raspberry system time, followed immediately by Witty Pi time.\n- Apply the same order in German and English. Time values, synchronization, confirmation and cancellation behavior are unchanged.\n\nIncludes the restored homepage and left-aligned clock/configuration layout from 1.0.4 Build 2.\n"
+    "Version 1.0.5 · Build 2\nChanges since 1.0.5 Build 1\n\n- Move device clocks/GPS and Current Witty configuration together to the right to leave space above the firmware download button. Clocks remain to the left of Witty configuration.\n- Includes the homepage fix and clock dialog order: Windows time, blank line, Raspberry system time, Witty Pi time.\n"
   ]
 }
