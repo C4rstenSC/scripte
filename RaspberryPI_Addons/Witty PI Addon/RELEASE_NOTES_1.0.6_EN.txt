@@ -1,0 +1,6 @@
+Version 1.0.6 · Build 1
+Changes since 1.0.5
+
+- Move device clocks slightly further right and increase spacing before Witty configuration.
+- Show satellite counts (used / visible) directly below GPS position.
+- Keep GPS time, position and satellites visible when GPS is installed; show Unavailable for missing or stale data. Hide all GPS rows when GPS is not installed.
