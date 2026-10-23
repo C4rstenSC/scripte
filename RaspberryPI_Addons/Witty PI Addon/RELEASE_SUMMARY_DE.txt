@@ -1,3 +1,15 @@
+Version 1.0.7 · Build 2
+Änderungen gegenüber 1.0.7 Build 1
+
+Browser-Tabs und Seitenüberschrift
+- Den tatsächlichen Hostnamen und Einsatzzweck im Tab anzeigen, auch bei Zugriff über eine IP-Adresse: beispielsweise Wurb-n4 - BAT-Detector oder Allsky-n1 - Cloud Images. Die gemeinsame Navigation setzt diese Bezeichnung auch auf den verknüpften WURB-/WIRC-/Allsky-Seiten.
+- Die Add-on-Seite heißt entsprechend dem erkannten Witty-Modell Witty Pi 3/4/5 Webpage Addon. Deutsch und Englisch geprüft.
+
+RTC-Zeitzone
+- Vorhandene GPS-Koordinaten weiterhin zur Zeitzonenermittlung verwenden, auch beim Pi 4 mit Witty Pi 5. Schnelle Statusantworten ohne GPS-Felder dürfen die bereits ermittelte Zeitzone nicht mehr durch GPS-Position noch nicht verfügbar ersetzen.
+- Fehlgeschlagene Standortabfragen dürfen erneut versucht werden. Zeitzonenhinweis und Sprachwechsel geprüft: Berlin (MESZ) beziehungsweise Berlin (CEST). Die gewählte Zeiteinstellung und die USB-/GPS-Konfiguration bleiben unverändert.
+
+
 Version 1.0.7 · Build 1
 Änderungen gegenüber 1.0.6 Build 2
 

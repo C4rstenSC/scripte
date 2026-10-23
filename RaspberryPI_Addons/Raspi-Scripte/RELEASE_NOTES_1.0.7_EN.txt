@@ -1,15 +1,10 @@
-Version 1.0.7 · Build 1
-Changes since 1.0.6 Build 2
+Version 1.0.7 · Build 2
+Changes since 1.0.7 Build 1
 
-GPS satellites
-- On Pi 4 with USB GPS, read visible satellite counts from GSV messages in the existing WURB reader. No second USB reader or receiver/gpsd reconfiguration.
-- Avoid counting multipart and multiple-signal GSV reports twice. Reject invalid checksums and stale counts; retain unknown when no current GSV report exists.
-- Keep Pi 5 USB/Waveshare on the existing gpsd path. Test parallel requests, GPS and current display with simulated device data.
+Browser tabs and page heading
+- Use the actual device hostname and purpose, including access by IP address: for example Wurb-n4 - BAT-Detector or Allsky-n1 - Cloud Images. Apply the same identity to linked WURB/WIRC/Allsky tabs via shared navigation.
+- Name the Add-on page Witty Pi 3/4/5 Webpage Addon according to detected hardware. Verify German and English.
 
-Times and GPS position
-- Add a matching frame and heading, consistent font and size, aligned value columns, and three nonbreaking spaces after the Raspberry system-time label.
-- On Pi 5 show the internal RTC directly below system time: its own advancing clock when active, Disabled when disabled, or Unavailable for missing readings. Hide this additional RTC row on Pi 4.
-- Software checks passed; no new physical Raspberry hardware test.
-
-Installation and update
-- Add a centered Open Witty homepage button that opens the connected Raspberry Add-on in the default browser.
+RTC time zone
+- Keep using available GPS coordinates for time-zone detection on Pi 4 with Witty Pi 5. Quick status responses without GPS fields no longer overwrite an established zone with GPS position is not available yet.
+- Retry failed coordinate lookups. Verify the hint and language changes: Berlin (MESZ) / Berlin (CEST). Keep the selected time mode and USB/GPS configuration.

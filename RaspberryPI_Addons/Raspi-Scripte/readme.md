@@ -1,17 +1,12 @@
 # Raspi-Scripte 1.0.7
 
-Version 1.0.7 · Build 1
-Änderungen gegenüber 1.0.6 Build 2
+Version 1.0.7 · Build 2
+Änderungen gegenüber 1.0.7 Build 1
 
-GPS-Satelliten
-- Auf Raspberry Pi 4 mit USB-GPS zusätzlich sichtbare Satelliten aus den GSV-Meldungen des vorhandenen WURB-Lesers auslesen. Kein zweiter USB-Leser und keine Änderung der Geräte- oder gpsd-Konfiguration.
-- Mehrteilige GSV-Meldungen und mehrere Signalarten nicht doppelt zählen; veraltete Werte und fehlerhafte Prüfsummen verwerfen. Ohne aktuelle GSV-Daten bleibt die Zahl unbekannt.
-- Raspberry-Pi-5-Pfad mit USB und Waveshare bleibt bei gpsd. Parallele Abfragen sowie GPS- und Stromanzeige wurden mit simulierten Gerätedaten getestet.
+Browser-Tabs und Seitenüberschrift
+- Den tatsächlichen Hostnamen und Einsatzzweck im Tab anzeigen, auch bei Zugriff über eine IP-Adresse: beispielsweise Wurb-n4 - BAT-Detector oder Allsky-n1 - Cloud Images. Die gemeinsame Navigation setzt diese Bezeichnung auch auf den verknüpften WURB-/WIRC-/Allsky-Seiten.
+- Die Add-on-Seite heißt entsprechend dem erkannten Witty-Modell Witty Pi 3/4/5 Webpage Addon. Deutsch und Englisch geprüft.
 
-Zeiten und GPS Position
-- Gemeinsamer Rahmen mit Überschrift im Stil der Witty-Konfiguration. Einheitliche Schriftgröße und Schriftart sowie automatisch ausgerichtete Wertespalten. Drei geschützte Leerzeichen hinter Raspberry-Systemzeit.
-- Beim Pi 5 die interne RTC direkt unter der Systemzeit anzeigen. Bei aktiver RTC ihre eigene Zeit sekundengenau fortschreiben, bei deaktivierter RTC „Deaktiviert“ anzeigen. Bei fehlenden Daten „Nicht verfügbar“; beim Pi 4 keine zusätzliche RTC-Zeile.
-- Softwaretests bestanden; kein neuer Hardwaretest am Raspberry durchgeführt.
-
-Installation und Update
-- Mittiger Button „Zur Witty Homepage“ öffnet die Add-on-Homepage des verbundenen Raspberry im Standardbrowser.
+RTC-Zeitzone
+- Vorhandene GPS-Koordinaten weiterhin zur Zeitzonenermittlung verwenden, auch beim Pi 4 mit Witty Pi 5. Schnelle Statusantworten ohne GPS-Felder dürfen die bereits ermittelte Zeitzone nicht mehr durch GPS-Position noch nicht verfügbar ersetzen.
+- Fehlgeschlagene Standortabfragen dürfen erneut versucht werden. Zeitzonenhinweis und Sprachwechsel geprüft: Berlin (MESZ) beziehungsweise Berlin (CEST). Die gewählte Zeiteinstellung und die USB-/GPS-Konfiguration bleiben unverändert.
