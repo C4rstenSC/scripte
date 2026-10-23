@@ -1,6 +1,6 @@
 # Witty Add-on 1.0.9
 
-Version 1.0.9 · Build 1
+Version 1.0.9 · Build 2
 
 Allsky: Bilderordner und Witty-Zeitmodus
 - Verständliche Ein-/Aus-Anzeigen mit Beispiel: 23.10., 17 Uhr bis 24.10., 8 Uhr → alle neuen Bilder im Ordner 20261023.
@@ -17,3 +17,9 @@ Windows: GPS-Anzeige
 
 Prüfung
 - Automatisierte Tests für Ordnerzuordnung, beide Zeitmodi, deutsche/englische Texte, verzögerte Satellitendaten und NMEA-Prüfsummen. Kein Test an physischer Raspberry-Pi-Hardware.
+
+Ergänzungen in Build 2
+- Verwendete und sichtbare Satelliten getrennt aktualisieren: Ein Datensatz ohne sichtbare Anzahl löscht die letzte noch aktuelle Anzahl nicht mehr.
+- Zusätzlich zuletzt gemeldete GPSD-SKY-Daten abfragen und deren Alter anhand der GPS-Zeit prüfen. Veraltete Werte werden weiterhin ausgeblendet.
+- Auf Allsky - Setup: Ein und Witty Add-on grün und fett; Aus und Allsky-Standard rot und fett. Nur die Statuswörter werden hervorgehoben.
+- Beide Regeln werden direkt im Allsky-Code eingerichtet und nach Allsky-Neuinstallation, Update sowie Dienststart aus der gespeicherten Auswahl wiederhergestellt. Die Witty-Zeitvorgabe gilt auch bei anderer GPS-Position.

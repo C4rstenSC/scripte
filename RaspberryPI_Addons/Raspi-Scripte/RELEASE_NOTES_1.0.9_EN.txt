@@ -1,4 +1,4 @@
-Version 1.0.9 · Build 1
+Version 1.0.9 · Build 2
 
 Allsky: image folders and Witty time mode
 - Clear on/off labels with an example: 23 Oct, 5 pm to 24 Oct, 8 am → all new images in folder 20261023.
@@ -15,3 +15,9 @@ Windows: GPS display
 
 Validation
 - Automated folder, both time-mode, bilingual wording, delayed satellite and NMEA checksum tests. Not tested on physical Raspberry Pi hardware.
+
+Build 2 additions
+- Update used and visible satellite counts separately: a report missing the visible count no longer erases a still-fresh reading.
+- Also request GPSD cached SKY data and validate sample age against receiver time. Stale readings remain hidden.
+- Allsky Setup: On and Witty Add-on are green and bold; Off and Allsky default are red and bold. Only status labels are highlighted.
+- Both rules are applied directly to Allsky code and restored from the saved selection after Allsky installation, updates and service starts. The selected Witty timezone remains in effect when GPS location changes.
