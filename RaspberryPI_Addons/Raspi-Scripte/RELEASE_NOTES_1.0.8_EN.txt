@@ -1,4 +1,4 @@
-Version 1.0.8 · Build 1
+Version 1.0.8 · Build 2
 
 Clock check before installation and updates
 - Three choices when clocks differ: synchronize and continue; continue without synchronization; cancel. Skipping synchronization attempts the update using the existing clocks. The fixed time zone is retained.
@@ -8,7 +8,13 @@ Allsky: observing day and fixed time zone
 - Optionally assign all new captures to observing days starting at 12:00 noon. Morning captures before noon then belong to the previous day's folder. Disabling restores Allsky's original assignment. Existing files are not changed.
 - Optionally apply the fixed UTC offset already selected on the Witty homepage to Allsky's capture process, for example UTC+10:00 without daylight saving time. Disabling returns to the system time zone. A changed Witty offset can be reapplied.
 - Running Allsky services are briefly restarted to apply changes; stopped services stay stopped. A failed restart restores the previous configuration. The noon adjustment is reapplied at service start after Allsky updates; unrecognized source layouts are not blindly modified.
-- No changes to GPS access, WURB, WIRC, the system clock, RTC or actual location coordinates. Longitude is not changed as a time-zone workaround.
+- Allsky switches do not change the system clock, RTC or actual location coordinates. Longitude is not changed as a time-zone workaround.
 
 Validation
 - Automated tests cover noon/month/year/leap-year boundaries, positive and negative fixed UTC offsets, rollback after failures and German/English browser behavior. Windows application and updater built locally. Physical Raspberry Pi testing remains outstanding.
+
+GPS satellite display (Build 2)
+- GPS polling waits for delayed SKY satellite data across repeated position messages.
+- General Windows status polling no longer overwrites current satellite values.
+- WURB bridge fills a missing count in valid GGA fixes from fresh GPSD SKY data; existing counts and invalid fixes are preserved.
+- Delayed satellite, parallel GPS polling and GGA checksum regression tests passed. Raspberry Pi hardware testing remains outstanding.

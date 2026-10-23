@@ -1,12 +1,22 @@
-# Witty Add-on 1.0.7
+# Witty Add-on 1.0.8
 
-Version 1.0.7 · Build 2
-Änderungen gegenüber 1.0.7 Build 1
+Version 1.0.8 · Build 2
 
-Browser-Tabs und Seitenüberschrift
-- Den tatsächlichen Hostnamen und Einsatzzweck im Tab anzeigen, auch bei Zugriff über eine IP-Adresse: beispielsweise Wurb-n4 - BAT-Detector oder Allsky-n1 - Cloud Images. Die gemeinsame Navigation setzt diese Bezeichnung auch auf den verknüpften WURB-/WIRC-/Allsky-Seiten.
-- Die Add-on-Seite heißt entsprechend dem erkannten Witty-Modell Witty Pi 3/4/5 Webpage Addon. Deutsch und Englisch geprüft.
+Zeitprüfung bei Installation und Update
+- Drei Möglichkeiten bei abweichenden Zeiten: Zeit abgleichen und fortfahren; ohne Zeitabgleich fortfahren; abbrechen. Ohne Zeitabgleich wird das Update mit den vorhandenen Zeiten versucht. Die feste Zeitzone bleibt erhalten.
 
-RTC-Zeitzone
-- Vorhandene GPS-Koordinaten weiterhin zur Zeitzonenermittlung verwenden, auch beim Pi 4 mit Witty Pi 5. Schnelle Statusantworten ohne GPS-Felder dürfen die bereits ermittelte Zeitzone nicht mehr durch GPS-Position noch nicht verfügbar ersetzen.
-- Fehlgeschlagene Standortabfragen dürfen erneut versucht werden. Zeitzonenhinweis und Sprachwechsel geprüft: Berlin (MESZ) beziehungsweise Berlin (CEST). Die gewählte Zeiteinstellung und die USB-/GPS-Konfiguration bleiben unverändert.
+Allsky: Aufnahmetag und feste Zeitzone
+- Ganz oben auf Allsky - Setup stehen zwei getrennte Zeilen mit Button und aktuellem Status, auf Deutsch und Englisch.
+- Optional alle neuen Aufnahmen nach der Mittagsgrenze 12:00 zuordnen. Morgenaufnahmen vor 12:00 gehören dadurch zum Ordner des Vortags. Ausschalten stellt die bisherige Allsky-Zuordnung wieder her. Vorhandene Dateien werden nicht verändert.
+- Optional den bereits auf der Witty-Homepage gewählten festen UTC-Offset für den Allsky-Aufnahmeprozess übernehmen, etwa UTC+10:00 ohne Sommer-/Winterzeit. Ausschalten verwendet wieder die Systemzeitzone. Ein geänderter Witty-Offset kann erneut übernommen werden.
+- Laufende Allsky-Dienste werden zur Übernahme kurz neu gestartet; gestoppte Dienste bleiben gestoppt. Bei einem fehlgeschlagenen Neustart werden die vorherigen Einstellungen wiederhergestellt. Die Mittagsanpassung wird nach Allsky-Updates beim Dienststart erneut angewendet; unbekannte Quellformate werden nicht blind verändert.
+- Keine Änderung an Systemzeit, RTC oder echten Standortkoordinaten durch die Allsky-Schalter. Eine Änderung der Längengrade als Zeitzonen-Umgehung wird nicht vorgenommen.
+
+Prüfung
+- Automatisierte Tests für Mittags-/Monats-/Jahres-/Schaltjahresgrenzen, feste positive und negative UTC-Offsets, Rücknahme nach Fehlern und Deutsch/Englisch im Browser. Windows-Anwendung und Updater lokal gebaut. Physischer Raspberry-Pi-Test steht noch aus.
+
+GPS-Satellitenanzeige (Build 2)
+- GPS-Abfrage wartet auf verzögert eintreffende SKY-Satellitendaten, auch bei laufenden Positionsmeldungen.
+- Die allgemeine Windows-Statusabfrage überschreibt keine aktuellen Satellitenwerte mehr.
+- WURB-Bridge ergänzt eine fehlende Satellitenzahl in gültigen GGA-Fixes aus frischen GPSD-SKY-Daten; echte vorhandene Werte und ungültige Fixes bleiben erhalten.
+- Regressionstests mit verzögerten Satellitendaten, parallelen GPS-Abfragen und GGA-Prüfsummen bestanden. Raspberry-Pi-Hardwaretest steht aus.
