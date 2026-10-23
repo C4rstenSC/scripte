@@ -1,6 +1,8 @@
-Version 1.0.6 · Build 1
-Changes since 1.0.5
+Version 1.0.6 · Build 2
+Changes since 1.0.6 Build 1
 
-- Move device clocks slightly further right and increase spacing before Witty configuration.
-- Show satellite counts (used / visible) directly below GPS position.
-- Keep GPS time, position and satellites visible when GPS is installed; show Unavailable for missing or stale data. Hide all GPS rows when GPS is not installed.
+Raspberry Pi 4 with USB GPS and WURB
+- Display actual receiver UTC instead of the Raspberry system clock. Missing receiver time stays Unavailable and cannot trigger GPS synchronization.
+- Add a receiver-status API using WURBs existing GPS reader for time, coordinates and used satellites. Keep USB device selection, gpsd configuration and existing serial processing unchanged.
+- The existing GPS boot synchronization starts the WURB service in the background and activates its reader without a browser. Synchronize Linux and Witty RTC after a valid fix using the existing transaction; preserve the Allsky exception.
+- Reuse one reader across status requests and later browser startup. Reject stale fixes and compensate receiver sample age.
