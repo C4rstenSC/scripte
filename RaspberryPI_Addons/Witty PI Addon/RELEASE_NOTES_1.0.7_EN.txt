@@ -1,0 +1,15 @@
+Version 1.0.7 · Build 1
+Changes since 1.0.6 Build 2
+
+GPS satellites
+- On Pi 4 with USB GPS, read visible satellite counts from GSV messages in the existing WURB reader. No second USB reader or receiver/gpsd reconfiguration.
+- Avoid counting multipart and multiple-signal GSV reports twice. Reject invalid checksums and stale counts; retain unknown when no current GSV report exists.
+- Keep Pi 5 USB/Waveshare on the existing gpsd path. Test parallel requests, GPS and current display with simulated device data.
+
+Times and GPS position
+- Add a matching frame and heading, consistent font and size, aligned value columns, and three nonbreaking spaces after the Raspberry system-time label.
+- On Pi 5 show the internal RTC directly below system time: its own advancing clock when active, Disabled when disabled, or Unavailable for missing readings. Hide this additional RTC row on Pi 4.
+- Software checks passed; no new physical Raspberry hardware test.
+
+Installation and update
+- Add a centered Open Witty homepage button that opens the connected Raspberry Add-on in the default browser.
