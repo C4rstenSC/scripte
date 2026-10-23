@@ -1,5 +1,5 @@
-Version 1.0.5 · Build 2
-Changes since 1.0.5 Build 1
+Version 1.0.5 · Build 3
+Changes since 1.0.5 Build 2
 
-- Move device clocks/GPS and Current Witty configuration together to the right to leave space above the firmware download button. Clocks remain to the left of Witty configuration.
-- Includes the homepage fix and clock dialog order: Windows time, blank line, Raspberry system time, Witty Pi time.
+- Move device clocks slightly further right and increase spacing before Witty configuration.
+- Display GPS satellites directly below GPS position: used / visible. Keep the row visible for configured GPS and show Unavailable for missing or stale readings.
