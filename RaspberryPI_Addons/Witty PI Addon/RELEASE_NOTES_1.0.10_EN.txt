@@ -1,0 +1,20 @@
+Version 1.0.10 · Build 2
+
+Allsky: real capture state and one consistent time basis
+- With Witty time following enabled, capture programs and the WebUI resolve the same Allsky-local solar engine. Real coordinates and the selected solar angle still determine DAY/NIGHT.
+- Solar state and transitions use absolute UTC timestamps. The selected fixed UTC offset or explicit named timezone controls display time; coordinates cannot select a different daylight-saving rule.
+- Correct sunwait UTC day boundaries, fractional-hour offsets and per-event daylight-saving conversion. Original solar formulae remain unchanged.
+- PHP receives current state and the next real transition together, without blindly moving an expired clock string to tomorrow.
+- Bound the capture program's disabled-mode sleep to 60 seconds while Witty following is active, then recheck real DAY/NIGHT instead of sleeping for an erroneous 23 hours.
+- Build and validate local programs before deployment; preserve existing camera files if compilation fails. Reapply after installation/updates; retain the separate Allsky Standard option.
+- Keep the noon-to-noon folder policy in the chosen Witty time basis. Do not change existing images, true coordinates, exposure settings or the system clock.
+
+Verification
+- 95 Allsky tests: 94 passed, one optional Playwright browser test skipped; five satellite regression tests passed.
+- Includes 1,680 timezone comparisons, Australian DST transitions, fractional offsets, dusk boundaries, midnight, year/leap boundaries, PHP and extracted real Allsky C++ control functions.
+- At 19:00 fixed UTC+10, 33.73304S / 151.09081E and angle -6: NIGHT, followed by morning rather than the next evening.
+- Not tested on the affected Pi. An incorrect actual UTC clock cannot be repaired without a trustworthy time reference.
+
+After updating
+- Restore actual camera longitude if 135E was used as a temporary workaround.
+- First application rebuilds existing Allsky camera programs locally on the Pi and may take several minutes.
