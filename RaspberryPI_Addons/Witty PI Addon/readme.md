@@ -1,25 +1,16 @@
-# Witty Add-on 1.0.9
+# Witty Add-on 1.0.9.1
 
-Version 1.0.9 · Build 2
+Version 1.0.9.1 · Build 1
 
-Allsky: Bilderordner und Witty-Zeitmodus
-- Verständliche Ein-/Aus-Anzeigen mit Beispiel: 23.10., 17 Uhr bis 24.10., 8 Uhr → alle neuen Bilder im Ordner 20261023.
-- Bei eingeschalteter Ordnerregel beginnt der Aufnahmetag um 12 Uhr mittags und endet vor 12 Uhr am Folgetag, auch an Tagen mit Zeitumstellung. Vorhandene Bilder werden nicht verschoben.
-- Der zweite Schalter übernimmt den auf Witty gewählten Zeitmodus: feste UTC-Abweichung ohne Sommer-/Winterzeit oder die gewählte Zeitzone mit deren Sommer-/Winterzeitregeln. Die GPS-Position wählt keinen anderen Zeitmodus.
-- Änderungen des Witty-Zeitmodus werden bei eingeschalteter Übernahme auch für Allsky angewendet. Nur laufende Allsky-Dienste werden dazu neu gestartet.
+Allsky: Zeitbasis für Aufnahme und Countdown angleichen
+- Die Allsky-Webseite verwendet bei eingeschalteter Witty-Zeitübernahme jetzt denselben Zeitmodus wie die Aufnahmedienste und sunwait.
+- Feste UTC-Offsets werden in PHP ausdrücklich als feste Abweichung verarbeitet. Die eigene Zone Witty/FixedOffset muss PHP dafür nicht kennen; eine alte PHP-Sommerzeitzone wird nicht mehr ersatzweise verwendet.
+- Der Aufruf von sunwait aus der Webseite erhält denselben UTC-Offset bzw. dieselbe gewählte Zeitzone. Countdown, Umschaltuhrzeit und Sonnenzustand verwenden damit dieselbe Zeitbasis.
+- Falls vorhanden, wird auch allskyserver.service in die Zeitvorgabe einbezogen. Zuvor gestoppte Dienste bleiben gestoppt.
+- Nach Witty-Update, Allsky-Neuinstallation oder Allsky-Update wird die PHP-Korrektur zusammen mit den gespeicherten Ordner-/Zeitregeln wieder eingerichtet. Beim Ausschalten der Witty-Zeitübernahme gilt wieder die bisherige Allsky-Webseitenregel.
+- Keine pauschale Stundenverschiebung und keine Änderung der GPS-Koordinaten oder Systemuhr. Einen vorübergehend auf 135 Grad Ost verschobenen Längengrad bitte wieder auf den tatsächlichen Kamerastandort zurückstellen.
 
-Windows: GPS-Anzeige
-- Satellitenzahlen zusätzlich aus geprüften NMEA-GGA/GSV-Daten über gpsd lesen, wenn JSON-SKY-Daten fehlen. GPS-Zeit und Position bleiben unabhängig davon.
-- Letzte noch aktuelle GPS-Werte bei kurzen Daten-/Verbindungslücken erhalten; ausdrücklich gemeldeter Fixverlust und veraltete Messwerte werden ausgeblendet.
-- Position und Satellitenwerte getrennt aktualisieren; kürzere Statusabfrage verhindert unnötige Anzeigelücken.
-- Feste Breite des Zeit-/GPS-Rahmens: Die Witty-Konfiguration springt bei fehlender GPS-Position nicht mehr seitlich.
-- GitHub-Version und Buildnummer gemeinsam aus einer Versionsdatei lesen.
-
-Prüfung
-- Automatisierte Tests für Ordnerzuordnung, beide Zeitmodi, deutsche/englische Texte, verzögerte Satellitendaten und NMEA-Prüfsummen. Kein Test an physischer Raspberry-Pi-Hardware.
-
-Ergänzungen in Build 2
-- Verwendete und sichtbare Satelliten getrennt aktualisieren: Ein Datensatz ohne sichtbare Anzahl löscht die letzte noch aktuelle Anzahl nicht mehr.
-- Zusätzlich zuletzt gemeldete GPSD-SKY-Daten abfragen und deren Alter anhand der GPS-Zeit prüfen. Veraltete Werte werden weiterhin ausgeblendet.
-- Auf Allsky - Setup: Ein und Witty Add-on grün und fett; Aus und Allsky-Standard rot und fett. Nur die Statuswörter werden hervorgehoben.
-- Beide Regeln werden direkt im Allsky-Code eingerichtet und nach Allsky-Neuinstallation, Update sowie Dienststart aus der gespeicherten Auswahl wiederhergestellt. Die Witty-Zeitvorgabe gilt auch bei anderer GPS-Position.
+Geprüfter Fehlerfall
+- 24.10.2026, 33.73304S / 151.09081E, Angle -6, fester Offset UTC+10: Umschaltzeit etwa 18:40 Uhr. Um 16:46 Uhr zeigt der korrigierte Countdown 1h 54m statt 54m.
+- Echte PHP-/sunwait-Tests mit eingefrorenem Zeitpunkt, unterschiedlichen PHP-Standardzeitzonen, festen positiven/negativen UTC-Offsets und automatischer Sommer-/Winterzeit; zusätzlich Wiederherstellung und Rücknahme bei Fehlern geprüft.
+- Kein Test auf dem betroffenen Raspberry Pi. Eine falsch laufende UTC-Systemuhr wird durch dieses Update nicht automatisch verstellt.

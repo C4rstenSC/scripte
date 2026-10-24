@@ -1,0 +1,14 @@
+Version 1.0.9.1 · Build 1
+
+Allsky: align capture and webpage countdown timezones
+- When following the Witty time mode, the Allsky PHP countdown now uses the same timezone as capture services and sunwait.
+- PHP receives an explicit fixed offset, avoiding fallback to an old daylight-saving timezone when Witty/FixedOffset is not a PHP timezone identifier.
+- Webpage sunwait subprocesses receive the same selected fixed offset or named timezone. The transition time, countdown and solar state share one time basis.
+- Include allskyserver.service when present; previously stopped services remain stopped.
+- Reapply the PHP correction and saved capture policies after Witty updates, Allsky installation and Allsky updates. Selecting Allsky Standard restores the original webpage timezone branch.
+- No arbitrary one-hour shift, coordinate modification or system-clock adjustment. Restore the actual camera longitude if 135 degrees east was used as a temporary workaround.
+
+Regression verification
+- 24 October 2026, 33.73304S / 151.09081E, angle -6, fixed UTC+10: dusk approximately 18:40. At 16:46 the corrected countdown is 1h 54m instead of 54m.
+- Real PHP/sunwait tests with frozen instants, conflicting PHP defaults, positive/negative fixed offsets, named zones with daylight saving, installation repair and rollback.
+- Not tested on the affected Raspberry Pi. An incorrect underlying UTC system clock is not automatically adjusted.
