@@ -1,0 +1,7 @@
+Version 1.0.13.2 – pin the maintenance date implementation
+
+- Reproduce the reported timestamp failure with BusyBox 1.37.0 and verify GNU date accepts the same stored filesystem timestamp.
+- Bundle GNU date and its dependencies as /sbin/witty-sd-date. Use its absolute path for all maintenance timestamps, parsing and RAM clock alignment. Verify its image presence and log its implementation version.
+- Use process-local UTC and C locale with absolute epochs; preserve configured UTC offset, DST choice and Witty RTC. Historical filesystem timestamps are not the current system time.
+- Test PATH shadowing, UTC, positive/negative and fractional offsets, Berlin/Sydney and SD regressions. Physical hardware test remains open.
+- Install Windows content update and Add-on 1.0.13.2, then start Shrink once. Windows executable stays at 1.0.12; progress UI and Allsky update remain pending.

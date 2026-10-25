@@ -1,13 +1,13 @@
-# Inhaltsupdate 1.0.13.1
+# Inhaltsupdate 1.0.13.2
 
-Version 1.0.13.1 – vorbereiteten Schrumpfauftrag nach RTC-Konfiguration reparieren
+Version 1.0.13.2 – Datumsleser im RAM-Wartungsstart eindeutig festlegen
 
-- Den gemeldeten Fehlalarm nachgestellt: Das Add-on-Update setzt seinen RTC-Abschnitt ans Dateiende. Der vorbereitete Wartungsblock steht danach vor diesem Abschnitt statt ganz am Ende.
-- Den vollständigen Wartungsblock genau einmal erkennen, unabhängig von dieser Position. Nach Entfernen des Blocks müssen sämtliche übrigen nichtleeren Zeilen weiterhin mit der gesicherten Konfiguration in derselben Reihenfolge übereinstimmen. Hinter dem Block ausschließlich den bekannten RTC-Abschaltabschnitt zulassen.
-- Fehlende, veränderte oder doppelte Wartungsblöcke sowie andere neue Bootoptionen weiterhin ablehnen. Vor dem Ersetzen des geprüften Images erneut auf zwischenzeitliche Konfigurationsänderungen prüfen.
-- Die gesicherte normale Bootkonfiguration aus der geprüften aktuellen Fassung übernehmen, damit der deaktivierte interne RTC-Zustand beim Wartungsstart erhalten bleibt.
-- Der Status „Wartung ausstehend“ bleibt bis zur tatsächlichen Ausführung des Auftrags korrekt bestehen. Reparatur oder Verbindungsverlust allein werden nicht als erfolgreiches Schrumpfen gewertet.
+- Gemeldeten Fehler mit echtem BusyBox 1.37.0 reproduziert: Der Datumsleser lehnt den gespeicherten Dateisystemzeitstempel „Tue Oct 6 00:26:34 2026“ ab. GNU date verarbeitet denselben Zeitstempel korrekt.
+- GNU date beim Erstellen des Wartungsimages unter dem eigenen Namen /sbin/witty-sd-date einschließlich Laufzeitabhängigkeiten einbinden. Sämtliche Datumsabfragen, Prüfungen und das Setzen der RAM-Uhr benutzen diesen festen Pfad statt einer möglicherweise von BusyBox überschatteten PATH-Auflösung.
+- Beim Paketbau GNU coreutils bestätigen, den privaten Datumsleser im fertigen Image prüfen und seine Version im Wartungsprotokoll festhalten.
+- Zeitstempel bleiben absolute Zeitpunkte. LC_ALL=C und TZ=UTC0 gelten nur im Wartungsprozess. Eingestellter UTC-Offset, Sommerzeitwahl, Raspberry-Konfiguration und Witty-RTC werden dadurch nicht geändert.
+- Gespeicherte Erstellungs-/Mount-/Prüfzeitpunkte dürfen vom heutigen Datum abweichen. Es wird keine Aktualität dieser historischen Felder vorgetäuscht.
 
-Update: Entwicklermodus ausschalten, oben im Windows-Programm das Inhaltsupdate 1.0.13.1 installieren, neu verbinden und das Witty-Add-on auf 1.0.13.1 aktualisieren. Danach einmal „Partitionen schrumpfen“ drücken. Keine manuellen Änderungen an config.txt und kein Löschen des Wartungsauftrags erforderlich.
+Update: Entwicklermodus ausschalten, oben das Windows-Inhaltsupdate 1.0.13.2 installieren, nach dem Programmneustart verbinden und das Witty-Add-on auf 1.0.13.2 aktualisieren. Danach einmal „Partitionen schrumpfen“ drücken. Der vorherige fehlgeschlagene Lauf bleibt im Protokoll erhalten und wird erst durch das neue tatsächliche Ergebnis abgelöst.
 
-Prüfung: Gemeldete Abschnittsanordnung, bisherige Anordnung und Ablehnung fremder/duplizierter Bootoptionen getestet. Physischer Schrumpf-/Abschalttest auf dem betroffenen Raspberry noch offen. Windows-EXE bleibt unverändert auf 1.0.12; Fortschritts-UI und Allsky-Aktualisierung stehen noch aus.
+Prüfung: Originalfehler mit BusyBox reproduziert; privater GNU-Leser trotz anderem date im Suchpfad geprüft; UTC, UTC+10, UTC+14, UTC-12, halbe und Viertelstunden-Offsets sowie Berlin/Sydney geprüft. 29 SD-Prüfungen und 10 Release-Regressionen bestanden. Physischer Schrumpf-/Abschalttest noch offen. Windows-EXE bleibt 1.0.12; Fortschritts-UI und Allsky-Update sind noch nicht enthalten.
