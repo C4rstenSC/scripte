@@ -1,0 +1,8 @@
+Version 1.0.13.1 – repair prepared shrink jobs after RTC policy rewriting
+
+- Reproduce the maintenance block appearing before the RTC policy after an Add-on update.
+- Accept the exact single maintenance block in that position only when all other nonblank lines match the original in order and the remaining tail contains only the known RTC-off policy.
+- Keep rejecting altered, missing, duplicate or unrelated boot options. Recheck for concurrent changes before replacing the verified image and preserve the verified normal configuration.
+- Keep maintenance pending until actually executed; do not treat repair or network loss as shrink success.
+- Install content update and Add-on 1.0.13.1, with developer mode disabled; click Shrink once. No manual boot configuration edits required.
+- Test the reported arrangement and rejection cases. Physical Pi test remains open. Windows executable stays at 1.0.12; progress UI and Allsky update are pending.

@@ -1,12 +1,13 @@
-# Witty Add-on 1.0.13
+# Inhaltsupdate 1.0.13.1
 
-Version 1.0.13 – SD-Wartungsstart und automatische Diagnose
+Version 1.0.13.1 – vorbereiteten Schrumpfauftrag nach RTC-Konfiguration reparieren
 
-- Ursache des nicht gestarteten Schrumpfens behoben: Eine Bash-Prozesssubstitution bestand die sh-Syntaxprüfung des Initramfs-Generators nicht. Der Helfer lag im Image, fehlte aber in der Startreihenfolge.
-- Wartungsimage vor jedem Neustart zusätzlich auf den tatsächlichen Eintrag des Schrumpfhelfers in scripts/local-premount/ORDER prüfen. Bei fehlendem Eintrag kein Wartungsneustart.
-- Vorbereitete, noch nicht ausgeführte Aufträge können nach Prüfung von UUIDs, Partitionsgeometrie, Kernel und unveränderter Bootkonfiguration repariert werden. Die Reparatur selbst verändert keine Partition.
-- Bei jedem Schrumpfauftrag automatisch witty-sd-diagnose.log anlegen: Vorbereitung, Befehle, Ausgaben, Fehlercodes, Laufzeiten, Offline-Schrumpfen und Hersteller-Abschluss. Während längerer Befehle alle 15 Sekunden einen Laufhinweis speichern.
-- Protokoll auf der Bootpartition erhalten; bei neuem Auftrag den vorherigen Lauf archivieren. Bei einem Kernel-Zwischenneustart das laufende Protokoll fortsetzen.
-- Diagnoseausgaben während der Vorbereitung zusätzlich auf stdout ausgeben; der vorhandene Windows-Build sammelt diese noch bis zum Befehlsende. Live-Anzeige, Fortschrittsbalken und Restzeit im Windows-Fenster sind in diesem Sofortfix noch nicht enthalten.
+- Den gemeldeten Fehlalarm nachgestellt: Das Add-on-Update setzt seinen RTC-Abschnitt ans Dateiende. Der vorbereitete Wartungsblock steht danach vor diesem Abschnitt statt ganz am Ende.
+- Den vollständigen Wartungsblock genau einmal erkennen, unabhängig von dieser Position. Nach Entfernen des Blocks müssen sämtliche übrigen nichtleeren Zeilen weiterhin mit der gesicherten Konfiguration in derselben Reihenfolge übereinstimmen. Hinter dem Block ausschließlich den bekannten RTC-Abschaltabschnitt zulassen.
+- Fehlende, veränderte oder doppelte Wartungsblöcke sowie andere neue Bootoptionen weiterhin ablehnen. Vor dem Ersetzen des geprüften Images erneut auf zwischenzeitliche Konfigurationsänderungen prüfen.
+- Die gesicherte normale Bootkonfiguration aus der geprüften aktuellen Fassung übernehmen, damit der deaktivierte interne RTC-Zustand beim Wartungsstart erhalten bleibt.
+- Der Status „Wartung ausstehend“ bleibt bis zur tatsächlichen Ausführung des Auftrags korrekt bestehen. Reparatur oder Verbindungsverlust allein werden nicht als erfolgreiches Schrumpfen gewertet.
 
-Prüfung: Fehler mit Debians Initramfs-Startlistengenerator reproduziert; korrigierten Eintrag geprüft. Shell-Syntax, Diagnoseverhalten und SD-Regressionen geprüft. Physischer Boot-/Abschalttest auf Raspberry Pi noch offen.
+Update: Entwicklermodus ausschalten, oben im Windows-Programm das Inhaltsupdate 1.0.13.1 installieren, neu verbinden und das Witty-Add-on auf 1.0.13.1 aktualisieren. Danach einmal „Partitionen schrumpfen“ drücken. Keine manuellen Änderungen an config.txt und kein Löschen des Wartungsauftrags erforderlich.
+
+Prüfung: Gemeldete Abschnittsanordnung, bisherige Anordnung und Ablehnung fremder/duplizierter Bootoptionen getestet. Physischer Schrumpf-/Abschalttest auf dem betroffenen Raspberry noch offen. Windows-EXE bleibt unverändert auf 1.0.12; Fortschritts-UI und Allsky-Aktualisierung stehen noch aus.
