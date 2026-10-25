@@ -1,0 +1,9 @@
+Version 1.0.26 – 25 October 2026
+
+- Preserve Allsky's Witty-master clock policy with GPS attached: GPS remains a position source. Preserve the active timezone, including fixed-offset mode, across Linux/Allsky updates and verify Witty RTC→Linux before Allsky starts. Keep the internal Pi RTC disabled.
+- Witty add-on updates leave existing clocks unchanged and skip the Windows clock preflight. Allsky update preflight never offers to copy Windows time into the Witty RTC.
+- Use the same Witty-aware reboot adapter for own archives, official GitHub and fresh installations. Check the manufacturer's wp5d_reboot.service on reboot.target, never request poweroff, and retain a reboot-request diagnostic. This does not retrospectively prove the physical cause of an earlier failed return.
+- Resume pending Allsky updates with the original backup when its source revision matches allsky-OLD, even if the partial installation was marked installed. Preserve corrupt intermediate sources separately and prepare them again; start Allsky after restoring its configuration. Report the exact invalid JSON file.
+- Add Delete Allsky-OLD and an Update backups inventory with type, disk usage, date, path and explicit selected deletion. Protect active updates, pending recovery, mounts and symlinked backup roots. Preserve the current installation and external drives.
+- Successful Windows updates already remove temporary rollback data. Do not automatically delete user downloads or IMG files.
+- Retain version 1.0.25 update-session and terminal-completion fixes.
