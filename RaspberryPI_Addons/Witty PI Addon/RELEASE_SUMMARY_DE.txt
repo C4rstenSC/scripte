@@ -1,17 +1,10 @@
-Version 1.0.12 · Build 2
+Version 1.0.13 – SD-Wartungsstart und automatische Diagnose
 
-SD-Schrumpfung
-- Fehler nachgestellt: Im frühen RAM-Wartungsstart kann die Uhr nahe 1970 liegen. e2fsck 1.47.2 meldet dann Erfolg, ohne den Prüfzeitstempel zu erneuern; resize2fs verlangt anschließend erneut e2fsck -f.
-- Vor der Prüfung die RAM-Uhr anhand der vorgemerkten Systemzeit und vorhandener Dateisystemzeitstempel angleichen. Witty-RTC, PC-Uhr und gewählter UTC-Offset werden nicht geändert.
-- Nach e2fsck kontrollieren, dass die Prüfung nicht vor dem letzten Mount liegt. Keine erzwungene Verkleinerung und kein Umgehen der resize2fs-Sicherheitsprüfung.
-- Gemeinsamen Wartungshelfer in Windows und Witty Add-on erneuert.
+- Ursache des nicht gestarteten Schrumpfens behoben: Eine Bash-Prozesssubstitution bestand die sh-Syntaxprüfung des Initramfs-Generators nicht. Der Helfer lag im Image, fehlte aber in der Startreihenfolge.
+- Wartungsimage vor jedem Neustart zusätzlich auf den tatsächlichen Eintrag des Schrumpfhelfers in scripts/local-premount/ORDER prüfen. Bei fehlendem Eintrag kein Wartungsneustart.
+- Vorbereitete, noch nicht ausgeführte Aufträge können nach Prüfung von UUIDs, Partitionsgeometrie, Kernel und unveränderter Bootkonfiguration repariert werden. Die Reparatur selbst verändert keine Partition.
+- Bei jedem Schrumpfauftrag automatisch witty-sd-diagnose.log anlegen: Vorbereitung, Befehle, Ausgaben, Fehlercodes, Laufzeiten, Offline-Schrumpfen und Hersteller-Abschluss. Während längerer Befehle alle 15 Sekunden einen Laufhinweis speichern.
+- Protokoll auf der Bootpartition erhalten; bei neuem Auftrag den vorherigen Lauf archivieren. Bei einem Kernel-Zwischenneustart das laufende Protokoll fortsetzen.
+- Diagnoseausgaben während der Vorbereitung zusätzlich auf stdout ausgeben; der vorhandene Windows-Build sammelt diese noch bis zum Befehlsende. Live-Anzeige, Fortschrittsbalken und Restzeit im Windows-Fenster sind in diesem Sofortfix noch nicht enthalten.
 
-Witty-Skriptliste
-- Fehlende Größe und Eventzahl für reine Gerätedateien einmalig durch Lesen der Originaldateien ergänzen.
-- Metadaten einschließlich Prüfsumme dauerhaft speichern; bekannte Skripte nicht bei jeder Listenabfrage erneut vom Witty herunterladen.
-- Unvollständige oder fehlgeschlagene Downloads nicht als gültige Metadaten speichern. Lesen aktiviert keinen anderen Zeitplan.
-
-Prüfung
-- Abbruch mit echtem e2fsprogs 1.47.2 reproduziert; korrigierten Ablauf mit realem ext4-Schrumpfen, Erweiterung und Datenvergleich geprüft.
-- Getrennte Prüfungen für eine um eine Stunde vor- oder nachgehende Systemuhr sowie einmaligen Download mehrerer Skripte.
-- Kein vollständiger Boot- und Abschalttest auf dem betroffenen Raspberry Pi.
+Prüfung: Fehler mit Debians Initramfs-Startlistengenerator reproduziert; korrigierten Eintrag geprüft. Shell-Syntax, Diagnoseverhalten und SD-Regressionen geprüft. Physischer Boot-/Abschalttest auf Raspberry Pi noch offen.
