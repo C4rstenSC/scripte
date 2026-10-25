@@ -1,0 +1,21 @@
+Version 1.0.20 – Allsky snapshot 24 October 2026 and shared time policy
+
+- Add the official Allsky commit 8e59705f0f4a7e7f13901e144aea05f373133eac from 24 October. Its upstream release is still v2026.10.01; the archive choice therefore includes its snapshot date and commit.
+- Installation and updates offer four sources: archive 24 October 2026, previous archive 6 October 2026, archive 25 July 2025, and the latest upstream source. Preserve previous choices and existing configuration migration.
+- Download 36 encrypted parts, verify individual and combined SHA-256, authenticate/decrypt the archive, validate its Git data and check out the selected original commit. Existing archived Sunwait/module support matches this snapshot.
+- Preserve fixed UTC offsets without daylight saving, true coordinates and the selected solar angle. Capture and PHP share the same local solar engine. Preserve noon-to-noon image folders and existing images. Reapply saved Witty policies after installation and updates.
+- Validate against actual new PHP, shell and C++ source. Synchronize source selection, revision verification, manuals and release notes. Windows, content and Witty Add-on are 1.0.20.
+- Keep all 1.0.15 SD fixes: ISO timestamps, measured durations and current step inside the red frame, no ETA estimate, and automatic view cleanup after completion or switching to the SD card. The normal complete Windows update includes the EXE with explicit authorization.
+
+Validation: authenticated archive roundtrip, original Git commit/fsck, full source preparation with support archives, and syntax checks for 61 actual upstream shell scripts. Allsky suite with the current actual C++ functions: 95 tests, 83 passed and 12 optional PHP/sunwait/Playwright tests skipped. Windows/updater compilation checked. No physical Raspberry installation/capture/shrink test.
+
+Update Windows first, then Witty Add-on, both to 1.0.20. Select archive 24 October 2026 for the Allsky version change. The official installer still needs operating-system package sources and a supported camera.
+
+Upstream comparison 6–24 October: five commits; four files changed overall: documentation, compiler and ShellCheck workflows plus version.json. Capture, camera, exposure and solar runtime code are unchanged. No additional runtime fix was required by this upstream difference; retain existing Witty patches.
+
+SD completion and offline display in 1.0.20
+- Clear stale live values, clocks and lights on SSH loss. Do not animate an unobserved offline process or continue a misleading elapsed-work timer.
+- After verified filesystem work, the existing finalisation boot briefly starts network and SSH. Windows reads and acknowledges the matching report; manufacturer shutdown follows. Disconnect and close the maintenance view when SSH disappears during that expected shutdown. Do not show a completed progress bar while shutdown is still pending.
+- Switching to the SD-card tab closes a stale offline maintenance view immediately. Later card inspection must not reactivate it. Without a report/network, success remains unconfirmed and can be checked on the card.
+- Show filesystem capacity, allocated blocks including ext4 metadata, and free space separately. Log old Allsky installations, caches and swap before shrinking. Clean only APT/Pip download caches, preserving images, settings, active environments and old projects. The user's 11-GB image cause has not yet been proven from actual usage data; do not promise 4–5 GB.
+- 35 SD tests plus model/image checks passed; Windows build without warnings. New network completion/UI remain untested on physical target hardware.
