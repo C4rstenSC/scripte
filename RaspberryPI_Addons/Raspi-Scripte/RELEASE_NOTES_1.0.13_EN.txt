@@ -1,0 +1,7 @@
+Version 1.0.13 – SD maintenance startup and automatic diagnosis
+
+- Fix the Bash process substitution rejected by initramfs-tools' sh syntax filter, which excluded the shrink script from the boot order despite retaining it in the image.
+- Validate the actual ORDER entry before scheduling maintenance. Support guarded repair of an unconsumed request without changing partitions.
+- Automatically persist preparation, command output, return codes, durations, 15-second running markers, offline stages and manufacturer finalisation in witty-sd-diagnose.log on the boot partition; archive earlier runs and continue across kernel reboots.
+- Emit preparation diagnostics on stdout. Live Windows progress and remaining-time UI are not part of this maintenance fix.
+- Reproduce the boot-order failure and verify correction, shell syntax and SD regression checks. Physical Pi boot and shutdown remain untested.
