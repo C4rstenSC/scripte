@@ -1,0 +1,10 @@
+Version 1.0.11 · Build 1
+
+- Update Linux packages before base setup and allow installed base dependencies to be upgraded.
+- Verify real versioned PHP runtime packages against the 21 October 2026 security fixes; apply available package updates and restart affected running web services.
+- Retry interrupted direct Allsky Git clones with a time limit; allow scoped ownership checks for the known installation directory.
+- Retry Witty script listing and merge activation/download lists; reject timed-out partial listings and preserve content-based active-script identification.
+- Build SD maintenance with its matching kernel. Automatically resume shrink once after a required kernel reboot and verify the same card UUIDs.
+- Refresh the shared standalone Windows/Add-on SD helper; retain real partition/filesystem verification, manufacturer shutdown and normal-boot expansion.
+- Retain all 1.0.9 Windows GPS/optional-clock fixes and the complete 1.0.10 Allsky UTC solar/noon-folder rules.
+- Locally build Windows and Updater 1.0.11; verify encrypted packages and automated regressions. No physical Raspberry Pi or affected SD card attached during testing.

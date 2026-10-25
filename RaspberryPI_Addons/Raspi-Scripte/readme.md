@@ -1,25 +1,30 @@
-# Raspi-Scripte 1.0.9
+# Raspi-Scripte 1.0.11
 
-Version 1.0.9 · Build 2
+Version 1.0.11 · Build 1
 
-Allsky: Bilderordner und Witty-Zeitmodus
-- Verständliche Ein-/Aus-Anzeigen mit Beispiel: 23.10., 17 Uhr bis 24.10., 8 Uhr → alle neuen Bilder im Ordner 20261023.
-- Bei eingeschalteter Ordnerregel beginnt der Aufnahmetag um 12 Uhr mittags und endet vor 12 Uhr am Folgetag, auch an Tagen mit Zeitumstellung. Vorhandene Bilder werden nicht verschoben.
-- Der zweite Schalter übernimmt den auf Witty gewählten Zeitmodus: feste UTC-Abweichung ohne Sommer-/Winterzeit oder die gewählte Zeitzone mit deren Sommer-/Winterzeitregeln. Die GPS-Position wählt keinen anderen Zeitmodus.
-- Änderungen des Witty-Zeitmodus werden bei eingeschalteter Übernahme auch für Allsky angewendet. Nur laufende Allsky-Dienste werden dazu neu gestartet.
+Basisinstallation und PHP
+- Linux-Paketlisten und installierte Pakete vor der Systemeinrichtung aktualisieren; vorhandene Basispakete können aktualisiert werden.
+- Versionierte PHP-Laufzeitpakete auf die Sicherheitskorrekturen vom 21.10.2026 prüfen und erforderliche Updates über APT installieren; laufende PHP-FPM-/Webserverdienste nach Paketwechsel erneuern.
 
-Windows: GPS-Anzeige
-- Satellitenzahlen zusätzlich aus geprüften NMEA-GGA/GSV-Daten über gpsd lesen, wenn JSON-SKY-Daten fehlen. GPS-Zeit und Position bleiben unabhängig davon.
-- Letzte noch aktuelle GPS-Werte bei kurzen Daten-/Verbindungslücken erhalten; ausdrücklich gemeldeter Fixverlust und veraltete Messwerte werden ausgeblendet.
-- Position und Satellitenwerte getrennt aktualisieren; kürzere Statusabfrage verhindert unnötige Anzeigelücken.
-- Feste Breite des Zeit-/GPS-Rahmens: Die Witty-Konfiguration springt bei fehlender GPS-Position nicht mehr seitlich.
-- GitHub-Version und Buildnummer gemeinsam aus einer Versionsdatei lesen.
+Allsky von GitHub
+- Direkten Git-Klon bei vorübergehenden Fehlern bis zu dreimal mit Zeitlimit wiederholen.
+- Bestehende, dem Raspberry-Benutzer gehörende Allsky-Quellen mit begrenzter Git-Vertrauensfreigabe prüfen.
+- Vollständige UTC-Sonnenberechnung, gewählter Witty-Zeitmodus und Mittag-bis-Mittag-Ordnerregel aus 1.0.10 enthalten.
+
+Witty-Skripte
+- Aktivierungs- und Downloadlisten mit längerer Wartezeit und Wiederholungen zusammenführen.
+- Abgebrochene Geräteabfragen nicht mehr als erfolgreiche Liste aus nur lokalen Dateien ausgeben.
+- Aktiven Skriptnamen anhand der Originalinhalte mit längeren Downloadfristen wiederherstellen.
+
+SD-Schrumpfung
+- Wartungskernel und Initramfs auf dieselbe Kernelversion abstimmen, auch nach Linux-Updates auf Pi 5.
+- Falls zuerst der neue Kernel starten muss: Schrumpfauftrag nach automatischem Neustart auf derselben Karte einmalig fortsetzen.
+- Gemeinsamen Wartungshelfer in Windows und Add-on aktualisiert; echte Partitions-/ext4-Prüfung vor kleinem IMG bleibt erhalten.
+- Geprüfte Verkleinerung, Hersteller-Abschaltung und automatische Erweiterung beim nächsten normalen Start bleiben verbunden.
+
+Windows
+- Vorhandene 1.0.9-Korrekturen für GPS-Satelliten, optionalen Zeitabgleich und gemeinsame Versions-/Buildabfrage übernommen.
+- Programm, Inhaltspaket, eingebettetes Witty-Paket und Versionsanzeigen auf 1.0.11 abgestimmt.
 
 Prüfung
-- Automatisierte Tests für Ordnerzuordnung, beide Zeitmodi, deutsche/englische Texte, verzögerte Satellitendaten und NMEA-Prüfsummen. Kein Test an physischer Raspberry-Pi-Hardware.
-
-Ergänzungen in Build 2
-- Verwendete und sichtbare Satelliten getrennt aktualisieren: Ein Datensatz ohne sichtbare Anzahl löscht die letzte noch aktuelle Anzahl nicht mehr.
-- Zusätzlich zuletzt gemeldete GPSD-SKY-Daten abfragen und deren Alter anhand der GPS-Zeit prüfen. Veraltete Werte werden weiterhin ausgeblendet.
-- Auf Allsky - Setup: Ein und Witty Add-on grün und fett; Aus und Allsky-Standard rot und fett. Nur die Statuswörter werden hervorgehoben.
-- Beide Regeln werden direkt im Allsky-Code eingerichtet und nach Allsky-Neuinstallation, Update sowie Dienststart aus der gespeicherten Auswahl wiederhergestellt. Die Witty-Zeitvorgabe gilt auch bei anderer GPS-Position.
+- Automatisierte Python-/Shell-, PHP-/Sonnenzeit-, Windows-SD- und Uhrzeittests sowie lokaler win-x64-Build. Prüfung ohne angeschlossenen Raspberry Pi oder die betroffene SD-Karte.
