@@ -1,0 +1,9 @@
+Version1.0.23 – First-run preflight duration prediction
+
+- No previous complete shrink is required. Read64MiB directly from the Pi SD card after preparation, without benchmark writes or dropping system caches.
+- Inspect ext4 group descriptors, active inode tables and allocated blocks beyond the resize2fs-P minimum-size estimate. Build an approximate I/O workload for three checks and relocation reads/writes; prediction never controls resize geometry.
+- Predict total/remaining time before maintenance reboot from current I/O workload, read speed and available measured boot times. Earlier measured workload speed can calibrate it but is optional. Unsupported metadata or failed measurements display an explicit reason.
+- Time and percentage remain predictions, not live RAM progress. CPU, writes, fragmentation, network and poweroff latency can differ; never declare100percent before confirmed completion.
+- Retrieve completion reports with SSH only, without SFTP or an additional login shell. Separate connection/status/acknowledgement timeouts and poll every second. Allow the existing bounded Pi receipt window if acknowledgement fails; log retrieval timings. A specific reduction of the observed34seconds is not claimed without a device test.
+
+Update Windows first, then Witty Add-on.43SD Python tests including unchanged real ext4-image inspection and first-run prediction; .NET progress/prediction checks and clean Windows/updater builds. No physical test of this version on the user's Pi.
