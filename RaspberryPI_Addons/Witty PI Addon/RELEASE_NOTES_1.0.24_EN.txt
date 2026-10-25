@@ -1,0 +1,11 @@
+Version1.0.24 – Allsky installation recovery and truthful status
+
+- Deploy the missing global witty-ensure-php-security helper during both fresh installation and Add-on update. Prepare mandatory helpers before moving an existing Allsky installation; keep existing PHP checks.
+- Apply the same preparation to archive installation/version switching and Latest version(Github ALLSKY). The current official commit8e59705f matches the24October archive.
+- Resume incomplete updates using their original settings backup and allsky-OLD. Reuse matching prepared sources; retain a mismatched partial source separately before preparing another choice, including rollback to6October.
+- Downloaded Git sources no longer imply installation success. Require an official completed installer state in config/logs/install_status.txt, matching revision and completion checks. Keep pending restore/failed states explicit and do not mark GitHub up to date. Intermediate locale reboots are not success.
+- Prevent premature first-boot restore of an unfinished installation. Show human-readable control errors outside protocol markers.
+- Display Allsky dates as v.2026-10-24 or v.2026-10-06 while preserving the original release identity internally.
+- Simplify SD timing to remaining / total | measured SD speed; percentage only inside the bar. Bind prior boot-time references to the actual Pi/RAM/card profile so cloned-card logs do not contaminate predictions.
+
+Update Windows first, then Witty Add-on1.0.24. Retry the desired Allsky update without first uninstalling; the original backup is retained.102Allsky tests:90passed,12optional-runtime skips;44SD tests and .NET display/prediction checks passed. Clean Windows/updater builds. No complete physical Allsky/camera installation test on the affected Pi.
