@@ -1,5 +1,12 @@
 [
   {
+    "Version": "1.0.27",
+    "Build": "20261025.27",
+    "Date": "2026-10-25",
+    "Notes": "Bootfehler behoben: Die automatische Bootdiagnose und Wiederherstellung der Startparameter wurden stillgelegt. Leere oder unvollständige cmdline.txt werden erkannt; Bootdateien bleiben unverändert. Die bestätigte Witty-RTC-Übernahme vor Allsky bleibt erhalten. Das Witty-Pi-Menü wird bei erfolgreichem automatischem Zeitabgleich nicht mehr im Installationsterminal ausgegeben. Fehler bleiben sichtbar.\n",
+    "NotesEn": "Fixed boot failure: retired automatic boot diagnosis and command-line restoration. Empty or incomplete kernel command lines are rejected; boot files remain unchanged. Preserved the verified Witty RTC to Linux synchronization before Allsky. Successful automatic clock synchronization no longer displays the interactive Witty Pi menu; errors remain visible.\n"
+  },
+  {
     "Version": "1.0.26",
     "Build": "20261025.26",
     "Date": "2026-10-25",
