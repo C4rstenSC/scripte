@@ -1,0 +1,7 @@
+Version 1.0.12 · Build 2
+
+- Reproduce successful e2fsck followed by resize2fs refusal with e2fsprogs 1.47.2 and an invalid early-boot clock.
+- Align only the RAM maintenance clock with saved system/filesystem timestamps before checking. Leave the Witty RTC, PC clock and configured UTC offset unchanged.
+- Verify fsck timestamp ordering without forcing resize2fs or bypassing its safety checks.
+- Read missing Witty script sources once to cache size, event count and SHA-256; reject partial downloads and never activate a schedule while reading.
+- Update the shared Windows/Add-on maintenance helper. Test real ext4 shrink/expand, data integrity and one-hour clock differences. Physical Pi boot/poweroff remains untested.
