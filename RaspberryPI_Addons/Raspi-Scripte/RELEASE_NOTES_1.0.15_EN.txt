@@ -1,0 +1,12 @@
+Version 1.0.15 – traceable SD maintenance and measured durations
+
+- Normalize tune2fs timestamps to ISO before parsing; retain the configured UTC offset, DST mode and Witty RTC.
+- Compare the actual image's shrink script and private GNU date bytes with the current sources before reboot. Record build, hashes and a unique request identity.
+- Refresh the independent Windows maintenance folder during Add-on updates; the new Windows DLL redeploys current helpers before actions.
+- Windows, content, title and Witty Add-on are 1.0.15. The normal complete Windows update includes the EXE with explicit authorization.
+- New DLL: preparation step, progress and measured elapsed times inside the red SD frame. No remaining-time estimate. Read recorded offline duration/stage from the actual result.
+- Retain the device view through SSH loss until manual Disconnect. Only a matching verified filesystem and partition report can confirm shrink success; stale reports cannot complete a new request.
+
+Validation: SD regressions, Windows model/image checks and Windows-x64 compilation. Native Windows UI and physical Pi shrink/shutdown remain untested. The precise reason the earlier parser error recurred after 1.0.13.2 remains unproven without the full device log. Allsky 1.0.14 is separate follow-up work.
+
+Complete Windows update through the normal update function; EXE explicitly authorized.
