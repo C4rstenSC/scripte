@@ -1,0 +1,10 @@
+Version 1.0.21 – SD progress and completion report
+
+- Keep maintenance progress indeterminate and orange while offline work or shutdown is pending. Show measured waiting time separately from preparation; no estimated remaining time or invented live steps.
+- Verified filesystem geometry alone never sets the bar to100 percent. Retrieve and acknowledge the matching report, then wait for expected SSH shutdown before closing the session. A missing report never proves success.
+- Start systemd-user-sessions.service in the dedicated completion boot so normal SSH login is permitted after boot initialization. Its absence could block report retrieval; the last device run is not diagnosed without its logs. Log completion-probe failures.
+- Keep all three SD action buttons fixed, independently of progress-text width.
+- Label both Allsky selectors Archive –24.10.2026 (Carsten Github). The archive already downloads from C4rstenSC/scripte; its source and commit are unchanged.
+- Retain the1.0.20 SD, storage and Allsky corrections.
+
+Install the normal Windows1.0.21 update first, then Witty Add-on1.0.21. Changes apply to the next maintenance request. No physical Pi shutdown/SSH test of this version has been performed.
