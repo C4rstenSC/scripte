@@ -1,13 +1,14 @@
-# Inhaltsupdate 1.0.13.2
+# 1.0.13.6
 
-Version 1.0.13.2 – Datumsleser im RAM-Wartungsstart eindeutig festlegen
+Version 1.0.13.6 – SD-Wartungsstand, messbare Zeiten und Windows-Module
 
-- Gemeldeten Fehler mit echtem BusyBox 1.37.0 reproduziert: Der Datumsleser lehnt den gespeicherten Dateisystemzeitstempel „Tue Oct 6 00:26:34 2026“ ab. GNU date verarbeitet denselben Zeitstempel korrekt.
-- GNU date beim Erstellen des Wartungsimages unter dem eigenen Namen /sbin/witty-sd-date einschließlich Laufzeitabhängigkeiten einbinden. Sämtliche Datumsabfragen, Prüfungen und das Setzen der RAM-Uhr benutzen diesen festen Pfad statt einer möglicherweise von BusyBox überschatteten PATH-Auflösung.
-- Beim Paketbau GNU coreutils bestätigen, den privaten Datumsleser im fertigen Image prüfen und seine Version im Wartungsprotokoll festhalten.
-- Zeitstempel bleiben absolute Zeitpunkte. LC_ALL=C und TZ=UTC0 gelten nur im Wartungsprozess. Eingestellter UTC-Offset, Sommerzeitwahl, Raspberry-Konfiguration und Witty-RTC werden dadurch nicht geändert.
-- Gespeicherte Erstellungs-/Mount-/Prüfzeitpunkte dürfen vom heutigen Datum abweichen. Es wird keine Aktualität dieser historischen Felder vorgetäuscht.
+- Den gemeldeten tune2fs-Zeitstempel vor dem Datumsaufruf in ein eindeutiges ISO-Format umwandeln. Wochentag und Monatsname werden nicht mehr an den Datumsparser übergeben. Fester UTC-Offset, Sommerzeitwahl und Witty-RTC bleiben erhalten.
+- Im fertigen Wartungsimage den ausführenden Schrumpfhelfer und den privaten GNU-Datumsleser bytegenau mit den aktuellen Quelldateien vergleichen. Abweichende Images werden nicht gestartet. Build, Prüfsummen und eindeutige Auftragskennung im Protokoll festhalten.
+- Das Add-on-Update aktualisiert auch einen vorhandenen unabhängigen Windows-Wartungsordner. Die neue Windows-DLL stellt den aktuellen Wartungshelfer vor einer Aktion erneut bereit.
+- Inhaltsversion und Fensterüberschrift auf 1.0.13.6 setzen. Der bestehende EXE-Starter wird nicht ersetzt und nicht hochgeladen.
+- Neue Windows-DLL: aktueller Schritt, Fortschrittsbalken und tatsächlich gemessene Zeiten innerhalb des roten SD-Rahmens. Keine Restzeitschätzung. Offline-Dauer und letzter Schritt werden nach Auslesen des Berichts angezeigt.
+- Beim Schrumpfen bleibt die Geräteansicht trotz SSH-Ausfall erhalten. Erst ein manueller Klick auf Verbindung trennen beendet die Anzeige. Weder Verbindungsabbruch noch Zeitablauf werden als Schrumpferfolg gewertet. Ein alter Bericht darf einen neuen Auftrag nicht abschließen.
+- Nach Einlegen der Karte am Windows-PC werden Ergebnisbericht, Dateisystemgröße und Partitionsgrenze gemeinsam geprüft. Fehler bleiben sichtbar; Erfolg erfordert den passenden verifizierten Auftrag.
+- Für die neue Oberfläche benötigt der bisherige Inhaltsupdater einmalig das separate DLL-Modulpaket 1.0.13.6. Darin ist keine EXE enthalten. Der neue Modulstand unterstützt danach weitere DLL-Updates über die normale Updatefunktion. Das normale Inhalts- und Witty-Update steht unabhängig davon bereit.
 
-Update: Entwicklermodus ausschalten, oben das Windows-Inhaltsupdate 1.0.13.2 installieren, nach dem Programmneustart verbinden und das Witty-Add-on auf 1.0.13.2 aktualisieren. Danach einmal „Partitionen schrumpfen“ drücken. Der vorherige fehlgeschlagene Lauf bleibt im Protokoll erhalten und wird erst durch das neue tatsächliche Ergebnis abgelöst.
-
-Prüfung: Originalfehler mit BusyBox reproduziert; privater GNU-Leser trotz anderem date im Suchpfad geprüft; UTC, UTC+10, UTC+14, UTC-12, halbe und Viertelstunden-Offsets sowie Berlin/Sydney geprüft. 29 SD-Prüfungen und 10 Release-Regressionen bestanden. Physischer Schrumpf-/Abschalttest noch offen. Windows-EXE bleibt 1.0.12; Fortschritts-UI und Allsky-Update sind noch nicht enthalten.
+Prüfung: 32 SD-Regressionen, Windows-Modelltests und bestehende Abbildtests; Windows-x64-Module kompiliert. Kein nativer Windows-Oberflächentest und kein physischer Raspberry-Schrumpf-/Abschalttest. Die genaue Ursache dafür, dass nach 1.0.13.2 erneut der frühere Parserfehler erschien, ist ohne das vollständige Geräteprotokoll nicht abschließend belegt. Allsky 1.0.14 bleibt separate Folgearbeit.
