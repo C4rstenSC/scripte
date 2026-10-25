@@ -1,0 +1,10 @@
+Version1.0.22 – Total duration and automatic SD throughput measurement
+
+- Replace preparation-step times with one total elapsed clock spanning preparation, offline filesystem work, completion boot, report retrieval and expected shutdown disconnect.
+- Automatically identify Pi, RAM, card, partition size and occupied space. Measure actual read/write sectors during filesystem work and accept only matching operation measurements.
+- Use successful fully confirmed comparable runs to predict total duration: calibrated I/O workload divided by measured throughput plus measured overhead. Keep device/card profiles separate.
+- Show remaining time and percentage explicitly as a time prediction, with the percentage inside the bar. Never reach100percent before confirmed completion. Report an exceeded prediction without declaring success.
+- A new device/card or substantially changed partition/occupancy first needs a complete automatic measurement. No reliable first-run ETA or live RAM progress is fabricated.
+- Clear stale online values immediately after submitting maintenance. Keep automatic cleanup after matching report and expected shutdown disconnect.
+
+Update Windows first, then Witty Add-on.38SD Python tests and .NET timing/progress checks passed; Windows/updater built without warnings/errors. No physical test of this new measurement on the user's Pi.

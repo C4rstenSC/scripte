@@ -1,13 +1,14 @@
-# 1.0.21
+# 1.0.22
 
-Version 1.0.21 – SD-Fortschritt und Abschlussbericht
+Version 1.0.22 – Gesamtdauer und automatische SD-Durchsatzmessung
 
-- Die SD-Fortschrittsanzeige meldet während laufender Wartung oder ausstehender Abschaltung keinen fertigen Zustand. Nach der Vorbereitung erscheint eine unbestimmte orange Warteanzeige mit tatsächlich gemessener Wartezeit; keine geschätzte Restzeit und kein erfundener Live-Schritt.
-- Ein geprüftes Dateisystem allein setzt den Balken nicht auf 100 Prozent. Der zugehörige Bericht wird empfangen und quittiert; die Abschaltung bleibt bis zum erwarteten Verbindungsende ausstehend. Ohne passenden Bericht wird kein Erfolg behauptet.
-- Im separaten Abschlussstart wird systemd-user-sessions.service vor dem Berichtempfang gestartet. Damit kann die reguläre SSH-Anmeldung nach der Bootinitialisierung erfolgen; bisher konnte die fehlende Freigabe den Berichtempfang verhindern. Die tatsächliche Ursache des letzten Nutzerlaufs bleibt ohne Geräteprotokoll unbestätigt. Ergebnisabfragefehler werden jetzt im Terminal protokolliert.
-- Die drei SD-Aktionsbuttons bleiben an fester Position. Der Fortschrittsbereich ist vom oberen Buttonraster getrennt, sodass längere Zeit- und Statustexte die Buttons nicht verschieben.
-- Beide Allsky-Auswahlfenster benennen das neue Archiv einheitlich: Archiv – 24.10.2026 (Carsten Github). Es wird bereits vom Repository C4rstenSC/scripte geladen; Downloadquelle und Originalcommit bleiben unverändert.
-- Alle Korrekturen aus 1.0.20 bleiben enthalten: automatische Bereinigung nach bestätigt empfangenem Abschluss bzw. beim Wechsel zur SD-Karte, Speicherbelegungsanzeige und Allsky-Archiv24.10.2026.
+- Einzelzeiten der Vorbereitung entfallen. Die Gesamtuhr läuft vom Auftrag über Vorbereitung, Offline-Dateisystemarbeit, Abschlussstart und Berichtempfang bis zum erwarteten Abschalt-Verbindungsende durch.
+- Das Programm erkennt Pi, RAM, SD-Karte, Partitionsgröße und Belegung automatisch. Tatsächlich gelesene und geschriebene Sektoren werden während der Offline-Dateisystemarbeit gemessen. Nur zum aktuellen Auftrag passende Messwerte werden übernommen.
+- Erfolgreiche vollständig bestätigte Läufe liefern den SD-Arbeitsdurchsatz und die Nebenzeiten für spätere vergleichbare Aufträge. Berechnung: voraussichtliche I/O-Datenmenge geteilt durch gemessenen Durchsatz plus gemessene Nebenzeit. Geräte-/Kartenprofile bleiben getrennt; keine feste Geschwindigkeitstabelle aus Pi-Modellnamen.
+- Gesamtdauer, Restzeit und Prozentwert erscheinen ausdrücklich als Zeitprognose, die Prozentzahl direkt im Balken. Bis zum bestätigten Abschaltabschluss höchstens99Prozent; eine überschrittene Prognose wird angezeigt und bedeutet keinen Erfolg.
+- Bei einer neuen Geräte-/Kartenkombination oder wesentlich veränderter Partition/Belegung fehlt zunächst eine vergleichbare vollständige Messung. Das Programm sammelt sie selbst; im Erstlauf gibt es noch keine belastbare Restzeit. Die Anzeige benennt diese Grenze statt erfundener Prozentwerte. Ein echter Livefortschritt aus dem RAM-Start steht weiterhin nicht zur Verfügung.
+- Nach Absenden des Wartungsauftrags werden alte Liveanzeigen sofort ausgeschaltet. Der bisherige grüne Expandiert-Stand bleibt während der Offline-Wartung nicht sichtbar. Abschlussbericht und erwartetes Verbindungsende steuern weiterhin das automatische Schließen.
+- Die hochgeladenen Protokolle des letzten1.0.21-Laufs bestätigen den Berichtempfang durch Windows.16Sekunden Offline-Dateisystemarbeit,44Sekunden bis zum Abschlussmodus und34Sekunden bis zur Abschaltanforderung erklären dort die lange Wartephase. Die physische Strom-aus-Zeit ist nicht direkt protokolliert und wird nicht mit dem SSH-Ende gleichgesetzt.
 
-Installation: zuerst normales Windows-Update auf1.0.21, danach Witty Add-on1.0.21. Die Änderungen greifen erst beim nächsten Wartungsauftrag. Den bereits erfolgreich abgeschlossenen Schrumpflauf nicht allein zum Aktualisieren wiederholen.
-Prüfung:36 SD-Pythonregressionen inklusive generierter Abschluss-Unit bestanden. Windows und Updater ohne Warnungen/Fehler gebaut. Modellprüfungen für Berichte, Fortschritt und Modulvalidierung bestanden. Kein physischer Pi-Abschalt-/SSH-Test dieser Version.
+Update: zuerst Windows1.0.22, danach Witty Add-on1.0.22. Neue Messwerte entstehen bei künftigen regulären Wartungsaufträgen; keinen zusätzlichen Schrumpflauf nur zur Kalibrierung verlangen.
+Prüfung:38SD-Pythonregressionen sowie .NET-Prüfungen für Durchsatzformel, Nebenzeiten, Geräte-/Layouttrennung, Gesamtuhr und99/100-Grenze bestanden. Windows-/Updater-Build ohne Warnungen/Fehler. Kein physischer Test dieser neuen Messung auf dem Nutzer-Pi.
