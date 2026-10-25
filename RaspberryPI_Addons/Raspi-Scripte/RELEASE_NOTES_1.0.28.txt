@@ -7,6 +7,7 @@ Version 1.0.28 – Änderungen gegenüber 1.0.27
 - GPS-Zeitzonenerkennung: Add-on-Updates reparieren nun ebenfalls die fehlende oder defekte Offline-Zeitzonendatenbank. Neuinstallation und Update verwenden dieselbe Einrichtung und prüfen echte Koordinaten für Berlin und Sydney. Die Homepage startet mit der passenden Python-Umgebung; unnötige Numba-JIT-Kompilierung ist abgeschaltet.
 - GPS-Vorschlag und aktiver Zeitmodus werden getrennt: Auch bei erkannter Sydney-Zeitzone zeigt die Auswahl weiterhin den tatsächlich aktivierten festen UTC+10-Offset. Ein GPS-Fix ändert weder Witty-Uhr noch Zeitmodus automatisch.
 - Fehlt die Offline-Datenbank weiterhin, nennt die Homepage diese Ursache statt nur „Zeitzonenermittlung nicht möglich“. Ein defektes optionales Python-Modul legt nicht den gesamten Webserver lahm.
+- Zeitzonenwechsel: gegenseitige Sperre zwischen Offset-Backend und Allsky-Startprüfung behoben. Der Hardwarezugriff bleibt serialisiert; vor dem anschließenden Allsky-Neustart wird die Witty-Sperre freigegeben. Dies beseitigt einen konkreten Timeoutpfad mit vorübergehend fehlenden Statusdaten.
 - Die Bootdatei-Korrektur aus 1.0.27 bleibt enthalten: keine automatische Wiederherstellung einer leeren Startzeile.
 
 Installation: zuerst Windows 1.0.28, danach Witty Add-on 1.0.28. Erst anschließend Allsky installieren/aktualisieren. Die vorübergehende PC-Zeit setzt eine korrekt eingestellte PC-Uhr voraus. Eine Installation direkt von der Witty-Webseite besitzt keine PC-Zeitquelle.
