@@ -1,15 +1,13 @@
-# 1.0.15
+# 1.0.21
 
-Version 1.0.15 – SD-Wartungsstand, messbare Zeiten und Windows-Module
+Version 1.0.21 – SD-Fortschritt und Abschlussbericht
 
-- Den gemeldeten tune2fs-Zeitstempel vor dem Datumsaufruf in ein eindeutiges ISO-Format umwandeln. Wochentag und Monatsname werden nicht mehr an den Datumsparser übergeben. Fester UTC-Offset, Sommerzeitwahl und Witty-RTC bleiben erhalten.
-- Im fertigen Wartungsimage den ausführenden Schrumpfhelfer und den privaten GNU-Datumsleser bytegenau mit den aktuellen Quelldateien vergleichen. Abweichende Images werden nicht gestartet. Build, Prüfsummen und eindeutige Auftragskennung im Protokoll festhalten.
-- Das Add-on-Update aktualisiert auch einen vorhandenen unabhängigen Windows-Wartungsordner. Die neue Windows-DLL stellt den aktuellen Wartungshelfer vor einer Aktion erneut bereit.
-- Windows-Programm, Inhalt, Fensterüberschrift und Witty Add-on gemeinsam auf 1.0.15 setzen. Das normale Windows-Komplettupdate enthält mit ausdrücklicher Freigabe auch die EXE.
-- Neue Windows-DLL: aktueller Schritt, Fortschrittsbalken und tatsächlich gemessene Zeiten innerhalb des roten SD-Rahmens. Keine Restzeitschätzung. Offline-Dauer und letzter Schritt werden nach Auslesen des Berichts angezeigt.
-- Beim Schrumpfen bleibt die Geräteansicht trotz SSH-Ausfall erhalten. Erst ein manueller Klick auf Verbindung trennen beendet die Anzeige. Weder Verbindungsabbruch noch Zeitablauf werden als Schrumpferfolg gewertet. Ein alter Bericht darf einen neuen Auftrag nicht abschließen.
-- Nach Einlegen der Karte am Windows-PC werden Ergebnisbericht, Dateisystemgröße und Partitionsgrenze gemeinsam geprüft. Fehler bleiben sichtbar; Erfolg erfordert den passenden verifizierten Auftrag.
+- Die SD-Fortschrittsanzeige meldet während laufender Wartung oder ausstehender Abschaltung keinen fertigen Zustand. Nach der Vorbereitung erscheint eine unbestimmte orange Warteanzeige mit tatsächlich gemessener Wartezeit; keine geschätzte Restzeit und kein erfundener Live-Schritt.
+- Ein geprüftes Dateisystem allein setzt den Balken nicht auf 100 Prozent. Der zugehörige Bericht wird empfangen und quittiert; die Abschaltung bleibt bis zum erwarteten Verbindungsende ausstehend. Ohne passenden Bericht wird kein Erfolg behauptet.
+- Im separaten Abschlussstart wird systemd-user-sessions.service vor dem Berichtempfang gestartet. Damit kann die reguläre SSH-Anmeldung nach der Bootinitialisierung erfolgen; bisher konnte die fehlende Freigabe den Berichtempfang verhindern. Die tatsächliche Ursache des letzten Nutzerlaufs bleibt ohne Geräteprotokoll unbestätigt. Ergebnisabfragefehler werden jetzt im Terminal protokolliert.
+- Die drei SD-Aktionsbuttons bleiben an fester Position. Der Fortschrittsbereich ist vom oberen Buttonraster getrennt, sodass längere Zeit- und Statustexte die Buttons nicht verschieben.
+- Beide Allsky-Auswahlfenster benennen das neue Archiv einheitlich: Archiv – 24.10.2026 (Carsten Github). Es wird bereits vom Repository C4rstenSC/scripte geladen; Downloadquelle und Originalcommit bleiben unverändert.
+- Alle Korrekturen aus 1.0.20 bleiben enthalten: automatische Bereinigung nach bestätigt empfangenem Abschluss bzw. beim Wechsel zur SD-Karte, Speicherbelegungsanzeige und Allsky-Archiv24.10.2026.
 
-Prüfung: 32 SD-Regressionen, Windows-Modelltests und bestehende Abbildtests; Windows-x64-Module kompiliert. Kein nativer Windows-Oberflächentest und kein physischer Raspberry-Schrumpf-/Abschalttest. Die genaue Ursache dafür, dass nach 1.0.13.2 erneut der frühere Parserfehler erschien, ist ohne das vollständige Geräteprotokoll nicht abschließend belegt. Allsky 1.0.14 bleibt separate Folgearbeit.
-
-Windows-Komplettupdate über die normale Updatefunktion; EXE mit ausdrücklicher Freigabe enthalten.
+Installation: zuerst normales Windows-Update auf1.0.21, danach Witty Add-on1.0.21. Die Änderungen greifen erst beim nächsten Wartungsauftrag. Den bereits erfolgreich abgeschlossenen Schrumpflauf nicht allein zum Aktualisieren wiederholen.
+Prüfung:36 SD-Pythonregressionen inklusive generierter Abschluss-Unit bestanden. Windows und Updater ohne Warnungen/Fehler gebaut. Modellprüfungen für Berichte, Fortschritt und Modulvalidierung bestanden. Kein physischer Pi-Abschalt-/SSH-Test dieser Version.
