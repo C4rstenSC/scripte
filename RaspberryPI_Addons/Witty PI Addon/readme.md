@@ -1,11 +1,21 @@
-# 1.0.30
+# 1.1
 
-Version 1.0.30 – Skriptgröße, Ereigniszahl und Uploadablauf
+Version 1.1 – Änderungen gegenüber 1.0.30
 
-- Der Editor zählt jetzt die tatsächlich für Download und Upload formatierten UTF-8-Bytes einschließlich Windows-Zeilenumbrüchen. Die vorherige Anzeige zählte nur den unbearbeiteten Editorinhalt. Der gemeldete Unterschied269/293Byte ist mit identischem Inhalt reproduziert.
-- Ereigniszahl nach dem Upload repariert: CRLF-Zeilenumbrüche führten bisher im nachträglichen Bash-Schätzer zum internen Ersatzwert4096, der anschließend als vermeintlich echte Ereigniszahl angezeigt wurde. Ein gemeinsamer Python-Zähler wird nun für Backend-Metadaten und Uploadprüfung verwendet. Teilweise letzte Zyklen und der tatsächliche Zustand am END werden berücksichtigt; unbekannte Werte erscheinen nicht mehr als4096Events.
-- Metadaten werden aus dem gespeicherten und vom Witty gegengelesenen Inhalt berechnet. Bereits lokal vorhandene Skripte werden beim nächsten Laden der Liste neu ausgewertet. Es ist kein erneutes Aktivieren notwendig.
-- Reiner Editor-Upload bleibt von der Aktivierung getrennt. Upload, ggf. Deaktivieren der bisher aktiven gleichnamigen Datei und Gegenlesen laufen nun in einer gemeinsamen Hardwaretransaktion. wp5d wird nicht mehr zwischen diesen Teilschritten mehrfach neu gestartet; sein vorheriger Dienstzustand wird anschließend wiederhergestellt.
-- Der gemeldete Raspberry-Ausfall während des Uploads ist ohne Geräteprotokoll nicht eindeutig erklärt. Die Änderung beseitigt zwischenzeitliche Herstellerdienststarts als konkreten Ablauf-Risikopunkt, behauptet aber keinen nachgewiesenen Hardware-Abschaltgrund. Upload-Phasen werden unter dem Journal-Kennzeichen witty-schedule protokolliert.
-- Neuinstallations- und Updatekorrekturen sowie Start bei Stromzufuhr aus1.0.29 bleiben enthalten. Windows/Inhalt und Witty-Add-on gemeinsam1.0.30.
-Prüfung: reproduzierte269/293Byte-Dateien mitLF/CRLF, übereinstimmende JavaScript-/Python-Ereigniszählung, letzteTeilzyklen, unbekannteMetadaten und UploadtransaktionohneAktivierung. Abgleich der Ereigniserzeugung mitHersteller-Firmwarev1.7src/script.c. Kein physischerUpload-/Abschalttest aufdem betroffenenPi.
+1. Witty-Zeitprüfung vor Allsky: RTC-Jahr 2000 wird auf 01.01.2026 00:00:00 als Ersatzzeit gesetzt und in Witty zurückgeschrieben. Andere Jahre bleiben unverändert. Vor Allsky wird der Zeitabgleich weiterhin geprüft. Zeitzone und fester UTC-Offset bleiben erhalten. Die Ersatzzeit ist keine aktuelle Uhrzeit.
+
+2. Manuelle GPS-Zeitübernahme: Beide GPS-Zeitbuttons funktionieren auch bei installiertem Allsky mit gültigen GPS-Zeitdaten. Automatisch bleibt Witty die Zeitquelle vor dem Allsky-Start. Die vorhandenen Schreib- und Vergleichsprüfungen bleiben bestehen.
+
+3. Weitere Einstellungen: Strommessung zwischen Spannung und Temperatur; Startverhalten bei Stromzufuhr verständlich beschriftet und direkt vor Witty-Reset; Reset am Ende vor Raspberry-Neustart. Hot-Standby aus dem Menü entfernt. Energie-Priorität heißt Bevorzugter Stromanschluss.
+
+4. UTC-Auswahl: Größere Schrift, abwechselnd dezente Hintergründe und Pfeile vor +01:00, +02:00 und +10:00. Zeitzonenhinweis vor UTC-Auswahl. Aktiver Zeitmodus wird grün markiert.
+
+5. Manuelle Zeitfelder: In der PC-Ansicht stehen die Eingabefelder direkt links neben ihrem jeweiligen Setzen-Button.
+
+6. GPS-Anzeige: Installierte Variante grün oberhalb ihres Buttons, aktive Funktion weiterhin über Ampel. Doppelten Statustext und Trennlinie entfernt. GPS-Zeitzeile bei fehlenden gültigen GPS-Zeitdaten vollständig ausgeblendet.
+
+7. Reaktionszeit: Speicherung von Firmware-Einstellungen wird vor der anschließenden Statusaktualisierung bestätigt. Dabei wird der schnelle Status ohne GPS-Abfrage verwendet.
+
+8. Skriptliste: Verzeichnisabfragen und Metadaten werden in einer gemeinsamen Witty-Transaktion gelesen; wp5d wird dabei nur einmal angehalten und wieder gestartet. systemd-Startbegrenzung bleibt unverändert.
+
+Hinweis: Die spontanen Raspberry-Ausfälle sind weiterhin nicht abschließend geklärt. Die Logs zeigen wiederholte Unterspannung und einen abrupten Abbruch, ohne passenden Witty-Abschalteintrag. Dieses Update wird nicht als Behebung dieser Ausfälle ausgegeben.
