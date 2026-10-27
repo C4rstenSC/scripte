@@ -1,0 +1,4 @@
+Version 1.0.30 – schedule metadata and upload flow
+
+The editor counts actual serialized UTF-8 upload/download bytes including CRLF. Reproduced the269/293byte discrepancy. A shared analyzer now supplies backend metadata and upload validation; CRLF no longer becomes the fallback4096 displayed as real events. Partial final cycles and the final ON/OFF state are handled consistently with the editor and reviewed vendor firmwarev1.7. Unknown event counts are not displayed as4096.
+Editor uploads remain separate from activation. One hardware transaction now covers replacement/deactivation, upload and readback, avoiding repeated wp5d restarts between those steps. Prior service state is restored afterward. The reported Pi shutdown is not conclusively diagnosed without device logs; journal tag witty-schedule records upload phases. Preserved1.0.29 fresh-install and auto-power-on fixes. Automated byte/count/transaction regressions passed; no physical Pi upload/power test.
