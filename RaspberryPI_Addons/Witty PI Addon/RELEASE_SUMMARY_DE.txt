@@ -1,20 +1,16 @@
-Version 1.1 – Änderungen gegenüber 1.0.30
+Version 1.1.1 – Änderungen gegenüber 1.1
 
-1. Witty-Zeitprüfung vor Allsky: RTC-Jahr 2000 wird auf 01.01.2026 00:00:00 als Ersatzzeit gesetzt und in Witty zurückgeschrieben. Andere Jahre bleiben unverändert. Vor Allsky wird der Zeitabgleich weiterhin geprüft. Zeitzone und fester UTC-Offset bleiben erhalten. Die Ersatzzeit ist keine aktuelle Uhrzeit.
+Geltungsbereich: ausschließlich WURB mit USB-GPS auf Raspberry Pi 5. Die neue Positionskorrektur wird nur bei RPI_MODEL=5 und GPS_MODE=usb aktiviert. Waveshare-GPS, Raspberry Pi 4 und Allsky erhalten keine neue GPS-Konfiguration oder neue Positionskorrektur.
 
-2. Manuelle GPS-Zeitübernahme: Beide GPS-Zeitbuttons funktionieren auch bei installiertem Allsky mit gültigen GPS-Zeitdaten. Automatisch bleibt Witty die Zeitquelle vor dem Allsky-Start. Die vorhandenen Schreib- und Vergleichsprüfungen bleiben bestehen.
+1. Positionsübernahme: Beim Speichern der GPS-Auswahl übernimmt WURB einen bereits vorhandenen, frischen und qualitätsgeprüften Fix unmittelbar. Eine unveränderte Position bleibt dadurch nicht mehr allein wegen eines fehlenden Koordinatenänderungsereignisses auf null stehen.
 
-3. Weitere Einstellungen: Strommessung zwischen Spannung und Temperatur; Startverhalten bei Stromzufuhr verständlich beschriftet und direkt vor Witty-Reset; Reset am Ende vor Raspberry-Neustart. Hot-Standby aus dem Menü entfernt. Energie-Priorität heißt Bevorzugter Stromanschluss.
+2. Verpasste Positionsereignisse: Die bestehende WURB-Kontrollschleife gleicht die aktive Position auch ohne neue Koordinatenänderung mit dem aktuellen GPS-Leser ab. Ein vor Beginn der Schleife verpasstes Ereignis kann dadurch nachgeholt werden. Schreiben erfolgt nur bei abweichenden Werten.
 
-4. UTC-Auswahl: Größere Schrift, abwechselnd dezente Hintergründe und Pfeile vor +01:00, +02:00 und +10:00. Zeitzonenhinweis vor UTC-Auswahl. Aktiver Zeitmodus wird grün markiert.
+3. Gültigkeitsprüfung: Die neue Abfrage verwendet die vorhandene monotone Empfangszeit und die bestehende Drei-Sekunden-Gültigkeit. Ungültige oder veraltete Fixes werden nicht als aktuelle Position übernommen. Mindest-Satellitenzahl, letzte GPS-Position und manuelle Standardposition bleiben getrennt.
 
-5. Manuelle Zeitfelder: In der PC-Ansicht stehen die Eingabefelder direkt links neben ihrem jeweiligen Setzen-Button.
+4. Zahlenverarbeitung: Die Positionskonvertierung akzeptiert Zeichenketten und numerische Werte. Begleitdateien werden vor Änderungen auf bekannte Struktur und gültige Python-Syntax geprüft; wiederholtes Anwenden erzeugt keine weiteren Änderungen.
 
-6. GPS-Anzeige: Installierte Variante grün oberhalb ihres Buttons, aktive Funktion weiterhin über Ampel. Doppelten Statustext und Trennlinie entfernt. GPS-Zeitzeile bei fehlenden gültigen GPS-Zeitdaten vollständig ausgeblendet.
+5. Prüfung: 23 Softwaretests bestanden, darunter GPS-Verarbeitung, Wiederherstellung unveränderter Positionen, Fixverlust sowie gleichzeitige Versorgung von Homepage und WURB-Bridge über einen GPSD-Testserver und einen echten Linux-PTY. Die acht aufgezeichneten GGA-/RMC-Sätze wurden zusätzlich direkt durch den tatsächlichen WURB-Parser geprüft. Kein Hardwaretest dieser Änderung auf dem betroffenen Raspberry Pi.
 
-7. Reaktionszeit: Speicherung von Firmware-Einstellungen wird vor der anschließenden Statusaktualisierung bestätigt. Dabei wird der schnelle Status ohne GPS-Abfrage verwendet.
-
-8. Skriptliste: Verzeichnisabfragen und Metadaten werden in einer gemeinsamen Witty-Transaktion gelesen; wp5d wird dabei nur einmal angehalten und wieder gestartet. systemd-Startbegrenzung bleibt unverändert.
-
-Hinweis: Die spontanen Raspberry-Ausfälle sind weiterhin nicht abschließend geklärt. Die Logs zeigen wiederholte Unterspannung und einen abrupten Abbruch, ohne passenden Witty-Abschalteintrag. Dieses Update wird nicht als Behebung dieser Ausfälle ausgegeben.
+Unverändert: GPSD-Einstellungen, NMEA-Bridge, Empfängerprotokoll, USB-Portbelegung, Witty-Zeitsteuerung und Windows-EXE. Die frühere GPS-Anzeigestörung der Witty-Homepage und das Überschreiben der manuellen Standardposition sind mit den vorhandenen Daten nicht abschließend erklärt und werden nicht als behoben ausgegeben.
 
