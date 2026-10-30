@@ -1,0 +1,17 @@
+Version 1.1.2 – Änderungen gegenüber 1.1.1
+
+1. WURB-Standardposition auf Pi 4 und Pi 5: Über die WURB-Webseite ausdrücklich gespeicherte Default-Koordinaten werden unabhängig von Aufnahme- und Startprofilen aufbewahrt. Neustarts, das Laden anderer Profile und aktuelle GPS-Koordinaten ersetzen dieses Paar nicht mehr. Nur ein erneutes ausdrückliches Speichern der Standardposition ersetzt es. Bereits gespeicherte Werte werden einmalig übernommen; bereits verlorene Werte werden nicht aus einer GPS-Position erraten.
+
+2. Smartphone-Eingabe in WURB: Die Lat-/Long-Felder erhalten mehr Platz und mindestens 16 Pixel Schrift. Beim Antippen wird der Fokus ohne erzwungenen Seitensprung gesetzt. Beim Öffnen der Tastatur wird nur so weit gescrollt, dass das Eingabefeld sichtbar bleibt. Eine vollständige Tastatur erhält Minuszeichen sowie N/S/E/W als Eingabemöglichkeit.
+
+3. Bearbeitete Koordinaten schützen: Hintergrundmeldungen und verspätete Default-Abfragen überschreiben auf Smartphones keine gerade bearbeiteten oder noch ungespeicherten Werte. Layoutverändernde Statusaktualisierungen warten während des Feldfokus. Ein fehlgeschlagener Speicherversuch lässt die Eingabe stehen.
+
+4. Mehr Kontrast ausschließlich auf Smartphones: Graue Beschriftungen, Hinweise und Dateiinformationen erscheinen heller auf Witty Addon, WURB Recordings und WIRC Recordings. Schwarze Schrift sowie grüne und rote Statusfarben bleiben erhalten. Desktop, iPad und die eigentlichen WURB-/WIRC-Seiten erhalten diese Farbanpassung nicht.
+
+5. Bereitstellung: Eigener WURB-Helfer für die dauerhaften Standardkoordinaten bei Installation, im normalen Add-on-Update und vor WURB-Starts. Die Navigation lädt die Smartphone-Eingabekorrektur ausschließlich in WURB und bleibt bei wiederholter Anwendung unverändert.
+
+6. SSH-Updateausgabe: Historische Release-Dateien erscheinen nicht mehr im laufenden Dateiabgleich. Nach erfolgreichem Abschluss werden nur Änderungsnotizen seit der zuvor installierten Version beziehungsweise dem zuvor installierten Build angezeigt. Bei Versionssprüngen werden die dazwischenliegenden Stände berücksichtigt; beim identischen Stand werden keine alten Änderungen wiederholt. Erfolgreiche Routineprüfungen werden knapp als geprüft gemeldet, aktuelle Warnungen und vollständige Fehlerdiagnosen bleiben sichtbar. Unabhängige Homepage-Änderungen lösen keine Allsky-Reparatur aus.
+
+Prüfung: Sechs Speicherprüfungen mit tatsächlicher SQLite-Speicherung und erneutem Öffnen, einschließlich Pi-4-Quellstand und Pi-5-Stand mit 1.1.1-Korrektur. Sechs lokale Smartphone-Formularfälle sowie Ausschluss von Desktop/iPad geprüft. Vier Prüfungen für versionsabhängige Updateausgaben, Warnungen, Fehlercodes und Live-Fortschritt bestanden. Navigation und JavaScript-/Python-/Shell-Syntax geprüft. Das Verhalten der Bildschirmtastatur auf einem echten iPhone/Samsung muss nach Installation bestätigt werden.
+
+Unverändert: funktionierender GPS-Empfang, GPSD, USB-/Waveshare-Datenwege, Pi-4-GPS-Konfiguration, NMEA-Bridge, Allsky, Witty-Zeitsteuerung und Windows-EXE. Keine neuen GPS-Empfangstests und keine neue EXE erforderlich.

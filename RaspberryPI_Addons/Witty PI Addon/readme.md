@@ -1,17 +1,19 @@
-# 1.1.1
+# 1.1.2
 
-Version 1.1.1 – Änderungen gegenüber 1.1
+Version 1.1.2 – Änderungen gegenüber 1.1.1
 
-Geltungsbereich: ausschließlich WURB mit USB-GPS auf Raspberry Pi 5. Die neue Positionskorrektur wird nur bei RPI_MODEL=5 und GPS_MODE=usb aktiviert. Waveshare-GPS, Raspberry Pi 4 und Allsky erhalten keine neue GPS-Konfiguration oder neue Positionskorrektur.
+1. WURB-Standardposition auf Pi 4 und Pi 5: Über die WURB-Webseite ausdrücklich gespeicherte Default-Koordinaten werden unabhängig von Aufnahme- und Startprofilen aufbewahrt. Neustarts, das Laden anderer Profile und aktuelle GPS-Koordinaten ersetzen dieses Paar nicht mehr. Nur ein erneutes ausdrückliches Speichern der Standardposition ersetzt es. Bereits gespeicherte Werte werden einmalig übernommen; bereits verlorene Werte werden nicht aus einer GPS-Position erraten.
 
-1. Positionsübernahme: Beim Speichern der GPS-Auswahl übernimmt WURB einen bereits vorhandenen, frischen und qualitätsgeprüften Fix unmittelbar. Eine unveränderte Position bleibt dadurch nicht mehr allein wegen eines fehlenden Koordinatenänderungsereignisses auf null stehen.
+2. Smartphone-Eingabe in WURB: Die Lat-/Long-Felder erhalten mehr Platz und mindestens 16 Pixel Schrift. Beim Antippen wird der Fokus ohne erzwungenen Seitensprung gesetzt. Beim Öffnen der Tastatur wird nur so weit gescrollt, dass das Eingabefeld sichtbar bleibt. Eine vollständige Tastatur erhält Minuszeichen sowie N/S/E/W als Eingabemöglichkeit.
 
-2. Verpasste Positionsereignisse: Die bestehende WURB-Kontrollschleife gleicht die aktive Position auch ohne neue Koordinatenänderung mit dem aktuellen GPS-Leser ab. Ein vor Beginn der Schleife verpasstes Ereignis kann dadurch nachgeholt werden. Schreiben erfolgt nur bei abweichenden Werten.
+3. Bearbeitete Koordinaten schützen: Hintergrundmeldungen und verspätete Default-Abfragen überschreiben auf Smartphones keine gerade bearbeiteten oder noch ungespeicherten Werte. Layoutverändernde Statusaktualisierungen warten während des Feldfokus. Ein fehlgeschlagener Speicherversuch lässt die Eingabe stehen.
 
-3. Gültigkeitsprüfung: Die neue Abfrage verwendet die vorhandene monotone Empfangszeit und die bestehende Drei-Sekunden-Gültigkeit. Ungültige oder veraltete Fixes werden nicht als aktuelle Position übernommen. Mindest-Satellitenzahl, letzte GPS-Position und manuelle Standardposition bleiben getrennt.
+4. Mehr Kontrast ausschließlich auf Smartphones: Graue Beschriftungen, Hinweise und Dateiinformationen erscheinen heller auf Witty Addon, WURB Recordings und WIRC Recordings. Schwarze Schrift sowie grüne und rote Statusfarben bleiben erhalten. Desktop, iPad und die eigentlichen WURB-/WIRC-Seiten erhalten diese Farbanpassung nicht.
 
-4. Zahlenverarbeitung: Die Positionskonvertierung akzeptiert Zeichenketten und numerische Werte. Begleitdateien werden vor Änderungen auf bekannte Struktur und gültige Python-Syntax geprüft; wiederholtes Anwenden erzeugt keine weiteren Änderungen.
+5. Bereitstellung: Eigener WURB-Helfer für die dauerhaften Standardkoordinaten bei Installation, im normalen Add-on-Update und vor WURB-Starts. Die Navigation lädt die Smartphone-Eingabekorrektur ausschließlich in WURB und bleibt bei wiederholter Anwendung unverändert.
 
-5. Prüfung: 23 Softwaretests bestanden, darunter GPS-Verarbeitung, Wiederherstellung unveränderter Positionen, Fixverlust sowie gleichzeitige Versorgung von Homepage und WURB-Bridge über einen GPSD-Testserver und einen echten Linux-PTY. Die acht aufgezeichneten GGA-/RMC-Sätze wurden zusätzlich direkt durch den tatsächlichen WURB-Parser geprüft. Kein Hardwaretest dieser Änderung auf dem betroffenen Raspberry Pi.
+6. SSH-Updateausgabe: Historische Release-Dateien erscheinen nicht mehr im laufenden Dateiabgleich. Nach erfolgreichem Abschluss werden nur Änderungsnotizen seit der zuvor installierten Version beziehungsweise dem zuvor installierten Build angezeigt. Bei Versionssprüngen werden die dazwischenliegenden Stände berücksichtigt; beim identischen Stand werden keine alten Änderungen wiederholt. Erfolgreiche Routineprüfungen werden knapp als geprüft gemeldet, aktuelle Warnungen und vollständige Fehlerdiagnosen bleiben sichtbar. Unabhängige Homepage-Änderungen lösen keine Allsky-Reparatur aus.
 
-Unverändert: GPSD-Einstellungen, NMEA-Bridge, Empfängerprotokoll, USB-Portbelegung, Witty-Zeitsteuerung und Windows-EXE. Die frühere GPS-Anzeigestörung der Witty-Homepage und das Überschreiben der manuellen Standardposition sind mit den vorhandenen Daten nicht abschließend erklärt und werden nicht als behoben ausgegeben.
+Prüfung: Sechs Speicherprüfungen mit tatsächlicher SQLite-Speicherung und erneutem Öffnen, einschließlich Pi-4-Quellstand und Pi-5-Stand mit 1.1.1-Korrektur. Sechs lokale Smartphone-Formularfälle sowie Ausschluss von Desktop/iPad geprüft. Vier Prüfungen für versionsabhängige Updateausgaben, Warnungen, Fehlercodes und Live-Fortschritt bestanden. Navigation und JavaScript-/Python-/Shell-Syntax geprüft. Das Verhalten der Bildschirmtastatur auf einem echten iPhone/Samsung muss nach Installation bestätigt werden.
+
+Unverändert: funktionierender GPS-Empfang, GPSD, USB-/Waveshare-Datenwege, Pi-4-GPS-Konfiguration, NMEA-Bridge, Allsky, Witty-Zeitsteuerung und Windows-EXE. Keine neuen GPS-Empfangstests und keine neue EXE erforderlich.
