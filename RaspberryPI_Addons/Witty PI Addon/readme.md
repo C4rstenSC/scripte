@@ -1,19 +1,26 @@
-# 1.1.2
+# 1.1.3
 
-Version 1.1.2 – Änderungen gegenüber 1.1.1
+Version 1.1.3 – 30.10.2026
 
-1. WURB-Standardposition auf Pi 4 und Pi 5: Über die WURB-Webseite ausdrücklich gespeicherte Default-Koordinaten werden unabhängig von Aufnahme- und Startprofilen aufbewahrt. Neustarts, das Laden anderer Profile und aktuelle GPS-Koordinaten ersetzen dieses Paar nicht mehr. Nur ein erneutes ausdrückliches Speichern der Standardposition ersetzt es. Bereits gespeicherte Werte werden einmalig übernommen; bereits verlorene Werte werden nicht aus einer GPS-Position erraten.
+1. Schreibschutz beim Inhaltsupdate
+Geänderte Add-on-Dateien, Homepage-Vorlagen, Versionsangaben und Update-Zustandsdateien werden zunächst vollständig in eine temporäre Datei im Zielverzeichnis geschrieben und mit fsync gesichert. Erst danach wird die vorhandene Datei atomar ersetzt. Vor der Erfolgsmeldung folgt ein systemweiter Schreibabschluss. Dies verringert das Risiko leerer Zieldateien bei unterbrochenen Updates; ein beliebiger harter Stromausfall oder ein Datenträgerdefekt kann damit nicht vollständig abgesichert werden.
 
-2. Smartphone-Eingabe in WURB: Die Lat-/Long-Felder erhalten mehr Platz und mindestens 16 Pixel Schrift. Beim Antippen wird der Fokus ohne erzwungenen Seitensprung gesetzt. Beim Öffnen der Tastatur wird nur so weit gescrollt, dass das Eingabefeld sichtbar bleibt. Eine vollständige Tastatur erhält Minuszeichen sowie N/S/E/W als Eingabemöglichkeit.
+2. Wiederherstellung beschädigter WURB-/WIRC-Startseiten
+Eine leere index.html wird aus der auf dem Raspberry bereits installierten Git-Revision wiederhergestellt und vor dem Ersetzen geprüft. Keine neue Hersteller-Version wird dafür heruntergeladen. Anschließend wird nur die betroffene Anwendung neu geladen.
 
-3. Bearbeitete Koordinaten schützen: Hintergrundmeldungen und verspätete Default-Abfragen überschreiben auf Smartphones keine gerade bearbeiteten oder noch ungespeicherten Werte. Layoutverändernde Statusaktualisierungen warten während des Feldfokus. Ein fehlgeschlagener Speicherversuch lässt die Eingabe stehen.
+3. Beschädigte Pi-5-USB-GPS-Bridge
+Nur bei Raspberry Pi 5 mit gewähltem USB-GPS wird eine nachweislich leere reguläre Bridge-Dienstdatei mit der bisherigen Dienstdefinition wiederhergestellt. Absichtliche Maskierungen als symbolischer Link bleiben erhalten. GPS-Empfangslogik, NMEA-Verarbeitung, Pi-4-GPS und Waveshare wurden nicht geändert. Eine Maskierung allein beweist keine leere Datei.
 
-4. Mehr Kontrast ausschließlich auf Smartphones: Graue Beschriftungen, Hinweise und Dateiinformationen erscheinen heller auf Witty Addon, WURB Recordings und WIRC Recordings. Schwarze Schrift sowie grüne und rote Statusfarben bleiben erhalten. Desktop, iPad und die eigentlichen WURB-/WIRC-Seiten erhalten diese Farbanpassung nicht.
+4. Witty-Rückfall auf Jahr 2000
+Bei erkanntem RTC-Jahr 2000 wird die Ersatzzeit 01.01.2026 einmal in Linux und anschließend einmal in den Witty geschrieben. Die unnötige Rückübertragung entfällt; beide Uhren werden danach lesend verglichen. Die Ersatzzeit ist nicht die tatsächliche aktuelle Uhrzeit. Bei gültiger RTC bleibt die bisherige Richtung Witty nach Linux erhalten. Die Ursache der beobachteten Abschaltungen ist damit nicht als behoben nachgewiesen.
 
-5. Bereitstellung: Eigener WURB-Helfer für die dauerhaften Standardkoordinaten bei Installation, im normalen Add-on-Update und vor WURB-Starts. Die Navigation lädt die Smartphone-Eingabekorrektur ausschließlich in WURB und bleibt bei wiederholter Anwendung unverändert.
+5. Datumsprüfung und Sicherungen
+Vor Dateiänderungen und Paketprüfungen stoppt das Update bei einem Linux-Jahr außerhalb 2026 bis 2099 mit einer eindeutigen Meldung. Diese Prüfung synchronisiert weder RTC noch Systemzeit und verändert keinen UTC-Offset oder Sommer-/Winterzeitmodus. Backup-Verzeichnisse erhalten eindeutige Zusätze gegen Namenskollisionen bei zurückgestellter Uhr; vorhandene Wiederherstellungssicherungen werden bei diesem Reparaturupdate nicht automatisch gelöscht. Leere GPS-/Komponenten-Vergleichsdateien gelten nicht als geänderte Nutzerauswahl.
 
-6. SSH-Updateausgabe: Historische Release-Dateien erscheinen nicht mehr im laufenden Dateiabgleich. Nach erfolgreichem Abschluss werden nur Änderungsnotizen seit der zuvor installierten Version beziehungsweise dem zuvor installierten Build angezeigt. Bei Versionssprüngen werden die dazwischenliegenden Stände berücksichtigt; beim identischen Stand werden keine alten Änderungen wiederholt. Erfolgreiche Routineprüfungen werden knapp als geprüft gemeldet, aktuelle Warnungen und vollständige Fehlerdiagnosen bleiben sichtbar. Unabhängige Homepage-Änderungen lösen keine Allsky-Reparatur aus.
+6. Updateausgaben
+Ist die bisherige Versionsdatei leer oder beschädigt, wird nur die Änderungsliste der Zielversion angezeigt, nicht die gesamte Versionshistorie. Bei bekannter Ausgangsversion bleibt die versionsabhängige Auswahl erhalten. Die Änderung des Bootzeit-Helfers allein löst keine GPS-Neueinrichtung mehr aus.
 
-Prüfung: Sechs Speicherprüfungen mit tatsächlicher SQLite-Speicherung und erneutem Öffnen, einschließlich Pi-4-Quellstand und Pi-5-Stand mit 1.1.1-Korrektur. Sechs lokale Smartphone-Formularfälle sowie Ausschluss von Desktop/iPad geprüft. Vier Prüfungen für versionsabhängige Updateausgaben, Warnungen, Fehlercodes und Live-Fortschritt bestanden. Navigation und JavaScript-/Python-/Shell-Syntax geprüft. Das Verhalten der Bildschirmtastatur auf einem echten iPhone/Samsung muss nach Installation bestätigt werden.
+7. Mobile Funktionen aus 1.1.2 bleiben enthalten
+Dauerhafte ausdrücklich gespeicherte WURB-Default-Koordinaten; Eingabeschutz für LAT, LONG und gemeinsame Bestätigung auf Smartphones; mehr Kontrast nur auf den Smartphone-Seiten Witty Addon, WURB Recordings und WIRC Recordings. Desktop/iPad, schwarze Beschriftungen und Rot/Grün bleiben unverändert. Die native iPhone-Tastaturbedienung muss noch auf einem echten Gerät bestätigt werden.
 
-Unverändert: funktionierender GPS-Empfang, GPSD, USB-/Waveshare-Datenwege, Pi-4-GPS-Konfiguration, NMEA-Bridge, Allsky, Witty-Zeitsteuerung und Windows-EXE. Keine neuen GPS-Empfangstests und keine neue EXE erforderlich.
+Prüfung: gezielte Softwaretests für atomaren Dateiersatz, Wiederherstellung einer leeren Vorlage aus Git, Begrenzung der Bridge-Reparatur, Zeitübertragung, Updateausgaben und Smartphone-Formulare bestanden. Kein erneuter GPS-Empfangstest und kein physischer Stromausfall-/Witty-Neustarttest. Im Nutzerprotokoll wurden wiederholte Unterspannungsmeldungen beobachtet; deren Ursache bleibt offen.
