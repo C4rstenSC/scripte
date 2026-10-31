@@ -1,0 +1,28 @@
+Version 1.1.3.1 – 2026-10-31
+
+Early boot diagnosis before basic.target, wp5d and the Add-on backend; no
+completed boot or SSH connection required. Captures the first ten minutes of
+each boot by immutable boot ID. Audit records relevant executions, script
+access and the reboot syscall; D-Bus, journal, manufacturer log and process
+ancestry supplement it. Backend requests and WP5 menu input are journalled.
+
+The update installs auditd when required, saves the initial state before
+Add-on file changes, retains the update transcript and verifies readiness
+before reporting success. All changes from 1.1.3 remain included. A planned
+Witty boot is marked without automatically shutting down or resetting Witty.
+
+Collect after a failed attempt, using direct Pi power if necessary:
+sudo /usr/local/sbin/witty-start-diagnose collect
+
+The archive compares installed files with 1.1.1, 1.1.2, 1.1.3 and 1.1.3.1,
+and includes service definitions, masks, empty unit files, WP5 package checks
+and a backup inventory. UPDATE-PRUEFUNG.txt documents the update review.
+
+The observer does not run WP5/I2C commands, change clocks, EEPROM or boot
+parameters. Physical power source is not automatically verified. Missing last
+records or a missing observer end marker do not establish the shutdown cause.
+An abrupt cut may require the Witty firmware log. This release provides
+diagnosis, not a confirmed fix. Software tests only; no physical Pi/Witty test.
+
+Remove after diagnosis: sudo /usr/local/sbin/witty-start-diagnose remove
+Collected evidence and the installed auditd package are retained.
