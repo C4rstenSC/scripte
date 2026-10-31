@@ -1,0 +1,32 @@
+Version 1.1.3.2 – 2026-11-01
+
+Removes the fixed 2026 fallback write. The additional Pi-5/Allsky boot helper
+waits for a fresh valid RTC, avoids a duplicate Linux clock set, and never
+writes an RTC. Without Allsky the extra boot helper is disabled. The vendor
+WP5 daemon and its own startup synchronization are unchanged.
+
+GPS validation happens before stopping WP5; no USB receiver means no clock
+write or daemon stop. GPS no longer holds multi-user.target startup open.
+The WP5 time adapter restores a previously active daemon after a CLI timeout.
+
+Updates use a supplied PC epoch or verified-HTTPS response date, protect Linux
+against subsequent wall-clock jumps using monotonic elapsed time, and inhibit
+additional Add-on clock changes. Certificate/signature checks remain enabled.
+If the clock is too wrong for TLS and no PC epoch is supplied, the update stops
+and requests a correct Linux time. It never guesses a replacement RTC date.
+
+A separate observer starts after root remount, before local-fs/Audit, recording
+kernel, uptime and process names under /witty-start-evidence. Existing Audit
+and D-Bus evidence continues. Boot IDs normalize hyphens. Capture still cannot
+cover events before writable root or after power loss.
+
+Normal backend status reads bypass the long writer lock; Windows clock probes
+limit RTC status waits to four seconds and retain Linux time on failure.
+Automatic embedded-terminal clear/reset preserves output; reload of the same
+terminal view restores up to 2 MiB using per-view session storage.
+
+Atomic clock configuration/drop-in replacement and all 1.1.3.1 fixes retained.
+Collect: sudo /usr/local/sbin/witty-start-diagnose collect
+Remove observers: sudo /usr/local/sbin/witty-start-diagnose remove
+Software tests only; no physical Pi/Witty or real Windows WebView test.
+The cause of the reported early shutdown has not been established.

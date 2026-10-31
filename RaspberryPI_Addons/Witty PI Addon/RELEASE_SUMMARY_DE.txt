@@ -1,57 +1,67 @@
-Version 1.1.3.1 – 31.10.2026
+Version 1.1.3.2 – 01.11.2026
 
-1. Frühe Startdiagnose für das Abschalten beim Start über Witty
-Ein eigener Beobachter startet vor basic.target, wp5d und dem Add-on-Backend.
-Er benötigt weder einen abgeschlossenen Bootvorgang noch eine SSH-Verbindung.
-Die ersten zehn Minuten pro Start werden dauerhaft nach fester Boot-ID
-aufgezeichnet. Der Beobachter setzt keine Uhr und führt keine WP5-/I2C-Befehle
-oder Firmware-Resets aus. Die Abschaltursache ist damit noch nicht behoben.
+1. Zeitabgleich beim Start
+Die feste Ersatzzeit 01.01.2026 wird nicht mehr automatisch nach Linux oder
+in die Witty-RTC geschrieben. Auf Pi 5 wartet der zusätzliche Allsky-Zeithelfer
+bis zu 25 Sekunden auf eine frisch lesbare, plausibel datierte Witty-RTC.
+Er beendet sich bei fehlender/ungültiger RTC mit einer klaren Meldung, ohne
+Uhren zu schreiben. Eine bereits durch WP5 übernommene passende Linux-Zeit
+wird nicht nochmals gesetzt. Der bestätigte Abgleich wird pro Boot vorgemerkt.
+WP5 wird dafür nicht angehalten. Ohne Allsky wird der zusätzliche Boot-Zeit-
+dienst deaktiviert, statt bei jedem Update erneut aktiviert zu werden.
+Das ursprüngliche Verhalten der UUGear-Herstellersoftware bleibt unverändert;
+auch sie führt beim eigenen Start einen Zeitabgleich aus.
 
-2. Herkunft von Befehlen und WP5-Zugriffen
-Linux Audit erfasst relevante Programmstarts mit PID/PPID, Skriptzugriffe und
-den reboot-Systemaufruf. Dienst-/Power-Aktionen auf D-Bus, Herstellerlog,
-Journal und ergänzende Prozessketten werden gespeichert. Das Backend
-protokolliert seine Aktion und die tatsächlich übergebene WP5-Menüfolge.
-Auditd wird bei Bedarf als Diagnosevoraussetzung installiert. Ein fehlender
-oder gesperrter Audit-Zugang führt zu einer klaren Fehlermeldung.
+2. GPS ohne blockierten WP5-Daemon
+Der GPS-Abgleich wartet zuerst auf gültige GPS-Daten und hält erst danach WP5
+für erforderliche Schreibzugriffe an. Ohne USB-GPS-Maus endet der automatische
+Auftrag ohne Zeitänderung und ohne Anhalten von WP5. Der GPS-Dienst hält das
+Erreichen von multi-user.target nicht mehr minutenlang auf. Der eigenständige
+WP5-Zeitadapter stellt den vorher aktiven Daemon auch nach einem CLI-Timeout
+wieder her. GPS-/Zeithelferänderungen allein richten den Empfänger nicht neu ein.
 
-3. Update mit Ausgangssicherung und dauerhaftem Verlauf
-Vor Änderungen an Add-on-Dateien wird der bestehende Systemzustand gesammelt;
-der folgende Updateverlauf bleibt in /var/log/witty-start-diagnose erhalten.
-Vor der Erfolgsmeldung muss der Beobachter aktiv und mit Audit-Regeln bereit
-sein. Der nächste Start wird als geplanter Witty-Test markiert. Ein Update
-führt keinen automatischen Shutdown aus. Nach einem fehlgeschlagenen Start
-kann die Diagnose bei direkter Pi-Versorgung gesammelt werden:
+3. Tatsächliche Installationszeit und Schutz vor Zeitsprüngen
+Das Add-on-Update ermittelt eine Installationszeit aus übergebenem PC-Zeitwert
+oder dem Date-Header einer zertifikatsgeprüften HTTPS-Verbindung. Es schreibt
+keine Ersatzzeit in die RTC und schaltet keine Signaturprüfung ab. Während
+des Updates wird Linux anhand dieser Zeit plus monotoner Laufzeit gegen
+Zeitsprünge abgesichert; zusätzliche Add-on-Zeit-/RTC-Befehle sind gesperrt.
+Ist keine bestätigte Zeit erreichbar, stoppt das Update vor den Änderungen.
+Bei Jahr 2000 kann bereits die TLS-Prüfung scheitern; dann ist weiterhin die
+aktuelle Windows-Zeit einmal nach Linux zu übernehmen. Die alte falsche
+Linux-Zeit wird am Ende nicht wiederhergestellt. Der Verlauf wird gespeichert.
+
+4. Frühere Diagnose
+Ein zusätzlicher Shell-Beobachter startet bereits nach dem beschreibbaren
+Root-Dateisystem, vor local-fs.target und Audit. Er speichert sofort Start-ID,
+Laufzeit, Kernelmeldungen und Prozessnamen unter /witty-start-evidence.
+Die ausführlichere Audit-/D-Bus-Diagnose aus 1.1.3.1 bleibt erhalten. Beide
+zeichnen jeweils bis zu zehn Minuten auf. Die Diagnose wartet weder auf SSH
+noch auf vollständigen Boot. Boot-IDs mit und ohne Bindestriche werden korrekt
+verglichen; ein fehlender früher Start wird nicht dem Direktstart zugeschrieben.
+Aufzeichnung vor dem beschreibbaren Root-Dateisystem oder nach Stromverlust
+ist damit weiterhin nicht möglich. Ein fehlender Eintrag beweist keine Ursache.
+
+5. Statusabfragen und Windows-Terminal
+Normale Status-/Uhrzeitabfragen warten nicht mehr bis zu 150 Sekunden auf die
+Sperre schreibender Backend-Befehle. Der Windows-Zeitprüfer begrenzt eine
+Witty-Statusabfrage auf vier Sekunden und liefert Linux-Zeit auch bei Fehlern.
+Das automatische Leeren/Zurücksetzen des eingebetteten Terminals bewahrt
+jetzt den Text; ein erneutes Laden derselben Terminalansicht stellt den Verlauf
+bis maximal 2 MiB wieder her. Der Verlauf ist je Terminalansicht getrennt.
+Das automatische Zuklappen des Windows-Fensters bleibt erhalten.
+
+6. Schreibsicherheit und Auswertung
+Die Pi-Bootkonfiguration und Allsky-Zeit-Drop-ins werden atomar mit fsync
+ersetzt. Bestehende Diagnosebeweise und Update-Sicherungen bleiben erhalten.
+Der Sammler enthält beide Beobachter, Installationszeit-Protokolle, Dienst-
+zustände und Dateivergleiche einschließlich 1.1.3.2. Sammlung nach Fehlstart:
 sudo /usr/local/sbin/witty-start-diagnose collect
-
-4. Vergleich von 1.1.1, 1.1.2, 1.1.3 und 1.1.3.1
-Das Diagnosearchiv enthält Versions-/Prüfsummenvergleiche, Dienstdefinitionen,
-Maskierungen, leere Dienstdateien, Paketprüfung von WP5 und ein Inventar der
-Update-Sicherungen. Auch die bereits durch 1.1.3 und manuell reparierten
-Dateien werden erfasst. Alle Änderungen aus 1.1.3 bleiben enthalten.
-Die beigefügte UPDATE-PRUEFUNG.txt trennt bestätigte Befunde von Vermutungen.
-
-5. Eindeutige Zuordnung und Grenzen
-Feste Boot-IDs und Sekunden seit Start vermeiden Verwechslungen bei falscher
-RTC-Zeit. Die Versorgung ist nur vom Nutzer vorgemerkt, nicht physisch
-verifiziert. Ein vor dem Beobachter beendeter Boot wird nicht automatisch
-dem nächsten Direktstart zugeschrieben. Schreibabschluss erfolgt fortlaufend;
-bei abruptem Verlust können dennoch letzte Einträge fehlen. Für eine vom
-Witty selbst ausgelöste Abschaltung kann zusätzlich dessen aktuelles
-Firmwareprotokoll erforderlich sein. Ein Linux-Mitschnitt allein kann nicht
-jede elektrische oder direkte Registeraktion vollständig erklären.
-
-6. Statusanzeigen bei fehlendem Witty oder GPS
-Die grüne GPS-Anzeige benötigt jetzt einen real vorhandenen GPS-Empfänger;
-laufende Dienste und /dev/ttyWURB allein reichen nicht mehr. Ein angeschlossener
-Empfänger ist weiterhin unabhängig von einem gültigen Satellitenfix zu sehen.
-Bei fehlender Witty-Antwort liefert der Status weiterhin die echte Linux-
-Systemzeit, ohne eine Witty-Zeit zu erfinden. Witty-Felder bleiben nicht
-verfügbar und der Lesefehler wird für die Diagnose erhalten.
-
-Entfernen des Beobachters nach Abschluss:
+Entfernen der Beobachter nach Abschluss:
 sudo /usr/local/sbin/witty-start-diagnose remove
-Vorhandene Diagnosebeweise bleiben erhalten; auditd bleibt installiert.
-Prüfung: Softwaretests für Boot-Zuordnung, Befehlsaufzeichnung, Schreibfehler,
-Dateivergleiche, Updateintegration und verschlüsseltes Paket. Kein physischer
-Pi-/Witty-Starttest in dieser Entwicklungsumgebung.
+
+Prüfung: gezielte Softwaretests für ungültige RTC, verzögerte Erreichbarkeit,
+einmalige Übernahme, Update-Zeitsprünge, HTTPS-Prüfung, WP5-Wiederanlauf nach
+Timeout, GPS ohne Fix, Start-ID-Zuordnung, frühe Dienstreihenfolge, Terminal-
+Verlauf und Paketintegrität. Kein physischer Pi-/Witty-Starttest und kein echter
+Windows-WebView-Test. Die konkrete Abschaltursache ist noch nicht bewiesen.
