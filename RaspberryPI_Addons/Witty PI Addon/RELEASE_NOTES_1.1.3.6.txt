@@ -1,0 +1,19 @@
+Version 1.1.3.6 – 01.11.2026
+
+1. Hersteller-Zeitabgleich beim Pi-5-Start nicht mehr überlagern
+Der zusätzliche Boot-Zeithelfer wartet auf die Verbindung und den erfolgreichen Zeitabgleich der aktuell laufenden WP5-Daemoninstanz. „active“ und After=wp5d.service allein gelten nicht als abgeschlossene Initialisierung. Anschließend werden Linux und frisch gelesene Witty-RTC ausschließlich verglichen. Dieser Helfer schreibt keine Uhr, setzt kein Ersatzdatum und hält WP5 nicht an. Bei fehlender Bestätigung oder Zeitabweichung bleibt Allsky gesperrt. Ohne Allsky bleibt der zusätzliche Boot-Zeitdienst deaktiviert. Die originale WP5-Initialisierung und ausdrücklich angeforderte manuelle Zeitübernahmen bleiben bestehen; Pi 3/4 werden nicht auf den Pi-5-Ablauf umgestellt.
+
+2. Frühe Zeit- und Busdiagnose
+Ab dem frühen Beobachter werden Linux-Systemzeit und monotone Startzeit alle 250 ms verglichen; erkannte Zeitsprünge werden beziffert. Eine private Kernel-Traceinstanz zeichnet vorhandene I²C-/SMBus-Transferereignisse mit Prozesskennung, Adressen, Nutzdaten und Rückgaben auf. Sie führt selbst keine Busübertragung aus. Dauer maximal zehn Minuten, Ringpuffer 128 KiB je CPU, Mitschnitt maximal 16 MiB. Fehlende Kernel-Unterstützung und verfügbare Überlaufzähler werden dokumentiert. Andere Traceinstanzen werden nicht verändert. Dies ist kein elektrischer Mitschnitt und keine Garantie für Daten unmittelbar vor hartem Stromverlust.
+
+3. Diagnose zuverlässig sammeln
+Frühe Startverzeichnisse ohne Journaleintrag werden nicht mehr aus dem Archiv ausgeschlossen. Eine vollständige Inventarliste bleibt im Index erhalten. systemctl erhält vor Unitnamen einen Optionsabschluss, damit -.mount nicht als Option behandelt wird. Der Frühbeobachter sichert seine einzelnen Dateien; er fordert nicht länger alle halbe Sekunde das Schreiben des gesamten Dateisystems an. Vorhandene Originalprotokolle werden nicht automatisch gelöscht.
+
+4. Windows: Diagnose nach C:\temp herunterladen
+Nur im angemeldeten Entwicklermodus erscheint neben den Witty-Add-on-Schaltflächen „Diagnose herunterladen“. Der Button sammelt über die bestehende Verbindung mit der vorhandenen sudo-Anmeldung, zeigt den Fortschritt und lädt das gemeldete Archiv per SFTP nach C:\temp. Größe und SHA-256 werden geprüft; unvollständige Downloads werden nicht als fertiges Archiv abgelegt. Bestehende lokale Dateien werden nicht überschrieben. Ältere Sammler mit der bisherigen Pfadausgabe werden unterstützt. Windows-Modul und Inhaltspaket werden gemeinsam über das bestehende Updateverfahren verteilt; kein EXE-Upload.
+
+5. Windows: Terminal wirklich leeren
+Der ausdrücklich angeklickte Button leert Bildschirm und Scrollback geordnet nach wartender Ausgabe und fordert die SSH-Shell mit Strg+L zum Neuzeichnen auf. Prompt, vorhandene Eingabe und Cursor werden dadurch gemeinsam ausgerichtet. Kein Enter und kein Abbruchsignal werden gesendet. Automatisches Einklappen derselben Sitzung erhält weiterhin den Verlauf; eine neue Verbindung beginnt eine neue Ansicht.
+
+Prüfung und Grenzen
+Gezielte Softwaretests für Herstellerbereitschaft, gescheiterten Zeitabgleich, reine Zeitprüfung ohne Schreibvorgänge, frühe Zeitsprungerfassung, private Businstanz und fehlende Traceunterstützung; echte xterm-Tests einschließlich Leeren und Cursor; Download-Protokoll-/Integritätstests; Abgleich der unveränderten Windows-Methoden und Ressourcen; Originaldecoder, eingebettete Pakete und Syntax geprüft. Kein physischer Pi-/Witty-Starttest und kein Live-Windows-WPF-/SFTP-Test in dieser Umgebung. Die Ursache des beobachteten Ausgehens ist weiterhin nicht nachgewiesen; diese Version wird nicht als bestätigte Behebung ausgegeben.

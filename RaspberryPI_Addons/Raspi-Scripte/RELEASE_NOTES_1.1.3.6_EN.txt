@@ -1,0 +1,11 @@
+Version 1.1.3.6 – 2026-11-01
+
+Pi-5 boot clock verification waits for successful initialization of the current manufacturer daemon instance. The additional boot adapter only compares fresh RTC and Linux time; it writes neither clock and does not stop WP5. Missing initialization or disagreement blocks Allsky. Non-Allsky and Pi-3/4 policies remain separate.
+
+Early diagnostics sample realtime versus boottime every 250 ms and optionally record kernel I2C/SMBus transfer events in a private trace instance, without issuing transfers. Ten-minute duration, 128 KiB per CPU and 16 MiB capture limit. Unsupported tracing and overrun statistics are reported. Unjournaled early boot evidence is retained; unit arguments accept -.mount correctly. Evidence-only file fsync replaces filesystem-wide syncfs.
+
+Windows developer mode adds a diagnosis download button using existing sudo/SSH/SFTP credentials, progress output and size/SHA-256 validation. Complete archives are saved to C:\temp without overwriting existing files. Legacy collector output is supported. The existing module update installs matching content on first startup; no executable upload.
+
+Explicit terminal clear removes display/scrollback and requests a Ctrl-L redraw from the shell, preserving pending input and aligning the cursor. Automatic collapse still preserves the same session transcript.
+
+Targeted software, real-xterm, protocol/integrity and package checks; existing native method/resource comparison. No physical Pi boot or live Windows WPF/SFTP validation. The observed early power-off cause is not established and this release is not claimed as a confirmed fix.
