@@ -1,5 +1,6 @@
 {
-  "version": "1.1",
-  "buildRevision": "20261027.110",
-  "releaseDate": "2026-10-27"
+  "version": "1.1.4.1",
+  "buildRevision": "20261102.1141",
+  "releaseDate": "2026-11-02",
+  "functionalBaseCommit": "42b16c9db5934672ecfb069ff3663fd36cc01bb1"
 }

@@ -1,0 +1,52 @@
+Prüfbericht Version 1.1.4.1
+========================
+
+Version 1.1.4.1 – vollständiger Rückbau auf Funktionsstand 1.1
+
+Basisinstallation, Witty-Herstellerinstallation, Raspberry-Dienste, WURB-/WIRC-/Allsky-Einrichtung, Homepage und Windows-Programm verwenden wieder die Funktionsdateien aus dem Originalstand 1.1 vom 27.10.2026. Änderungen nach diesem Stand einschließlich der späteren Diagnoseerweiterungen sind nicht enthalten. Die neue Versionskennung lautet einheitlich 1.1.4.1.
+
+Das vollständige Windows-Paket enthält jetzt dieselben Inhaltsdateien und dasselbe Witty-Paket wie die separaten GitHub-Downloads. Die im ursprünglichen vollständigen Windows-Paket verbliebene eingebettete Version 1.0.30 wurde durch die gemeinsame Basis 1.1 ersetzt. Alle Aufrufwege verwenden dadurch denselben Raspberry-Installationscode.
+
+Windows-EXE und Updater entsprechen dem Originalstand. In der Haupt-DLL wurden ausschließlich Versions-/Datumsangaben für Anzeige und Updatevergleich geändert. Start-, SSH-, Installations-, Netzwerk- und Abschaltlogik sind unverändert; die bestehende Aktivierungskennung bleibt erhalten. Der normale vollständige Programmupdate enthält das Windows-Programm und die passenden Inhalte.
+
+Die bereits in Version 1.1 vorhandene Pi-5-Ethernet-Freigabe nach 30 Sekunden bleibt unverändert. Sie wird in der gemeinsamen Add-on-Installation auch für WURB eingerichtet, enthält keinen Abschaltbefehl und wird erst nach der WURB-/WIRC-Paketinstallation eingerichtet. Ein fehlender Ethernet-Helfer ist für den protokollierten frühen Installationsabbruch nicht nachgewiesen.
+
+Geprüft: vollständiger Dateivergleich des Raspberry-Codes gegen Original 1.1, Windows-Methodenvergleich mit ausschließlich Versionsänderungen, identische eingebettete Installationspakete, Bash-/Python-Syntax, ZIP-/Verschlüsselungsintegrität, Paketprüfsummen und tatsächliche Extraktion des ursprünglichen Updaters. Kein physischer Raspberry-Start-/Installationstest und kein Windows-WPF-Livetest möglich. Die Ursache der gemeldeten Abschaltung ist damit nicht abschließend nachgewiesen; diese Veröffentlichung ist ein vollständiger Rückbau, keine bestätigte Hardware-Fehlerbehebung.
+
+Technischer Dateivergleich
+-------------------------
+{
+  "version": "1.1.4.1",
+  "baseCommit": "42b16c9db5934672ecfb069ff3663fd36cc01bb1",
+  "raspberryOriginalFiles": 165,
+  "raspberryChangedFiles": [
+    "PACKAGE_REVISION",
+    "RELEASE_SUMMARY_EN.txt",
+    "RELEASE_DATE",
+    "VERSION",
+    "RELEASE_NOTES_1.1.4.1.txt",
+    "RELEASE_SUMMARY_DE.txt",
+    "RELEASE_CHANGES.json"
+  ],
+  "bashFilesChecked": 44,
+  "pythonFilesChecked": 38,
+  "addonSha256": "d0d035c2789534c6773f07931516b84fa738c19297042cb1cd2fcb625477cadc",
+  "manifest": {
+    "schema": 1,
+    "version": "1.1.4.1",
+    "contentVersion": "1.1.4.1",
+    "buildRevision": "20261102.1141",
+    "fullPackage": "Raspi-Scripte-Programm.zip",
+    "fullSha256": "356727f602241750ca14d80c5e2addedcb673872f8463b9bbb05227ec929a83d",
+    "contentPackage": "Raspi-Scripte-Modular-Content.zip",
+    "contentSha256": "dbce1daa22916c1520a337c5b7eef6343b325868ce8cf01dbfc037ddfdbb5604"
+  },
+  "exeAndUpdaterByteIdentical": true,
+  "windowsOriginalEmbeddedAddonVersion": "1.0.30",
+  "windowsNewEmbeddedAddonVersion": "1.1.4.1",
+  "ethernetAlreadyInOriginal11": true,
+  "hardwareTested": false,
+  "windowsMethodsUnchanged": 2561,
+  "windowsMethodsVersionOnly": 10,
+  "updaterExtractionVerified": true
+}
