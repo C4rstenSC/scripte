@@ -1,23 +1,9 @@
-Version 1.1.3.9 – 01.11.2026
+Version 1.1.3.10 – Rückbau auf Witty-Funktionsstand 1.1
 
-1. Zeitabgleich und Wiederstart des WP5-Dienstes abgesichert
-Die Aufräumfunktion wird vor dem ersten Stopp des Herstellerdienstes eingerichtet. Eigenständige WP5-Menüaufrufe und Prüfaufrufe verwenden dieselbe Absicherung. Abbruchsignale führen zum Wiederstart; ein fehlgeschlagener Wiederstart wird als Fehler gemeldet. Der Installations-Zeithelfer startet WP5 auch dann wieder, wenn bereits der Stopp einen Timeout meldet. Der Webserver beendet Backend-Aufträge bei Zeitüberschreitung zunächst mit TERM und lässt Zeit für die Aufräumfunktion, bevor ein weiter hängender Auftrag hart beendet wird.
+Raspberry-Skripte, Homepage, Zeitsteuerung, Herstellerinstallation und Windows-Inhaltsdateien stammen wieder aus Version 1.1 (Commit 42b16c9db5934672ecfb069ff3663fd36cc01bb1). Die späteren Funktionsänderungen aus 1.1.1 bis 1.1.3.9 sind zurückgenommen.
 
-2. PC-/Update-Zeitsteuerung ohne vorgezogene Uhränderung
-Die PC-Zeitübernahme mit Witty erfolgt innerhalb der gemeinsamen Backend-Sperre und prüft die Updatesperre vor jeder Uhränderung. Auch reine Linux-PC-Zeitübernahme berücksichtigt diese Sperre. Der Updatewächter setzt seine Markierung unter derselben Sperre, sodass ein bereits laufender Zeitabgleich zuerst abschließen muss. Der Wächter schreibt weiterhin keine RTC und keine wiederholten Gegenkorrekturen.
+Die Diagnose aus 1.1.3.9 bleibt separat erhalten: Im Windows-Entwicklermodus stehen RPI Diagnose und Script download neben Witty Addon Software Update. Das Archiv wird nach C:\temp heruntergeladen. Diagnoseaufzeichnung wird ausschließlich per Diagnosebutton aktiviert; Rechtsklick erlaubt das Deaktivieren.
 
-3. Frische GPS-Zeit verwenden
-Zwischen GPS-Probe und tatsächlichem Schreiben verstrichene Zeit wird mit einer monotonen Uhr berücksichtigt. Proben über 30 Sekunden werden vor der Uhränderung verworfen. Status- und GPS-Anzeigen führen weiterhin keinen Zeitabgleich und keinen WP5-Neustart aus.
+Die Basisinstallation auf einer neuen Speicherkarte verwendet dasselbe geprüfte Witty-Paket mit Funktionsstand 1.1, das auf GitHub und im Windows-Inhaltspaket liegt. Witty zeigt Version 1.1 an. Die höhere Windows-Updatekennung 1.1.3.10 dient dazu, den Rückbau über den vorhandenen Update-Button anzubieten. EXE und Updater bleiben unverändert; kein separater Starter.
 
-4. Diagnose ausschließlich manuell
-Das normale Add-on-Update installiert oder startet keine Diagnoseaufzeichnung, erzeugt kein Diagnosearchiv und markiert keinen Teststart mehr. Bereits von früheren Versionen aktivierte eigene Diagnosebeobachter werden deaktiviert; vorhandene Protokolle bleiben erhalten. Auch die Basisinstallation aktiviert keine automatische Diagnoseaufzeichnung mehr. Diagnosewerkzeuge werden nur als inaktive Dateien mitgeliefert.
-
-5. Windows: RPI Diagnose und Script download
-Im Entwicklermodus stehen neben Witty Addon Software update die Schaltflächen RPI Diagnose und Script download. Die Inhalts-Erweiterung berücksichtigt die eigenen Controller aller vorhandenen und später geöffneten Raspberry-Tabs. RPI Diagnose aktiviert die Aufzeichnung bei Bedarf und erzeugt das Archiv. Danach erscheinen dessen Dateiname und der freigeschaltete Downloadbutton. Script download lädt ausschließlich das erzeugte Diagnosearchiv über die vorhandene SSH-/SFTP-Verbindung nach C:\temp; Größe und SHA-256 werden geprüft. Vorhandene Dateien werden nicht überschrieben. Rechtsklick auf RPI Diagnose erlaubt das Deaktivieren der Aufzeichnung unter Erhalt der Protokolle.
-
-Bedienung über den gewohnten Update-Button
-Raspi-Scripte wird ausschließlich über den vorhandenen Update-Button aktualisiert und danach wie gewohnt geöffnet. Die Hauptprogramm-DLL erhält einen kleinen Ladepunkt für die externen Diagnose-Bedienelemente; ein separater Starter entfällt. Dafür enthält diese Version ein reguläres vollständiges Programmpaket. Die darin enthaltenen vorhandenen EXE- und Updater-Dateien sind bytegleich zum bisherigen Paket. Der bestehende vollständige Updateweg wird unverändert verwendet. Alle Bedienelemente und ihre weitere Funktion liegen in den Inhaltsdateien. Zusätzlich das Witty-Add-on auf 1.1.3.9 aktualisieren. Eine zuvor deaktivierte automatische GPS-Zeitübernahme bleibt nach dem Add-on-Update deaktiviert.
-
-
-Prüfung
-Abbruch während der Sperrwartezeit, WP5-Menüfehler, Wiederstartfehler, Installer-Stopp-Timeout, Webserver-Timeout, Updatesperren und GPS-Probenalter mit simulierten Diensten geprüft. Windows-Helfer kompiliert; Tab-Erkennung, .NET-Ladepunkt und Downloadprotokoll geprüft. Kein WPF-/SFTP-Livetest unter Windows und kein physischer Raspberry-Test in dieser Umgebung. Die Ursache des zuvor aufgezeichneten abrupten Ausfalls nach rund sechs Minuten ist damit noch nicht nachgewiesen; die Version behebt die nachgewiesenen Softwarefehler für den nächsten Vergleichstest.
+Geprüft: Dateivergleich gegen Original 1.1, Bash-/Python-Syntax, Diagnose-Schnittstelle, Windows-Helferkompilierung, Paketentschlüsselung, ZIP-Integrität und identische eingebettete Witty-Pakete. Kein physischer Raspberry-Starttest und kein Windows-WPF-Livetest möglich. Ein erfolgreicher Hardwarestart ist daher noch nicht nachgewiesen.
