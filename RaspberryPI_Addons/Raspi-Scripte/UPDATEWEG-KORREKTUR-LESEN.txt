@@ -1,9 +1,0 @@
-Version 1.1.3.10 – Rückbau auf Witty-Funktionsstand 1.1
-
-Raspberry-Skripte, Homepage, Zeitsteuerung, Herstellerinstallation und Windows-Inhaltsdateien stammen wieder aus Version 1.1 (Commit 42b16c9db5934672ecfb069ff3663fd36cc01bb1). Die späteren Funktionsänderungen aus 1.1.1 bis 1.1.3.9 sind zurückgenommen.
-
-Die Diagnose aus 1.1.3.9 bleibt separat erhalten: Im Windows-Entwicklermodus stehen RPI Diagnose und Script download neben Witty Addon Software Update. Das Archiv wird nach C:\temp heruntergeladen. Diagnoseaufzeichnung wird ausschließlich per Diagnosebutton aktiviert; Rechtsklick erlaubt das Deaktivieren.
-
-Die Basisinstallation auf einer neuen Speicherkarte verwendet dasselbe geprüfte Witty-Paket mit Funktionsstand 1.1, das auf GitHub und im Windows-Inhaltspaket liegt. Witty zeigt Version 1.1 an. Die höhere Windows-Updatekennung 1.1.3.10 dient dazu, den Rückbau über den vorhandenen Update-Button anzubieten. EXE und Updater bleiben unverändert; kein separater Starter.
-
-Geprüft: Dateivergleich gegen Original 1.1, Bash-/Python-Syntax, Diagnose-Schnittstelle, Windows-Helferkompilierung, Paketentschlüsselung, ZIP-Integrität und identische eingebettete Witty-Pakete. Kein physischer Raspberry-Starttest und kein Windows-WPF-Livetest möglich. Ein erfolgreicher Hardwarestart ist daher noch nicht nachgewiesen.

@@ -1,9 +1,20 @@
-Version 1.1.3.10 – Rückbau auf Witty-Funktionsstand 1.1
+Version 1.1 – Änderungen gegenüber 1.0.30
 
-Raspberry-Skripte, Homepage, Zeitsteuerung, Herstellerinstallation und Windows-Inhaltsdateien stammen wieder aus Version 1.1 (Commit 42b16c9db5934672ecfb069ff3663fd36cc01bb1). Die späteren Funktionsänderungen aus 1.1.1 bis 1.1.3.9 sind zurückgenommen.
+1. Witty-Zeitprüfung vor Allsky: RTC-Jahr 2000 wird auf 01.01.2026 00:00:00 als Ersatzzeit gesetzt und in Witty zurückgeschrieben. Andere Jahre bleiben unverändert. Vor Allsky wird der Zeitabgleich weiterhin geprüft. Zeitzone und fester UTC-Offset bleiben erhalten. Die Ersatzzeit ist keine aktuelle Uhrzeit.
 
-Die Diagnose aus 1.1.3.9 bleibt separat erhalten: Im Windows-Entwicklermodus stehen RPI Diagnose und Script download neben Witty Addon Software Update. Das Archiv wird nach C:\temp heruntergeladen. Diagnoseaufzeichnung wird ausschließlich per Diagnosebutton aktiviert; Rechtsklick erlaubt das Deaktivieren.
+2. Manuelle GPS-Zeitübernahme: Beide GPS-Zeitbuttons funktionieren auch bei installiertem Allsky mit gültigen GPS-Zeitdaten. Automatisch bleibt Witty die Zeitquelle vor dem Allsky-Start. Die vorhandenen Schreib- und Vergleichsprüfungen bleiben bestehen.
 
-Die Basisinstallation auf einer neuen Speicherkarte verwendet dasselbe geprüfte Witty-Paket mit Funktionsstand 1.1, das auf GitHub und im Windows-Inhaltspaket liegt. Witty zeigt Version 1.1 an. Die höhere Windows-Updatekennung 1.1.3.10 dient dazu, den Rückbau über den vorhandenen Update-Button anzubieten. EXE und Updater bleiben unverändert; kein separater Starter.
+3. Weitere Einstellungen: Strommessung zwischen Spannung und Temperatur; Startverhalten bei Stromzufuhr verständlich beschriftet und direkt vor Witty-Reset; Reset am Ende vor Raspberry-Neustart. Hot-Standby aus dem Menü entfernt. Energie-Priorität heißt Bevorzugter Stromanschluss.
 
-Geprüft: Dateivergleich gegen Original 1.1, Bash-/Python-Syntax, Diagnose-Schnittstelle, Windows-Helferkompilierung, Paketentschlüsselung, ZIP-Integrität und identische eingebettete Witty-Pakete. Kein physischer Raspberry-Starttest und kein Windows-WPF-Livetest möglich. Ein erfolgreicher Hardwarestart ist daher noch nicht nachgewiesen.
+4. UTC-Auswahl: Größere Schrift, abwechselnd dezente Hintergründe und Pfeile vor +01:00, +02:00 und +10:00. Zeitzonenhinweis vor UTC-Auswahl. Aktiver Zeitmodus wird grün markiert.
+
+5. Manuelle Zeitfelder: In der PC-Ansicht stehen die Eingabefelder direkt links neben ihrem jeweiligen Setzen-Button.
+
+6. GPS-Anzeige: Installierte Variante grün oberhalb ihres Buttons, aktive Funktion weiterhin über Ampel. Doppelten Statustext und Trennlinie entfernt. GPS-Zeitzeile bei fehlenden gültigen GPS-Zeitdaten vollständig ausgeblendet.
+
+7. Reaktionszeit: Speicherung von Firmware-Einstellungen wird vor der anschließenden Statusaktualisierung bestätigt. Dabei wird der schnelle Status ohne GPS-Abfrage verwendet.
+
+8. Skriptliste: Verzeichnisabfragen und Metadaten werden in einer gemeinsamen Witty-Transaktion gelesen; wp5d wird dabei nur einmal angehalten und wieder gestartet. systemd-Startbegrenzung bleibt unverändert.
+
+Hinweis: Die spontanen Raspberry-Ausfälle sind weiterhin nicht abschließend geklärt. Die Logs zeigen wiederholte Unterspannung und einen abrupten Abbruch, ohne passenden Witty-Abschalteintrag. Dieses Update wird nicht als Behebung dieser Ausfälle ausgegeben.
+

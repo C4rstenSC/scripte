@@ -1,26 +1,21 @@
-# 1.1.3
+# 1.1
 
-Version 1.1.3 – 30.10.2026
+Version 1.1 – Änderungen gegenüber 1.0.30
 
-1. Schreibschutz beim Inhaltsupdate
-Geänderte Add-on-Dateien, Homepage-Vorlagen, Versionsangaben und Update-Zustandsdateien werden zunächst vollständig in eine temporäre Datei im Zielverzeichnis geschrieben und mit fsync gesichert. Erst danach wird die vorhandene Datei atomar ersetzt. Vor der Erfolgsmeldung folgt ein systemweiter Schreibabschluss. Dies verringert das Risiko leerer Zieldateien bei unterbrochenen Updates; ein beliebiger harter Stromausfall oder ein Datenträgerdefekt kann damit nicht vollständig abgesichert werden.
+1. Witty-Zeitprüfung vor Allsky: RTC-Jahr 2000 wird auf 01.01.2026 00:00:00 als Ersatzzeit gesetzt und in Witty zurückgeschrieben. Andere Jahre bleiben unverändert. Vor Allsky wird der Zeitabgleich weiterhin geprüft. Zeitzone und fester UTC-Offset bleiben erhalten. Die Ersatzzeit ist keine aktuelle Uhrzeit.
 
-2. Wiederherstellung beschädigter WURB-/WIRC-Startseiten
-Eine leere index.html wird aus der auf dem Raspberry bereits installierten Git-Revision wiederhergestellt und vor dem Ersetzen geprüft. Keine neue Hersteller-Version wird dafür heruntergeladen. Anschließend wird nur die betroffene Anwendung neu geladen.
+2. Manuelle GPS-Zeitübernahme: Beide GPS-Zeitbuttons funktionieren auch bei installiertem Allsky mit gültigen GPS-Zeitdaten. Automatisch bleibt Witty die Zeitquelle vor dem Allsky-Start. Die vorhandenen Schreib- und Vergleichsprüfungen bleiben bestehen.
 
-3. Beschädigte Pi-5-USB-GPS-Bridge
-Nur bei Raspberry Pi 5 mit gewähltem USB-GPS wird eine nachweislich leere reguläre Bridge-Dienstdatei mit der bisherigen Dienstdefinition wiederhergestellt. Absichtliche Maskierungen als symbolischer Link bleiben erhalten. GPS-Empfangslogik, NMEA-Verarbeitung, Pi-4-GPS und Waveshare wurden nicht geändert. Eine Maskierung allein beweist keine leere Datei.
+3. Weitere Einstellungen: Strommessung zwischen Spannung und Temperatur; Startverhalten bei Stromzufuhr verständlich beschriftet und direkt vor Witty-Reset; Reset am Ende vor Raspberry-Neustart. Hot-Standby aus dem Menü entfernt. Energie-Priorität heißt Bevorzugter Stromanschluss.
 
-4. Witty-Rückfall auf Jahr 2000
-Bei erkanntem RTC-Jahr 2000 wird die Ersatzzeit 01.01.2026 einmal in Linux und anschließend einmal in den Witty geschrieben. Die unnötige Rückübertragung entfällt; beide Uhren werden danach lesend verglichen. Die Ersatzzeit ist nicht die tatsächliche aktuelle Uhrzeit. Bei gültiger RTC bleibt die bisherige Richtung Witty nach Linux erhalten. Die Ursache der beobachteten Abschaltungen ist damit nicht als behoben nachgewiesen.
+4. UTC-Auswahl: Größere Schrift, abwechselnd dezente Hintergründe und Pfeile vor +01:00, +02:00 und +10:00. Zeitzonenhinweis vor UTC-Auswahl. Aktiver Zeitmodus wird grün markiert.
 
-5. Datumsprüfung und Sicherungen
-Vor Dateiänderungen und Paketprüfungen stoppt das Update bei einem Linux-Jahr außerhalb 2026 bis 2099 mit einer eindeutigen Meldung. Diese Prüfung synchronisiert weder RTC noch Systemzeit und verändert keinen UTC-Offset oder Sommer-/Winterzeitmodus. Backup-Verzeichnisse erhalten eindeutige Zusätze gegen Namenskollisionen bei zurückgestellter Uhr; vorhandene Wiederherstellungssicherungen werden bei diesem Reparaturupdate nicht automatisch gelöscht. Leere GPS-/Komponenten-Vergleichsdateien gelten nicht als geänderte Nutzerauswahl.
+5. Manuelle Zeitfelder: In der PC-Ansicht stehen die Eingabefelder direkt links neben ihrem jeweiligen Setzen-Button.
 
-6. Updateausgaben
-Ist die bisherige Versionsdatei leer oder beschädigt, wird nur die Änderungsliste der Zielversion angezeigt, nicht die gesamte Versionshistorie. Bei bekannter Ausgangsversion bleibt die versionsabhängige Auswahl erhalten. Die Änderung des Bootzeit-Helfers allein löst keine GPS-Neueinrichtung mehr aus.
+6. GPS-Anzeige: Installierte Variante grün oberhalb ihres Buttons, aktive Funktion weiterhin über Ampel. Doppelten Statustext und Trennlinie entfernt. GPS-Zeitzeile bei fehlenden gültigen GPS-Zeitdaten vollständig ausgeblendet.
 
-7. Mobile Funktionen aus 1.1.2 bleiben enthalten
-Dauerhafte ausdrücklich gespeicherte WURB-Default-Koordinaten; Eingabeschutz für LAT, LONG und gemeinsame Bestätigung auf Smartphones; mehr Kontrast nur auf den Smartphone-Seiten Witty Addon, WURB Recordings und WIRC Recordings. Desktop/iPad, schwarze Beschriftungen und Rot/Grün bleiben unverändert. Die native iPhone-Tastaturbedienung muss noch auf einem echten Gerät bestätigt werden.
+7. Reaktionszeit: Speicherung von Firmware-Einstellungen wird vor der anschließenden Statusaktualisierung bestätigt. Dabei wird der schnelle Status ohne GPS-Abfrage verwendet.
 
-Prüfung: gezielte Softwaretests für atomaren Dateiersatz, Wiederherstellung einer leeren Vorlage aus Git, Begrenzung der Bridge-Reparatur, Zeitübertragung, Updateausgaben und Smartphone-Formulare bestanden. Kein erneuter GPS-Empfangstest und kein physischer Stromausfall-/Witty-Neustarttest. Im Nutzerprotokoll wurden wiederholte Unterspannungsmeldungen beobachtet; deren Ursache bleibt offen.
+8. Skriptliste: Verzeichnisabfragen und Metadaten werden in einer gemeinsamen Witty-Transaktion gelesen; wp5d wird dabei nur einmal angehalten und wieder gestartet. systemd-Startbegrenzung bleibt unverändert.
+
+Hinweis: Die spontanen Raspberry-Ausfälle sind weiterhin nicht abschließend geklärt. Die Logs zeigen wiederholte Unterspannung und einen abrupten Abbruch, ohne passenden Witty-Abschalteintrag. Dieses Update wird nicht als Behebung dieser Ausfälle ausgegeben.
