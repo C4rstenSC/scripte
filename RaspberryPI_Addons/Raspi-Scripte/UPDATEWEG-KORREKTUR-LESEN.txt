@@ -1,0 +1,11 @@
+Korrektur des Updateangebots fuer vorhandene Windows-Programme
+
+Die beiden Manifeste bieten wieder den bisherigen Inhaltsupdate an: Programmversion 1.0.30 und Programm-Build 20261027.30 bleiben beim installierten Grundprogramm; Inhaltsversion und Inhaltspruefsumme bleiben 1.1.3.7. Die Modulupdate-Felder sind entfernt. Die erhoehte BuildRevision hatte auch ohne Modulfelder einen vollstaendigen Programmupdate ausgeloest.
+
+Fuer diesen Updateweg den Entwicklermodus ausschalten und das Update erneut pruefen. Der vorhandene Entwicklermodus erzwingt im alten Programm einen Programmupdate. Eine Reparatur des Windows-Moduls ist fuer den Inhaltsupdate nicht notwendig.
+
+Das Witty-Paket und alle Witty-Funktionsaenderungen aus 1.1.3.6 bleiben als 1.1.3.7 verfuegbar. Witty wird separat ueber den vorhandenen Witty-Add-on-Updatebutton installiert.
+
+Der neue native Windows-Diagnosebutton aus 1.1.3.6 benoetigt weiterhin das neue Windows-Modul. Er kann durch einen reinen Inhaltsupdate nicht nachgeliefert werden. Die vorhandene separate Modulreparatur bleibt optional verfuegbar; das normale Update bietet diesen Modulpfad nicht mehr an.
+
+Geprueft anhand des tatsaechlich ausgelieferten Moduls von 1.1.3.5: fehlende Modulversion deaktiviert den Modulpfad; unveraenderte Programmversion und Programm-Build verhindern ausserhalb des Entwicklermodus den Programmupdate; neuer Inhaltsstand waehlt den vorhandenen Inhaltsupdate. Kein Live-Windows-Test.
