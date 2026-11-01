@@ -1,5 +1,11 @@
 [
   {
+    "Version": "1.1.3.7",
+    "Build": "20261101.1137",
+    "Date": "2026-11-01",
+    "Notes": "Version 1.1.3.7 – 01.11.2026\n\nWindows-Modulupdate ohne neue EXE\nDer Starthelfer verwendet bei Modulpaketen den vorhandenen Windows-Updater und kopiert dessen EXE ausschließlich lokal in das temporäre Updateverzeichnis. Die benötigten Updater-DLLs kommen aus dem geprüften Modulpaket. Vollständige Programmpakete behalten ihren bisherigen Updatepfad. Der Versionsvergleich berücksichtigt den installierten Modulstand 1.1.3.7.\n\nEinmalige Reparatur für unverändertes 1.1.3.5/1.1.3.6\nDiese älteren Module verlangen bereits vor dem Start des Updaters eine EXE im Modulpaket. Ein Serverpaket allein kann diese lokale Prüfung nicht korrigieren. Nach dem Downloadversuch von 1.1.3.7 kann REPARATUR-Modulupdate-1.1.3.7.ps1 das vollständig geprüfte ZIP aus dem lokalen Updatecache einspielen. Das Programm muss geschlossen sein; vorhandene DLLs werden gesichert. Keine EXE wird ausgeliefert oder ersetzt.\n\nÄnderungen aus 1.1.3.6 bleiben enthalten\nDiagnose-Download im angemeldeten Entwicklermodus nach C:\\temp, Terminal-Leeren-Korrektur, reine Pi-5-Startzeitprüfung nach Herstellerinitialisierung und zusätzliche Frühstartdiagnosen. Die Raspberry-Funktionsdateien entsprechen 1.1.3.6; geändert werden die Versions- und Releaseinformationen.\n\nPrüfung und Grenzen\nPaketentschlüsselung und ZIP-Prüfsummen, Modulmanifest, eingebettete Inhalte, Erhalt der vorhandenen Methoden und Ressourcen sowie gezielte Tests des neuen Starthelfers. Kein Live-Windows-WPF-/SFTP-Test und kein physischer Raspberry-/Witty-Starttest. Die Ursache des frühen Ausgehens ist weiterhin nicht nachgewiesen.\n"
+  },
+  {
     "Version": "1.1.3.6",
     "Build": "20261101.1136",
     "Date": "2026-11-01",

@@ -1,0 +1,9 @@
+Version 1.1.3.7 – 2026-11-01
+
+Module updates reuse the installed updater apphost locally; no EXE is distributed or replaced. The original full-package update path is preserved. Module comparisons use the installed 1.1.3.7 version.
+
+Unmodified 1.1.3.5/1.1.3.6 requires a one-time local DLL repair after downloading 1.1.3.7, because its old launcher requires an EXE inside every module ZIP. The repair script validates the cached ZIP and all module files, backs up the existing files and requires the app to be closed.
+
+All 1.1.3.6 changes remain included: developer diagnosis download to C:\temp, terminal clearing, Pi-5 boot clock verification and early diagnostics. Raspberry functional files are unchanged from 1.1.3.6.
+
+Package integrity and targeted launcher checks; no live Windows WPF/SFTP or physical Pi boot validation. Early power-off cause remains unconfirmed.
