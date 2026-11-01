@@ -1,0 +1,21 @@
+Version 1.1.3.3 – 01.11.2026
+
+1. Basisinstallation auf einem frischen Raspberry
+Die Windows-Zeitprüfung verlangt vor der Erstinstallation kein bereits
+installiertes Witty-Add-on-Backend mehr. Auf einem frischen System prüft sie
+zunächst die Linux-Systemzeit. Wird der angebotene PC-Zeitabgleich bestätigt,
+wird in diesem Schritt nur Linux gesetzt. Es wird weder eine Witty-Zeit
+erfunden noch eine noch fehlende Backend-Funktion aufgerufen.
+
+2. Bestehende Installationen weiter prüfen
+Bei erkanntem Add-on-Installationsstand und fehlendem Backend wird weiterhin
+mit einer eindeutigen Meldung abgebrochen. Bei vorhandenem Backend bleiben
+die angeforderte RTC-Prüfung und der bestätigte RTC-Abgleich erhalten.
+
+3. Umfang und Prüfung
+Windows-Inhaltsupdate ohne EXE-/Modulwechsel. Das enthaltene Witty-Add-on
+bleibt unverändert auf 1.1.3.2; es ist für die Basisinstallation vorbereitet.
+Acht gezielte Softwaretests für Erstinstallation, Linux-Zeitabgleich,
+beschädigten Installationsstand und bestehende RTC-Prüfung bestanden.
+Kein Test der vollständigen Windows-Basisinstallation auf echter Hardware.
+Die Ursache des Startfehlers der bisherigen SD-Karte ist weiterhin offen.
