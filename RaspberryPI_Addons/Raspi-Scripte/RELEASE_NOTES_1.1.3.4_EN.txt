@@ -1,0 +1,13 @@
+Version 1.1.3.4 – 2026-11-01
+
+System-wide boot diagnosis: early kernel/process/start-job recording; all sampled processes and disappearance events; native-ABI audit of process execution/exit, reboot and clock-change syscalls; journal, manufacturer log and D-Bus capture with boot-relative receive times. Recording lasts ten minutes per observer. Failed stream commands retry and record their status.
+
+Collect adds package verification and versions, local/generated units, masks/broken symlinks, dependencies, partition and swap state, maintenance markers and package history. It never invokes WP5 menus, sets clocks or reboots. Use sudo /usr/local/sbin/witty-start-diagnose status or collect.
+
+Fresh Witty Pi 5 base installation captures before/after archives and installs persistent diagnosis before its planned reboot. Diagnosis setup failure blocks that automatic reboot. Add-on updates install diagnosis before changes and mark the next boot; no automatic shutdown.
+
+Fixes two established installation defects: missing GPS presence helper and GPS setup re-enabling extra RTC boot sync without the central Allsky policy. Corrects the misleading internal-RTC installation message.
+
+Targeted software and syntax tests; encrypted package checked with the previous decoder. No physical boot test. No full I2C/electrical trace; pre-observer and last buffered events may be missing. Native-ABI audit coverage only, with lost-event counters. Boot failure is not established as fixed.
+
+Windows content 1.1.3.4 embeds this Add-on and preserves the 1.1.3.3 first-install correction, without changing EXE/modules or adding pending Windows UI changes.

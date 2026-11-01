@@ -1,67 +1,20 @@
-Version 1.1.3.2 – 01.11.2026
+Version 1.1.3.4 – 01.11.2026
 
-1. Zeitabgleich beim Start
-Die feste Ersatzzeit 01.01.2026 wird nicht mehr automatisch nach Linux oder
-in die Witty-RTC geschrieben. Auf Pi 5 wartet der zusätzliche Allsky-Zeithelfer
-bis zu 25 Sekunden auf eine frisch lesbare, plausibel datierte Witty-RTC.
-Er beendet sich bei fehlender/ungültiger RTC mit einer klaren Meldung, ohne
-Uhren zu schreiben. Eine bereits durch WP5 übernommene passende Linux-Zeit
-wird nicht nochmals gesetzt. Der bestätigte Abgleich wird pro Boot vorgemerkt.
-WP5 wird dafür nicht angehalten. Ohne Allsky wird der zusätzliche Boot-Zeit-
-dienst deaktiviert, statt bei jedem Update erneut aktiviert zu werden.
-Das ursprüngliche Verhalten der UUGear-Herstellersoftware bleibt unverändert;
-auch sie führt beim eigenen Start einen Zeitabgleich aus.
+1. Systemweite Startdiagnose
+Die erste Startphase zeichnet Kernelmeldungen, Prozessübersichten und offene Startaufträge im Root-Dateisystem auf. Danach werden alle per Abtastung sichtbaren Prozesse und deren Verschwinden erfasst, nicht nur Witty/WP5. Zusätzlich protokolliert Kernel-Audit systemweit native Prozessstarts und Prozessenden sowie Neustart- und Zeitänderungs-Systemaufrufe. Journal, Herstellerlog und D-Bus-Ereignisse werden parallel mit Empfangszeit seit dem Start gespeichert. Abgebrochene Mitschnitte werden erneut gestartet; ihr Zustand wird separat protokolliert. Beobachtungsdauer: zehn Minuten ab Start des jeweiligen Beobachters.
 
-2. GPS ohne blockierten WP5-Daemon
-Der GPS-Abgleich wartet zuerst auf gültige GPS-Daten und hält erst danach WP5
-für erforderliche Schreibzugriffe an. Ohne USB-GPS-Maus endet der automatische
-Auftrag ohne Zeitänderung und ohne Anhalten von WP5. Der GPS-Dienst hält das
-Erreichen von multi-user.target nicht mehr minutenlang auf. Der eigenständige
-WP5-Zeitadapter stellt den vorher aktiven Daemon auch nach einem CLI-Timeout
-wieder her. GPS-/Zeithelferänderungen allein richten den Empfänger nicht neu ein.
-
-3. Tatsächliche Installationszeit und Schutz vor Zeitsprüngen
-Das Add-on-Update ermittelt eine Installationszeit aus übergebenem PC-Zeitwert
-oder dem Date-Header einer zertifikatsgeprüften HTTPS-Verbindung. Es schreibt
-keine Ersatzzeit in die RTC und schaltet keine Signaturprüfung ab. Während
-des Updates wird Linux anhand dieser Zeit plus monotoner Laufzeit gegen
-Zeitsprünge abgesichert; zusätzliche Add-on-Zeit-/RTC-Befehle sind gesperrt.
-Ist keine bestätigte Zeit erreichbar, stoppt das Update vor den Änderungen.
-Bei Jahr 2000 kann bereits die TLS-Prüfung scheitern; dann ist weiterhin die
-aktuelle Windows-Zeit einmal nach Linux zu übernehmen. Die alte falsche
-Linux-Zeit wird am Ende nicht wiederhergestellt. Der Verlauf wird gespeichert.
-
-4. Frühere Diagnose
-Ein zusätzlicher Shell-Beobachter startet bereits nach dem beschreibbaren
-Root-Dateisystem, vor local-fs.target und Audit. Er speichert sofort Start-ID,
-Laufzeit, Kernelmeldungen und Prozessnamen unter /witty-start-evidence.
-Die ausführlichere Audit-/D-Bus-Diagnose aus 1.1.3.1 bleibt erhalten. Beide
-zeichnen jeweils bis zu zehn Minuten auf. Die Diagnose wartet weder auf SSH
-noch auf vollständigen Boot. Boot-IDs mit und ohne Bindestriche werden korrekt
-verglichen; ein fehlender früher Start wird nicht dem Direktstart zugeschrieben.
-Aufzeichnung vor dem beschreibbaren Root-Dateisystem oder nach Stromverlust
-ist damit weiterhin nicht möglich. Ein fehlender Eintrag beweist keine Ursache.
-
-5. Statusabfragen und Windows-Terminal
-Normale Status-/Uhrzeitabfragen warten nicht mehr bis zu 150 Sekunden auf die
-Sperre schreibender Backend-Befehle. Der Windows-Zeitprüfer begrenzt eine
-Witty-Statusabfrage auf vier Sekunden und liefert Linux-Zeit auch bei Fehlern.
-Das automatische Leeren/Zurücksetzen des eingebetteten Terminals bewahrt
-jetzt den Text; ein erneutes Laden derselben Terminalansicht stellt den Verlauf
-bis maximal 2 MiB wieder her. Der Verlauf ist je Terminalansicht getrennt.
-Das automatische Zuklappen des Windows-Fensters bleibt erhalten.
-
-6. Schreibsicherheit und Auswertung
-Die Pi-Bootkonfiguration und Allsky-Zeit-Drop-ins werden atomar mit fsync
-ersetzt. Bestehende Diagnosebeweise und Update-Sicherungen bleiben erhalten.
-Der Sammler enthält beide Beobachter, Installationszeit-Protokolle, Dienst-
-zustände und Dateivergleiche einschließlich 1.1.3.2. Sammlung nach Fehlstart:
+2. Diagnose sammeln
+sudo /usr/local/sbin/witty-start-diagnose status
 sudo /usr/local/sbin/witty-start-diagnose collect
-Entfernen der Beobachter nach Abschluss:
-sudo /usr/local/sbin/witty-start-diagnose remove
+Der Sammler ergänzt Paketdateiprüfung, Paketversionen, lokale und generierte Dienstdefinitionen einschließlich Maskierungen und defekter Links, Startabhängigkeiten, Partitionsgrößen, SD-Partitionstabelle und Swap-Zustand. Vorhandene SD-Wartungsmarker und Paketinstallationshistorien werden aufgenommen. Die Erfassung selbst ruft keine WP5-Menüs auf, schreibt keine Uhr und löst keinen Neustart aus.
 
-Prüfung: gezielte Softwaretests für ungültige RTC, verzögerte Erreichbarkeit,
-einmalige Übernahme, Update-Zeitsprünge, HTTPS-Prüfung, WP5-Wiederanlauf nach
-Timeout, GPS ohne Fix, Start-ID-Zuordnung, frühe Dienstreihenfolge, Terminal-
-Verlauf und Paketintegrität. Kein physischer Pi-/Witty-Starttest und kein echter
-Windows-WebView-Test. Die konkrete Abschaltursache ist noch nicht bewiesen.
+3. Basisinstallation und Update
+Vor und nach der Basisinstallation mit Witty Pi 5 werden Diagnosearchive angelegt. Vor dem ersten geplanten Neustart wird die persistente Aufzeichnung installiert. Scheitert ihre Einrichtung, führt der Installer keinen automatischen Neustart aus. Beim Add-on-Update wird die erweiterte Diagnose vor den Änderungen eingerichtet und der nächste Start als Witty-Test markiert. Das Update fährt den Raspberry nicht automatisch herunter.
+
+4. Belegte Installationsfehler
+Der GPS-Helfer witty-gps-presence.py wird nun auch bei einer frischen Homepage-Installation kopiert. Die GPS-Konfiguration aktiviert den zusätzlichen Witty-Bootzeitdienst nur bei aktiver Allsky-Zeitregel und hebt deren Entscheidung nicht mehr auf. Die Installationsmeldung behauptet nicht mehr fälschlich, die interne Pi-RTC sei aktiv.
+
+5. Prüfstand und Grenzen
+Gezielte Softwaretests für Prozessbeobachtung einschließlich PID-Wiederverwendung, Wiederanlauf eines zunächst fehlgeschlagenen Mitschnitts, Allsky-Auswahl sowie bestehende Diagnosefunktionen; Python- und Shell-Syntax geprüft. Verschlüsseltes Paket mit bisherigem Decoder geprüft. Kein physischer Starttest auf dem betroffenen Pi. Kein vollständiger I2C-/elektrischer Mitschnitt; Ereignisse vor Beobachterstart und letzte gepufferte Daten bei abruptem Ausfall können fehlen. Kernel-Audit gilt für die native ABI; verlorene Audit-Ereignisse werden über den Zähler erkennbar. Der Startfehler ist damit nicht als behoben nachgewiesen.
+
+Windows-Inhaltsstand ebenfalls 1.1.3.4 mit diesem Add-on; bestehende Erstinstallationskorrektur aus 1.1.3.3 bleibt enthalten. Kein EXE-/Modulwechsel. Weitere angefragte Windows-Oberflächenänderungen sind nicht Teil dieses Diagnoseupdates.
