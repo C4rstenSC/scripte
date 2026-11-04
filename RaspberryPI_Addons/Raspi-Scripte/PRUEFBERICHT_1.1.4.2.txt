@@ -1,0 +1,9 @@
+Version 1.1.4.2 – abgesicherter Neustart nach der Basisinstallation
+
+1. Die Basisinstallation verwendet am Ende für WURB, WIRC und Allsky den vorhandenen Helfer witty-reboot statt eines direkten systemctl reboot. Vor der Abschlussmeldung werden der Witty-Hersteller-Neustartdienst, seine Aktivierung und seine Einbindung in reboot.target geprüft.
+2. Fehlt der Helfer oder schlägt die Prüfung fehl, wird die Installation mit verständlicher Fehlermeldung beendet. Kein ungeprüfter Ersatzneustart. Ein Fehler bei der Neustartanforderung wird ausdrücklich gemeldet.
+3. Der GitHub-Download, das Windows-Inhaltspaket und beide eingebetteten Add-on-Kopien im vollständigen Windows-Paket enthalten dasselbe Add-on 1.1.4.2. Windows-Programmdateien und Hintergrundabfragen bleiben unverändert; die Inhaltsversion wird aktualisiert.
+
+Geprüft: Bash-Syntax von 44 Dateien; isolierter Neustartablauf mit simulierten Befehlen für Erfolg, fehlenden Helfer, fehlgeschlagene Vorbereitung und fehlgeschlagene Anforderung. ZIP-Integrität, Verschlüsselung und Übereinstimmung der eingebetteten Pakete geprüft.
+
+Offen: Der gemeldete Abbruch endet nach step=checks vor der Installationsübersicht und vor dem abschließenden Neustart. Seine Ursache ist nicht nachgewiesen. Diese Version ist keine bestätigte Behebung dieses Abbruchs. Kein physischer Pi-/Witty-Starttest und kein Windows-WPF-Livetest.
