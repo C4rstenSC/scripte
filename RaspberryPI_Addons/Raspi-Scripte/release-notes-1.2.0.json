@@ -1,0 +1,9 @@
+{
+  "version": "1.2.0",
+  "de": [
+    "Version 1.2.0 – PC-Zeit vor Installation und Update\n\nNur wenn die Raspberry-Systemzeit um mehr als 48 Stunden von der PC-Zeit abweicht, übernimmt das Windowsprogramm automatisch die aktuelle PC-Zeit vor der ersten Downloadprüfung. Dies gilt auch bei installiertem Allsky, bei direktem Internet und beim Download über Windows. Die gesetzte Systemzeit wird zurückgelesen; erst danach laufen Download und Update weiter. Die bisherige Rückfrage entfällt. Witty-RTC, interne Pi-RTC und Zeitzone werden dabei nicht geschrieben. HTTPS-Zertifikate werden weiterhin geprüft.\n\nPrüfung: Windows-Crossbuild und automatisierte Zeitabgleich-/Vorprüfungstests. Kein physischer Raspberry-/Witty-Test und kein nativer Windows-WPF-Test.\n"
+  ],
+  "en-AU": [
+    "Version 1.2.0 – PC-Zeit vor Installation und Update\n\nNur wenn die Raspberry-Systemzeit um mehr als 48 Stunden von der PC-Zeit abweicht, übernimmt das Windowsprogramm automatisch die aktuelle PC-Zeit vor der ersten Downloadprüfung. Dies gilt auch bei installiertem Allsky, bei direktem Internet und beim Download über Windows. Die gesetzte Systemzeit wird zurückgelesen; erst danach laufen Download und Update weiter. Die bisherige Rückfrage entfällt. Witty-RTC, interne Pi-RTC und Zeitzone werden dabei nicht geschrieben. HTTPS-Zertifikate werden weiterhin geprüft.\n\nPrüfung: Windows-Crossbuild und automatisierte Zeitabgleich-/Vorprüfungstests. Kein physischer Raspberry-/Witty-Test und kein nativer Windows-WPF-Test.\n"
+  ]
+}
