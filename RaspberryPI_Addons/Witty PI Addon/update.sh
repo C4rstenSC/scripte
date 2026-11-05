@@ -101,6 +101,7 @@ fi
 
 unzip -q "$archive" -d "$work_dir/extracted"
 runner="$work_dir/extracted/witty_addon/update_addon.sh"
+export WITTY_REQUIRE_BASE_INSTALLATION=1
 [[ -f "$runner" ]] || die "update_addon.sh fehlt im GitHub-ZIP."
 chmod 0755 "$runner"
 package_version="$(tr -d '\r\n' < "$work_dir/extracted/witty_addon/VERSION")"
@@ -108,13 +109,13 @@ package_version="$(tr -d '\r\n' < "$work_dir/extracted/witty_addon/VERSION")"
 log "Geprüfte Witty-Paketversion: $package_version"
 
 
-printf '[WITTY-CONTROL] event=update_started source=%s\n' "$update_source"
+printf '[WITTY-CONTROL]\nACTION=update\nSOFTWARE=addon\nSTATE=started\nSOURCE=%s\n[/WITTY-CONTROL]\n' "$update_source"
 runner_rc=0
 bash "$runner" "$@" || runner_rc=$?
 if (( runner_rc != 0 )); then
     result=error
     (( runner_rc == 130 )) && result=cancelled
-    printf '[WITTY-CONTROL] event=update_finished result=%s exit_code=%s\n' "$result" "$runner_rc"
+    printf '[WITTY-CONTROL]\nACTION=update\nSOFTWARE=addon\nSTATE=finished\nRESULT=%s\nEXIT_CODE=%s\n[/WITTY-CONTROL]\n' "$result" "$runner_rc"
     exit "$runner_rc"
 fi
-printf '[WITTY-CONTROL] event=update_finished result=success\n'
+printf '[WITTY-CONTROL]\nACTION=update\nSOFTWARE=addon\nSTATE=finished\nRESULT=success\nEXIT_CODE=0\n[/WITTY-CONTROL]\n'

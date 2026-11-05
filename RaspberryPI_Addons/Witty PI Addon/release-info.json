@@ -1,10 +1,12 @@
 {
-  "version": "1.1.4.3",
-  "buildRevision": "20261104.1143",
-  "releaseDate": "2026-11-04",
+  "version": "1.2",
+  "buildRevision": "20261105.1200",
+  "releaseDate": "2026-11-05",
   "functionalBaseCommit": "42b16c9db5934672ecfb069ff3663fd36cc01bb1",
   "rebootGuardChanged": true,
   "physicalBootVerified": false,
   "timeServiceRecoveryChanged": true,
-  "windowsTerminalPreserved": true
+  "windowsTerminalPreserved": true,
+  "mobileInterfaceChanged": true,
+  "directScheduleEditor": true
 }
