@@ -1,14 +1,7 @@
 {
-  "version": "1.3",
-  "buildRevision": "20261105.130.1",
-  "releaseDate": "2026-11-05",
-  "functionalBaseCommit": "42b16c9db5934672ecfb069ff3663fd36cc01bb1",
-  "rebootGuardChanged": true,
+  "version": "1.3.8",
+  "buildRevision": "20261107.138.1",
+  "releaseDate": "2026-11-07",
   "physicalBootVerified": false,
-  "timeServiceRecoveryChanged": true,
-  "windowsTerminalPreserved": true,
-  "mobileInterfaceChanged": true,
-  "directScheduleEditor": true,
-  "windowsClockPreflightDays": 2,
-  "automaticSystemClockOnly": true
+  "allskyArchiveCommit": "e9309b091ca60380ccb858c72149c647c5d326cc"
 }

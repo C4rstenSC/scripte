@@ -1,0 +1,11 @@
+Version 1.3.8 – 07.11.2026
+
+- Allsky Archiv 03.11.2026 (Original e9309b09) mit 25 verschlüsselten 6-MiB-Teilen und fünf Zusatzpaket-Teilen; bisherige Archive bleiben auswählbar.
+- Gemeinsame Kameravorbereitung unterstützt die bisherige RPi_cameraInfo.txt.repo und die neue RPi_camera_info.txt.repo mit dynamischen libcamera-Fähigkeiten. Gilt für Archiv und direkten Hersteller-Download, mit und ohne GS-Auswahl.
+- Allsky Setup: Live Video Bild im Popup für CSI-Kameras, ohne WURB/WIRC. Allsky wird währenddessen pausiert und nur wieder gestartet, wenn es vorher lief. Bei geschlossener/abgebrochener Browser-Verbindung endet die Vorschau automatisch.
+- Allsky-Webseiten starten ohne gespeicherte Sprachwahl auf Englisch. Eine ausdrücklich gewählte Sprache bleibt gespeichert.
+- Witty-Status hält keine GPS-Leseverbindung mehr unter der Zeitplansperre. Vorübergehend belegter I2C-Zugriff wird erneut gelesen; tatsächliche Lesefehler bleiben sichtbar.
+- Windows fragt GPS unabhängig von einer vorherigen Witty-Statusantwort ab. Kurzfristige Statusfehler löschen keine noch frischen Uhrwerte.
+- Schrumpfanzeige: Balkenmodus und Wert werden pro Aktualisierung nur einmal gesetzt. Ein Fehler der optionalen Zeitprognose überschreibt keine Ablaufmeldung. Offline-Abschluss wird nur anhand des Ergebnisberichts bestätigt.
+
+Prüfung: echte Oktober-/November-Quellstände für Kameravorbereitung, Shell-/Python-/JavaScript-Prüfungen und automatisierte Regressionen. Hardware-, Livekamera- und SD-Neuinstallationstest auf dem Nutzergerät stehen aus.

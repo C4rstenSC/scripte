@@ -1,0 +1,6 @@
+Allsky Archiv – 03.11.2026
+Original-Commit: e9309b091ca60380ccb858c72149c647c5d326cc
+Herstellerbezeichnung: v2026.10.01_01
+Verschlüsselte Teile mit maximal 6 MiB, SHA-256 je Teil und Gesamtpaket.
+Zusatzmodule: vorhandene geprüfte Originalstände, in 6-MiB-Teile aufgeteilt.
+Windows und Witty Add-on wurden durch diesen Upload nicht aktualisiert. Die neue Auswahl muss im nächsten freigegebenen Programm-/Addon-Update ergänzt werden.

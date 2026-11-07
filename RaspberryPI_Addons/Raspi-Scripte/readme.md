@@ -1,13 +1,13 @@
-# 1.1.4.1
+# Raspi-Scripte 1.3.8
 
-Version 1.1.4.1 – vollständiger Rückbau auf Funktionsstand 1.1
+Version 1.3.8 – 07.11.2026
 
-Basisinstallation, Witty-Herstellerinstallation, Raspberry-Dienste, WURB-/WIRC-/Allsky-Einrichtung, Homepage und Windows-Programm verwenden wieder die Funktionsdateien aus dem Originalstand 1.1 vom 27.10.2026. Änderungen nach diesem Stand einschließlich der späteren Diagnoseerweiterungen sind nicht enthalten. Die neue Versionskennung lautet einheitlich 1.1.4.1.
+- Allsky Archiv 03.11.2026 (Original e9309b09) mit 25 verschlüsselten 6-MiB-Teilen und fünf Zusatzpaket-Teilen; bisherige Archive bleiben auswählbar.
+- Gemeinsame Kameravorbereitung unterstützt die bisherige RPi_cameraInfo.txt.repo und die neue RPi_camera_info.txt.repo mit dynamischen libcamera-Fähigkeiten. Gilt für Archiv und direkten Hersteller-Download, mit und ohne GS-Auswahl.
+- Allsky Setup: Live Video Bild im Popup für CSI-Kameras, ohne WURB/WIRC. Allsky wird währenddessen pausiert und nur wieder gestartet, wenn es vorher lief. Bei geschlossener/abgebrochener Browser-Verbindung endet die Vorschau automatisch.
+- Allsky-Webseiten starten ohne gespeicherte Sprachwahl auf Englisch. Eine ausdrücklich gewählte Sprache bleibt gespeichert.
+- Witty-Status hält keine GPS-Leseverbindung mehr unter der Zeitplansperre. Vorübergehend belegter I2C-Zugriff wird erneut gelesen; tatsächliche Lesefehler bleiben sichtbar.
+- Windows fragt GPS unabhängig von einer vorherigen Witty-Statusantwort ab. Kurzfristige Statusfehler löschen keine noch frischen Uhrwerte.
+- Schrumpfanzeige: Balkenmodus und Wert werden pro Aktualisierung nur einmal gesetzt. Ein Fehler der optionalen Zeitprognose überschreibt keine Ablaufmeldung. Offline-Abschluss wird nur anhand des Ergebnisberichts bestätigt.
 
-Das vollständige Windows-Paket enthält jetzt dieselben Inhaltsdateien und dasselbe Witty-Paket wie die separaten GitHub-Downloads. Die im ursprünglichen vollständigen Windows-Paket verbliebene eingebettete Version 1.0.30 wurde durch die gemeinsame Basis 1.1 ersetzt. Alle Aufrufwege verwenden dadurch denselben Raspberry-Installationscode.
-
-Windows-EXE und Updater entsprechen dem Originalstand. In der Haupt-DLL wurden ausschließlich Versions-/Datumsangaben für Anzeige und Updatevergleich geändert. Start-, SSH-, Installations-, Netzwerk- und Abschaltlogik sind unverändert; die bestehende Aktivierungskennung bleibt erhalten. Der normale vollständige Programmupdate enthält das Windows-Programm und die passenden Inhalte.
-
-Die bereits in Version 1.1 vorhandene Pi-5-Ethernet-Freigabe nach 30 Sekunden bleibt unverändert. Sie wird in der gemeinsamen Add-on-Installation auch für WURB eingerichtet, enthält keinen Abschaltbefehl und wird erst nach der WURB-/WIRC-Paketinstallation eingerichtet. Ein fehlender Ethernet-Helfer ist für den protokollierten frühen Installationsabbruch nicht nachgewiesen.
-
-Geprüft: vollständiger Dateivergleich des Raspberry-Codes gegen Original 1.1, Windows-Methodenvergleich mit ausschließlich Versionsänderungen, identische eingebettete Installationspakete, Bash-/Python-Syntax, ZIP-/Verschlüsselungsintegrität, Paketprüfsummen und tatsächliche Extraktion des ursprünglichen Updaters. Kein physischer Raspberry-Start-/Installationstest und kein Windows-WPF-Livetest möglich. Die Ursache der gemeldeten Abschaltung ist damit nicht abschließend nachgewiesen; diese Veröffentlichung ist ein vollständiger Rückbau, keine bestätigte Hardware-Fehlerbehebung.
+Prüfung: echte Oktober-/November-Quellstände für Kameravorbereitung, Shell-/Python-/JavaScript-Prüfungen und automatisierte Regressionen. Hardware-, Livekamera- und SD-Neuinstallationstest auf dem Nutzergerät stehen aus.
