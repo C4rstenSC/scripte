@@ -1,13 +1,13 @@
 [
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/modular-release-notes.json",
-    "size": 3225,
-    "sha256": "f62eddce987f55de82a220929803ed4669d056383e79a9045101f58e11128bb7"
+    "size": 4325,
+    "sha256": "d95202948478faa619288e893799129186760c0e722133902810d294864f2a7a"
   },
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/modular-update-manifest.json",
     "size": 391,
-    "sha256": "e183915d7b3dcf92abf902faba9a381a40455f6defce9c7b4ef6aef948524f88"
+    "sha256": "37c08cb10f24a6cac07c66452303291625185bca64751167128c07e540aa483b"
   },
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/modular-version.txt",
@@ -16,38 +16,38 @@
   },
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/package-revision.txt",
-    "size": 16,
-    "sha256": "3f39838eef94caac134c09485c1d7c4d4509c8dfbaf028a52240d29df3fa8efa"
+    "size": 15,
+    "sha256": "3ce77a650e3eddd35e93572bc2587d54a4de86eb047c7468707d5dae35ae1008"
   },
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Content.zip.enc",
-    "size": 1063128,
-    "sha256": "23c54e6e2ae1a2dab454e8307c184ed5dcab35b799d4d94e94ac984f65210b89"
+    "size": 1073596,
+    "sha256": "1a057a58d31783214270a64bbeb0ad250710d1a1b615511efdf189450118118b"
   },
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Modular-Content.zip.enc",
-    "size": 1063128,
-    "sha256": "23c54e6e2ae1a2dab454e8307c184ed5dcab35b799d4d94e94ac984f65210b89"
+    "size": 1073596,
+    "sha256": "1a057a58d31783214270a64bbeb0ad250710d1a1b615511efdf189450118118b"
   },
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Programm.zip.enc",
-    "size": 7556389,
-    "sha256": "bd0eb9d895777ae1b2c8f636ba5fc1c3dd4b222af39d1adb7aa22cd131391ac1"
+    "size": 7586924,
+    "sha256": "22d2497562ad3acb774acabc603690ff8075229a44ea95122eeb546d5ba55b4a"
   },
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte.zip.enc",
-    "size": 7556389,
-    "sha256": "bd0eb9d895777ae1b2c8f636ba5fc1c3dd4b222af39d1adb7aa22cd131391ac1"
+    "size": 7586924,
+    "sha256": "22d2497562ad3acb774acabc603690ff8075229a44ea95122eeb546d5ba55b4a"
   },
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/readme.md",
-    "size": 1597,
-    "sha256": "d1dc6806b4d618f54fe67842e66f8f0b68e0fae429212516516d53de9c3197e5"
+    "size": 2409,
+    "sha256": "531c2855d64f3dacc4e4bb5a7ab045e25ddd3a672213ab87a73530cde0c7dedd"
   },
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/release-date.txt",
-    "size": 12,
-    "sha256": "87624f53e7a5769366cd3521d200106caff75188f55d318d8bb218737d5284f0"
+    "size": 11,
+    "sha256": "ef3e321dcdb3410d2124f2eec41615dced7277a4102a5ec2352b592f9b4eac4d"
   },
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/release-notes-1.3.8.json",
@@ -56,8 +56,8 @@
   },
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/release-notes.json",
-    "size": 3225,
-    "sha256": "f62eddce987f55de82a220929803ed4669d056383e79a9045101f58e11128bb7"
+    "size": 4325,
+    "sha256": "d95202948478faa619288e893799129186760c0e722133902810d294864f2a7a"
   },
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/RELEASE_NOTES_1.3.8.txt",
@@ -67,7 +67,7 @@
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/update-manifest.json",
     "size": 391,
-    "sha256": "e183915d7b3dcf92abf902faba9a381a40455f6defce9c7b4ef6aef948524f88"
+    "sha256": "37c08cb10f24a6cac07c66452303291625185bca64751167128c07e540aa483b"
   },
   {
     "path": "RaspberryPI_Addons/Raspi-Scripte/version.txt",
@@ -76,23 +76,23 @@
   },
   {
     "path": "RaspberryPI_Addons/Witty PI Addon/package-revision.txt",
-    "size": 16,
-    "sha256": "3f39838eef94caac134c09485c1d7c4d4509c8dfbaf028a52240d29df3fa8efa"
+    "size": 15,
+    "sha256": "3ce77a650e3eddd35e93572bc2587d54a4de86eb047c7468707d5dae35ae1008"
   },
   {
     "path": "RaspberryPI_Addons/Witty PI Addon/readme.md",
-    "size": 1596,
-    "sha256": "3f4eb6561fed72f23b55d2d4c96dda1fce169dbb5368ee99ec8450f27dd91df7"
+    "size": 2379,
+    "sha256": "5be205bb2564b8fac718b0031c33224d04550dfe070998ebfc096ca50e2deaf3"
   },
   {
     "path": "RaspberryPI_Addons/Witty PI Addon/release-date.txt",
-    "size": 12,
-    "sha256": "87624f53e7a5769366cd3521d200106caff75188f55d318d8bb218737d5284f0"
+    "size": 11,
+    "sha256": "ef3e321dcdb3410d2124f2eec41615dced7277a4102a5ec2352b592f9b4eac4d"
   },
   {
     "path": "RaspberryPI_Addons/Witty PI Addon/release-info.json",
-    "size": 202,
-    "sha256": "2a92c0fa67116f6aa3b372c33460792e14c7694330d8f86e4bf2e803f0d23a78"
+    "size": 195,
+    "sha256": "4a672ecf007b720b782944e7054c4934a82756a9583f6e9368c5b2b9fac2d86f"
   },
   {
     "path": "RaspberryPI_Addons/Witty PI Addon/release-notes-1.3.8.json",
@@ -101,8 +101,8 @@
   },
   {
     "path": "RaspberryPI_Addons/Witty PI Addon/release-notes-history.json",
-    "size": 303435,
-    "sha256": "3f7f129a0e17c6ed27b0231ec88eb3007d1f70db59a0e3447c65d602b01c10ce"
+    "size": 309031,
+    "sha256": "8fe632a808959214f89d3189ab45b7620954e9c8d68d85b4969a6685f31312de"
   },
   {
     "path": "RaspberryPI_Addons/Witty PI Addon/RELEASE_NOTES_1.3.8.txt",
@@ -111,17 +111,47 @@
   },
   {
     "path": "RaspberryPI_Addons/Witty PI Addon/RELEASE_SUMMARY_DE.txt",
-    "size": 1572,
-    "sha256": "9b6e025051280939527dbef58057a254d0d6e4537aa2fbd165c101f0481c0205"
+    "size": 2357,
+    "sha256": "d2812cd8b8c4c23281716eb3b41c1bef429dff94baf342ce38e4bd4767e63b22"
   },
   {
     "path": "RaspberryPI_Addons/Witty PI Addon/version.txt",
-    "size": 7,
-    "sha256": "98579dca7f943baaaecfe0ba06487e7e1ec5566e00e6c47271b2069005956ef5"
+    "size": 6,
+    "sha256": "7635ad71ecd62fea77470b67ae8572b410e628331551abb2c3f745473722637b"
   },
   {
     "path": "RaspberryPI_Addons/Witty PI Addon/witty_addon.zip.enc",
-    "size": 729890,
-    "sha256": "548d42dddfce3480d51f4aa18e7769558c1d31127bef50b832c8c30dfeaa7e35"
+    "size": 739311,
+    "sha256": "3c019d18618c82ccfe10dcb6ef5fae43c453e1167dd05353a69e115f0e90f2ad"
+  },
+  {
+    "path": "RaspberryPI_Addons/Allsky/ARCHIV_2026.11.03_DE.txt",
+    "size": 348,
+    "sha256": "9218946bcdbcc1caf016642efa4c408ee96613d8a604beddc5230ec5e59f7a09"
+  },
+  {
+    "path": "RaspberryPI_Addons/Raspi-Scripte/release-notes-1.3.9.json",
+    "size": 4628,
+    "sha256": "1e932cfb6618cc18a1386d3ae4d9d34f114c24ba975636aeb00e5398c19bec08"
+  },
+  {
+    "path": "RaspberryPI_Addons/Raspi-Scripte/RELEASE_NOTES_1.3.9.txt",
+    "size": 2357,
+    "sha256": "d2812cd8b8c4c23281716eb3b41c1bef429dff94baf342ce38e4bd4767e63b22"
+  },
+  {
+    "path": "RaspberryPI_Addons/Witty PI Addon/PRUEFBERICHT_1.3.9.txt",
+    "size": 3798,
+    "sha256": "c858c8342b77c784fb91eeab63d4f7482e286153ec1b02b23ba81f05e206dd97"
+  },
+  {
+    "path": "RaspberryPI_Addons/Witty PI Addon/release-notes-1.3.9.json",
+    "size": 4628,
+    "sha256": "1e932cfb6618cc18a1386d3ae4d9d34f114c24ba975636aeb00e5398c19bec08"
+  },
+  {
+    "path": "RaspberryPI_Addons/Witty PI Addon/RELEASE_NOTES_1.3.9.txt",
+    "size": 2357,
+    "sha256": "d2812cd8b8c4c23281716eb3b41c1bef429dff94baf342ce38e4bd4767e63b22"
   }
 ]
