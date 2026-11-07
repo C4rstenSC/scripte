@@ -1,13 +1,9 @@
-Version 1.3.9 – 07.11.2026
+Version 1.4 – 07.11.2026
 
-- Live Video Bild: Popup-Code wird ausgeführt. Schließen, Escape und Verbindungsabbruch beenden die Vorschau; verspätete Bilder bleiben nach dem Schließen verworfen.
-- Allsky-Aufnahme: Nur ein zuvor laufender Dienst wird nach der Vorschau wieder gestartet. Fehler beim Stoppen oder Wiederstart werden angezeigt; eine ausstehende Wiederaufnahme bleibt erhalten. Während der Vorschau sind konkurrierende Konfigurations-/Speichervorgänge gesperrt.
-- November-Archiv: Die Abschlussprüfung liest erlaubte Versionen und Aliase aus dem Archivkatalog. Das Archiv 03.11.2026 wird akzeptiert, ein falscher Git-Stand weiterhin abgewiesen. Der bestehende automatische Neustart nach erfolgreichem Abschluss wird dadurch wieder erreicht.
-- Beide Installationsquellen erhalten dieselbe Witty-Kamera-, Paket-/Python- und Trixie-Vorbereitung. Geprüfter aktueller Herstellerstand: e9309b09, identisch mit dem Allsky-Hauptquellstand des November-Archivs. Archivierte Zusatzmodule bleiben festgelegt; der Direktdownload verwendet Herstellerquellen.
-- Eingebettete Downloadpfade verwenden allsky-v2026.11.03-e9309b09; doppelte allsky-archive-Dateien entfernt.
-- ALLSKY_Setup: Vollständige englische Beschriftungen einschließlich Speicherplatz, Sonnenwinkel und Popup. Erklärtexte sind auf Mobilgeräten ausgeblendet; Status und Bedienelemente bleiben sichtbar. Bei installiertem Allsky startet die mobile Homepage ohne gespeicherte Sprachwahl auf australischem Englisch; eine bewusst gewählte Sprache bleibt erhalten.
-- November wird als Allsky · Archiv 03.11.2026 angezeigt; die interne Oktober-Herstellerbezeichnung steht nicht mehr als sichtbarer Versionsname in dieser Anzeige.
-- Lange Schaltflächen passen in die Smartphoneansicht; beim Zurücksetzen der Sprachwahl gilt wieder Englisch.
+- Allsky: Das Add-on-Update erneuert jetzt auch den global installierten Kamera-Helfer und prüft dessen Inhalt und Ausführbarkeit. Die Softwareverwaltung verwendet direkt den Patch aus dem aktuellen Add-on. Alte und neue Kameradateinamen werden berücksichtigt; die unnötige OV5647-Voraussetzung entfällt. Archiv und Herstellerdownload verwenden dieselbe Vorbereitung.
+- Zeitzone: Abgeschlossene Installationssicherungen werden nach erfolgreicher Wiederherstellung entfernt. Alte Sicherungen ohne aktuelle Bootkennung ändern die gewählte Zeitzone nicht mehr. Ein fester Offset bleibt erhalten, statt durch alte regionale Sommerzeitregeln ersetzt zu werden.
+- UTC-Auswahl: Der ausdrücklich ausgewählte feste Offset wird unverändert an alle Backends übertragen. Keine erneute Ableitung aus dem Sommerzeitstand eines Ortsnamens. Automatischer Modus und feste Auswahl bleiben getrennt.
+- Homepage: Bei festem Modus wird der aktive Offset vor einem früher gespeicherten Ortsnamen ausgewählt. Neu geschriebene feste Zeitzonendateien werden ohne veralteten Python-Zeitzonencache gelesen.
+- Windows, Inhaltspakete und eingebettetes Witty-Add-on tragen denselben Stand 1.4. Änderungen aus 1.3.9 einschließlich Livebild und November-Archiv bleiben enthalten.
 
-Prüfung: Originalquellen 8e59705f (Oktober) und e9309b09 (November), mit/ohne GS; automatische Helfer-/Dateitests und Browserprüfungen mit simulierten API-/Videodaten. Ein echter Livekamera-Test und ein vollständiger automatischer Installations-/Neustartdurchlauf mit 1.3.9 auf dem Raspberry sind noch ausstehend. Bash-Syntaxprüfung auf diesem Windows-Prüfhost nicht verfügbar.
-Windows: Inhaltspaket 1.3.9 mit identischem eingebettetem Witty-Paket. Windows-Programmbinärdatei bleibt unverändert Version 1.3.8; kein neuer EXE-Build.
+Prüfung: Reale Allsky-Shellquellen zweier Generationen, andere Sensoreinträge, wiederholte Patchanwendung, Zeitzonensicherungen, alle drei Backends mit positiven/negativen und gebrochenen Offsets sowie JavaScript-Übertragung und aktive Auswahl geprüft. Windows-Build und gezielte Windows-Tests werden im Buildlauf geprüft. Kein physischer Raspberry-/Kamera-Installationstest auf Papas Gerät.
