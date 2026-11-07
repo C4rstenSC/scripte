@@ -313,132 +313,132 @@
       ]
     },
     {
-      "package": "allsky-archive-2026.11.03-e9309b09.zip.enc",
+      "package": "allsky-v2026.11.03-e9309b09.zip.enc",
       "sha256": "9ddc6276100bb701842c7367299051c2eae24b3f53b097732d6cdb5e72e41d92",
       "sizeBytes": 153666310,
       "parts": [
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part01",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part01",
           "sha256": "36acfdb69d8918792d50a426d466c2ce8c2036e2dbb8a6c80e51e086186ab960",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part02",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part02",
           "sha256": "f124e05dfb2b44acc756d2a928fe1c0faa438bd846f92a61ebc560f41d6940f1",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part03",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part03",
           "sha256": "c8f721490e8f737d7200a44b7a0152aaeb3e254edb6ca5f3779359e0c8d35b23",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part04",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part04",
           "sha256": "1db3ac2e12cb82159554edf55ed3df48843236d65dfedcc8fbde1aa9e1c85b26",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part05",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part05",
           "sha256": "c005d96e881255ec22454045c89cb4bd857505b8065998938bf17823404df1f9",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part06",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part06",
           "sha256": "6396c3761c28784a2c3197fc85e6235cd0cd0e78e402db554ce8406b0a660701",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part07",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part07",
           "sha256": "e798eaf95a77ff109028edbb181133f1486118190cd37d4fef2cc374ca86749f",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part08",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part08",
           "sha256": "cb8d362152a97fa1e578b042b7fc908bd72247392869e3d366de39c35caf6ef7",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part09",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part09",
           "sha256": "cbbd88adb058f9e5e567dd85d3eb3195f107cc5367d8426a53207f29e06132ac",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part10",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part10",
           "sha256": "cbd0e645058179cb9a6c18c7d714e4f08efe33dba1f3d4a18adeb9db76231307",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part11",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part11",
           "sha256": "e3d5da83d632798ad68b59d847ab5b93df4450333b4f43c52a9a4f2c48fe44bd",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part12",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part12",
           "sha256": "50f1351f21fd61679ade66e7559e781c8f9dc2f9ea5f073d7dc2141c712a9fe2",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part13",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part13",
           "sha256": "fc3f7c04f06fe1e4fac7c68202ee983394033e1845ba464ab9238e4157640200",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part14",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part14",
           "sha256": "f44378dc767fcbb2abb363dd7413d1922eaf2be142071468bf2c647d2db7b07f",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part15",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part15",
           "sha256": "750e9aff6b77e8660eb8e5c973fc2dcefb0133c28c7cbc880892c7ae2b637be6",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part16",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part16",
           "sha256": "fcdf72081060d3585e852f621831941607b5383c170a308a83ae63d19af0a692",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part17",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part17",
           "sha256": "f55cfb2483bd7a98bc7af40882a9ccfcaa8824ec14fe288e908c7823c98f9c8c",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part18",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part18",
           "sha256": "8cae8afe55c65a5ff73f02808cadd70b3e743d363631cd44e316f71bb71e713d",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part19",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part19",
           "sha256": "da0d976931d1f40e561a6994acdee894011866b7c97eccd4a9b4525779531195",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part20",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part20",
           "sha256": "06d690821551e62667658c9e4ded6350f53b083ddbe3147efab722275ea57365",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part21",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part21",
           "sha256": "2fb206506f6843940ad0b74261dad91a1fcb8d807556de79fd1141ba085724a1",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part22",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part22",
           "sha256": "f30eae80d504b4cf6bc35ca22b2a72fbbe57e9e1f71418e7f08def09f58fe8d0",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part23",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part23",
           "sha256": "7ea92fe84352a9c5c50eff830d9577dd6a1358954d06497e8d294246e04b8ae9",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part24",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part24",
           "sha256": "0991ef92efd284d32d2f33adde41c7012b86881995182f4a8c388c7ec4958a81",
           "sizeBytes": 6291456
         },
         {
-          "package": "allsky-archive-2026.11.03-e9309b09.zip.enc.part25",
+          "package": "allsky-v2026.11.03-e9309b09.zip.enc.part25",
           "sha256": "d545eee3edecef9b891e2bec4e401b8110ed4e1ce990e67e355fd96a6816b2d8",
           "sizeBytes": 2671366
         }
