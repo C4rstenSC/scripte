@@ -1,0 +1,13 @@
+{
+  "version": "1.4.1",
+  "buildRevision": "20261109.141.1",
+  "baseCommit": "0287d3755b6751a73721e5a9e3bbdad0c26e1359",
+  "windowsBuild": "passed",
+  "updaterBuild": "passed",
+  "targetedRegressionTests": 10,
+  "targetedRegressionResult": "passed",
+  "deviceClockRegressionTests": "passed",
+  "pythonBashJavaScriptSyntax": "passed",
+  "sydneyTransitions": 22,
+  "physicalRaspberryGpsVerified": false
+}

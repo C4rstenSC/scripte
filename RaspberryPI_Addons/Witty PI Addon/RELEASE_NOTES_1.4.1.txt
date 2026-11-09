@@ -1,0 +1,15 @@
+Version 1.4.1 – 09.11.2026
+
+- Lokale Sydney-Datei: 22 berechnete Wechseltermine von 2026 bis 2036 einschließlich, mit UTC-Zeitpunkten und Offset davor/danach. Beim Aktivieren der Sydney-Automatik wird die aktuelle Datumsregel geprüft; fester Offset bleibt davon unberührt.
+- GPS-Region: Nur im automatischen Modus bestimmt ein aktueller gültiger GPS-Fix die Region über die lokale Zeitzonendatenbank. Ohne Fix bleibt die gespeicherte Region aktiv. Fester Offset hat Vorrang.
+- Sydney ohne GPS: Region und fester Offset werden getrennt ausgewählt und gespeichert. Automatik verwendet Australia/Sydney und ihre Sommer-/Winterzeitregeln; der feste Offset wird nicht als andere Region interpretiert.
+- Allsky: Ein gespeicherter fester Allsky-Offset bleibt erhalten, wenn WURB/WIRC zur regionalen Sommer-/Winterzeit zurückkehren. Allsky-Zeitberechnungen verwenden weiterhin die gespeicherte Allsky-Regel.
+- WURB/WIRC: Lokale Zeitregeln werden im laufenden Prozess nachgeladen. WURB-Sonnenzeiten werden bei Regions-/Offset- oder Tageswechsel neu berechnet; das bisher beim Programmstart festgelegte Standarddatum wurde korrigiert.
+- GPS: Unabhängiger Hintergrundabgleich wartet auf fortschreitende, gültige GPS-Zeit. Er funktioniert auch nach spätem Anstecken oder spätem Empfang. Beide Empfängerarten verwenden denselben geprüften gpsd-Pfad. Ohne Fix bleibt die Oberfläche bedienbar.
+- Witty-Homepage: GPS-Suche hält keine globale Witty-Sperre mehr. Statusabfragen werden über einen gemeinsamen kurzlebigen Cache zusammengefasst und stehen nicht mehr vor Klicks in der Browser-Warteschlange. Zeitlimits verhindern dauerhaft hängende Anfragen.
+- Sommer-/Winterzeit: Der Umschaltauftrag aktualisiert die Witty-RTC aus der laufenden Linux-Zeit; dafür wird kein GPS-Empfang vorausgesetzt.
+- Windows: Neuer schwarz umrahmter Zeitbereich zwischen Uhren und Witty-Konfiguration. Systemzeit => RPI und Witty RTC überträgt den UTC-Zeitpunkt des PCs und prüft den Abgleich. PC-Zeitzone wird erkannt und angezeigt. Zwei weitere Buttons öffnen die Auswahl für festen UTC-Offset oder automatische Sommer-/Winterzeit.
+- Terminal wp5: Die Berechtigungen beider Witty-Sperrdateien werden bei Installation, Add-on-Update und Herstellerinstallation für die i2c-Gruppe wiederhergestellt. Neue Gruppenrechte gelten nach erneutem Verbinden des Terminals.
+- Grundlage ist der veröffentlichte Stand 1.4; dessen Allsky-, Archiv- und UTC-Korrekturen bleiben enthalten.
+
+Prüfung: Windows-Kompilierung, Python-/Bash-/JavaScript-Prüfungen, Sydney Sommer/Winter ohne GPS, alle drei Backends mit positiven/negativen/gebrochenen Offsets, UTC-PC-Abgleich, Allsky-Trennung, Solar-Cache und simulierte GPS-Fixes beider Empfängerarten. Kein physischer Test auf den beiden Raspberry-Pi-Geräten oder mit den beiden GPS-Mäusen.

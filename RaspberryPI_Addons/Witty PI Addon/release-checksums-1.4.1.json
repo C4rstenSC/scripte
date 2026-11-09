@@ -1,0 +1,34 @@
+{
+  "witty_addon.zip.enc": {
+    "sha256": "d05bb0d89934c0f1ba281ee174832ac7c07f785b7e1d7992717a241d211818b3",
+    "size": 750267
+  },
+  "Raspi-Scripte-Modular-Content.zip": {
+    "sha256": "61e8de2f535096488d87199fc69de5e0e506f800f0338b9f9191c42739367350",
+    "size": 1014112
+  },
+  "witty_addon.zip": {
+    "sha256": "d777afb24cd3f1d970232478f950a6879d0b0bbb1323e46095de8f9f548db27a",
+    "size": 750215
+  },
+  "Raspi-Scripte-Programm.zip.enc": {
+    "sha256": "1fb5543e9b8c794787f0051987d2ae7fcfb46843e1472002a589b9bd683ca062",
+    "size": 7534564
+  },
+  "Raspi-Scripte-Programm.zip": {
+    "sha256": "e6982ed47fb60376d5203e0c19e5ced9cfed8a6d2d4d4f0bf25cd1bc7486c491",
+    "size": 7534512
+  },
+  "Raspi-Scripte-Module.zip": {
+    "sha256": "a624a6b7644ec124126e92a0f9c2949a460d31a55001bb2622cceb7d9b0e7fdf",
+    "size": 866605
+  },
+  "Raspi-Scripte-Module.zip.enc": {
+    "sha256": "f1a445ed2d809e7ca516ddb1b5c0ada98cc1d23c34313558caf69bbe5041bfbf",
+    "size": 866657
+  },
+  "Raspi-Scripte-Modular-Content.zip.enc": {
+    "sha256": "6cdb4d6c46a8d29456b94218db53b3b88392cd20dd95cf4497e96e08ee2e5ab0",
+    "size": 1014164
+  }
+}
