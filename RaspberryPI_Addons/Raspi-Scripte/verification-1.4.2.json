@@ -1,0 +1,14 @@
+{
+  "version": "1.4.2",
+  "buildRevision": "20261109.142.1",
+  "windowsBuild": "passed",
+  "updaterBuild": "passed",
+  "targetedTimeGpsRegressionTests": 10,
+  "targetedTimeGpsRegressionResult": "passed",
+  "packageIntegrity": "passed",
+  "updaterFiles": "all four present",
+  "embeddedAddonCopies": "identical",
+  "moduleUpdateAdvertised": false,
+  "nativeWindowsLayoutVerified": false,
+  "physicalRaspberryVerified": false
+}

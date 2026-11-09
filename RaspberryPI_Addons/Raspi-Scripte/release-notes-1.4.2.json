@@ -1,0 +1,9 @@
+{
+  "version": "1.4.2",
+  "de": [
+    "Version 1.4.2 – 09.11.2026\n- Zeiten/GPS, Zeiteinstellungen und Witty-Konfiguration als kompakte Gruppe mittig ausgerichtet.\n- Witty-Konfiguration auf 420 begrenzt; Zeiteinstellungen nach Inhalt bemessen, mindestens 400 breit.\n- Alle drei neuen Buttonbeschriftungen vollständig und einzeilig sichtbar.\n- PC-Anzeige: HH:MM:SS   DD.MM.YYYY   (UTC +1); darunter Zeitzone: Region.\n- Fester UTC-Offset direkt im Auswahlfeld links neben dem Button einstellbar.\n- Sommer-/Winterzeit-Dialog dem sichtbaren Sitzungsfenster zugeordnet; Owner-Fehler behoben.\n- Windows-Update verwendet das vollständige Paket einschließlich Updater-EXE.\n"
+  ],
+  "en-AU": [
+    "Version 1.4.2 – 09.11.2026\n- Zeiten/GPS, Zeiteinstellungen und Witty-Konfiguration als kompakte Gruppe mittig ausgerichtet.\n- Witty-Konfiguration auf 420 begrenzt; Zeiteinstellungen nach Inhalt bemessen, mindestens 400 breit.\n- Alle drei neuen Buttonbeschriftungen vollständig und einzeilig sichtbar.\n- PC-Anzeige: HH:MM:SS   DD.MM.YYYY   (UTC +1); darunter Zeitzone: Region.\n- Fester UTC-Offset direkt im Auswahlfeld links neben dem Button einstellbar.\n- Sommer-/Winterzeit-Dialog dem sichtbaren Sitzungsfenster zugeordnet; Owner-Fehler behoben.\n- Windows-Update verwendet das vollständige Paket einschließlich Updater-EXE.\n"
+  ]
+}
