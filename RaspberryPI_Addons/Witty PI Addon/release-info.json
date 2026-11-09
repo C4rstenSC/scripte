@@ -1,7 +1,5 @@
 {
-  "version": "1.4.1",
-  "buildRevision": "20261109.141.1",
-  "releaseDate": "2026-11-09",
-  "physicalBootVerified": false,
-  "allskyArchiveCommit": "e9309b091ca60380ccb858c72149c647c5d326cc"
+  "version": "1.4.2",
+  "buildRevision": "20261109.142.1",
+  "releaseDate": "2026-11-09"
 }
