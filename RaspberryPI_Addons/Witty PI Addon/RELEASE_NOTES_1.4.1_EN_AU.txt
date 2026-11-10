@@ -1,0 +1,13 @@
+Version 1.4.1 – 9 November 2026
+
+- Store the regional time zone separately from a fixed UTC offset. Australia/Sydney applies daylight saving without GPS.
+- Preserve Allsky's saved fixed offset when WURB/WIRC return to regional automatic time.
+- Reload time rules in running WURB/WIRC processes and invalidate WURB solar caches on zone/day changes. Resolve the solar calculation date at call time.
+- Apply fresh progressing GPS fixes in an independent background service, including late receiver attachment or late reception. GPS acquisition no longer holds the Witty command lock.
+- Share short-lived status snapshots across clients and avoid queueing background reads ahead of user actions. Bound HTTP requests.
+- Refresh Witty RTC at daylight-saving transitions from Linux time without requiring GPS.
+- Add a black-bordered Windows time panel with PC UTC sync and fixed/automatic time-zone dialogs; detect and display the PC time zone and verify applied settings.
+- Repair both Witty lock-file permissions during install, Add-on update and manufacturer installation. Reconnect the terminal after group changes.
+- Retain the published 1.4 Allsky/archive/UTC corrections.
+
+Validation includes a Windows build, language syntax checks and focused software regression tests. Both physical Raspberry Pi/GPS installations remain untested.

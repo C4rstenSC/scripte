@@ -1,0 +1,6 @@
+Version 1.4.5 – 10 November 2026
+- Windows: Highlight the confirmed active time mode in green, matching the homepage; unknown/stale status stays neutral.
+- Publish Windows and Witty Add-on 1.4.5 together, enabling the Add-on update from 1.4.2.
+- Select the connected Raspberry's fixed UTC offset, or its effective system offset in automatic mode, on connection and reconnection.
+- Accept older text-valued offset fields; unknown offsets no longer default to UTC zero.
+- Preserve unapplied selections while device settings remain unchanged; retain arrow markers for UTC+01, +02, +10 and +11.

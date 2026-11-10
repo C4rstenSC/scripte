@@ -1,0 +1,5 @@
+Version 1.4.3 – 10 November 2026
+- Select the Raspberry's active fixed UTC offset on connection and reconnection.
+- Preserve pending user choices during unchanged status polls; reflect changes to the active device offset.
+- Mark UTC+01:00, UTC+02:00, UTC+10:00 and UTC+11:00 with ➜ in Windows, matching the webpage style.
+- Request a fresh initial time status for every connection.

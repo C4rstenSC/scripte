@@ -1,0 +1,8 @@
+Version 1.5 – 10 November 2026
+- Windows: The UTC selector sizes to its content with a minimum width of 160, keeping the arrow and final digit fully visible.
+- UTC choices are limited to UTC 00:00, +01:00, +02:00 and Australia, including its inhabited external territories: +06:30, +07:00, +08:00, +08:45, +09:30, +10:00, +10:30, +11:00 and +12:00.
+- Arrow markers remain on UTC+01:00, +02:00, +10:00 and +11:00. Device status cannot add excluded offsets back to the list; changing from one requires an explicit selection.
+- The confirmed active fixed or automatic time mode appears in green. Unknown or stale status remains neutral.
+- On reconnection, the reported fixed or current system offset is selected if it is listed. Repeated unchanged status reports preserve a pending selection.
+- Windows and the Witty Add-on both use version 1.5; bundled add-ons, update checksums and version information are updated together.
+- Updated Windows and homepage user guides and release notes in German and Australian English, covering time modes, UTC selection, GPS clock actions, Allsky live view and updates.

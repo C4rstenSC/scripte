@@ -1,0 +1,8 @@
+Version 1.5 – 10.11.2026
+- Windows: UTC-Auswahlfeld bemisst sich nach dem Inhalt und ist mindestens 160 breit; Pfeil und letzte Ziffer bleiben vollständig sichtbar.
+- UTC-Auswahl reduziert auf UTC 00:00, +01:00, +02:00 sowie Australien einschließlich bewohnter Außengebiete: +06:30, +07:00, +08:00, +08:45, +09:30, +10:00, +10:30, +11:00 und +12:00.
+- UTC+01:00, +02:00, +10:00 und +11:00 bleiben mit ➜ markiert. Ausgeschlossene Offsets werden auch durch Gerätestatus nicht wieder in die Liste aufgenommen; zum Ändern ist dann eine ausdrückliche Auswahl nötig.
+- Der bestätigte aktive feste oder automatische Zeitmodus wird grün angezeigt. Veralteter oder unbekannter Status bleibt neutral.
+- Bei Neuverbindung wird der gemeldete feste beziehungsweise aktuelle System-Offset vorausgewählt, sofern er in der Liste enthalten ist. Unveränderte Statusabfragen erhalten eine noch nicht übernommene Auswahl.
+- Windows und Witty Add-on tragen einheitlich Version 1.5; eingebettete Add-ons, Update-Prüfsummen und Versionsinformationen werden gemeinsam aktualisiert.
+- Release Notes und Bedienungsanleitungen für Windows und Homepage auf Deutsch und australischem Englisch aktualisiert; Zeitmodi, UTC-Auswahl, GPS-Zeitaktionen, Allsky-Livebild und Updateablauf erklärt.

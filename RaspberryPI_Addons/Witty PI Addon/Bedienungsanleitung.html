@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Bedienungsanleitung</title>
+    <link rel="stylesheet" href="/assets/bulma-v1.0.4.min.css">
+    <style>
+        :root { --panel:#303030; --border:#5d5d5d; --muted:#c5c5c5; --accent:#f0f0f0; }
+        html,body { min-height:100%; background:#171717; color:#f4f4f4; }
+        .app-shell { min-height:100vh; }
+        .navbar { min-height:3.5rem; display:flex; align-items:center; flex-wrap:wrap; background:#000; }
+        .navbar-brand { display:flex; align-items:center; flex-wrap:wrap; width:100%; }
+        .navbar-item img { max-height:2.25rem; }
+        .nav-button { display:inline-flex; align-items:center; margin:.35rem .25rem; padding:.42rem .7rem; border:1px solid #777; border-radius:.35rem; background:#b5b5b5; color:#111; font-weight:700; }
+        .nav-button[aria-current="page"] { background:#fff; }
+        .nav-button.nav-witty { margin-left:2cm; }
+        .developer-mode-label { margin-left:auto; padding:.4rem .7rem; color:#ffd166; font-weight:800; white-space:nowrap; }
+        .developer-login-button.is-active { border-color:#ffd166; box-shadow:0 0 .35rem rgba(255,209,102,.8); }
+        .page-heading-row { display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+        .manual-card { background:var(--panel); border:1px solid var(--border); }
+        .manual-card p, .manual-card li { line-height:1.55; }
+        .manual-card ul, .manual-card ol { margin-top:.55rem; }
+        .manual-card li + li { margin-top:.4rem; }
+        .manual-card code { color:#fff; background:#202020; padding:.08rem .3rem; border-radius:.2rem; }
+        .manual-card details { border-top:1px solid var(--border); padding:.85rem 0; }
+        .manual-card details:first-of-type { border-top:0; }
+        .manual-card summary { cursor:pointer; color:var(--accent); font-size:1.08rem; font-weight:700; }
+        .manual-card details > div { padding:.8rem .25rem .25rem; }
+        .guide-block { margin:0 0 1.5rem; padding:1rem; border:1px solid #505050; border-radius:.45rem; background:#292929; }
+        .guide-block:last-child { margin-bottom:0; }
+        .guide-block h3 { margin:0 0 .65rem; color:#fff; font-size:1.02rem; font-weight:700; }
+        .guide-block h4 { margin:1rem 0 .35rem; color:#fff; font-size:.96rem; font-weight:700; }
+        .guide-block p { margin:.45rem 0; }
+        .guide-block ol, .guide-block ul { margin:.55rem 0 .25rem 1.3rem; }
+        .button-name { display:inline-block; padding:.08rem .38rem; border:1px solid #777; border-radius:.25rem; background:#3a3a3a; font-weight:700; }
+        .notice { border-left:.3rem solid #f0ad4e; padding:.7rem .9rem; background:#262626; }
+        .danger-notice { border-left-color:#e05252; }
+        .toc { display:flex; flex-wrap:wrap; gap:.5rem; }
+        .toc a { color:#fff; border:1px solid #777; border-radius:.3rem; padding:.3rem .55rem; }
+        [data-language-panel][hidden] { display:none !important; }
+        @media(max-width:760px) { .nav-button.nav-witty { margin-left:1.25rem; } }
+    </style>
+<link rel="stylesheet" href="/assets/witty-navigation.css">
+</head>
+<body>
+<div class="app-shell">
+    <header class="has-background-black">
+        <nav class="navbar px-2 witty-unified-navigation" aria-label="Navigation">
+            <div class="navbar-brand" id="mainNavigation">
+                <div class="navbar-item"><img src="/assets/cloudedbats_logo.png" alt="CloudedBats"></div>
+            </div>
+        </nav>
+        <div class="px-3 pb-2 witty-language-row" aria-label="Language selection">
+            <button id="languageGermanButton" class="nav-button" type="button">Deutsch</button>
+            <button id="languageEnglishButton" class="nav-button" type="button">English</button>
+        </div>
+    </header>
+
+    <main class="section py-5">
+        <div class="container is-fluid">
+            <div class="buttons is-justify-content-flex-end mb-3">
+                <button id="developerLoginButton" class="button developer-login-button" type="button">Login</button>
+            </div>
+            <section data-language-panel="de">
+<section class="guide-block"><h3>Aktuelle Bedienung – Version 1.5</h3><p>Stand: 10.11.2026</p><h4>Windows und Witty Add-on aktualisieren</h4><p>Zuerst das Windows-Programm auf 1.5 aktualisieren, danach das Witty Add-on. Das vollständige Programmupdate enthält Programm, Updater, Inhalte und passendes eingebettetes Add-on. Hersteller-Software und Witty-Firmware besitzen eigene Versionsnummern und sind getrennte Aktualisierungen.</p><p>Die Updateanzeige berücksichtigt installierte Version und Build und zeigt die seitdem hinzugekommenen Änderungen. Ein unbekannter oder fehlgeschlagener Gerätestatus ist kein Nachweis einer erfolgreichen Aktualisierung. Nach dem Update neu verbinden und die gemeldeten Versionsstände prüfen.</p><p>Vor Basisinstallation und Witty-Update wird die PC-Systemzeit nur bei mehr als 48 Stunden Abweichung automatisch auf die Raspberry-Systemuhr übertragen. Diese Vorprüfung ändert weder Zeitzone noch RTCs. Der ausdrücklich betätigte PC-Zeitbutton ist eine eigene Aktion.</p><h4>Zeiteinstellungen im Windows-Programm</h4><p>Das UTC-Feld links neben „Fester UTC-Offset“ passt sich seinem Inhalt an. Es enthält ausschließlich:</p><p>UTC 00:00, UTC +01:00, UTC +02:00, UTC +06:30, UTC +07:00, UTC +08:00, UTC +08:45, UTC +09:30, UTC +10:00, UTC +10:30, UTC +11:00, UTC +12:00</p><p>+06:30 gilt für die Kokosinseln, +07:00 für die Weihnachtsinsel, +08:00 für Westaustralien, +08:45 für Eucla, +09:30 für Northern Territory/South Australia, +10:00 für die östlichen Bundesstaaten, +10:30 für South Australia im Sommer beziehungsweise Lord Howe im Winter, +11:00 für die östliche Sommerzeit/Lord Howe im Sommer und Norfolk im Winter, +12:00 für Norfolk im Sommer. Mehrfach verwendete Offsets erscheinen nur einmal.</p><p>Die Pfeile markieren +01:00, +02:00, +10:00 und +11:00 als Orientierung. Sie zeigen nicht den aktiven Zeitmodus an. Einen Offset auswählen und mit „Fester UTC-Offset“ übernehmen. Feste Offsets gelten ganzjährig ohne automatische Umstellung.</p><p>„Sommer-/Winterzeit automatisch“ öffnet die Regionsauswahl. Zum Beispiel Australia/Sydney für NSW oder Australia/Adelaide für South Australia wählen. Die Region bestimmt die Umstellung; im festen Modus bleibt der ausdrücklich gewählte Offset maßgeblich. Ein GPS-Vorschlag ersetzt keinen aktiven festen Offset.</p><p>Der bestätigte aktive Modus wird grün angezeigt. Bei unbekanntem oder veraltetem Status bleiben die Buttons neutral. Bei Verbindung wird ein unterstützter gemeldeter Offset vorausgewählt. Wiederholte unveränderte Statusabfragen überschreiben eine noch nicht übernommene Auswahl nicht. Meldet ein älterer Raspberry einen ausgeschlossenen Offset, bleibt die Auswahl leer, bis ausdrücklich ein Eintrag gewählt wird; die laufende Zeitzone wird dabei nicht geändert.</p><p>„Systemzeit =&gt; RPI und Witty RTC“ überträgt den aktuellen UTC-Zeitpunkt des PCs mit Prüfung auf Raspberry und Witty. Die eingestellten Zeitzonenregeln bleiben bestehen. Eine korrekt eingestellte PC-Uhr ist Voraussetzung.</p><h4>Homepage: Status, Uhren und GPS</h4><p>Die Homepage zeigt Linux-Systemzeit, Witty-RTC und bei Verfügbarkeit interne Pi-RTC, GPS-Zeit, Position und Satelliten. Empfängeraktivität ohne Positionsfix ist von einem gültigen Fix zu unterscheiden. Ein sichtbarer GPS-Zeitwert garantiert keine gültige Position für Sonnenberechnung.</p><p>„GPS =&gt; Systemzeit + Witty-PI RTC“ und „GPS =&gt; Witty-PI RTC“ benötigen gültige aktuelle GPS-Zeit. Beim Witty Pi 5 führt das aktuelle Backend beide Aktionen als geprüften gemeinsamen Abgleich von Linux und Witty aus; eine aktive interne Pi-RTC wird mit abgeglichen. Die zweite Beschriftung bedeutet dort daher keine ausschließlich isolierte RTC-Korrektur. Die Rückmeldung nennt die tatsächlich abgeglichenen Uhren. Im Allsky-Betrieb bleibt Witty beim automatischen Start die Zeitquelle; eine manuelle GPS-Aktion ist davon getrennt.</p><p>Kein GPS, USB-GPS und Waveshare L76X werden getrennt eingerichtet. Die Auswahl für die nächste Installation und der aktuell aktive Empfänger sind unterschiedliche Angaben. Bei fehlendem Fix zuerst Empfang und Quelle prüfen. Ein fester UTC-Offset wird nicht automatisch durch GPS auf Sommerzeit umgestellt.</p><p>Die zusätzlichen Witty-Einstellungen enthalten Start bei Stromzufuhr, bevorzugten Stromanschluss, elektrische Statuswerte und die interne Raspberry-RTC. „RPI - reboot“ und „RPI - herunterfahren“ stehen am Ende. Ein verlorener SSH-Zugang bestätigt allein keine abgeschaltete Stromversorgung.</p><h4>Zeitpläne und Skripteditor</h4><p>Aktives oder gespeichertes WPI-Skript direkt in den Editor laden. Laden und Bearbeiten ändern den laufenden Zeitplan nicht. BEGIN, END, Dateiname, Vorschau und Größenprüfung kontrollieren. Ein Upload ist eine eigene Aktion und aktiviert das Skript nicht automatisch. Vor dem Ersetzen einer aktiven gleichnamigen Datei wird diese deaktiviert.</p><p>Nach einem abgelaufenen END-Datum wird „Aktivieren“ ausgeblendet; hierfür ist die Witty-RTC maßgeblich. Die Datei kann weiterhin geladen oder gelöscht werden. Nach Aktivierung oder Deaktivierung die bestätigte Rückmeldung und nächste Start-/Abschaltzeit prüfen. Fehlertexte nicht als Erfolg behandeln.</p><h4>Allsky: Installation und Livebild</h4><p>Die Basisinstallation bietet die archivierten Quellen und die aktuelle Herstellerversion. Quelle vor dem Start wählen. Ein abgebrochener Installer ist keine fertige Installation; die konkrete Fehlermeldung im Terminal prüfen. Bestehende Einstellungen vor Softwarewechsel sichern.</p><p>„Live Video Bild“ im Allsky-Setup öffnet das Kamerabild zum manuellen Fokussieren. Der Ablauf koordiniert den Kamerazugriff mit Allsky. Popup nach dem Fokussieren schließen und kontrollieren, ob der zuvor laufende Allsky-Dienst wieder gestartet ist. Ein zuvor gestoppter Dienst soll gestoppt bleiben. Keine zweite Kameraanwendung gleichzeitig starten.</p><p>Auf Allsky-Installationen ist Englisch die Vorgabe für die mobile Seite. Eine ausdrücklich gewählte deutsche Sprache wird gespeichert. Bei festem UTC-Offset bleibt dieser maßgeblich; die automatische Sommerzeit gilt erst nach Auswahl des automatischen Modus.</p></section>
+<section class="guide-block"><h3>Allsky-Quellen ab 1.0.20</h3><p>Zur Auswahl stehen Archiv 24.10.2026 (Hersteller v2026.10.01, Git 8e59705f), Archiv 06.10.2026, Archiv 25.07.2025 und die aktuelle Herstellerversion. Zuerst Windows und Witty Add-on auf die aktuelle Version 1.5 aktualisieren. Danach Allsky installieren oder über Software-Update auf die gewünschte Quelle wechseln. Gespeicherte Witty-Zeit- und Mittag-bis-Mittag-Regeln werden wieder angewendet; tatsächliche Koordinaten und Sonnenwinkel bleiben maßgeblich.</p></section>
+                <div class="page-heading-row mb-5">
+                    <div>
+                        <h1 class="title mb-2">Bedienungsanleitung</h1>
+                        <p class="subtitle is-6">Witty Add-on 1.5 · Witty-Webseite sowie WURB- und WIRC-Recordings</p>
+                    </div>
+                    <a class="button mb-2" href="/">Zur Witty-Startseite</a>
+                </div>
+
+                <article class="box manual-card">
+                    <nav class="toc mb-5" aria-label="Inhalt">
+                        <a href="#de-navigation">Navigation</a><a href="#de-status">Status und Zeit</a>
+                        <a href="#de-gps">GPS und RTC</a><a href="#de-schedule">Zeitpläne</a>
+                        <a href="#de-log">Log und Reset</a><a href="#de-recordings">Recordings</a>
+                        <a href="#de-allsky">Allsky-Setup</a>
+                        <a href="#de-safety">Sicherheit und Fehler</a>
+                        <a href="#de-release">Release Notes</a>
+                    </nav>
+
+                    <details class="manual-section" open>
+                        <summary>Neu in 0.8.6: Updates und SD-Wartung</summary>
+                        <div class="manual-content">
+                            <h3>Änderungen seit dem installierten Stand</h3>
+                            <p>Beim Add-on-Update zeigt das Terminal nur Änderungen neuer als die installierte Version und Build-Revision. Übersprungene Zwischenversionen werden berücksichtigt. Bereits installierte Änderungen werden nicht erneut ausgegeben.</p>
+                            <h3>SD-Verkleinerung und Witty-Abschaltung</h3>
+                            <p>Die Verkleinerung läuft nach einem Neustart in RAM, mit ausgehängtem Root-Dateisystem und mehreren Prüfungen. Ergebnis und Fehler stehen auf der Bootpartition in <code>witty-sd-result.json</code> und <code>witty-sd-result.txt</code>.</p>
+                            <p>Bei Witty Pi 5 bedient der Wartungsmodus den Hersteller-Heartbeat. Nach verifizierter Verkleinerung startet ein eigener Abschlussmodus mit dem installierten Witty-Herstellerdienst. Anwendungen und bekannte Erweiterungsdienste bleiben dabei gesperrt. UUID und Partitionsgröße werden vor der Hersteller-Abschaltung erneut geprüft. Die vollständige Stromabschaltung muss am Gerät geprüft werden.</p>
+                        </div>
+                    </details>
+                    <details id="de-navigation" open>
+                        <summary>1. Navigation, Sprache und Dienste</summary>
+                        <div>
+                            <section class="guide-block">
+                                <h3>Zwischen den Seiten wechseln</h3>
+                                <p>Die große Leiste oben ist das Hauptmenü. Im normalen Betrieb erscheinen dort nur Programme, die auf diesem Raspberry Pi tatsächlich gefunden wurden.</p>
+                                <p>Über <strong>Login</strong> oben auf dieser Anleitungsseite kann der Entwicklermodus ein- und mit demselben Knopf wieder ausgeschaltet werden. Im Entwicklermodus werden alle Homepage-Knöpfe angezeigt, auch wenn die jeweilige Software nicht installiert ist. Rechts in der Leiste steht dann <strong>Entwicklermodus</strong>.</p>
+                                <h4>So wechseln Sie die Seite</h4>
+                                <ol><li>Klicken Sie auf den gewünschten Namen in der oberen Leiste.</li><li>Mit <strong>Witty Addon</strong> kehren Sie zur Steuerungsseite zurück.</li><li>Mit <strong>Anleitung</strong> öffnen Sie diese Bedienungsanleitung.</li></ol>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Sprache auswählen</h3>
+                                <p>Mit <span class="button-name">Deutsch</span> oder <span class="button-name">English</span> ändern Sie die Sprache gemeinsam für Witty, Anleitung sowie WURB- und WIRC-Recordings.</p>
+                                <p>Die Auswahl wird im Browser gespeichert. Bereits geöffnete Seiten übernehmen die neue Sprache ebenfalls.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>WURB-, WIRC- und Allsky-Dienste erkennen</h3>
+                                <p><strong>Grau</strong> bedeutet: nicht installiert. <strong>Rot</strong> bedeutet: installiert, aber angehalten. <strong>Grün</strong> bedeutet: installiert und aktiv.</p>
+                                <p>Eine fehlende Software kann direkt über <strong>Software installieren</strong> eingerichtet werden. Bei vorhandener Software heißt die Schaltfläche <strong>Software neu installieren</strong>; der laufende Dienst wird dabei vor dem Aktualisieren beendet und danach wieder geprüft.</p>
+                                <p>Vor Neuinstallation oder Deinstallation kann eine Einstellungssicherung unmittelbar auf den PC heruntergeladen werden. Aufnahmen und virtuelle Programmumgebungen werden nicht in diese Sicherung aufgenommen. Allsky-Sicherungen können über <strong>Allsky - Setup</strong> wiederhergestellt werden.</p>
+                                <p>Die sichtbare Konsole ist ausschließlich mit dem jeweiligen Installer verbunden und keine allgemeine SSH- oder Root-Konsole. Nur Allsky startet nach erfolgreicher Installation den Raspberry Pi neu; WURB und WIRC werden ohne Neustart wieder aktiviert.</p>
+                                <p>Im SSH-Terminal verwenden Sie <code>wp5</code>, <code>wurb-service status</code> und <code>wirc-service status</code> ohne vorangestelltes <code>sudo</code>. Für die Dienstbefehle sind außerdem <code>on</code>, <code>off</code>, <code>start</code>, <code>stop</code> und <code>restart</code> erlaubt.</p>
+                                <p><strong>Wichtig:</strong> Die Basisinstallation darf ausschließlich über <strong>Raspi-Scripte für Windows → Basis Installation</strong> gestartet werden. Ein manueller Aufruf von <code>installer.sh</code> über SSH oder eine andere Konsole ist gesperrt, weil dabei Hardware- und Softwareauswahl nicht zuverlässig zum verbundenen Raspberry passen.</p>
+                                <p>Allsky wird bei Deinstallation beziehungsweise Vorbereinigung vollständig und ohne automatische Projektkopie entfernt. Benötigte Einstellungen daher vorher bewusst als TAR.GZ auf den PC herunterladen.</p>
+                            </section>
+                        </div>
+                    </details>
+
+                    <details id="de-status">
+                        <summary>2. Witty-Status, Uhren und Raspberry-Steuerung</summary>
+                        <div>
+                            <section class="guide-block">
+                                <h3>Ist der Witty erreichbar?</h3>
+                                <p>Die Statusleuchte wird erst <strong>grün</strong>, wenn der Witty antwortet und Modell sowie Firmware erfolgreich gelesen wurden.</p>
+                                <p>Bleibt sie grau oder rot, sollten Sie zunächst keine Zeit oder Zeitpläne übertragen.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Die drei Uhren verstehen</h3>
+                                <p><strong>Linux-Systemzeit</strong> ist die laufende Uhr des Betriebssystems und keine eigene RTC.</p>
+                                <p><strong>Witty Zeit RTC</strong> ist die eigene Uhr des Witty. Sie wird auch weitergeführt, wenn der Raspberry Pi ausgeschaltet ist.</p>
+                                <p><strong>GPS Zeit UTC</strong> erscheint nur bei gültigem GPS-Empfang. Nach dem Einlesen laufen die angezeigten Uhren jede Sekunde sichtbar weiter.</p>
+                                <p>Mit <span class="button-name">Daten aktualisieren</span> werden alle verfügbaren Werte gemeinsam neu eingelesen.</p>
+                                <p>Die Quellen werden nacheinander gelesen. Die Anzeige berücksichtigt deshalb den jeweiligen Lesezeitpunkt und lässt Linux-, Witty- und GPS-Uhr ab diesem Moment sekundengenau weiterlaufen.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Spannungs-, Temperatur- und Firmwareeinstellungen</h3>
+                                <p>Unter <strong>Witty Reset</strong> werden Ausgangsstrom, Unterspannungsgrenze, Wiederanlaufspannung sowie Über- und Untertemperaturaktion getrennt angezeigt. <strong>Setzen</strong> schreibt den jeweiligen Wert; <strong>Deaktivieren</strong> schaltet nur die zugehörige Schutzregel ab.</p>
+                                <p>Darunter zeigt <strong>Weitere Einstellungen</strong> den Standardzustand nach Stromzufuhr, die Abschaltverzögerung nach Linux-Shutdown, das Impulsintervall im Schlafmodus, die Impulslänge der weißen LED, die Energie-Priorität V-USB/V-IN und VIN-Hot-Standby. Die Energie-Priorität entspricht Punkt 10 und VIN-Hot-Standby Punkt 13 des offiziellen <code>wp5</code>-Menüs.</p>
+                                <p>Weitere Einstellungen sind standardmäßig eingeklappt. Die beiden Raspberry-Pi-Schaltflächen zum Neustarten und sicheren Herunterfahren bleiben immer sichtbar.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Zeit zwischen Raspberry Pi und Witty übertragen</h3>
+                                <p><span class="button-name">Systemzeit → Witty-RTC</span> übernimmt die Raspberry-Zeit in den Witty.</p>
+                                <p><span class="button-name">Witty-RTC → Systemzeit</span> kopiert die Witty-Zeit ausschließlich nach Linux. Der Aktivierungszustand der internen Raspberry-Pi-RTC wird dabei nicht verändert.</p>
+                                <p><strong>Linux-Systemzeit manuell setzen</strong> verändert nur die laufende Linux-Uhr. Witty-RTC und interne Pi-RTC werden dabei nicht beschrieben.</p>
+                                <p>Über <strong>Witty-RTC manuell setzen</strong> können Sie selbst Datum und Uhrzeit eingeben. Verwenden Sie diese Möglichkeit nur, wenn keine zuverlässige automatische Zeitquelle verfügbar ist.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Raspberry Pi neu starten oder ausschalten</h3>
+                                <p><span class="button-name">Nur Raspberry Pi neu starten</span> führt einen normalen Neustart durch. Die Seite prüft sofort regelmäßig und lädt neu, sobald der Witty-Webserver wieder erreichbar ist. Bei einem Raspberry Pi 5 dauert das normalerweise weniger als 30 Sekunden.</p>
+                                <p><span class="button-name">Sicher herunterfahren</span> beendet Linux geordnet. Danach muss der Raspberry über die Stromversorgung oder einen Witty-Zeitplan wieder eingeschaltet werden.</p>
+                                <p class="notice danger-notice"><strong>Wichtig:</strong> Nach dem sicheren Herunterfahren nicht sofort den Strom trennen. Warten Sie, bis der Raspberry Pi vollständig beendet ist.</p>
+                            </section>
+                        </div>
+                    </details>
+
+                    <details id="de-gps">
+                        <summary>3. GPS-Auswahl, Synchronisation und Zeitzone</summary>
+                        <div>
+                            <section class="guide-block">
+                                <h3>Die richtige GPS-Option wählen</h3>
+                                <p><strong>Kein GPS</strong> deaktiviert die interne Pi-RTC. Der offizielle <code>wp5d.service</code> verwendet die Witty-RTC beim Start als schnelle Master-Clock für Linux; es gibt keinen späteren Add-on-Timer. Allsky wird nicht durch eine GPS-Suche oder einen interaktiven <code>wp5</code>-Aufruf verzögert.</p>
+                                <p><strong>USB-Maus</strong> ist für einen GPS-Empfänger am USB-Anschluss vorgesehen.</p>
+                                <p><strong>Waveshare L76X</strong> ist für die angeschlossene Waveshare-Platine vorgesehen.</p>
+                                <p>Bei den GPS-Modi bleibt die interne Pi-5-RTC aktiv und die Programme laufen sofort an. Nur während der ersten rund fünf Minuten wird parallel auf einen vollständigen Live-Fix mit Zeit und Position gewartet. Dann setzt GPS die Linux-Zeit und schreibt zusätzlich die interne Pi-RTC sowie die Witty-RTC. Alte gespeicherte GPS-Werte werden nicht als Empfang gewertet.</p>
+                                <h4>Bedeutung der Ampeln</h4>
+                                <ul><li><strong>Grau:</strong> nicht installiert.</li><li><strong>Rot:</strong> installiert, aber derzeit nicht aktiv.</li><li><strong>Grün:</strong> installiert und aktiv.</li></ul>
+                            </section>
+                            <section class="guide-block">
+                                <h3>GPS-Modus ändern</h3>
+                                <ol><li>Klicken Sie auf die gewünschte GPS-Option.</li><li>Warten Sie, bis die Einrichtung abgeschlossen ist.</li><li>Falls ein Neustart verlangt wird, bestätigen Sie ihn.</li><li>Warten Sie anschließend auf eine grüne Ampel und gültige GPS-Zeit.</li></ol>
+                                <p>Die benötigten GPS-Dienste und die Verbindung zu WURB werden dabei automatisch eingerichtet.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>GPS-Zeit übernehmen</h3>
+                                <p><span class="button-name">GPS → System + Pi-RTC + Witty</span> und <span class="button-name">GPS =&gt; Witty-PI RTC</span> synchronisieren beide Linux, die Witty-RTC und eine aktive interne Pi-RTC aus einem frischen GPS-Fix. Beide verwenden denselben geprüften Ablauf.</p>
+                                <p><span class="button-name">GPS =&gt; Witty-PI RTC</span> schreibt einen gültigen Live-Fix in Linux, die interne Pi-RTC und die Witty-Uhr. Der ausgewählte Zeitmodus und UTC-Abstand werden berücksichtigt.</p>
+                                <p class="notice"><strong>Hinweis:</strong> Eine sichtbare GPS-Uhrzeit bedeutet nicht automatisch, dass schon eine Position vorhanden ist. Für Sonnenzeiten in WURB müssen außerdem Breitengrad und Längengrad empfangen werden.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Automatische Zeitumstellung oder fester UTC-Offset?</h3>
+                                <p><strong>Automatische Sommer-/Winterzeit</strong> ist die normale Einstellung für einen festen Standort. Der Raspberry Pi berücksichtigt die Zeitwechsel der gewählten Zeitzone.</p>
+                                <p><strong>Fester UTC-Offset</strong> hält immer denselben Zeitabstand zu UTC. Es erfolgt keine automatische Sommer-/Winterzeitumstellung.</p>
+                                <p>Der aktuell aktive Modus steht direkt hinter <strong>Zeitmodus Umschaltung:</strong>. Die beiden Knöpfe rechts wechseln den Modus.</p>
+                            </section>
+                        </div>
+                    </details>
+
+                    <details id="de-schedule">
+                        <summary>4. Zeitplan, Skriptliste und Editor</summary>
+                        <div>
+                            <section class="guide-block">
+                                <h3>Aktiven Zeitplan erkennen</h3>
+                                <p>Oben im Bereich <strong>Zeitplan</strong> sehen Sie den Namen des aktiven Skripts sowie den nächsten Start und das nächste Herunterfahren.</p>
+                                <p>Jahr und Monat stammen aus <code>BEGIN</code>/<code>END</code> des aktiven WPI-Skripts. Beginnt das Skript beispielsweise erst 2027, wird nicht mehr 2026 angezeigt. Unter Start und Herunterfahren wird das Zeitplanjahr getrennt mit Linux-Systemjahr und Witty-RTC-Jahr verglichen: ältere Werte erscheinen rot, spätere orange.</p>
+                                <p>Steht dort <strong>Deaktiviert</strong>, ist momentan kein Skript eingeschaltet. Gespeicherte Skriptdateien können trotzdem noch in der Liste vorhanden sein.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Aktuelles Skript ansehen oder abschalten</h3>
+                                <p><span class="button-name">Aktuelles Skript in Editor laden</span> lädt das aktive Skript direkt in den Editor. Ein zusätzliches Anzeigefenster entfällt.</p>
+                                <p><span class="button-name">Editor Fenster leeren</span> leert nur den Editor. Auf dem Witty wird nichts gelöscht.</p>
+                                <p><span class="button-name">Aktuelles Skript abschalten</span> beendet den aktiven Zeitplan und löscht die vorgemerkten Ein- und Ausschaltzeiten. Die eigentliche WPI-Datei bleibt gespeichert und kann später erneut aktiviert werden. Der Name erscheint bis zur nächsten Aktivierung grün als zuletzt aktives Skript.</p><p>Rechts neben <strong>Witty Pi 5</strong> zeigt jede Programmseite <strong>Next Shutdown</strong> rot mit Restminuten und Datum. <strong>Deactivate auto switch off</strong> deaktiviert denselben Zeitplan direkt von WURB, WIRC, Allsky, den Recording-Seiten oder der Anleitung. Ist kein Zeitplan aktiv, steht dort grün <strong>Next Shutdown: deactivated</strong>.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Gespeicherte Skripte verwalten</h3>
+                                <p>Unter <strong>Gefundene Skripte</strong> steht jede verfügbare WPI-Datei in einer eigenen Zeile.</p><p><span class="button-name">Skripte Download</span> liest alle WPI-Dateien einzeln vom Witty, erstellt daraus eine ZIP für den PC und entfernt danach die temporäre Raspberry-Datei. <span class="button-name">Skripte Upload</span> prüft eine ausgewählte ZIP vollständig und lädt danach jedes gültige WPI-Skript einzeln hoch. Die obere Statusanzeige zeigt dabei Dateianzahl, Datenmenge, gelernte I²C-Geschwindigkeit und geschätzte Restzeit.</p>
+                                <ul><li><strong>Aktivieren:</strong> Dieses Skript als neuen Zeitplan einschalten.</li><li><strong>In Editor laden:</strong> Den Inhalt in den Editor laden.</li><li><strong>Löschen:</strong> Die Datei vom Witty entfernen.</li></ul>
+                                <p>Auch das aktuell aktive Skript kann über <strong>In Editor laden</strong> direkt bearbeitet werden. Nur das Löschen des aktiven Skripts bleibt gesperrt. Laden allein ändert den laufenden Zeitplan nicht.</p>
+                                <p>Ein zu langer Dateiname wird rot markiert. Beim Aktivieren erzeugt das System automatisch einen kürzeren, eindeutigen Namen.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Ein Skript bearbeiten und hochladen</h3>
+                                <ol><li>Lesen Sie ein vorhandenes Skript ein oder fügen Sie den Text in den Editor ein.</li><li>Prüfen Sie Skriptname, Startdatum und Enddatum.</li><li>Kontrollieren Sie rechts die berechneten realen Schaltzeiten.</li><li>Klicken Sie auf <strong>Auf Witty hochladen</strong>.</li><li>Aktivieren Sie das Skript anschließend bewusst in der Dateiliste.</li></ol>
+                                <p>Der Upload allein aktiviert das Skript nicht. Hat die neue Datei denselben Namen wie das aktive Skript, wird die alte Version zuerst abgeschaltet und ersetzt.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>ON und OFF richtig verstehen</h3>
+                                <p>ON und OFF sind <strong>Zeitdauern</strong>, keine festen Uhrzeiten.</p>
+                                <p><code>ON H2</code> bedeutet: zwei Stunden eingeschaltet bleiben. <code>OFF H22</code> bedeutet danach: 22 Stunden ausgeschaltet bleiben.</p>
+                                <p>Die Vorschau rechts rechnet diese Dauern in echte Uhrzeiten und Datumsangaben um, auch über Mitternacht hinweg.</p>
+                                <p class="notice"><strong>Grenzen:</strong> höchstens 4000 Byte, höchstens 128 ON/OFF-Zeilen, weniger als 128 Byte pro Zeile und bis einschließlich 4096 Ereignisse.</p>
+                            </section>
+                        </div>
+                    </details>
+
+                    <details id="de-log">
+                        <summary>5. Witty-Protokoll, Download und Reset</summary>
+                        <div>
+                            <section class="guide-block">
+                                <h3>Aktuelles Log vom Witty laden</h3>
+                                <ol><li>Klicken Sie auf <strong>Log vom Witty laden</strong>.</li><li>Lassen Sie die Seite geöffnet.</li><li>Beobachten Sie Laufzeit und empfangene Byte in der Statusanzeige.</li><li>Nach Abschluss erscheint das Log mit den neuesten Zeilen oben.</li></ol>
+                                <p>Das Backend hält <code>wp5d</code> dafür kurz an, verwendet <code>wp5</code> intern mit Root-Rechten, wartet auf die Herstellersperre und startet <code>wp5d</code> danach wieder. Ein kurzfristiger Lock-Konflikt wird einmal automatisch wiederholt.</p>
+                                <p>Ein großes Witty-Pi-5-Log kann mehrere Minuten benötigen. Solange Zeit oder Bytezahl weiterlaufen, arbeitet die Übertragung noch.</p>
+                                <p>Firmware 1.6 nennt die Gesamtgröße vorher nicht. Deshalb ist vor dem ersten vollständigen Download keine zuverlässige Prozentberechnung möglich.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Gespeichertes Log verwenden</h3>
+                                <p><span class="button-name">Altes Log vom Raspberry laden</span> zeigt den zuletzt übertragenen Stand, ohne erneut auf den Witty zuzugreifen.</p>
+                                <p><span class="button-name">Log herunterladen</span> speichert diesen Stand auf Ihrem PC oder Mobilgerät.</p>
+                                <p><span class="button-name">Lokale Logs löschen</span> entfernt nur die Kopien auf dem Raspberry. Das Firmware-Log auf dem Witty wird dadurch nicht gelöscht.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Witty sichern und zurücksetzen</h3>
+                                <p>Diese Funktion ist für ein sehr groß gewordenes Firmware-Log oder beschädigte Witty-Dateiverwaltung vorgesehen.</p>
+                                <h4>Ablauf beim Witty Pi 5</h4>
+                                <ol><li>Alle WPI-Skripte werden auf dem Raspberry gesichert.</li><li>Der Witty-Datenträger einschließlich Log wird zurückgesetzt.</li><li>Alle Skripte werden nacheinander wieder hochgeladen.</li><li>Danach wird die Dateiliste einmal gemeinsam geprüft.</li><li>Das vorher aktive Skript wird wieder aktiviert.</li></ol>
+                                <h4>Fortschrittsanzeige</h4>
+                                <p>Oben sehen Sie den aktuellen Schritt, den Dateinamen, den Fortschritt in Prozent und die bisherige Laufzeit.</p>
+                                <p>Die Prozentzahl zählt erledigte Schritte. Sie ist keine genaue Restzeit, weil jeder Firmwarezugriff unterschiedlich lange dauern kann.</p>
+                                <p class="notice danger-notice"><strong>Während des Resets niemals Strom trennen.</strong> Eine angelegte Sicherung bleibt bei einem Fehler erhalten.</p>
+                            </section>
+                        </div>
+                    </details>
+
+                    <details id="de-recordings">
+                        <summary>6. WURB- und WIRC-Recordings verwalten</summary>
+                        <div>
+                            <section class="guide-block">
+                                <h3>Den richtigen Speicher auswählen</h3>
+                                <p>Unter <strong>Recording-Speicher</strong> wählen Sie, welche Aufnahmequelle angezeigt werden soll. Das kann der interne Speicher, ein USB-Stick oder eine externe SSD sein.</p>
+                                <p>Die Auswahl stammt direkt aus der aktiven WURB- oder WIRC-Konfiguration und wird bei jedem Aufruf neu geprüft.</p>
+                                <p>WURB zeigt nur <strong>WAV</strong>. WIRC zeigt nur <strong>H264, MP4 und MKV</strong>. Andere Dateien werden weder angezeigt noch verändert.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Dateien und Ordner ansehen</h3>
+                                <p>Ordner stehen oberhalb der Dateien. Die neuesten Aufnahmen erscheinen zuerst.</p>
+                                <p>Mit <span class="button-name">Öffnen</span> zeigen Sie den Inhalt eines Ordners. Ist dort keine passende Aufnahme vorhanden, erscheint ein kurzer Leerhinweis.</p>
+                                <p>Rechts neben einer einzelnen Aufnahme finden Sie Knöpfe zum direkten Herunterladen oder Löschen.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Mehrere Aufnahmen herunterladen</h3>
+                                <ol><li>Setzen Sie links bei allen gewünschten Dateien einen Haken.</li><li>Klicken Sie auf <strong>Auswahl als ZIP herunterladen</strong>.</li><li>Speichern Sie die ZIP-Datei auf Ihrem Endgerät.</li></ol>
+                                <p>Die Originalaufnahmen bleiben erhalten. Die vorübergehend erzeugte ZIP-Datei wird nach erfolgreicher Übertragung automatisch gelöscht.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Verschieben, Ordner anlegen und löschen</h3>
+                                <p>Mit <strong>Ordner erstellen</strong> können Sie einen neuen Ordner im Hauptverzeichnis oder in einem vorhandenen Unterordner anlegen.</p>
+                                <p>Markieren Sie Dateien oder Ordner, wählen Sie links den Zielordner und klicken Sie anschließend auf <strong>Verschieben</strong>.</p>
+                                <p><strong>Auswahl löschen</strong> entfernt markierte Dateien und leere Ordner. Bei einem nicht leeren Ordner wird vorher ausdrücklich nachgefragt.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Aufnahmen hochladen</h3>
+                                <ol><li>Klicken Sie auf <strong>Upload</strong>.</li><li>Wählen Sie eine oder mehrere Dateien.</li><li>Wählen Sie den Zielordner.</li><li>Starten Sie den Upload.</li></ol>
+                                <p>Bei gleichem Dateinamen können Sie vorhandene Dateien überschreiben oder nur die betroffenen Dateien überspringen.</p>
+                                <p>Nach Erfolg wird die Liste aktualisiert. Das Uploadfenster schließt sich nach zwei Sekunden.</p>
+                            </section>
+                        </div>
+                    </details>
+
+                    <details id="de-allsky">
+                        <summary>7. Allsky-Einstellungen sichern und wiederherstellen</summary>
+                        <div>
+                            <section class="guide-block"><h3>Was wird gesichert?</h3><p>Die Seite <strong>Allsky - Setup</strong> erscheint nur, wenn eine vollständige Allsky-Installation erkannt wurde.</p><p>Die TAR.GZ-Datei enthält alle benutzerrelevanten Allsky-Einstellungen: Kamera- und Aufnahmeoptionen, Overlay-Definitionen samt benötigten Grafiken und Schriften, Modulkonfigurationen, Umgebungs- und Website-Daten, Benutzermodule, verknüpfte Konfigurationsdateien sowie den gewählten Speicherpfad. Kameraaufnahmen, Videos, Darkframes, Logs, temporäre Laufzeitdateien, Programmcaches und die virtuelle Programmumgebung sind ausgeschlossen.</p></section>
+                            <section class="guide-block"><h3>Eine Sicherung erstellen</h3><ol><li>Öffnen Sie <strong>Allsky - Setup</strong>.</li><li>Klicken Sie auf <strong>Neue Sicherung erstellen und herunterladen</strong>.</li><li>Geben Sie einen eindeutigen Namen ein.</li><li>Nach der Erstellung startet der Download der geprüften TAR.GZ-Datei automatisch.</li></ol><p>Die Sicherung bleibt zusätzlich in der Liste auf dem Raspberry anklickbar, bis Sie sie dort ausdrücklich löschen. Beim Wiederherstellen auf einem unkonfigurierten System werden auch Speicherpfad und übrige gesicherte Allsky-Einstellungen übernommen.</p></section>
+                            <section class="guide-block"><h3>Eine Sicherung wiederherstellen</h3><ol><li>Klicken Sie auf <strong>Sicherung hochladen und wiederherstellen</strong>.</li><li>Wählen Sie eine passende TAR.GZ-Datei; vollständige aktuelle und ältere Kernbackups mit <code>settings.json</code> und <code>options.json</code> werden akzeptiert.</li><li>Lesen Sie den Warnhinweis und starten Sie die Wiederherstellung.</li></ol><p>Das Backend prüft Inhalt, Dateipfade und ausgewählte Overlays. Lighttpd bleibt aktiv, damit die Browser-Verbindung bestehen bleibt. Nur die zuvor aktiven ALLSKY-Schreibdienste werden kurz gestoppt, die archivierten Einstellungen wiederhergestellt und danach alle Dienste exakt in ihren vorherigen Zustand versetzt. Die hochgeladene Arbeitsdatei wird nach der Verarbeitung gelöscht; die vor dem Restore angelegte Rückrollsicherung bleibt dagegen in der Downloadliste erhalten.</p><p class="notice danger-notice"><strong>Während der Wiederherstellung weder Strom noch Netzwerk trennen.</strong></p></section>
+                        </div>
+                    </details>
+
+                    <details id="de-safety">
+                        <summary>8. Sicherheit und typische Fehler</summary>
+                        <div>
+                            <section class="guide-block">
+                                <h3>Ein Vorgang nach dem anderen</h3>
+                                <p>Während ein Befehl läuft, werden andere Aktionsknöpfe automatisch gesperrt. Warten Sie, bis der aktuelle Vorgang beendet ist.</p>
+                                <p>Starten Sie insbesondere keinen zweiten Logdownload oder Reset in einem anderen Browserfenster.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Eine Schaltfläche fehlt</h3>
+                                <p>Die Navigation zeigt nur erkannte Installationen. Ein fehlender WURB-, WIRC- oder Allsky-Knopf bedeutet daher meistens, dass diese Software nicht vollständig gefunden wurde.</p>
+                                <p>Nach einem Update laden Sie die Seite einmal mit <strong>Strg+F5</strong> neu.</p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>Die Witty-Seite ist nicht erreichbar</h3>
+                                <p>Prüfen Sie zuerst, ob Sie die richtige Adresse mit Port 8081 verwenden.</p>
+                                <p>Für eine technische Prüfung geben Sie ein:</p>
+                                <p><code>sudo systemctl status wittypi5-webserver.service</code></p>
+                                <p>Weitere Fehlermeldungen erhalten Sie mit:</p>
+                                <p><code>sudo journalctl -u wittypi5-webserver.service -n 100 --no-pager</code></p>
+                            </section>
+                            <section class="guide-block">
+                                <h3>GPS-Zeit vorhanden, aber WURB findet keinen Standort</h3>
+                                <p>Für die Uhrzeit reicht ein GPS-Zeitsignal. Für Sonnenaufgang und Sonnenuntergang benötigt WURB zusätzlich eine gültige Position.</p>
+                                <p>Auf Raspberry Pi 4/4B/4B+ liest WURB eine USB-GPS-Maus direkt; dort sind gpsd und <code>/dev/ttyUSB9</code> absichtlich nicht aktiv. Auf Raspberry Pi 5 prüfen Sie mit <code>gpspipe -w</code>, ob <strong>lat</strong> und <strong>lon</strong> ausgegeben werden.</p>
+                            </section>
+                        </div>
+                    </details>
+
+                    <details id="de-release">
+                        <summary>9. Release Notes – Versionshistorie</summary>
+                        <div><div id="release-history-150-de"><section class="guide-block"><h3>Version 1.5</h3><p>Version 1.5 – 10.11.2026
+- Windows: UTC-Auswahlfeld bemisst sich nach dem Inhalt und ist mindestens 160 breit; Pfeil und letzte Ziffer bleiben vollständig sichtbar.
+- UTC-Auswahl reduziert auf UTC 00:00, +01:00, +02:00 sowie Australien einschließlich bewohnter Außengebiete: +06:30, +07:00, +08:00, +08:45, +09:30, +10:00, +10:30, +11:00 und +12:00.
+- UTC+01:00, +02:00, +10:00 und +11:00 bleiben mit ➜ markiert. Ausgeschlossene Offsets werden auch durch Gerätestatus nicht wieder in die Liste aufgenommen; zum Ändern ist dann eine ausdrückliche Auswahl nötig.
+- Der bestätigte aktive feste oder automatische Zeitmodus wird grün angezeigt. Veralteter oder unbekannter Status bleibt neutral.
+- Bei Neuverbindung wird der gemeldete feste beziehungsweise aktuelle System-Offset vorausgewählt, sofern er in der Liste enthalten ist. Unveränderte Statusabfragen erhalten eine noch nicht übernommene Auswahl.
+- Windows und Witty Add-on tragen einheitlich Version 1.5; eingebettete Add-ons, Update-Prüfsummen und Versionsinformationen werden gemeinsam aktualisiert.
+- Release Notes und Bedienungsanleitungen für Windows und Homepage auf Deutsch und australischem Englisch aktualisiert; Zeitmodi, UTC-Auswahl, GPS-Zeitaktionen, Allsky-Livebild und Updateablauf erklärt.</p></section><section class="guide-block"><h3>Version 1.4.5</h3><p>Version 1.4.5 – 10.11.2026
+- Windows: Der bestätigte aktive Zeitmodus wird wie auf der Homepage grün angezeigt; unbekannter/veralteter Status bleibt neutral.
+- Windows und Witty Add-on gemeinsam als 1.4.5 veröffentlicht; Add-on-Update von 1.4.2 wird angeboten.
+- Bei Verbindung und Neuverbindung zeigt das weiße UTC-Auswahlfeld den festen Offset des Raspberry; im Automatikmodus dessen aktuellen System-Offset.
+- Ältere Statusantworten mit Offset als Text werden unterstützt. Fehlende Werte werden nicht als UTC+00:00 ausgegeben.
+- Eigene noch nicht übernommene Auswahl bleibt bei unverändertem Gerätestatus erhalten; Modus- und Offsetänderungen werden übernommen.
+- UTC+01:00, UTC+02:00, UTC+10:00 und UTC+11:00 bleiben mit ➜ markiert.</p></section><section class="guide-block"><h3>Version 1.4.4</h3><p>Version 1.4.4 – 10.11.2026
+- Windows und Witty Add-on gemeinsam als 1.4.4 veröffentlicht; Add-on-Update von 1.4.2 wird angeboten.
+- Bei Verbindung und Neuverbindung zeigt das weiße UTC-Auswahlfeld den festen Offset des Raspberry; im Automatikmodus dessen aktuellen System-Offset.
+- Ältere Statusantworten mit Offset als Text werden unterstützt. Fehlende Werte werden nicht als UTC+00:00 ausgegeben.
+- Eigene noch nicht übernommene Auswahl bleibt bei unverändertem Gerätestatus erhalten; Modus- und Offsetänderungen werden übernommen.
+- UTC+01:00, UTC+02:00, UTC+10:00 und UTC+11:00 bleiben mit ➜ markiert.</p></section><section class="guide-block"><h3>Version 1.4.3</h3><p>Version 1.4.3 – 10.11.2026
+- Windows: Bei Verbindung und Neuverbindung wird im festen UTC-Modus der auf dem Raspberry gespeicherte Offset vorausgewählt.
+- Wiederholte Statusabfragen lassen eine noch nicht übernommene Auswahl stehen. Änderungen des aktiven festen Offsets werden übernommen.
+- UTC+01:00, UTC+02:00, UTC+10:00 und UTC+11:00 sind mit ➜ markiert – wie auf der Homepage.
+- Der erste Zeitstatus wird bei jeder Verbindung frisch vom Raspberry abgefragt.</p></section><section class="guide-block"><h3>Version 1.4.2</h3><p>Version 1.4.2 – 09.11.2026
+- Zeiten/GPS, Zeiteinstellungen und Witty-Konfiguration als kompakte Gruppe mittig ausgerichtet.
+- Witty-Konfiguration auf 420 begrenzt; Zeiteinstellungen nach Inhalt bemessen, mindestens 400 breit.
+- Alle drei neuen Buttonbeschriftungen vollständig und einzeilig sichtbar.
+- PC-Anzeige: HH:MM:SS   DD.MM.YYYY   (UTC +1); darunter Zeitzone: Region.
+- Fester UTC-Offset direkt im Auswahlfeld links neben dem Button einstellbar.
+- Sommer-/Winterzeit-Dialog dem sichtbaren Sitzungsfenster zugeordnet; Owner-Fehler behoben.
+- Windows-Update verwendet das vollständige Paket einschließlich Updater-EXE.</p></section><section class="guide-block"><h3>Version 1.4.1</h3><p>Version 1.4.1 – 09.11.2026</p><p>- Lokale Sydney-Datei: 22 berechnete Wechseltermine von 2026 bis 2036 einschließlich, mit UTC-Zeitpunkten und Offset davor/danach. Beim Aktivieren der Sydney-Automatik wird die aktuelle Datumsregel geprüft; fester Offset bleibt davon unberührt.
+- GPS-Region: Nur im automatischen Modus bestimmt ein aktueller gültiger GPS-Fix die Region über die lokale Zeitzonendatenbank. Ohne Fix bleibt die gespeicherte Region aktiv. Fester Offset hat Vorrang.
+- Sydney ohne GPS: Region und fester Offset werden getrennt ausgewählt und gespeichert. Automatik verwendet Australia/Sydney und ihre Sommer-/Winterzeitregeln; der feste Offset wird nicht als andere Region interpretiert.
+- Allsky: Ein gespeicherter fester Allsky-Offset bleibt erhalten, wenn WURB/WIRC zur regionalen Sommer-/Winterzeit zurückkehren. Allsky-Zeitberechnungen verwenden weiterhin die gespeicherte Allsky-Regel.
+- WURB/WIRC: Lokale Zeitregeln werden im laufenden Prozess nachgeladen. WURB-Sonnenzeiten werden bei Regions-/Offset- oder Tageswechsel neu berechnet; das bisher beim Programmstart festgelegte Standarddatum wurde korrigiert.
+- GPS: Unabhängiger Hintergrundabgleich wartet auf fortschreitende, gültige GPS-Zeit. Er funktioniert auch nach spätem Anstecken oder spätem Empfang. Beide Empfängerarten verwenden denselben geprüften gpsd-Pfad. Ohne Fix bleibt die Oberfläche bedienbar.
+- Witty-Homepage: GPS-Suche hält keine globale Witty-Sperre mehr. Statusabfragen werden über einen gemeinsamen kurzlebigen Cache zusammengefasst und stehen nicht mehr vor Klicks in der Browser-Warteschlange. Zeitlimits verhindern dauerhaft hängende Anfragen.
+- Sommer-/Winterzeit: Der Umschaltauftrag aktualisiert die Witty-RTC aus der laufenden Linux-Zeit; dafür wird kein GPS-Empfang vorausgesetzt.
+- Windows: Neuer schwarz umrahmter Zeitbereich zwischen Uhren und Witty-Konfiguration. Systemzeit =&gt; RPI und Witty RTC überträgt den UTC-Zeitpunkt des PCs und prüft den Abgleich. PC-Zeitzone wird erkannt und angezeigt. Zwei weitere Buttons öffnen die Auswahl für festen UTC-Offset oder automatische Sommer-/Winterzeit.
+- Terminal wp5: Die Berechtigungen beider Witty-Sperrdateien werden bei Installation, Add-on-Update und Herstellerinstallation für die i2c-Gruppe wiederhergestellt. Neue Gruppenrechte gelten nach erneutem Verbinden des Terminals.
+- Grundlage ist der veröffentlichte Stand 1.4; dessen Allsky-, Archiv- und UTC-Korrekturen bleiben enthalten.</p><p>Prüfung: Windows-Kompilierung, Python-/Bash-/JavaScript-Prüfungen, Sydney Sommer/Winter ohne GPS, alle drei Backends mit positiven/negativen/gebrochenen Offsets, UTC-PC-Abgleich, Allsky-Trennung, Solar-Cache und simulierte GPS-Fixes beider Empfängerarten. Kein physischer Test auf den beiden Raspberry-Pi-Geräten oder mit den beiden GPS-Mäusen.</p></section><section class="guide-block"><h3>Version 1.4</h3><p>Version 1.4 – 07.11.2026</p><p>- Allsky: Das Add-on-Update erneuert jetzt auch den global installierten Kamera-Helfer und prüft dessen Inhalt und Ausführbarkeit. Die Softwareverwaltung verwendet direkt den Patch aus dem aktuellen Add-on. Alte und neue Kameradateinamen werden berücksichtigt; die unnötige OV5647-Voraussetzung entfällt. Archiv und Herstellerdownload verwenden dieselbe Vorbereitung.
+- Zeitzone: Abgeschlossene Installationssicherungen werden nach erfolgreicher Wiederherstellung entfernt. Alte Sicherungen ohne aktuelle Bootkennung ändern die gewählte Zeitzone nicht mehr. Ein fester Offset bleibt erhalten, statt durch alte regionale Sommerzeitregeln ersetzt zu werden.
+- UTC-Auswahl: Der ausdrücklich ausgewählte feste Offset wird unverändert an alle Backends übertragen. Keine erneute Ableitung aus dem Sommerzeitstand eines Ortsnamens. Automatischer Modus und feste Auswahl bleiben getrennt.
+- Homepage: Bei festem Modus wird der aktive Offset vor einem früher gespeicherten Ortsnamen ausgewählt. Neu geschriebene feste Zeitzonendateien werden ohne veralteten Python-Zeitzonencache gelesen.
+- Windows, Inhaltspakete und eingebettetes Witty-Add-on tragen denselben Stand 1.4. Änderungen aus 1.3.9 einschließlich Livebild und November-Archiv bleiben enthalten.</p><p>Prüfung: Reale Allsky-Shellquellen zweier Generationen, andere Sensoreinträge, wiederholte Patchanwendung, Zeitzonensicherungen, alle drei Backends mit positiven/negativen und gebrochenen Offsets sowie JavaScript-Übertragung und aktive Auswahl geprüft. Windows-Build und gezielte Windows-Tests werden im Buildlauf geprüft. Kein physischer Raspberry-/Kamera-Installationstest auf Papas Gerät.</p></section><section class="guide-block"><h3>Version 1.3.9</h3><p>Version 1.3.9 – 07.11.2026</p><p>- Live Video Bild: Popup-Code wird ausgeführt. Schließen, Escape und Verbindungsabbruch beenden die Vorschau; verspätete Bilder bleiben nach dem Schließen verworfen.
+- Allsky-Aufnahme: Nur ein zuvor laufender Dienst wird nach der Vorschau wieder gestartet. Fehler beim Stoppen oder Wiederstart werden angezeigt; eine ausstehende Wiederaufnahme bleibt erhalten. Während der Vorschau sind konkurrierende Konfigurations-/Speichervorgänge gesperrt.
+- November-Archiv: Die Abschlussprüfung liest erlaubte Versionen und Aliase aus dem Archivkatalog. Das Archiv 03.11.2026 wird akzeptiert, ein falscher Git-Stand weiterhin abgewiesen. Der bestehende automatische Neustart nach erfolgreichem Abschluss wird dadurch wieder erreicht.
+- Beide Installationsquellen erhalten dieselbe Witty-Kamera-, Paket-/Python- und Trixie-Vorbereitung. Geprüfter aktueller Herstellerstand: e9309b09, identisch mit dem Allsky-Hauptquellstand des November-Archivs. Archivierte Zusatzmodule bleiben festgelegt; der Direktdownload verwendet Herstellerquellen.
+- Eingebettete Downloadpfade verwenden allsky-v2026.11.03-e9309b09; doppelte allsky-archive-Dateien entfernt.
+- ALLSKY_Setup: Vollständige englische Beschriftungen einschließlich Speicherplatz, Sonnenwinkel und Popup. Erklärtexte sind auf Mobilgeräten ausgeblendet; Status und Bedienelemente bleiben sichtbar. Bei installiertem Allsky startet die mobile Homepage ohne gespeicherte Sprachwahl auf australischem Englisch; eine bewusst gewählte Sprache bleibt erhalten.
+- November wird als Allsky · Archiv 03.11.2026 angezeigt; die interne Oktober-Herstellerbezeichnung steht nicht mehr als sichtbarer Versionsname in dieser Anzeige.
+- Lange Schaltflächen passen in die Smartphoneansicht; beim Zurücksetzen der Sprachwahl gilt wieder Englisch.</p><p>Prüfung: Originalquellen 8e59705f (Oktober) und e9309b09 (November), mit/ohne GS; automatische Helfer-/Dateitests und Browserprüfungen mit simulierten API-/Videodaten. Ein echter Livekamera-Test und ein vollständiger automatischer Installations-/Neustartdurchlauf mit 1.3.9 auf dem Raspberry sind noch ausstehend. Bash-Syntaxprüfung auf diesem Windows-Prüfhost nicht verfügbar.
+Windows: Inhaltspaket 1.3.9 mit identischem eingebettetem Witty-Paket. Windows-Programmbinärdatei bleibt unverändert Version 1.3.8; kein neuer EXE-Build.</p></section><section class="guide-block"><h3>Version 1.3</h3><p>Version 1.3 – Korrekturbuild 20261105.130.2</p><p>1. WURB: „Accepted formats“ steht auch nach dem nachträglichen Laden oder erneuten Öffnen des Positionsbereichs unter Save.
+2. Updateausgabe: Kurze neue Änderungspunkte seit der installierten Version und dem installierten Build; keine wiederholten Bestandsfunktionen oder Prüfberichte.
+3. Windows: Der Abschluss mit Bereinigung und Versionsabgleich wird sichtbar angezeigt. Sobald das Add-on die erwartete Version meldet, entfällt die zusätzliche zweite Statusabfrage.</p></section><section class="guide-block"><h3>Version 1.3</h3><p>Version 1.3 – GPS-Maus bei Update und Basisinstallation, WURB-Hilfe und IP-Verbindungen</p><p>1. GPS-Upgrade von 1.1.1: Ein gültiger, bereits angepasster WURB-GPS-Leser wird auch mit zusätzlichen Hilfsfunktionen zwischen den Methoden erkannt. Die Meldung „GPS hotplug lifecycle layout is unknown“ ist mit der vorhandenen Referenz reproduziert und die Erkennung korrigiert. Unbekannte inhaltliche Änderungen werden vor dem Schreiben weiterhin abgewiesen.
+2. Vollständiger GPS-Helfer: Für Raspberry Pi 5 mit USB-GPS werden die aktuelle Fix-Prüfung, die Positionsübernahme beim Quellenwechsel und der Abgleich im WURB-Aufnahmemanager eingerichtet. Damit sind diese Anpassungen auch bei einer frischen Basisinstallation enthalten. Vorhandene Helfer werden erhalten; wiederholte Ausführung ist idempotent. Die gerade ausgewählte GPS-Betriebsart gilt auch vor dem ersten Speichern der Konfiguration.
+3. WURB-Formattext: Die originale Statusmeldung enthält „Accepted formats“ als Inline-Text mit Zeilenumbrüchen. Auch diese tatsächliche Struktur wird jetzt erkannt. Nur der Hilfetext wandert unter Save; die Statusmeldung bleibt oben. Wenn WURB den Hinweis nicht mehr anzeigt, verschwindet er auch unter Save. Desktop und Smartphone sind berücksichtigt.
+4. Windows-Verbindung: SSH und SFTP verwenden die gewählte IP-Adresse. „Wieder verbinden“ bevorzugt die gespeicherte IP statt des früheren Hostnamens. Nach erfolgreicher Anmeldung wird der aktuelle Hostname gelesen und der Eintrag für dieselbe IP aktualisiert. Alte und neue Namen erzeugen keine doppelten Einträge für denselben Benutzer; getrennte Benutzerzugänge bleiben erhalten.
+5. Gerätesuche: Ein ausgewähltes Ergebnis wird auch nach einem SD-Kartenwechsel über seine aktuelle IP neu verbunden. Wiederverwendete Tabs erhalten das neue Verbindungsziel, statt den alten Hostnamen weiterzuverwenden. Alte Hostnamen-Aliase werden nach erfolgreicher Verbindung ersetzt; die neue geprüfte Verbindung hat Vorrang vor einem veralteten Tab.
+6. Alle Funktionen aus 1.2.0.1 bleiben enthalten: neue Reihenfolge und Beschriftungen der Witty-Einstellungen, ausgerichtete Zeiteingaben und Homepage-Buttons, direkte Skriptbearbeitung, ausgeblendetes Aktivieren bei abgelaufenem END-Datum, automatische Wiederholung der ersten Statusabfrage sowie PC-Systemzeitabgleich vor Installation/Update nur bei mehr als 48 Stunden Abweichung.</p><p>Prüfung: GPS-Migration an der vorhandenen 1.1.1-Referenz, frische GPS-Einrichtung und Wiederholbarkeit, WURB-Hinweis mit der originalen Inline-Struktur, Windows-Verbindungslogik mit gleicher IP und geändertem Hostnamen, Windows-/Updater-Crossbuild und Paketvergleich. Kein direkter Test auf Papas Raspberry und kein nativer Windows-WPF-Test.</p></section><section class="guide-block"><h3>Version 1.2.0.1</h3><p>Version 1.2.0.1 – Homepage, Startstatus und Skriptaktivierung</p><p>1. Witty-Homepage: Automatischer Start bei Stromzufuhr und bevorzugter Stromanschluss stehen am Anfang der weiteren Einstellungen, vor der Eingangsspannung. Interne Raspberry-Pi-RTC steht unmittelbar vor den beiden RPI-Zeilen. Diese heißen „RPI - reboot“ und „RPI - herunterfahren“.
+2. Zeiteingaben: „manuell“ aus beiden Zeilen entfernt. Beide Datum-/Zeitfelder stehen bündig untereinander; ihre Aktionsbuttons bleiben rechts. GPS-Buttons heißen „GPS =&gt; Systemzeit + Witty-PI RTC“ und „GPS =&gt; Witty-PI RTC“; ihre Funktionen bleiben erhalten. Mobilansicht mit umbrochenen Einstellungszeilen und gestapelten GPS-Buttons.
+3. Windows: Witty-, WURB- und WIRC-Homepagebuttons stehen in derselben Spalte bei den jeweiligen Softwarezeilen.
+4. Originale WURB-Homepage: Der bestehende Text „Accepted formats“ steht unter dem Save-Button, auf Desktop und Smartphone. Der Text und seine Sichtbarkeit werden nicht ersetzt.
+5. Startstatus: GPS-Zeitzonendatenbank wird erst bei Bedarf geladen. Die schnelle Statusabfrage wartet höchstens zwei Sekunden auf die Backend-Sperre. Fehlgeschlagene erste Statusabfragen werden automatisch wiederholt. „Daten aktuell“ und der Zeitstempel erscheinen erst nach erfolgreicher Antwort.
+6. Abgelaufene Skripte: „Aktivieren“ wird nach END ausgeblendet, auch wenn die Seite geöffnet bleibt. Die Prüfung richtet sich nach der Witty-RTC, nicht nach der PC-Uhr. Backend-Vorprüfung bekannter Quelldateien verhindert Aktivierung abgelaufener Skripte. Laden in den Editor und Löschen bleiben verfügbar; Daten werden nicht automatisch angepasst.
+7. Aktivierung: Sofortige Rückmeldung mit Laufzeit. Terminale Firmwarefehler werden nicht minutenlang durch wiederholtes Aktivieren und Alarm-Rücksetzungen zu beheben versucht. „Activation finished, but…“ wird als Fehlschlag behandelt. Eine erfolgreiche Aktivierung wird nur nach entsprechender Herstellerantwort bestätigt.
+8. Der automatische PC-Zeitabgleich vor Basisinstallation und Witty-Update bleibt auf mehr als 48 Stunden Abweichung begrenzt.</p><p>Prüfung: Windows-Crossbuild sowie gezielte Python-/JavaScript-Tests. Kein physischer Raspberry-/Witty-Test und kein nativer Windows-WPF-Test.</p></section><section class="guide-block"><h3>Version 1.2.0</h3><p>Version 1.2.0 – PC-Zeit vor Installation und Update</p><p>Nur wenn die Raspberry-Systemzeit um mehr als 48 Stunden von der PC-Zeit abweicht, übernimmt das Windowsprogramm automatisch die aktuelle PC-Zeit vor der ersten Downloadprüfung. Dies gilt auch bei installiertem Allsky, bei direktem Internet und beim Download über Windows. Die gesetzte Systemzeit wird zurückgelesen; erst danach laufen Download und Update weiter. Die bisherige Rückfrage entfällt. Witty-RTC, interne Pi-RTC und Zeitzone werden dabei nicht geschrieben. HTTPS-Zertifikate werden weiterhin geprüft.</p><p>Prüfung: Windows-Crossbuild und automatisierte Zeitabgleich-/Vorprüfungstests. Kein physischer Raspberry-/Witty-Test und kein nativer Windows-WPF-Test.</p></section></div></div>
+                    </details>
+                </article>
+            </section>
+
+            <section data-language-panel="en" hidden>
+<section class="guide-block"><h3>Current instructions – version 1.5</h3><p>Updated: 10 November 2026 · Australian English</p><h4>Update Windows and the Witty Add-on</h4><p>Update the Windows program to 1.5 first, then the Witty Add-on. The full program package includes the program, updater, content and matching bundled add-on. Manufacturer software and Witty firmware have their own versions and separate update actions.</p><p>Update messages take the installed version and build into account and show subsequent changes. Missing or failed device status does not confirm a successful update. Reconnect afterwards and check the reported versions.</p><p>Before a base installation or Witty update, the PC time is automatically applied to the Raspberry system clock only when the difference exceeds 48 hours. This preliminary check does not write either RTC or change the time zone. Pressing the PC time button is a separate, explicit action.</p><h4>Windows time settings</h4><p>The UTC selector beside Fixed UTC offset sizes to its content. It contains only:</p><p>UTC 00:00, UTC +01:00, UTC +02:00, UTC +06:30, UTC +07:00, UTC +08:00, UTC +08:45, UTC +09:30, UTC +10:00, UTC +10:30, UTC +11:00, UTC +12:00</p><p>+06:30 covers the Cocos (Keeling) Islands; +07:00 Christmas Island; +08:00 Western Australia; +08:45 Eucla; +09:30 the Northern Territory/South Australia; +10:00 eastern states; +10:30 South Australian summer time or Lord Howe standard time; +11:00 eastern/Lord Howe daylight time or Norfolk standard time; and +12:00 Norfolk daylight time. Shared offsets appear only once.</p><p>Arrows mark +01:00, +02:00, +10:00 and +11:00 for reference. They do not indicate the active mode. Select an offset and press Fixed UTC offset to apply it. A fixed offset stays the same throughout the year.</p><p>Automatic daylight saving opens the region selector. Choose, for example, Australia/Sydney for NSW or Australia/Adelaide for South Australia. The region determines clock changes in automatic mode. In fixed mode, the explicitly selected offset takes precedence. A GPS suggestion does not replace an active fixed offset.</p><p>The confirmed active mode appears in green. Unknown or stale status leaves the buttons neutral. On connection, a supported reported offset is selected. Repeated unchanged status reports preserve a pending selection. If an older Raspberry reports an excluded offset, the selector remains empty until an allowed value is explicitly chosen; its running time zone is not changed by this display behaviour.</p><p>PC time =&gt; RPI and Witty RTC transfers and verifies the PC&#x27;s current UTC instant on the Raspberry and Witty. Existing time-zone rules are retained. The PC clock must be correct.</p><h4>Homepage status, clocks and GPS</h4><p>The homepage displays Linux system time, Witty RTC and, where available, the internal Pi RTC, GPS time, position and satellite counts. Receiver traffic without a position fix is distinct from a valid fix. A visible GPS time does not guarantee a position suitable for solar calculations.</p><p>GPS =&gt; system time + Witty Pi RTC and GPS =&gt; Witty Pi RTC require valid current GPS time. On Witty Pi 5, the current backend runs both as a verified joint Linux/Witty clock synchronisation and also updates an active internal Pi RTC. The second label therefore does not mean an isolated RTC-only correction on this backend. Read the result for the clocks actually synchronised. Allsky continues to use Witty as its automatic startup time source; manual GPS actions are separate.</p><p>No GPS, USB GPS and Waveshare L76X are separate configurations. The choice for a future installation and the currently active receiver are different indicators. Check reception and source if there is no fix. GPS does not automatically replace a fixed UTC offset with daylight time.</p><p>Additional Witty settings contain power-on at supply, preferred power input, electrical status and the internal Raspberry RTC. RPI - reboot and RPI - shut down appear at the end. Loss of SSH alone does not confirm that power has been disconnected.</p><h4>Schedules and script editor</h4><p>Load an active or saved WPI script directly into the editor. Loading and editing do not change the running schedule. Check BEGIN, END, filename, preview and size validation. Uploading is separate from activation. Replacing an active file of the same name first deactivates it.</p><p>Activate is hidden after the END date, using the Witty RTC as the reference. The file can still be loaded or deleted. After activation or deactivation, check the confirmation and next startup/shutdown times. An error message is not a success confirmation.</p><h4>Allsky installation and live view</h4><p>Base installation offers archived sources and current upstream. Choose the source before starting. An interrupted installer is not a completed installation; read the exact terminal error. Back up existing settings before switching software.</p><p>Live Video Image in Allsky Setup opens the camera view for manual focusing. The process coordinates camera access with Allsky. Close the popup afterwards and check that a previously running Allsky service has resumed. A previously stopped service should remain stopped. Avoid starting another camera application at the same time.</p><p>English is the default for the mobile page on Allsky installations. An explicitly selected German language is remembered. A fixed UTC offset retains priority; automatic daylight saving applies only after automatic mode is selected.</p></section>
+<section class="guide-block"><h3>Allsky sources from 1.0.20</h3><p>Choose archive 24 October 2026 (upstream v2026.10.01, Git 8e59705f), archive 6 October 2026, archive 25 July 2025 or current upstream. Update Windows and Witty Add-on to the current version 1.5 first, then install Allsky or change its source through Software Update. Saved Witty time and noon-to-noon folder rules are reapplied; actual coordinates and the selected solar angle continue to control day/night.</p></section>
+                <div class="page-heading-row mb-5">
+                    <div>
+                        <h1 class="title mb-2">User guide</h1>
+                        <p class="subtitle is-6">Witty Add-on 1.5 · Witty website plus WURB and WIRC recordings</p>
+                    </div>
+                    <a class="button mb-2" href="/">Back to the Witty home page</a>
+                </div>
+
+                <article class="box manual-card">
+                    <nav class="toc mb-5" aria-label="Contents">
+                        <a href="#en-navigation">Navigation</a><a href="#en-status">Status and time</a>
+                        <a href="#en-gps">GPS and RTC</a><a href="#en-schedule">Schedules</a>
+                        <a href="#en-log">Log and reset</a><a href="#en-recordings">Recordings</a>
+                        <a href="#en-allsky">Allsky setup</a>
+                        <a href="#en-safety">Safety and faults</a>
+                        <a href="#en-release">Release notes</a>
+                    </nav>
+
+                    <details id="en-navigation" open>
+                        <summary>1. Navigation, language and services</summary>
+                        <div>
+                            <section class="guide-block"><h3>Moving between pages</h3><p>The large bar at the top is the main menu. In normal operation it shows only programs actually found on this Raspberry Pi.</p><p><strong>Login</strong> at the top of this guide page enables developer mode and the same button disables it again. Developer mode shows every homepage button even when the corresponding software is not installed. <strong>Developer mode</strong> then appears at the far right of the bar.</p><h4>To change pages</h4><ol><li>Select the required name in the top bar.</li><li>Select <strong>Witty Addon</strong> to return to the control page.</li><li>Select <strong>Guide</strong> to open this user guide.</li></ol></section>
+                            <section class="guide-block"><h3>Choosing the language</h3><p><span class="button-name">Deutsch</span> and <span class="button-name">English</span> change the language for Witty, this guide and both recording pages together.</p><p>The browser remembers your choice. Other open pages adopt the new language as well.</p></section>
+                            <section class="guide-block"><h3>Understanding WURB, WIRC and Allsky service status</h3><p><strong>Grey</strong> means not installed. <strong>Red</strong> means installed but stopped. <strong>Green</strong> means installed and running.</p><p>Use <strong>Install software</strong> to add missing software. When software is already present, the button changes to <strong>Reinstall software</strong>; the running service is stopped before it is updated and checked again afterwards.</p><p>Before reinstalling or removing software, download any required settings backup directly to the PC. Recordings and virtual program environments are excluded. Allsky backups can be restored from <strong>Allsky - Setup</strong>.</p><p>The displayed console is restricted to the selected installer; it is not a general SSH or root console. Only Allsky restarts the Raspberry Pi after installation; WURB and WIRC are reactivated without a reboot.</p><p>In an SSH terminal use <code>wp5</code>, <code>wurb-service status</code>, and <code>wirc-service status</code> without a leading <code>sudo</code>. The service wrappers also accept <code>on</code>, <code>off</code>, <code>start</code>, <code>stop</code>, and <code>restart</code>.</p><p><strong>Important:</strong> Base installation must be launched only through <strong>Raspi-Scripte for Windows → Base Installation</strong>. Manual execution of <code>installer.sh</code> through SSH or another console is blocked because hardware and software choices may not match the connected Raspberry Pi.</p><p>Allsky removal and pre-install cleanup delete the old project without creating an automatic project copy. Download required settings to the PC first.</p></section>
+                        </div>
+                    </details>
+
+                    <details id="en-status">
+                        <summary>2. Witty status, clocks and Raspberry Pi controls</summary>
+                        <div>
+                            <section class="guide-block"><h3>Is Witty responding?</h3><p>The status light turns <strong>green</strong> only after Witty responds and its model and firmware are read successfully.</p><p>If it remains grey or red, do not transfer a time or schedule yet.</p></section>
+                            <section class="guide-block"><h3>Understanding the three clocks</h3><p><strong>System time</strong> is the clock used by Linux on the Raspberry Pi.</p><p><strong>Witty time (RTC)</strong> is Witty's own clock. It continues while the Raspberry Pi is switched off.</p><p><strong>GPS time</strong> appears only after a complete live fix. Each source is displayed unchanged so a wrong year remains visible for diagnosis.</p><p>Select <span class="button-name">Refresh data</span> to read all available values together again.</p><p>The sources are read one after another. The display therefore accounts for each sampling time and advances Linux, Witty and GPS clocks from that precise moment.</p></section>
+                            <section class="guide-block"><h3>Voltage, temperature and firmware settings</h3><p>Below <strong>Witty Reset</strong>, output current, low-voltage threshold, recovery voltage, over-temperature action and below-temperature action are displayed separately. <strong>Set</strong> writes that value; <strong>Disable</strong> disables only the related protection rule.</p><p><strong>Other settings</strong> displays default power state, power-cut delay, sleep pulse interval, white LED pulse length, V-USB/V-IN priority and VIN hot standby. Priority is official <code>wp5</code> item 10 and hot standby item 13.</p><p>Firmware 1.6 and later displays automatic hibernation as active. For now, all Other settings values can be changed without developer login.</p></section>
+                            <section class="guide-block"><h3>Copying time between Raspberry Pi and Witty</h3><p><span class="button-name">System time → Witty RTC</span> copies Raspberry Pi time to Witty.</p><p><span class="button-name">Witty RTC → system time</span> writes Witty time only to Linux and does not change whether the internal Pi RTC is enabled.</p><p><strong>Set system time manually</strong> changes only the running Linux clock; neither RTC is written.</p><p>You may also enter a date and time under <strong>Set Witty RTC manually</strong>. Use this only when no reliable automatic time source is available.</p></section>
+                            <section class="guide-block"><h3>Restarting or shutting down the Raspberry Pi</h3><p><span class="button-name">Restart Raspberry Pi only</span> performs a normal restart. The page checks immediately at short intervals and reloads as soon as the Witty web server is available again. On a Raspberry Pi 5 this normally takes less than 30 seconds.</p><p><span class="button-name">Shut down safely</span> closes Linux cleanly. Power or a Witty schedule must subsequently switch the Raspberry Pi on again.</p><p class="notice danger-notice"><strong>Important:</strong> After a safe shutdown, wait until the Raspberry Pi has completely stopped before removing power.</p></section>
+                        </div>
+                    </details>
+
+                    <details id="en-gps">
+                        <summary>3. GPS selection, synchronisation and time zone</summary>
+                        <div>
+                            <section class="guide-block"><h3>Choosing the correct GPS option</h3><p><strong>No GPS</strong> disables the internal Pi RTC and uses the official wp5d service to apply Witty RTC to Linux quickly during boot. Allsky is not delayed by GPS or an interactive wp5 call.</p><p><strong>USB GPS mouse</strong> and <strong>Waveshare L76X</strong> keep the internal Pi RTC enabled. Applications start immediately while a parallel job waits up to about five minutes for a complete live fix, then writes Linux, Pi RTC and Witty RTC.</p><h4>Indicator meanings</h4><ul><li><strong>Grey:</strong> not installed.</li><li><strong>Red:</strong> installed but not active.</li><li><strong>Green:</strong> installed and active.</li></ul></section>
+                            <section class="guide-block"><h3>Changing GPS mode</h3><ol><li>Select the required GPS option.</li><li>Wait for configuration to finish.</li><li>If a restart is requested, confirm it.</li><li>Afterwards, wait for a green indicator and valid GPS time.</li></ol><p>The required GPS services and WURB connection are configured automatically.</p></section>
+                            <section class="guide-block"><h3>Applying GPS time</h3><p><span class="button-name">GPS =&gt; system time + Witty Pi RTC</span> applies GPS time to Linux and Witty; an active internal Pi RTC is also synchronised on Witty Pi 5.</p><p><span class="button-name">GPS =&gt; Witty Pi RTC</span> writes a valid live fix to Linux, the internal Pi RTC and the Witty RTC. The selected time mode and UTC offset are respected.</p><p class="notice"><strong>Note:</strong> Visible GPS time does not necessarily mean a position is available. WURB solar times also require valid latitude and longitude.</p></section>
+                            <section class="guide-block"><h3>Automatic daylight saving or fixed UTC offset?</h3><p><strong>Automatic daylight-saving time</strong> is the usual setting for a fixed location. The Raspberry Pi applies the legal clock changes for the selected time zone.</p><p><strong>Fixed UTC offset</strong> keeps the same difference from UTC throughout the year. It does not change automatically.</p><p>The currently active mode appears directly after <strong>Time mode selection:</strong>. Use the two buttons on the right to change it.</p></section>
+                        </div>
+                    </details>
+
+                    <details id="en-schedule">
+                        <summary>4. Schedule, script list and editor</summary>
+                        <div>
+                            <section class="guide-block"><h3>Checking the active schedule</h3><p>The Schedule area shows the active script name, next startup and next shutdown.</p><p>The year and month are derived from the active WPI script's <code>BEGIN</code>/<code>END</code> range. A script beginning in 2027 is no longer displayed as 2026. Below startup and shutdown, the schedule year is compared separately with the Linux system year and Witty RTC year: older values are red and later values orange.</p><p>If it says <strong>Disabled</strong>, no schedule is currently active. Stored schedule files may still remain in the list.</p></section>
+                            <section class="guide-block"><h3>Reading or switching off the current script</h3><p><span class="button-name">Load current script into editor</span> loads the active script directly into the editor. There is no separate viewer.</p><p><span class="button-name">Clear editor window</span> clears the editor only. It does not delete anything from Witty.</p><p><span class="button-name">Switch off current script</span> stops the schedule and clears the planned startup and shutdown times. The WPI file remains stored and may be activated again later. Its name is shown in green as the last active script until another script is activated.</p><p>Every program page shows <strong>Next Shutdown</strong> in red to the right of <strong>Witty Pi 5</strong>, including remaining minutes and the shutdown date. <strong>Deactivate auto switch off</strong> disables the same schedule directly from WURB, WIRC, Allsky, the recording pages or this guide. When no schedule is active, it shows <strong>Next Shutdown: deactivated</strong> in green.</p></section>
+                            <section class="guide-block"><h3>Managing stored scripts</h3><p>Each available WPI file has its own row under <strong>Found scripts</strong>.</p><p><span class="button-name">Scripts Download</span> reads every WPI file from Witty, creates a ZIP for the PC and then removes the temporary Raspberry file. <span class="button-name">Scripts Upload</span> validates a selected ZIP completely and then uploads each valid WPI script individually. The top status area shows file count, transferred volume, learned I²C speed and estimated remaining time.</p><ul><li><strong>Activate:</strong> switch this file on as the new schedule.</li><li><strong>Load into editor:</strong> load its contents into the editor.</li><li><strong>Delete:</strong> remove the file from Witty.</li></ul><p>The active script can also be loaded directly using <strong>Load into editor</strong>. Deleting the active script remains disabled. Loading alone does not change the running schedule.</p><p>An overlong filename is marked in red. When it is activated, the system creates a shorter unique name automatically.</p></section>
+                            <section class="guide-block"><h3>Editing and uploading a schedule</h3><ol><li>Read an existing script or paste text into the editor.</li><li>Check the script name, start date and end date.</li><li>Check the calculated real switching times on the right.</li><li>Select <strong>Upload to Witty</strong>.</li><li>Deliberately activate the script from the file list afterwards.</li></ol><p>Uploading alone does not activate the schedule. If the new file has the same name as the active script, the old version is switched off before replacement.</p></section>
+                            <section class="guide-block"><h3>Understanding ON and OFF</h3><p>ON and OFF are <strong>durations</strong>, not fixed clock times.</p><p><code>ON H2</code> means remain on for two hours. <code>OFF H22</code> then means remain off for 22 hours.</p><p>The preview converts these durations into real dates and times, including events across midnight.</p><p class="notice"><strong>Limits:</strong> 4000 bytes, 128 ON/OFF lines, fewer than 128 bytes per line and up to and including 4096 events.</p></section>
+                        </div>
+                    </details>
+
+                    <details id="en-log">
+                        <summary>5. Witty log, download and reset</summary>
+                        <div>
+                            <section class="guide-block"><h3>Loading the current Witty log</h3><ol><li>Select <strong>Load log from Witty</strong>.</li><li>Leave the page open.</li><li>Watch elapsed time and received bytes in the status display.</li><li>When complete, the newest log entries appear at the top.</li></ol><p>The backend briefly stops <code>wp5d</code>, runs <code>wp5</code> through its privileged path, waits for the manufacturer lock and then starts <code>wp5d</code> again. A short lock conflict is retried once automatically.</p><p>A large Witty Pi 5 log may take several minutes. If the timer or byte count is still moving, the transfer is still working.</p><p>Firmware 1.6 does not report the total size in advance, so a reliable percentage is not available before the first complete download.</p></section>
+                            <section class="guide-block"><h3>Using the saved log</h3><p><span class="button-name">Load old log from Raspberry</span> displays the last transferred copy without contacting Witty again.</p><p><span class="button-name">Download log</span> saves that copy to your computer or mobile device.</p><p><span class="button-name">Delete local logs</span> removes only Raspberry Pi copies. It does not clear the firmware log on Witty.</p></section>
+                            <section class="guide-block"><h3>Backing up and resetting Witty</h3><p>Use this function when the firmware log has become very large or Witty file management appears damaged.</p><h4>Witty Pi 5 sequence</h4><ol><li>All WPI schedules are backed up to the Raspberry Pi.</li><li>Witty storage, including the log, is reset.</li><li>All schedules are uploaded again one by one.</li><li>The file list is checked once after all uploads.</li><li>The previously active schedule is reactivated.</li></ol><h4>Progress display</h4><p>The top display shows the current step, filename, percentage complete and elapsed time.</p><p>The percentage counts completed tasks; it is not an exact remaining-time estimate because each firmware operation may take a different amount of time.</p><p class="notice danger-notice"><strong>Never remove power during a reset.</strong> If an error occurs, any completed backup remains available.</p></section>
+                        </div>
+                    </details>
+
+                    <details id="en-recordings">
+                        <summary>6. Managing WURB and WIRC recordings</summary>
+                        <div>
+                            <section class="guide-block"><h3>Selecting the correct storage location</h3><p>Under <strong>Recording storage</strong>, choose which recording source to display. This may be internal storage, a USB stick or an external SSD.</p><p>The choices are read from the active WURB or WIRC configuration whenever the page is requested.</p><p>WURB shows <strong>WAV</strong> only. WIRC shows <strong>H264, MP4 and MKV</strong> only. Other files are neither displayed nor changed.</p></section>
+                            <section class="guide-block"><h3>Viewing files and folders</h3><p>Folders appear above files. The newest recordings appear first.</p><p>Select <span class="button-name">Open</span> to show a folder's contents. If no matching recording is present, a short empty notice appears.</p><p>Each individual recording has controls on the right for direct download and deletion.</p></section>
+                            <section class="guide-block"><h3>Downloading several recordings</h3><ol><li>Tick each required file on the left.</li><li>Select <strong>Download selection as ZIP</strong>.</li><li>Save the ZIP to your device.</li></ol><p>The original recordings remain in place. The temporary ZIP is deleted automatically after a successful transfer.</p></section>
+                            <section class="guide-block"><h3>Moving, creating folders and deleting</h3><p><strong>Create folder</strong> makes a folder in the root or within an existing subfolder.</p><p>Tick files or folders, choose the destination on the left and then select <strong>Move</strong>.</p><p><strong>Delete selection</strong> removes selected files and empty folders. A non-empty folder always requires confirmation first.</p></section>
+                            <section class="guide-block"><h3>Uploading recordings</h3><ol><li>Select <strong>Upload</strong>.</li><li>Choose one or more files.</li><li>Choose the destination folder.</li><li>Start the upload.</li></ol><p>If a filename already exists, you may overwrite it or skip only the conflicting file.</p><p>After success, the list refreshes and the upload window closes after two seconds.</p></section>
+                        </div>
+                    </details>
+
+                    <details id="en-allsky">
+                        <summary>7. Backing up and restoring Allsky settings</summary>
+                        <div>
+                            <section class="guide-block"><h3>What is included?</h3><p><strong>Allsky - Setup</strong> appears only when a complete Allsky installation is detected.</p><p>The TAR.GZ archive contains all user-relevant Allsky settings: camera and capture options, overlay definitions plus required graphics and fonts, module configuration, environment and website data, user modules, linked configuration files, and the selected storage path. Camera captures, videos, dark frames, logs, temporary runtime files, program caches, and the virtual environment are excluded.</p></section>
+                            <section class="guide-block"><h3>Creating a backup</h3><ol><li>Open <strong>Allsky - Setup</strong>.</li><li>Select <strong>Create and download a new backup</strong>.</li><li>Enter a distinct name.</li><li>The validated TAR.GZ download starts automatically after creation.</li></ol><p>The backup also remains available in the Raspberry's list until you explicitly delete it there. Restoring to an unconfigured system also restores the storage path and the other backed-up Allsky settings.</p></section>
+                            <section class="guide-block"><h3>Restoring a backup</h3><ol><li>Select <strong>Upload and restore a backup</strong>.</li><li>Choose a suitable TAR.GZ file; current complete archives and older core backups containing <code>settings.json</code> and <code>options.json</code> are accepted.</li><li>Read the warning and start the restore.</li></ol><p>The backend validates archive content, paths, and selected overlays. Lighttpd remains online so the browser connection is preserved. Only previously active ALLSKY writer services are stopped, the archived settings are restored, and every service is returned to its exact previous state. The uploaded working file is removed after processing, while the rollback backup created before restore remains in the download list.</p><p class="notice danger-notice"><strong>Do not disconnect power or the network during a restore.</strong></p></section>
+                        </div>
+                    </details>
+
+                    <details id="en-safety">
+                        <summary>8. Safety and common faults</summary>
+                        <div>
+                            <section class="guide-block"><h3>Run one operation at a time</h3><p>While one command is running, other action buttons are locked automatically. Wait until it finishes before starting another one.</p><p>In particular, do not start a second log download or reset in another browser window.</p></section>
+                            <section class="guide-block"><h3>A navigation button is missing</h3><p>The navigation shows detected installations only. A missing WURB, WIRC or Allsky button usually means that software was not found completely.</p><p>After an update, refresh the page once with <strong>Ctrl+F5</strong>.</p></section>
+                            <section class="guide-block"><h3>The Witty page is unavailable</h3><p>First check that the address includes port 8081.</p><p>For a technical check, enter:</p><p><code>sudo systemctl status wittypi5-webserver.service</code></p><p>For further error details, enter:</p><p><code>sudo journalctl -u wittypi5-webserver.service -n 100 --no-pager</code></p></section>
+                            <section class="guide-block"><h3>GPS time works, but WURB has no location</h3><p>A time signal is sufficient for the clock. WURB also needs a valid position to calculate sunrise and sunset.</p><p>On Raspberry Pi 4/4B/4B+, WURB reads a USB GPS receiver directly; gpsd and <code>/dev/ttyUSB9</code> are intentionally inactive there. On Raspberry Pi 5, run <code>gpspipe -w</code> and check that <strong>lat</strong> and <strong>lon</strong> are present.</p></section>
+                        </div>
+                    </details>
+
+                    <details id="en-release">
+                        <summary>9. Release notes – version history</summary>
+                        <div><div id="release-history-150-en"><section class="guide-block"><h3>Version 1.5</h3><p>Version 1.5 – 10 November 2026
+- Windows: The UTC selector sizes to its content with a minimum width of 160, keeping the arrow and final digit fully visible.
+- UTC choices are limited to UTC 00:00, +01:00, +02:00 and Australia, including its inhabited external territories: +06:30, +07:00, +08:00, +08:45, +09:30, +10:00, +10:30, +11:00 and +12:00.
+- Arrow markers remain on UTC+01:00, +02:00, +10:00 and +11:00. Device status cannot add excluded offsets back to the list; changing from one requires an explicit selection.
+- The confirmed active fixed or automatic time mode appears in green. Unknown or stale status remains neutral.
+- On reconnection, the reported fixed or current system offset is selected if it is listed. Repeated unchanged status reports preserve a pending selection.
+- Windows and the Witty Add-on both use version 1.5; bundled add-ons, update checksums and version information are updated together.
+- Updated Windows and homepage user guides and release notes in German and Australian English, covering time modes, UTC selection, GPS clock actions, Allsky live view and updates.</p></section><section class="guide-block"><h3>Version 1.4.5</h3><p>Version 1.4.5 – 10 November 2026
+- Windows: Highlight the confirmed active time mode in green, matching the homepage; unknown/stale status stays neutral.
+- Publish Windows and Witty Add-on 1.4.5 together, enabling the Add-on update from 1.4.2.
+- Select the connected Raspberry&#x27;s fixed UTC offset, or its effective system offset in automatic mode, on connection and reconnection.
+- Accept older text-valued offset fields; unknown offsets no longer default to UTC zero.
+- Preserve unapplied selections while device settings remain unchanged; retain arrow markers for UTC+01, +02, +10 and +11.</p></section><section class="guide-block"><h3>Version 1.4.4</h3><p>Version 1.4.4 – 10 November 2026
+- Publish Windows and Witty Add-on 1.4.4 together, enabling the Add-on update from 1.4.2.
+- Select the connected Raspberry&#x27;s fixed UTC offset, or its effective system offset in automatic mode, on connection and reconnection.
+- Accept older text-valued offset fields; unknown offsets no longer default to UTC zero.
+- Preserve unapplied selections while device settings remain unchanged; retain arrow markers for UTC+01, +02, +10 and +11.</p></section><section class="guide-block"><h3>Version 1.4.3</h3><p>Version 1.4.3 – 10 November 2026
+- Select the Raspberry&#x27;s active fixed UTC offset on connection and reconnection.
+- Preserve pending user choices during unchanged status polls; reflect changes to the active device offset.
+- Mark UTC+01:00, UTC+02:00, UTC+10:00 and UTC+11:00 with ➜ in Windows, matching the webpage style.
+- Request a fresh initial time status for every connection.</p></section><section class="guide-block"><h3>Version 1.4.2</h3><p>Version 1.4.2 – 9 November 2026
+- Centre the compact clocks/GPS, time settings and Witty configuration groups.
+- Limit Witty configuration to 420; size time settings to content with a minimum width of 400.
+- Keep all three new button labels fully visible on one line.
+- Show PC time as HH:MM:SS   DD.MM.YYYY   (UTC +1), with Time zone: Region below.
+- Select the fixed UTC offset directly beside its action button.
+- Assign the daylight-saving dialog to the visible session window, fixing its owner error.
+- Windows updates use the full package including the updater executable.</p></section><section class="guide-block"><h3>Version 1.4.1</h3><p>Version 1.4.1 – 9 November 2026</p><p>- Store the regional time zone separately from a fixed UTC offset. Australia/Sydney applies daylight saving without GPS.
+- Preserve Allsky&#x27;s saved fixed offset when WURB/WIRC return to regional automatic time.
+- Reload time rules in running WURB/WIRC processes and invalidate WURB solar caches on zone/day changes. Resolve the solar calculation date at call time.
+- Apply fresh progressing GPS fixes in an independent background service, including late receiver attachment or late reception. GPS acquisition no longer holds the Witty command lock.
+- Share short-lived status snapshots across clients and avoid queueing background reads ahead of user actions. Bound HTTP requests.
+- Refresh Witty RTC at daylight-saving transitions from Linux time without requiring GPS.
+- Add a black-bordered Windows time panel with PC UTC sync and fixed/automatic time-zone dialogs; detect and display the PC time zone and verify applied settings.
+- Repair both Witty lock-file permissions during install, Add-on update and manufacturer installation. Reconnect the terminal after group changes.
+- Retain the published 1.4 Allsky/archive/UTC corrections.</p><p>Validation includes a Windows build, language syntax checks and focused software regression tests. Both physical Raspberry Pi/GPS installations remain untested.</p></section><section class="guide-block"><h3>Version 1.4</h3><p>Version 1.4 – 7 November 2026</p><p>- Refresh and verify the installed Allsky camera helper; invoke the current packaged patch directly. Support both camera database filenames without requiring an OV5647 sensor entry.
+- Consume completed installation timezone snapshots. Historical snapshots cannot override the selected fixed UTC offset at startup.
+- Apply the selected fixed offset unchanged, without deriving another offset from a region&#x27;s daylight-saving rules. Select the actual active offset in the webpage and avoid stale custom-zone cache data.
+- Windows, content and both embedded add-on copies share release 1.4. Retain all 1.3.9 changes.
+- Software regression checks and Windows build/tests; no physical installation test on the affected Raspberry Pi.</p></section><section class="guide-block"><h3>Version 1.3.9</h3><p>Version 1.3.9 – 7 November 2026</p><p>- Live Video Image: execute popup code; closing, Escape and connection loss end the preview. Discard late frames after closing.
+- Resume only a previously running Allsky service. Report stop/restart failures and retain pending recovery. Exclude concurrent configuration/storage operations during preview.
+- Read valid archive versions and aliases from the source catalog. Accept the November archive while still rejecting mismatched Git revisions, allowing the existing automatic reboot path after successful installation.
+- Apply the same Witty camera, package/Python and Trixie preparation to archive and direct upstream installations. Current upstream core e9309b09 matches the November archive core. Archived support modules remain pinned; direct installation uses upstream sources.
+- Use dated allsky-v2026.11.03-e9309b09 download paths and remove duplicate archive filenames.
+- Complete English setup labels, including storage space, sun angle and popup. Hide explanatory copy on phones while retaining status and controls. Default the Allsky mobile homepage to Australian English when no preference exists, preserving an explicit language choice.
+- Label the November snapshot Allsky · Archive 3 November 2026 instead of showing the internal October upstream version as its visible name.
+- Fit long ALLSKY_Setup buttons on phones and default to English when language preference is cleared.</p><p>Validation: original October/November sources with and without GS, helper/file tests and browser tests with simulated API/video data. Real camera preview and a complete 1.3.9 installation/reboot on the Raspberry remain untested. Bash syntax validation unavailable on this Windows test host.
+Windows content package 1.3.9 includes the identical Witty package. The Windows executable remains the unchanged 1.3.8 binary; no new EXE build.</p></section><section class="guide-block"><h3>Version 1.3</h3><p>Version 1.3 – Corrective build 20261105.130.2</p><p>1. WURB: Accepted formats remains below Save after delayed loading or reopening the location panel.
+2. Update output shows concise new changes after the installed version/build without repeating existing features or test reports.
+3. Windows displays cleanup/version verification. Once the expected add-on version is confirmed, the redundant second status query is skipped.</p></section><section class="guide-block"><h3>Version 1.3</h3><p>Version 1.3 – GPS setup, WURB guidance and IP connections – build 20261105.130.1</p><p>1. GPS upgrade from 1.1.1 recognises a valid previously adapted WURB reader even when helper methods intervene. The GPS hotplug lifecycle layout is unknown failure was reproduced against the reference and corrected. Unknown substantive layouts are still rejected before writing.
+2. Pi 5 USB GPS setup includes live-fix validation, position transfer on source changes and recording-manager synchronisation, including fresh base installations. Existing helpers are preserved and repeated setup is idempotent. The selected GPS mode applies before the first configuration save.
+3. WURB Accepted formats is recognised in its original inline/line-break structure and moved below Save. Status stays above; guidance disappears when upstream hides it. Desktop/mobile supported.
+4. SSH/SFTP use the chosen IP; reconnect prefers the stored IP over an old hostname. Login refreshes the hostname for that IP without duplicate aliases; different users remain separate.
+5. Discovery reconnects through current IP after a card change. Reused tabs receive the new target and verified connection supersedes stale aliases/tabs.
+6. Retains 1.2.0.1 settings/order, aligned time inputs/homepage buttons, direct editing, expired-script activation protection, startup-status retry and PC system-time correction only beyond 48 hours.
+Validation at that release covered reference migration, fresh/idempotent GPS setup, original guidance structure, same-IP/new-hostname connections, program/updater cross-build and package comparison. No direct test on the affected Raspberry or native WPF test was performed.</p></section><section class="guide-block"><h3>Version 1.2.0.1</h3><p>Version 1.2.0.1 – Homepage, startup status and script activation</p><p>1. Automatic power-on and preferred power input lead Additional settings before input voltage. Internal Pi RTC precedes RPI - reboot and RPI - shut down.
+2. Date/time inputs align vertically with actions beside them; redundant manual labels removed. GPS buttons are renamed GPS =&gt; system time + Witty Pi RTC and GPS =&gt; Witty Pi RTC without changing their actions. Mobile rows wrap and GPS buttons stack.
+3. Windows homepage buttons align beside the matching software rows.
+4. Original WURB Accepted formats guidance sits below Save on desktop/mobile, preserving original text/visibility.
+5. GPS time-zone database loads on demand. Quick status waits up to two seconds for the backend lock, retries initial failures, and shows current-data/time labels only after success.
+6. Activate is hidden after END using Witty RTC, even while the page stays open. Backend preflight rejects expired known sources. Editing/deleting remain possible; dates are not changed automatically.
+7. Activation gives immediate elapsed-time feedback. Terminal firmware errors do not cause minutes of repeated activation/alarm reset. Activation finished, but… is a failure; only a confirming manufacturer reply establishes success.
+8. Automatic PC time correction before base installation/Witty update remains limited to differences exceeding 48 hours.
+Validation at that release covered Windows cross-build and targeted Python/JavaScript tests. No physical Raspberry/Witty or native WPF test was performed.</p></section><section class="guide-block"><h3>Version 1.2.0</h3><p>Version 1.2.0 – PC time before installation and updates</p><p>Only when the Raspberry system clock differs from the PC by more than 48 hours does Windows automatically apply current PC time before the first download check. This also applies with Allsky installed, direct Internet access and Windows-assisted download. The system time is read back before download/update continues; the previous prompt is removed. Neither RTC nor the time zone is written. HTTPS certificate verification stays enabled.
+Validation at that release covered the Windows cross-build and automated clock/preflight tests. No physical Raspberry/Witty or native WPF test was performed.</p></section></div></div>
+                    </details>
+                </article>
+            </section>
+        </div>
+    </main>
+</div>
+
+<script>
+(() => {
+    const requestedLanguage = new URLSearchParams(location.search).get("lang");
+    let language = requestedLanguage === "en" || requestedLanguage === "de"
+        ? requestedLanguage
+        : (localStorage.getItem("witty-language") === "en_AU" ? "en" : "de");
+    let developerModeActive = false;
+    const labels = {
+        de: { witty: "Witty Pi", guide: "Anleitung" },
+        en: { witty: "Witty Pi", guide: "Guide" }
+    };
+
+    function navigationLink(label, href, current=false) {
+        const link = document.createElement("a");
+        link.className = "nav-button";
+        link.textContent = label;
+        link.href = href;
+        if (current) link.setAttribute("aria-current", "page");
+        return link;
+    }
+
+    async function loadNavigation() {
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 3000);
+        const data = await fetch("/api/navigation", { cache:"no-store", signal:controller.signal }).then(response => response.json());
+        window.clearTimeout(timeout);
+        const nav = document.getElementById("mainNavigation");
+        const logo = nav.firstElementChild;
+        nav.replaceChildren(logo);
+        const host = location.hostname || data.access_host;
+        if (data.wurb || data.developer_mode) {
+            nav.appendChild(navigationLink("WURB-2026", `${location.protocol}//${host}:8080/`));
+            nav.appendChild(navigationLink("WURB Recordings", "/recordings/wurb"));
+        }
+        if (data.wirc || data.developer_mode) {
+            nav.appendChild(navigationLink("WIRC-2026", `${location.protocol}//${host}:8082/`));
+            nav.appendChild(navigationLink("WIRC Recordings", "/recordings/wirc"));
+        }
+        if (data.allsky || data.developer_mode) {
+            nav.appendChild(navigationLink("Allsky", `${location.protocol}//${host}/`));
+            nav.appendChild(navigationLink("Allsky - Setup", "/allsky-setup"));
+        }
+        const witty = navigationLink("Witty Addon", "/");
+        witty.classList.add("nav-witty", "witty-model-link");
+        nav.appendChild(witty);
+        nav.appendChild(navigationLink(labels[language].guide, `/manual?lang=${language}`, true));
+        if (data.developer_mode) {
+            const mode = document.createElement("span");
+            mode.className = "developer-mode-label";
+            mode.textContent = language === "en" ? "Developer mode" : "Entwicklermodus";
+            nav.appendChild(mode);
+        }
+        developerModeActive = data.developer_mode === true;
+        document.getElementById("developerLoginButton").classList.toggle("is-active", developerModeActive);
+    }
+
+    function setLanguage(next) {
+        language = next === "en" ? "en" : "de";
+        localStorage.setItem("witty-language", language === "en" ? "en_AU" : "de");
+        document.documentElement.lang = language === "en" ? "en-AU" : "de";
+        document.querySelectorAll("[data-language-panel]").forEach(panel => {
+            panel.hidden = panel.dataset.languagePanel !== language;
+        });
+        document.getElementById("languageGermanButton").setAttribute("aria-pressed", String(language === "de"));
+        document.getElementById("languageEnglishButton").setAttribute("aria-pressed", String(language === "en"));
+        document.title = language === "en" ? "User guide" : "Bedienungsanleitung";
+        const currentHash = decodeURIComponent(location.hash.replace(/^#/, ""));
+        if (currentHash.startsWith(language === "de" ? "en-" : "de-")) {
+            const correctedHash = `${language}-${currentHash.slice(3)}`;
+            history.replaceState(null, "", `${location.pathname}?lang=${language}#${correctedHash}`);
+        } else if (requestedLanguage) {
+            history.replaceState(null, "", `${location.pathname}?lang=${language}${location.hash}`);
+        }
+        loadNavigation().catch(() => {});
+    }
+
+    document.getElementById("languageGermanButton").addEventListener("click", () => setLanguage("de"));
+    document.getElementById("languageEnglishButton").addEventListener("click", () => setLanguage("en"));
+    document.getElementById("developerLoginButton").addEventListener("click", async () => {
+        const action = developerModeActive ? "logout" : "login";
+        const password = developerModeActive ? "" : window.prompt(language === "en" ? "Developer password:" : "Entwicklerpasswort:", "");
+        if (!developerModeActive && password === null) return;
+        try {
+            const response = await fetch("/api/developer-session", {
+                method:"POST", headers:{"Content-Type":"application/json"}, cache:"no-store",
+                body:JSON.stringify({ action, password:password || "" })
+            });
+            const result = await response.json().catch(() => ({ ok:false }));
+            if (!response.ok || result.ok === false) throw new Error(result.error || (language === "en" ? "Login failed." : "Anmeldung fehlgeschlagen."));
+            developerModeActive = result.developer_mode === true;
+            await loadNavigation();
+        } catch (error) {
+            window.alert(error.message);
+        }
+    });
+    window.addEventListener("storage", event => {
+        if (event.key === "witty-language") setLanguage(event.newValue === "en_AU" ? "en" : "de");
+    });
+    function revealHashSection() {
+        const id = decodeURIComponent(location.hash.replace(/^#/, ""));
+        if (!id) return;
+        const target = document.getElementById(id);
+        if (!target) return;
+        const details = target.matches("details") ? target : target.closest("details");
+        if (details) details.open = true;
+        window.requestAnimationFrame(() => target.scrollIntoView({ block:"start" }));
+    }
+    window.addEventListener("hashchange", revealHashSection);
+    setLanguage(language);
+    revealHashSection();
+})();
+</script>
+<script src="/assets/shutdown-nav.js"></script>
+</body>
+</html>

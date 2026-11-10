@@ -1,0 +1,8 @@
+Version 1.4.2 – 9 November 2026
+- Centre the compact clocks/GPS, time settings and Witty configuration groups.
+- Limit Witty configuration to 420; size time settings to content with a minimum width of 400.
+- Keep all three new button labels fully visible on one line.
+- Show PC time as HH:MM:SS   DD.MM.YYYY   (UTC +1), with Time zone: Region below.
+- Select the fixed UTC offset directly beside its action button.
+- Assign the daylight-saving dialog to the visible session window, fixing its owner error.
+- Windows updates use the full package including the updater executable.

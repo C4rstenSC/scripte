@@ -1,0 +1,4 @@
+Version 1.2.0 – PC time before installation and updates
+
+Only when the Raspberry system clock differs from the PC by more than 48 hours does Windows automatically apply current PC time before the first download check. This also applies with Allsky installed, direct Internet access and Windows-assisted download. The system time is read back before download/update continues; the previous prompt is removed. Neither RTC nor the time zone is written. HTTPS certificate verification stays enabled.
+Validation at that release covered the Windows cross-build and automated clock/preflight tests. No physical Raspberry/Witty or native WPF test was performed.

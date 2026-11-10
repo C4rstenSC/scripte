@@ -1,0 +1,7 @@
+Version 1.4 – 7 November 2026
+
+- Refresh and verify the installed Allsky camera helper; invoke the current packaged patch directly. Support both camera database filenames without requiring an OV5647 sensor entry.
+- Consume completed installation timezone snapshots. Historical snapshots cannot override the selected fixed UTC offset at startup.
+- Apply the selected fixed offset unchanged, without deriving another offset from a region's daylight-saving rules. Select the actual active offset in the webpage and avoid stale custom-zone cache data.
+- Windows, content and both embedded add-on copies share release 1.4. Retain all 1.3.9 changes.
+- Software regression checks and Windows build/tests; no physical installation test on the affected Raspberry Pi.

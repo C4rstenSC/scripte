@@ -1,0 +1,9 @@
+Version 1.3 – GPS setup, WURB guidance and IP connections – build 20261105.130.1
+
+1. GPS upgrade from 1.1.1 recognises a valid previously adapted WURB reader even when helper methods intervene. The GPS hotplug lifecycle layout is unknown failure was reproduced against the reference and corrected. Unknown substantive layouts are still rejected before writing.
+2. Pi 5 USB GPS setup includes live-fix validation, position transfer on source changes and recording-manager synchronisation, including fresh base installations. Existing helpers are preserved and repeated setup is idempotent. The selected GPS mode applies before the first configuration save.
+3. WURB Accepted formats is recognised in its original inline/line-break structure and moved below Save. Status stays above; guidance disappears when upstream hides it. Desktop/mobile supported.
+4. SSH/SFTP use the chosen IP; reconnect prefers the stored IP over an old hostname. Login refreshes the hostname for that IP without duplicate aliases; different users remain separate.
+5. Discovery reconnects through current IP after a card change. Reused tabs receive the new target and verified connection supersedes stale aliases/tabs.
+6. Retains 1.2.0.1 settings/order, aligned time inputs/homepage buttons, direct editing, expired-script activation protection, startup-status retry and PC system-time correction only beyond 48 hours.
+Validation at that release covered reference migration, fresh/idempotent GPS setup, original guidance structure, same-IP/new-hostname connections, program/updater cross-build and package comparison. No direct test on the affected Raspberry or native WPF test was performed.
