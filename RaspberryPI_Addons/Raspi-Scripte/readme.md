@@ -1,10 +1,7 @@
-# Raspi-Scripte und Witty Add-on 1.4.2
+# Raspi-Scripte 1.4.3
 
-Version 1.4.2 – 09.11.2026
-- Zeiten/GPS, Zeiteinstellungen und Witty-Konfiguration als kompakte Gruppe mittig ausgerichtet.
-- Witty-Konfiguration auf 420 begrenzt; Zeiteinstellungen nach Inhalt bemessen, mindestens 400 breit.
-- Alle drei neuen Buttonbeschriftungen vollständig und einzeilig sichtbar.
-- PC-Anzeige: HH:MM:SS   DD.MM.YYYY   (UTC +1); darunter Zeitzone: Region.
-- Fester UTC-Offset direkt im Auswahlfeld links neben dem Button einstellbar.
-- Sommer-/Winterzeit-Dialog dem sichtbaren Sitzungsfenster zugeordnet; Owner-Fehler behoben.
-- Windows-Update verwendet das vollständige Paket einschließlich Updater-EXE.
+Windows-Update: Der aktive feste UTC-Offset wird bei der Verbindung vorausgewählt.
+Die Werte UTC+01:00, UTC+02:00, UTC+10:00 und UTC+11:00 tragen die Markierung ➜.
+Das Witty-Add-on und die Homepage bleiben unverändert auf Version 1.4.2.
+
+Das vollständige Windows-Paket enthält den Updater. Versionsangaben und Prüfsummen sind auf diesen Build abgestimmt.

@@ -1,0 +1,9 @@
+{
+  "version": "1.4.3",
+  "de": [
+    "Version 1.4.3 – 10.11.2026\n- Windows: Bei Verbindung und Neuverbindung wird im festen UTC-Modus der auf dem Raspberry gespeicherte Offset vorausgewählt.\n- Wiederholte Statusabfragen lassen eine noch nicht übernommene Auswahl stehen. Änderungen des aktiven festen Offsets werden übernommen.\n- UTC+01:00, UTC+02:00, UTC+10:00 und UTC+11:00 sind mit ➜ markiert – wie auf der Homepage.\n- Der erste Zeitstatus wird bei jeder Verbindung frisch vom Raspberry abgefragt.\n"
+  ],
+  "en-AU": [
+    "Version 1.4.3 – 10 November 2026\n- Select the Raspberry's active fixed UTC offset on connection and reconnection.\n- Preserve pending user choices during unchanged status polls; reflect changes to the active device offset.\n- Mark UTC+01:00, UTC+02:00, UTC+10:00 and UTC+11:00 with ➜ in Windows, matching the webpage style.\n- Request a fresh initial time status for every connection.\n"
+  ]
+}
