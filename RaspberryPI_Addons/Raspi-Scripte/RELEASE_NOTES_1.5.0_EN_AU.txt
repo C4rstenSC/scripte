@@ -1,0 +1,7 @@
+Version 1.5.0 – 10 November 2026
+- Each opening of the update dialogue reads the latest manifest from the GitHub API using a unique request with caching disabled. Checking again does not require restarting the application.
+- The fetched GitHub version is shown in the Update menu. When a Raspberry is connected, its displayed Add-on release information is refreshed as well.
+- Failed version lookups no longer fall back to a misleading older version.
+- On connection and reconnection, the schedule is taken exclusively from the existing homepage status response. Removed the separate SSH schedule-status request; no extra hardware query is made for the schedule.
+- The initial clock/schedule request no longer forces a hardware query and can reuse the homepage status.
+- Subsequent homepage status responses refresh the schedule display automatically.

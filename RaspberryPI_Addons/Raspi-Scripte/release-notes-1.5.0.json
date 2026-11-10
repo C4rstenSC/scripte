@@ -1,0 +1,9 @@
+{
+  "version": "1.5.0",
+  "de": [
+    "Version 1.5.0 – 10.11.2026\n- Bei jedem Öffnen des Update-Fensters wird das aktuelle Manifest neu über die GitHub-API gelesen, mit eindeutiger Anfrage und deaktiviertem Cache. Kein Programmneustart zur erneuten Versionsprüfung nötig.\n- Die abgefragte GitHub-Version wird direkt im Update-Menü angezeigt. Bei verbundenem Raspberry wird auch die angezeigte Add-on-Version neu abgefragt.\n- Ein fehlgeschlagener Versionsabruf wird nicht mehr als scheinbar gültiger alter Versionsstand behandelt.\n- Zeitplan beim Verbinden und Neuverbinden ausschließlich aus der bereits vorhandenen Homepage-Statusantwort übernehmen. Separate SSH-Abfrage schedule-status entfernt; keine zusätzliche Hardwareabfrage für den Zeitplan.\n- Die erste Uhrzeit-/Zeitplanabfrage erzwingt keine Hardwareabfrage mehr und kann den vorhandenen Homepage-Status wiederverwenden.\n- Zeitplananzeige wird bei folgenden Homepage-Statusantworten automatisch aktualisiert.\n"
+  ],
+  "en-AU": [
+    "Version 1.5.0 – 10 November 2026\n- Each opening of the update dialogue reads the latest manifest from the GitHub API using a unique request with caching disabled. Checking again does not require restarting the application.\n- The fetched GitHub version is shown in the Update menu. When a Raspberry is connected, its displayed Add-on release information is refreshed as well.\n- Failed version lookups no longer fall back to a misleading older version.\n- On connection and reconnection, the schedule is taken exclusively from the existing homepage status response. Removed the separate SSH schedule-status request; no extra hardware query is made for the schedule.\n- The initial clock/schedule request no longer forces a hardware query and can reuse the homepage status.\n- Subsequent homepage status responses refresh the schedule display automatically.\n"
+  ]
+}
