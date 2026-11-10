@@ -1,9 +1,9 @@
 {
-  "version": "1.4.3",
+  "version": "1.4.5",
   "de": [
-    "Version 1.4.3 – 10.11.2026\n- Windows: Bei Verbindung und Neuverbindung wird im festen UTC-Modus der auf dem Raspberry gespeicherte Offset vorausgewählt.\n- Wiederholte Statusabfragen lassen eine noch nicht übernommene Auswahl stehen. Änderungen des aktiven festen Offsets werden übernommen.\n- UTC+01:00, UTC+02:00, UTC+10:00 und UTC+11:00 sind mit ➜ markiert – wie auf der Homepage.\n- Der erste Zeitstatus wird bei jeder Verbindung frisch vom Raspberry abgefragt.\n"
+    "- Windows: Der bestätigte aktive Zeitmodus wird wie auf der Homepage grün angezeigt; unbekannter/veralteter Status bleibt neutral.\nVersion 1.4.5 – 10.11.2026\n- Windows und Witty Add-on gemeinsam als 1.4.5 veröffentlicht; Add-on-Update von 1.4.2 wird angeboten.\n- Bei Verbindung und Neuverbindung zeigt das weiße UTC-Auswahlfeld den festen Offset des Raspberry; im Automatikmodus dessen aktuellen System-Offset.\n- Ältere Statusantworten mit Offset als Text werden unterstützt. Fehlende Werte werden nicht als UTC+00:00 ausgegeben.\n- Eigene noch nicht übernommene Auswahl bleibt bei unverändertem Gerätestatus erhalten; Modus- und Offsetänderungen werden übernommen.\n- UTC+01:00, UTC+02:00, UTC+10:00 und UTC+11:00 bleiben mit ➜ markiert.\n"
   ],
   "en-AU": [
-    "Version 1.4.3 – 10 November 2026\n- Select the Raspberry's active fixed UTC offset on connection and reconnection.\n- Preserve pending user choices during unchanged status polls; reflect changes to the active device offset.\n- Mark UTC+01:00, UTC+02:00, UTC+10:00 and UTC+11:00 with ➜ in Windows, matching the webpage style.\n- Request a fresh initial time status for every connection.\n"
+    "- Windows: Highlight the confirmed active time mode in green, matching the homepage; unknown/stale status stays neutral.\nVersion 1.4.5 – 10 November 2026\n- Publish Windows and Witty Add-on 1.4.5 together, enabling the Add-on update from 1.4.2.\n- Select the connected Raspberry's fixed UTC offset, or its effective system offset in automatic mode, on connection and reconnection.\n- Accept older text-valued offset fields; unknown offsets no longer default to UTC zero.\n- Preserve unapplied selections while device settings remain unchanged; retain arrow markers for UTC+01, +02, +10 and +11.\n"
   ]
 }

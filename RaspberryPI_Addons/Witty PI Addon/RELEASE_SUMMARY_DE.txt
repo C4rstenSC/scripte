@@ -1,8 +1,7 @@
-Version 1.4.2 – 09.11.2026
-- Zeiten/GPS, Zeiteinstellungen und Witty-Konfiguration als kompakte Gruppe mittig ausgerichtet.
-- Witty-Konfiguration auf 420 begrenzt; Zeiteinstellungen nach Inhalt bemessen, mindestens 400 breit.
-- Alle drei neuen Buttonbeschriftungen vollständig und einzeilig sichtbar.
-- PC-Anzeige: HH:MM:SS   DD.MM.YYYY   (UTC +1); darunter Zeitzone: Region.
-- Fester UTC-Offset direkt im Auswahlfeld links neben dem Button einstellbar.
-- Sommer-/Winterzeit-Dialog dem sichtbaren Sitzungsfenster zugeordnet; Owner-Fehler behoben.
-- Windows-Update verwendet das vollständige Paket einschließlich Updater-EXE.
+- Windows: Der bestätigte aktive Zeitmodus wird wie auf der Homepage grün angezeigt; unbekannter/veralteter Status bleibt neutral.
+Version 1.4.5 – 10.11.2026
+- Windows und Witty Add-on gemeinsam als 1.4.5 veröffentlicht; Add-on-Update von 1.4.2 wird angeboten.
+- Bei Verbindung und Neuverbindung zeigt das weiße UTC-Auswahlfeld den festen Offset des Raspberry; im Automatikmodus dessen aktuellen System-Offset.
+- Ältere Statusantworten mit Offset als Text werden unterstützt. Fehlende Werte werden nicht als UTC+00:00 ausgegeben.
+- Eigene noch nicht übernommene Auswahl bleibt bei unverändertem Gerätestatus erhalten; Modus- und Offsetänderungen werden übernommen.
+- UTC+01:00, UTC+02:00, UTC+10:00 und UTC+11:00 bleiben mit ➜ markiert.
