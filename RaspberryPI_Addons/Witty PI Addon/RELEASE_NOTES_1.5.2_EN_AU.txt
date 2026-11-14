@@ -1,0 +1,25 @@
+WURB/WIRC power-saving update 1.5.2 – 14 November 2026
+
+Replace the add-on's 0.5-second healthy GPS supervision with connection-loss events and a single three-second fix deadline. Back off failed device discovery attempts from 1 to at most 30 seconds; later hotplug recognition can therefore take up to 30 seconds. Explicitly disabled GPS performs no device scans. Recording GPS data processing remains live.
+
+Existing WURB/WIRC installations only. AllSky profiles, projects and services are excluded before changes.
+
+Disable a remaining legacy five-minute RTC timer only when its service invokes a known old add-on helper. Leave custom timers and in-flight RTC writes intact.
+
+Block unused Bluetooth specifically with rfkill; stop and mask bluetooth/hciuart services. A oneshot boot unit reapplies the block without a resident process. Save the previous service and radio states once. If rfkill is unavailable, skip Bluetooth without installing packages. Do not block Wi-Fi, change the hotspot, UART overlays, GPS configuration or Witty manufacturer controls.
+
+Schedule the external delayed HTTP socket activation after all recording/GPS service restarts and update work. This avoids interrupting an updater when service restarts take longer than the activation delay.
+
+Retain the 1.5.1 changes: on-demand HTTP process with idle exit, removal of the redundant GPS watcher, closed-PTY CPU spin fix, event-driven GPSD bridge waits, metadata-based timezone refresh, shared Witty hardware snapshots, and paused hidden/offline browser polling.
+
+Keep recording GPS, manufacturer heartbeat/shutdown, boot RTC/GPS sync and configured DST transitions. Do not stop GPS after an arbitrary timeout: GPS-only location mode can lose its valid location. Stopping a reader does not remove USB supply power.
+
+Validation: underlying 56 Python and nine JavaScript checks passed. Additional isolated Bluetooth tests cover type-specific blocking, idempotence, saved state and AllSky refusal; delayed activation ordering and shell syntax checked. Six additional GPS supervision checks and an actual WURB parser test cover valid GGA/RMC data, time, position, satellite count, three-second expiry and recovery. Existing GPS patcher compatibility checked. No access to the user's Pi or hardware power measurements. Approximately 1 A reported after 1.5.1 versus approximately 0.75 A without the add-on; no claimed saving from Bluetooth.
+
+Install from the extracted folder: sudo bash install.sh
+Backups are made. Recording services may briefly restart during installation. No user diagnostic procedure is requested.
+
+Compatibility corrections in this build:
+Keep the original systemd service as a process-free oneshot controller for existing Windows start/stop/status commands. Stop controls both the HTTP socket and the separate on-demand Python worker. Preserve developer login and completed terminal output privately under /run across idle worker exits. Preflight the new worker against installed dependencies before changing files or services. Repeated status clients reuse the recording GPS task.
+
+Validation: 76 Python test methods (56 existing, seven GPS, seven clock/timezone, five session/job/controller and one HTTP integration check across two worker activations), nine JavaScript checks, systemd-analyze verify, isolated installer and dependency-failure checks. Two existing root-only AllSky reboot test methods were excluded and their code was not changed. This is local software validation, not a complete hardware sign-off or measured battery-life claim. Not published or automatically installed.

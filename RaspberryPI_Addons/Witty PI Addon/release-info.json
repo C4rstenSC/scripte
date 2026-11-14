@@ -1,6 +1,6 @@
 {
-  "version": "1.5.1",
-  "buildRevision": "20261114.151.2",
+  "version": "1.5.2",
+  "buildRevision": "20261114.152.3",
   "releaseDate": "2026-11-14",
   "scope": "WURB/WIRC only; AllSky skipped"
 }
