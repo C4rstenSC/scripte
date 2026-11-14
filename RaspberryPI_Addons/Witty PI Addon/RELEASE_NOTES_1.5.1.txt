@@ -1,0 +1,33 @@
+WURB/WIRC-Stromsparupdate 1.5.1 – 14.11.2026
+Stand: zur Veröffentlichung auf GitHub freigegeben und auf dem Entwicklungsrechner geprüft; nicht automatisch auf einem Raspberry installiert.
+
+Dieses gezielte Update ist nur für bereits vorhandene WURB-/WIRC-2026-Installationen mit Witty-Add-on gedacht. Es verweigert Änderungen, wenn ein AllSky-Profil, eine AllSky-Installation oder ein vorhandener AllSky-Dienst erkannt wird. Es installiert keine Systempakete und ändert weder AllSky noch Betriebssystem, Firmware, USB-Mountoptionen oder Herstellerdaemon.
+
+Änderungen
+- Den zusätzlichen witty-gps-watch-Dienst vollständig deaktivieren und entfernen. Ohne Homepage-/Windows-Zugriff gibt es dadurch keine zusätzlichen GPS-Verbindungen und keine geografischen Zeitzonenabfragen des Add-ons mehr.
+- Add-on-Homepage per systemd-Socket starten, erst wenn ein Zugriff auf Port 8081 erfolgt. Nach etwa 30 Sekunden ohne laufende Anfrage oder angeforderte Arbeit beendet sich der Python-Webprozess. Der nächste Zugriff startet ihn wieder. Keine Anmeldung oder manuelles Starten erforderlich.
+- Laufende Downloads, Installationsarbeiten, Zeitplanübertragungen und aktive Verbindungen verhindern einen vorzeitigen Leerlaufstopp.
+- Witty-Statusanfragen mehrerer Clients zusammenfassen. Automatische Statusauffrischung frühestens nach 15 statt 2 Sekunden. Eine bewusst angeforderte frische Abfrage bleibt möglich.
+- GPS-Anzeige der Homepage mit Fix alle 5 statt 2 Sekunden aktualisieren; ohne Fix alle 3 statt 1 Sekunde. Verdeckte oder offline befindliche Seiten fragen GPS und Navigation nicht weiter ab; Rückkehr zur Seite setzt die Abfrage fort.
+- Virtuellen GPS-Rohdatenverteiler reparieren: Ein geschlossener virtueller GPS-Anschluss darf keine CPU-Dauerschleife verursachen. Wiederverbindung und unveränderte NMEA-Weitergabe bleiben möglich.
+- Die GPSD-NMEA-Brücke wartet auf Daten statt alle 0,5 Sekunden aufzuwachen. Ein ausbleibender Datenstrom wird weiterhin nach rund 3 Sekunden ungültig gemeldet.
+- WURB-/WIRC-Zeitkonvertierung liest und hasht die Zeitzonendatei nicht mehr alle 0,5 Sekunden. Nur Metadaten werden höchstens einmal pro Sekunde geprüft; Zeitregeln und Sonnenzeitcache werden nur bei tatsächlicher Änderung beziehungsweise Tages-/Offsetwechsel aktualisiert. Das ist keine geografische Zeitzonenberechnung.
+
+Was bewusst funktionsfähig bleibt
+WURB-Aufnahmen und deren GPS-Datenstrom; Witty-Herstellerdaemon, Abschalt-/Neustarthooks und Heartbeat; einmaliger RTC/GPS-Zeitabgleich beim Start; bereits konfigurierte automatische Sommer-/Winterzeitumschaltung. Die Linux-Systemuhr läuft ohne laufenden Browser weiter. Feste UTC-Offsets bleiben fest.
+
+WURB-GPS im unbeaufsichtigten Betrieb
+WURB empfängt einen laufenden seriellen GPS-Datenstrom. Ein Kontrollintervall ist nicht mit einer neuen Abfrage des Satellitenempfängers gleichzusetzen. Der Pi-5-USB-GPS-Patch kontrolliert die Verbindung alle 0,5 Sekunden; der ursprüngliche WURB-Code prüft/öffnet seine Verbindung etwa alle 20 Sekunden. Die NMEA-Rate kommt vom Empfänger.
+Bei aktivierter WURB-GPS-Zeit wartet der geprüfte Quellcode zunächst 30 gültige RMC-Datensätze zur Stabilisierung ab. Erst danach übernimmt er die Zeit; später korrigiert er bei Überschreiten der konfigurierten Zeitabweichung (Standard 60 Sekunden). Die erste Satellitenfix-Zeit ist nicht fest durch WURB vorgegeben.
+Eine gespeicherte Position bleibt mit 'GPS oder letzte bekannte Position' verfügbar. Im reinen GPS-Modus ohne Ersatzposition kann sie nach Verlust des Live-Fixes fehlen. Ein pauschales automatisches GPS-Abschalten wird deshalb nicht eingeführt. Ein nur softwareseitig beendeter GPS-Leser macht einen weiterhin mit Strom versorgten USB-Empfänger zudem nicht stromlos.
+
+Prüfung hier durchgeführt
+56 Python-Tests bestanden, darunter 9 neue Prüfungen zu Leerlauf, Socket-Wiederaktivierung, parallelen Hardwareabfragen, GPS-Weitergabe, Zeitregeln und AllSky-Schutz. Zusätzlich 9 bestehende JavaScript-Prüfungen sowie Python-, JavaScript- und Shell-Syntaxprüfungen bestanden. Zwei bestehende Testmethoden für den AllSky-Neustartadapter wurden wegen erforderlicher Root-Umgebung ausgelassen; dieser Adapter wurde nicht geändert.
+Der Original-GPS-Verteiler belegte im nachgestellten Fehlerfall etwa 100 % eines CPU-Kerns; der korrigierte Verteiler besteht den Leerlauf-/Wiederverbindungstest. Die Updateinstallation wurde in einem isolierten Dateibaum mit nachgestelltem systemd erfolgreich geprüft. Es wurde keine Leistungsaufnahme an Papas Hardware gemessen.
+
+Installation
+Nach Entpacken im Ordner dieses Updates: sudo bash install.sh
+Das Update sichert die betroffenen Dateien vor dem Austausch. WURB-/WIRC- und GPS-Brückendienste werden beim Anwenden kurz neu gestartet, damit der neue Code geladen wird. Der Webdienst wird auf Anforderungsstart umgestellt. Dies ist ein Installationsupdate, kein Diagnosepaket; es fordert keine Messung oder Testdurchführung an.
+
+Messung von Papa
+1,33 A gegenüber 0,75 A entspricht 0,58 A Unterschied, bei zehn Stunden 5,8 Ah. Das gilt bei vergleichbarer Messstelle und gleichen Betriebsbedingungen. Wie viel davon dieses Update tatsächlich beseitigt, ist ohne Messung an dieser Hardware nicht belegt. Null zusätzliche geografische Hintergrundberechnungen ist keine Behauptung von null Gesamtstromverbrauch.

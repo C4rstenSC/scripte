@@ -1,0 +1,15 @@
+WURB/WIRC power-saving update 1.5.1 – 14 November 2026
+Approved for publication and tested on the development host; not automatically installed on a Raspberry Pi.
+
+For existing WURB/WIRC installations only. The installer refuses to change a system with an AllSky profile, installation or service. No AllSky, OS, firmware, USB mount or manufacturer service changes.
+
+Remove the additional background GPS watcher. Start the add-on HTTP process through systemd socket activation only when accessed; exit after approximately 30 seconds without requests or active work. Keep requested downloads and jobs running. Share concurrent Witty snapshots and refresh automatically no more frequently than every 15 seconds. Pause homepage GPS/navigation polling when hidden or offline and reduce visible GPS polling to 5 seconds with a fix or 3 seconds without one.
+
+Fix the raw GPS fanout's closed-PTY CPU spin. Replace 0.5-second GPSD bridge polling with data-driven waits while retaining the three-second stale-data deadline. Replace repeated timezone file reads and hashing within WURB/WIRC with lightweight metadata checks; retain live rule updates, daily solar cache refresh and DST handling.
+
+Recording GPS, boot time synchronisation, configured DST transitions, manufacturer heartbeat and shutdown control remain operational. GPS is not automatically stopped after an arbitrary timeout: GPS-only location mode and moving installations require current data. Last-known location fallback was verified in the existing WURB code. Stopping a software reader does not remove USB receiver supply power.
+
+Validation: 56 Python checks, including nine new regression checks; nine existing JavaScript checks; syntax checks; simulated targeted installation; and two HTTP process activations using the same retained listening socket. Two pre-existing AllSky reboot test methods require root and were excluded; their code was not changed. No hardware power measurements or claimed battery-life improvement.
+
+Install from the extracted update folder using: sudo bash install.sh
+Affected files are backed up. Running WURB/WIRC and GPS bridge services briefly restart when applying the update. No user diagnostics or measurements are requested.

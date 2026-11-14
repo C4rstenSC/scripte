@@ -1,0 +1,8 @@
+{
+  "version": "1.5.1",
+  "build": "20261114.151.2",
+  "packageSha256": "da065ff77dfa27d1b3d7c018feb921ba72d60f8e36812c3096410a4142cd6cad",
+  "encryptedSha256": "e65489468a95486a6a2be42faca4535b7c54018e718434b7d9c36bdb281119d9",
+  "scope": "WURB/WIRC only; AllSky changes refused",
+  "validation": "56 Python checks, 9 JavaScript checks, idle reactivation and targeted install simulation; no Pi current measurement"
+}
