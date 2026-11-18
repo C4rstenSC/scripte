@@ -1,6 +1,6 @@
 {
-  "version": "1.5.2",
-  "buildRevision": "20261114.152.3",
-  "releaseDate": "2026-11-14",
-  "scope": "WURB/WIRC only; AllSky skipped"
+  "version": "1.5.3",
+  "buildRevision": "20261118.153.1",
+  "releaseDate": "2026-11-18",
+  "scope": "Direct GPS on Raspberry Pi 5 + Witty Pi 5 for WURB/WIRC; AllSky excluded; Windows remains 1.5.0"
 }

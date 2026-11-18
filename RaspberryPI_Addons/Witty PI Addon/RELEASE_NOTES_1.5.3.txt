@@ -1,0 +1,18 @@
+Witty Add-on 1.5.3 – 18.11.2026
+
+Direkter GPS-Empfang für Raspberry Pi 5 mit Witty Pi 5 und WURB/WIRC.
+
+- WURB besitzt den seriellen GPS-Anschluss selbst. GPSD, Python-NMEA-Übersetzer und socat/virtuelle GPS-Anschlüsse entfallen in dieser Betriebsart.
+- Bei gestopptem oder nicht installiertem WURB übernimmt ein einzelner schlanker Ersatzleser. Er nutzt dieselbe Verarbeitung. Beim WURB-Start wird der Ersatzleser zuerst beendet; exklusive Anschluss- und Prozesssperren verhindern zwei Leser.
+- Homepage-GPS-Status wird direkt aus dem Arbeitsspeicher des vorhandenen Lesers über einen lokalen Unix-Socket geliefert. Keine neue Python-Instanz oder GPSD-Verbindung je Statusabfrage. Der Windows-Zugriff nutzt denselben Statusweg.
+- USB-Erkennung umfasst ausdrücklich u-blox 6 (1546:01a6), 01a7/01a8 und BU-353 (067b:2303). Vorhandene eindeutig ausgewählte andere USB-Empfänger werden übernommen. Bei mehreren nicht eindeutig zugeordneten Geräten wird kein beliebiger serieller Anschluss geöffnet. USB-Kennung und vorhandene Seriennummer bleiben über einen Portwechsel erhalten.
+- Waveshare L76X/L86X wird direkt über den UART gelesen. Baudraten 4800, 9600, 38400 und 115200 werden ohne Konfigurationsbefehle an den Empfänger probiert. Jeder erste Versuch wartet bis zu zwölf Sekunden auf geprüfte NMEA-Daten, um auch langsame Empfänger zu berücksichtigen. Nach Erkennung wird eine gesunde Verbindung nicht periodisch neu geöffnet.
+- GP/GN-GGA, RMC, ZDA und GSV einschließlich südlicher/westlicher Koordinaten, Satellitenzahlen und Prüfsummen berücksichtigt. Ungültiger Fix oder Abziehen macht die Position ungültig. Ohne neue gültige Daten verfällt ein Live-Fix nach zwölf Sekunden; langsamere fünf- bis zehnsekündige Empfänger bleiben verwendbar.
+- Zeitübernahme verlangt fortschreitende Empfängerzeit. Feste UTC-Offsets, Sommer-/Winterzeitregeln, gespeicherte Positionswahl und Witty-Herstellerfunktionen bleiben erhalten. Bei fehlendem Gerät werden Verbindungsversuche auf maximal 30 Sekunden Abstand reduziert.
+- Anforderungsstart und Leerlaufende des Add-on-Webservers aus 1.5.2 bleiben erhalten. Die vorherigen Stromsparkorrekturen sind enthalten. Für andere Pi-/Witty-Modelle bleibt der bisherige GPS-Weg erhalten; AllSky wird vom bestehenden Schutz ausgenommen.
+
+Installation: Im bestehenden Windows-Programm „Witty Software update“ verwenden. Eine laufende WURB-Aufnahme wird für die GPS-Umstellung kurz neu gestartet. Die Umstellung sichert betroffene Add-on-Dateien und Konfigurationen unter /var/backups/witty-direct-gps; die WURB-GPS-Quelldatei erhält zusätzlich eine Sicherung. Bei erstmaliger UART-Aktivierung kann ein Neustart erforderlich sein.
+
+Prüfung: 80 Python-Testmethoden bestanden, davon 33 neue GPS-/Migrationsprüfungen. 28 JavaScript-Tests bestanden. Tatsächlicher ursprünglicher WURB-Parser mit seriellen Linux-PTYs, GPS-Statusantworten über Unix-Socketpaare, ungültiger Fix, Trennen, Besitzerwechsel, USB-Kennungen, langsame Daten, Syntax und erzeugte systemd-Einheiten geprüft. USB-/UART-/Kein-GPS-Migration in einem isolierten Dateibaum mit nachgestellten Systembefehlen geprüft. Zwei unveränderte Root-abhängige AllSky-Neustarttests ausgenommen. Der Prüfhost erlaubt keinen lauschenden Unix-Socket; dessen Annahme-/Verbindungsaufbau sowie tatsächliche systemd-Dienstwechsel wurden daher nicht auf einem Pi ausgeführt.
+
+Kein Hardwaretest mit Papas GPS-Maus, Waveshare oder Witty durchgeführt. Der tatsächliche Stromverbrauch und die gesamte gemeldete Stromdifferenz sind damit nicht gemessen oder als behoben bestätigt. Diese Veröffentlichung installiert nichts automatisch auf einem Raspberry Pi.
