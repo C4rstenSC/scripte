@@ -1,9 +1,10 @@
-# Witty Add-on 1.5.3
+# Raspi-Scripte und Witty Add-on 1.4.2
 
-18 November 2026 · Build 20261118.153.1
-
-Direct USB/UART GPS input on Raspberry Pi 5 with Witty Pi 5, a single fallback reader when WURB is stopped, and shared in-memory GPS status for WURB/WIRC. Explicit u-blox 6 recognition (1546:01a6) and Waveshare baud detection.
-
-Use **Witty Software update** in the existing Raspi-Scripte Windows program. The encrypted package retains its existing filename and format. Windows remains at 1.5.0.
-
-80 Python and 28 JavaScript checks passed; no physical receiver test or measured current-saving claim. See RELEASE_NOTES_1.5.3.txt and RELEASE_NOTES_1.5.3_EN_AU.txt for scope and verification limits.
+Version 1.4.2 – 09.11.2026
+- Zeiten/GPS, Zeiteinstellungen und Witty-Konfiguration als kompakte Gruppe mittig ausgerichtet.
+- Witty-Konfiguration auf 420 begrenzt; Zeiteinstellungen nach Inhalt bemessen, mindestens 400 breit.
+- Alle drei neuen Buttonbeschriftungen vollständig und einzeilig sichtbar.
+- PC-Anzeige: HH:MM:SS   DD.MM.YYYY   (UTC +1); darunter Zeitzone: Region.
+- Fester UTC-Offset direkt im Auswahlfeld links neben dem Button einstellbar.
+- Sommer-/Winterzeit-Dialog dem sichtbaren Sitzungsfenster zugeordnet; Owner-Fehler behoben.
+- Windows-Update verwendet das vollständige Paket einschließlich Updater-EXE.
