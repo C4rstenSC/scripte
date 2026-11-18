@@ -1,8 +1,11 @@
-Version 1.5 – 10.11.2026
-- Windows: UTC-Auswahlfeld bemisst sich nach dem Inhalt und ist mindestens 160 breit; Pfeil und letzte Ziffer bleiben vollständig sichtbar.
-- UTC-Auswahl reduziert auf UTC 00:00, +01:00, +02:00 sowie Australien einschließlich bewohnter Außengebiete: +06:30, +07:00, +08:00, +08:45, +09:30, +10:00, +10:30, +11:00 und +12:00.
-- UTC+01:00, +02:00, +10:00 und +11:00 bleiben mit ➜ markiert. Ausgeschlossene Offsets werden auch durch Gerätestatus nicht wieder in die Liste aufgenommen; zum Ändern ist dann eine ausdrückliche Auswahl nötig.
-- Der bestätigte aktive feste oder automatische Zeitmodus wird grün angezeigt. Veralteter oder unbekannter Status bleibt neutral.
-- Bei Neuverbindung wird der gemeldete feste beziehungsweise aktuelle System-Offset vorausgewählt, sofern er in der Liste enthalten ist. Unveränderte Statusabfragen erhalten eine noch nicht übernommene Auswahl.
-- Windows und Witty Add-on tragen einheitlich Version 1.5; eingebettete Add-ons, Update-Prüfsummen und Versionsinformationen werden gemeinsam aktualisiert.
-- Release Notes und Bedienungsanleitungen für Windows und Homepage auf Deutsch und australischem Englisch aktualisiert; Zeitmodi, UTC-Auswahl, GPS-Zeitaktionen, Allsky-Livebild und Updateablauf erklärt.
+Version 1.5.9 – 19.11.2026
+- Unterstützte Kombinationen: Herstellersoftware 5.3.1 mit Witty-Firmware 1.7 sowie Herstellersoftware 5.4.0 mit Firmware 1.8. Herstellerpaket und Firmware werden nicht automatisch aktualisiert.
+- Weitere Einstellungen: Witty-Firmware-Sommer-/Winterzeit per Button aktivieren/deaktivieren. Nur mit Firmware 1.8 sichtbar; Einschalten bei festem UTC-Offset gesperrt. Aktivierter Zustand grün, Anzeige erst nach Firmware-Rückmeldung.
+- Aktivierung übernimmt die tatsächlichen Regeln der Linux-Zeitzone, einschließlich Sydney, Adelaide, Hobart, Melbourne und Lord Howe (30 Minuten). Hersteller prüft Regel und Uhrenabgleich vor Aktivierung; Deaktivieren verändert die RTC-Zeit nicht.
+- Aktive Witty-Zeitpläne werden nach Regeländerung erneut aktiviert, damit umgerechnete Termine aktualisiert sind. Bei unbekanntem aktiven Zeitplan wird die Änderung vorab abgelehnt.
+- Bei aktiver Firmware-Automatik pausiert der zusätzliche Add-on-Umstellungstimer. Bei Deaktivierung übernimmt wieder der bisherige Add-on-Timer für regionale Zeitzonen. Feste Offsets verwenden keine Sommerzeit. Zeitzonenwechsel aktualisieren eine bereits eingeschaltete Firmware-Regel passend zur neuen Region.
+- Messwerte getrennt: V-In (Eingang), V-Out (Ausgang) und I-Out (Ausgangsstrom). Vertauschte Auswahl von V-In-/V-USB-Registern berichtigt; bisheriges API-Feld voltage bleibt die aktive Versorgungsspannung.
+- Versionsunabhängiger Rücksprung aus den weiteren Herstellereinstellungen durch leere Eingabe. Statusabfragen bleiben direkte Lesezugriffe ohne Herstellerdienst-Neustart.
+- Windows-Voll-, Inhalts- und Modulpakete gemeinsam aktualisiert. Alle eingebetteten Add-on-Kopien enthalten exakt 1.5.9; Versionen und SHA-256-Prüfsummen stimmen überein. Keine neue GPS-Bridge, kein geänderter Aufnahmealgorithmus, keine weitere dauerhafte Hintergrundanwendung.
+Prüfung: Python- und JavaScript-Regressionstests, originale Herstellerprüfung der Zeitregeln für neun Zeitzonen von 2026 bis 2035, Paket-/Versions-/Prüfsummenprüfung. Ein bestehender Root-Neustarttest ist auf diesem Host nicht ausführbar. Kein physischer Raspberry-/Witty-Test und kein nativer Windows-WPF-Test; keine bestätigte Stromersparnis.
+Build-Basis: öffentlich veröffentlichter GitHub-Stand (Add-on 1.5, Windows 1.5.0). Ein separat installierter Stand 1.5.8 lag nicht als Quellpaket vor und wurde nicht verglichen.

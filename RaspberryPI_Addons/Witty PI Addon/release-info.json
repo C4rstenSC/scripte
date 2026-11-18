@@ -1,5 +1,18 @@
 {
-  "version": "1.5",
-  "buildRevision": "20261110.150.1",
-  "releaseDate": "2026-11-10"
+  "version": "1.5.9",
+  "buildRevision": "20261119.1509.1",
+  "releaseDate": "2026-11-19",
+  "sourceCommit": "8c46ca8b932dfcbb730414f7285ca64f007729c7",
+  "baseAddonVersion": "1.5",
+  "baseWindowsVersion": "1.5.0",
+  "supportedPairs": [
+    {
+      "software": "5.3.1",
+      "firmware": "1.7"
+    },
+    {
+      "software": "5.4.0",
+      "firmware": "1.8"
+    }
+  ]
 }

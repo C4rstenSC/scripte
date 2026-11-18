@@ -1,0 +1,11 @@
+Version 1.5.9 – 19 November 2026
+- Supported pairs: manufacturer software 5.3.1 with firmware 1.7, and software 5.4.0 with firmware 1.8. Neither manufacturer software nor firmware is upgraded automatically.
+- Other settings: enable/disable firmware daylight saving with a button shown only for firmware 1.8. Enabling is blocked for fixed UTC offsets; green status follows confirmed hardware readback.
+- Rules follow the actual Linux timezone, including Sydney, Adelaide, Hobart, Melbourne and Lord Howe's 30-minute change. The manufacturer validates the rule and clock agreement before enabling. Disabling does not change RTC time.
+- Active Witty schedules are reactivated after a rule change to refresh converted events. Unknown active schedules block the change before writing.
+- The add-on transition timer pauses while firmware daylight saving is enabled, resumes when disabled in a regional timezone, and remains off for fixed offsets. Changing regional timezone updates an already enabled firmware rule.
+- Separate V-In, V-Out and I-Out readings. Corrected swapped V-In/V-USB register selection; the legacy voltage API field remains the active supply voltage.
+- Use blank input to leave manufacturer settings across both supported versions. Status polling remains read-only and does not restart the manufacturer daemon.
+- Updated Windows full, content and module packages together. All embedded add-on copies are identical 1.5.9 builds with matching versions and SHA-256 hashes. No new GPS bridge, recording algorithm or persistent background process.
+Validation: Python/JavaScript regression checks, upstream timezone-rule validation for nine zones over 2026–2035, archive/version/hash checks. One existing root-only reboot test cannot run on this host. No physical Pi/Witty or native Windows WPF test; no verified power saving.
+Build base: the published GitHub source (add-on 1.5, Windows 1.5.0). A separately installed 1.5.8 source package was unavailable and was not compared.
