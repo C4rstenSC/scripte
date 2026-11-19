@@ -1,0 +1,6 @@
+Witty Add-on 1.5.9.1 – 20 November 2026
+- Fixed the 1.5.2 to 1.5.9 updater crash caused by incompatible release-note formats. Accepts historical lists and language objects; a broken summary no longer blocks installation.
+- Retires recognised socket-activation files from withdrawn 1.5.1/1.5.2 packages before switching to the normal web service. Prevents port conflicts and restart loops. Backs up files first and rejects unknown customisations.
+- Removes the duplicate GPS clock watcher. Existing GPS boot sync and scheduled DST transition remain. This watcher no longer performs ongoing automatic timezone requests.
+- Windows application remains 1.5.9; content and bundled Add-on advance to 1.5.9.1.
+- The reported 35% power difference is not confirmed resolved. GPSD/bridge and WURB recording algorithms are unchanged in this hotfix. No hardware test.

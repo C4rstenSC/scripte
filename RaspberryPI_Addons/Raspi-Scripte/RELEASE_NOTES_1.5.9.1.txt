@@ -1,0 +1,6 @@
+Witty Add-on 1.5.9.1 – 20.11.2026
+- Updateabbruch 1.5.2 → 1.5.9 durch inkompatibles Release-Notes-Format korrigiert. Alte Listen und neue Sprachobjekte werden gelesen. Eine defekte Änderungsübersicht stoppt das Update nicht mehr.
+- Socketaktivierung aus den zurückgezogenen Paketen 1.5.1/1.5.2 vor dem normalen Webdienst entfernen. Verhindert Portkonflikt und Neustartschleife beim Wechsel. Nur erkannte Add-on-Dateien werden nach Sicherung entfernt; unbekannte Anpassungen führen zum Abbruch.
+- Zweiten GPS-Zeitwächter entfernt. Der vorhandene GPS-Startabgleich und der DST-Termin bleiben erhalten. Keine fortlaufenden automatischen Zeitzonenabfragen durch diesen Wächter.
+- Windows-Programm bleibt 1.5.9; Inhalt und eingebettetes Add-on werden auf 1.5.9.1 aktualisiert.
+- Noch keine bestätigte Behebung des gemessenen Mehrverbrauchs von 35 %. GPSD/Bridge und WURB-Aufnahmealgorithmus bleiben in diesem Hotfix unverändert. Kein Hardwaretest.

@@ -1,11 +1,6 @@
-Version 1.5.9 – 19.11.2026
-- Unterstützte Kombinationen: Herstellersoftware 5.3.1 mit Witty-Firmware 1.7 sowie Herstellersoftware 5.4.0 mit Firmware 1.8. Herstellerpaket und Firmware werden nicht automatisch aktualisiert.
-- Weitere Einstellungen: Witty-Firmware-Sommer-/Winterzeit per Button aktivieren/deaktivieren. Nur mit Firmware 1.8 sichtbar; Einschalten bei festem UTC-Offset gesperrt. Aktivierter Zustand grün, Anzeige erst nach Firmware-Rückmeldung.
-- Aktivierung übernimmt die tatsächlichen Regeln der Linux-Zeitzone, einschließlich Sydney, Adelaide, Hobart, Melbourne und Lord Howe (30 Minuten). Hersteller prüft Regel und Uhrenabgleich vor Aktivierung; Deaktivieren verändert die RTC-Zeit nicht.
-- Aktive Witty-Zeitpläne werden nach Regeländerung erneut aktiviert, damit umgerechnete Termine aktualisiert sind. Bei unbekanntem aktiven Zeitplan wird die Änderung vorab abgelehnt.
-- Bei aktiver Firmware-Automatik pausiert der zusätzliche Add-on-Umstellungstimer. Bei Deaktivierung übernimmt wieder der bisherige Add-on-Timer für regionale Zeitzonen. Feste Offsets verwenden keine Sommerzeit. Zeitzonenwechsel aktualisieren eine bereits eingeschaltete Firmware-Regel passend zur neuen Region.
-- Messwerte getrennt: V-In (Eingang), V-Out (Ausgang) und I-Out (Ausgangsstrom). Vertauschte Auswahl von V-In-/V-USB-Registern berichtigt; bisheriges API-Feld voltage bleibt die aktive Versorgungsspannung.
-- Versionsunabhängiger Rücksprung aus den weiteren Herstellereinstellungen durch leere Eingabe. Statusabfragen bleiben direkte Lesezugriffe ohne Herstellerdienst-Neustart.
-- Windows-Voll-, Inhalts- und Modulpakete gemeinsam aktualisiert. Alle eingebetteten Add-on-Kopien enthalten exakt 1.5.9; Versionen und SHA-256-Prüfsummen stimmen überein. Keine neue GPS-Bridge, kein geänderter Aufnahmealgorithmus, keine weitere dauerhafte Hintergrundanwendung.
-Prüfung: Python- und JavaScript-Regressionstests, originale Herstellerprüfung der Zeitregeln für neun Zeitzonen von 2026 bis 2035, Paket-/Versions-/Prüfsummenprüfung. Ein bestehender Root-Neustarttest ist auf diesem Host nicht ausführbar. Kein physischer Raspberry-/Witty-Test und kein nativer Windows-WPF-Test; keine bestätigte Stromersparnis.
-Build-Basis: öffentlich veröffentlichter GitHub-Stand (Add-on 1.5, Windows 1.5.0). Ein separat installierter Stand 1.5.8 lag nicht als Quellpaket vor und wurde nicht verglichen.
+Witty Add-on 1.5.9.1 – 20.11.2026
+- Updateabbruch 1.5.2 → 1.5.9 durch inkompatibles Release-Notes-Format korrigiert. Alte Listen und neue Sprachobjekte werden gelesen. Eine defekte Änderungsübersicht stoppt das Update nicht mehr.
+- Socketaktivierung aus den zurückgezogenen Paketen 1.5.1/1.5.2 vor dem normalen Webdienst entfernen. Verhindert Portkonflikt und Neustartschleife beim Wechsel. Nur erkannte Add-on-Dateien werden nach Sicherung entfernt; unbekannte Anpassungen führen zum Abbruch.
+- Zweiten GPS-Zeitwächter entfernt. Der vorhandene GPS-Startabgleich und der DST-Termin bleiben erhalten. Keine fortlaufenden automatischen Zeitzonenabfragen durch diesen Wächter.
+- Windows-Programm bleibt 1.5.9; Inhalt und eingebettetes Add-on werden auf 1.5.9.1 aktualisiert.
+- Noch keine bestätigte Behebung des gemessenen Mehrverbrauchs von 35 %. GPSD/Bridge und WURB-Aufnahmealgorithmus bleiben in diesem Hotfix unverändert. Kein Hardwaretest.
