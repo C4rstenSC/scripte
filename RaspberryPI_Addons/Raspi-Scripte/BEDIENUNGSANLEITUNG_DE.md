@@ -77,3 +77,8 @@ Bei einem Fehler die letzten vollständigen Terminalzeilen mit Version, Aktion u
 ## Release Notes
 
 Die aktuelle Version ist 1.5 vom 10.11.2026. Die getrennten deutschen und australisch-englischen Release Notes enthalten die Änderungen pro Version/Build. Die Homepage führt eine Versionshistorie, das Windows-Hilfefenster bietet die passenden Änderungsinformationen. Die UTC-Einschränkung dieser Version betrifft das Windows-Auswahlfeld.
+
+
+## GPS 1.6
+
+USB-GPS wird auf Pi 4 und Pi 5 direkt durch WURB gelesen. Das Addon übernimmt Zeit, Position und Satelliten aus WURB bei geöffneter Homepage oder angeforderter Zeitsynchronisation. Die aktivierte Waveshare-L76X-Option behält die WURB-Bridge. Zuerst das Windows-Programm aktualisieren, anschließend „Witty Software update“ ausführen. Das Update entfernt automatisch die alte USB-GPS-Zusatzkette; keine Neuinstallation erforderlich. Begrenzter GPS-Startabgleich und DST-Termin bleiben erhalten.

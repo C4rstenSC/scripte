@@ -77,3 +77,8 @@ For errors, retain the complete final terminal lines together with the version, 
 ## Release notes
 
 The current release is 1.5, dated 10 November 2026. Separate German and Australian English release notes describe each version/build. The homepage provides version history and Windows Help provides the matching change information. The restricted UTC list in this release applies to the Windows selector.
+
+
+## GPS 1.6
+
+On Pi 4 and Pi 5, WURB reads USB GPS directly. The Add-on requests WURB time, position and satellites for an open homepage or a requested clock synchronisation. Enabling Waveshare L76X retains its WURB bridge. Update the Windows package first, then run “Witty Software update”. The update migrates the old USB GPS chain automatically; no reinstallation is required. The bounded GPS boot sync and DST transition job remain.

@@ -1,0 +1,8 @@
+Version 1.6 – 20 November 2026
+- Raspberry Pi 4 and 5 now let WURB own USB GPS directly, without an additional USB GPSD/Socat/PTY chain.
+- The Add-on obtains time, position and satellites from WURB only for an open homepage or a requested clock synchronisation. No extra continuous Add-on GPS polling. Retains the bounded boot sync and scheduled DST transition.
+- Enabling Waveshare L76X retains the bridge that supplies WURB. Switching to USB or no GPS removes it. GPSD socket activation is masked for USB/no GPS and unmasked for Waveshare.
+- Direct upgrades from older Add-on versions retire the USB bridge, GPSD activation, virtual ports and hotplug service, configure WURB for direct USB discovery and add its status adapter. The former Pi-5 half-second loop returns to WURB's normal USB cycle.
+- Windows package and content version 1.6 include the same new Add-on. Existing Windows binaries are unchanged; the displayed content version and update payload advance together.
+- Preserves regional time and fixed UTC offset. Retains software/firmware pairs 5.3.1/1.7 and 5.4.0/1.8.
+- Validation: 12 simulated mode migrations, WURB API/fix-loss/idempotence checks, GPS/update regressions and syntax checks. No physical Pi or native Windows test; power savings have not yet been measured.

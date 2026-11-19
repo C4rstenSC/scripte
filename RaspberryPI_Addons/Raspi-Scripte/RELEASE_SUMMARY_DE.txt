@@ -1,6 +1,8 @@
-Witty Add-on 1.5.9.1 – 20.11.2026
-- Updateabbruch 1.5.2 → 1.5.9 durch inkompatibles Release-Notes-Format korrigiert. Alte Listen und neue Sprachobjekte werden gelesen. Eine defekte Änderungsübersicht stoppt das Update nicht mehr.
-- Socketaktivierung aus den zurückgezogenen Paketen 1.5.1/1.5.2 vor dem normalen Webdienst entfernen. Verhindert Portkonflikt und Neustartschleife beim Wechsel. Nur erkannte Add-on-Dateien werden nach Sicherung entfernt; unbekannte Anpassungen führen zum Abbruch.
-- Zweiten GPS-Zeitwächter entfernt. Der vorhandene GPS-Startabgleich und der DST-Termin bleiben erhalten. Keine fortlaufenden automatischen Zeitzonenabfragen durch diesen Wächter.
-- Windows-Programm bleibt 1.5.9; Inhalt und eingebettetes Add-on werden auf 1.5.9.1 aktualisiert.
-- Noch keine bestätigte Behebung des gemessenen Mehrverbrauchs von 35 %. GPSD/Bridge und WURB-Aufnahmealgorithmus bleiben in diesem Hotfix unverändert. Kein Hardwaretest.
+Version 1.6 – 20.11.2026
+- USB-GPS wird auf Raspberry Pi 4 und 5 ausschließlich durch den vorhandenen WURB-GPS-Reader gelesen. Keine zusätzliche USB-GPSD-/Socat-/PTY-Kette.
+- Witty liest Zeit, Position und Satelliten bei geöffneter Homepage sowie bei einer angeforderten Zeitsynchronisierung direkt aus WURB. Keine dauerhafte zusätzliche GPS-Abfrage im Addon. Begrenzter GPS-Startabgleich und DST-Termin bleiben erhalten.
+- Bei aktivierter Waveshare-L76X-Option bleibt die Bridge für WURB erhalten. Umschalten auf USB oder kein GPS entfernt die Bridge wieder. GPSD wird für USB/kein GPS gegen erneute Socketaktivierung gesperrt und für Waveshare entsperrt.
+- Direktes Update von älteren Addon-Ständen: alte USB-Bridge, GPSD-Aktivierung, virtuelle Ports und USB-Hotplug-Dienst werden entfernt; WURB erhält direkte USB-Portauswahl und den Statusadapter. Die frühere Pi-5-Halbesekunden-Schleife wird auf den normalen WURB-USB-Zyklus zurückgestellt.
+- Windows-Paket und Inhalt: Version 1.6 mit demselben neuen Addon. Bestehende Windows-Binärdateien bleiben unverändert; Versionsanzeige und Updateinhalt werden gemeinsam aktualisiert.
+- Zeitregion und fester UTC-Offset bleiben gespeichert. Herstellerkombinationen 5.3.1/Firmware 1.7 und 5.4.0/Firmware 1.8 bleiben vorgesehen.
+- Prüfung: 12 simulierte Modusmigrationen, WURB-API-/Fixverlust-/Wiederholungsprüfungen, GPS-/Update-Regressionen und Syntaxprüfungen. Kein physischer Raspberry-/Windows-Test; die Höhe der Stromeinsparung ist noch nicht gemessen.

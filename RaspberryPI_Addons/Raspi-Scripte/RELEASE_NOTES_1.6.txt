@@ -1,0 +1,8 @@
+Version 1.6 – 20.11.2026
+- USB-GPS wird auf Raspberry Pi 4 und 5 ausschließlich durch den vorhandenen WURB-GPS-Reader gelesen. Keine zusätzliche USB-GPSD-/Socat-/PTY-Kette.
+- Witty liest Zeit, Position und Satelliten bei geöffneter Homepage sowie bei einer angeforderten Zeitsynchronisierung direkt aus WURB. Keine dauerhafte zusätzliche GPS-Abfrage im Addon. Begrenzter GPS-Startabgleich und DST-Termin bleiben erhalten.
+- Bei aktivierter Waveshare-L76X-Option bleibt die Bridge für WURB erhalten. Umschalten auf USB oder kein GPS entfernt die Bridge wieder. GPSD wird für USB/kein GPS gegen erneute Socketaktivierung gesperrt und für Waveshare entsperrt.
+- Direktes Update von älteren Addon-Ständen: alte USB-Bridge, GPSD-Aktivierung, virtuelle Ports und USB-Hotplug-Dienst werden entfernt; WURB erhält direkte USB-Portauswahl und den Statusadapter. Die frühere Pi-5-Halbesekunden-Schleife wird auf den normalen WURB-USB-Zyklus zurückgestellt.
+- Windows-Paket und Inhalt: Version 1.6 mit demselben neuen Addon. Bestehende Windows-Binärdateien bleiben unverändert; Versionsanzeige und Updateinhalt werden gemeinsam aktualisiert.
+- Zeitregion und fester UTC-Offset bleiben gespeichert. Herstellerkombinationen 5.3.1/Firmware 1.7 und 5.4.0/Firmware 1.8 bleiben vorgesehen.
+- Prüfung: 12 simulierte Modusmigrationen, WURB-API-/Fixverlust-/Wiederholungsprüfungen, GPS-/Update-Regressionen und Syntaxprüfungen. Kein physischer Raspberry-/Windows-Test; die Höhe der Stromeinsparung ist noch nicht gemessen.
