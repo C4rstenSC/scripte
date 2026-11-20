@@ -1,3 +1,13 @@
+NEU IN 0.1.5
+Separate Spalte Batteriestatus in der Geraeteliste.
+Prozentwert oder gemeldeter Zustand; ohne Batteriedaten steht ein Gedankenstrich.
+Batterieangaben werden aus der Sammelspalte entfernt.
+Aussagekraeftige Funktionsnamen statt Weitere Geraetefunktion.
+Unbekannte Funktionen zeigen ihre Herstellerbezeichnung und den Funktionscode.
+Geraetepruefung: lesbare Zusammenfassung; technische Details optional einblenden.
+43 lokale Tests und Textfarben bei dunkler Systempalette geprueft.
+Rollladen ohne Freigabedaten und Bearbeiten von Original-Cloud-Szenen bleiben offen.
+
 SZENEN IN 0.1.4
 Unter Szenen zeigt der Speicherort Smart Life oder Dieser PC.
 Vorhandene Smart-Life-Szenen: ausfuehren und bereitgestellte Aktionen ansehen.
@@ -44,7 +54,7 @@ Rollladen: gemeldete Istposition und Sollposition getrennt.
 Oeffnen/Stoppen/Schliessen und Positionswahl laut freigegebenen Funktionen.
 23 lokale Tests bestanden; konkrete Rollladen-Rueckmeldung noch live pruefen.
 
-SMART LIFE DESKTOP 0.1.4 – WINDOWS-TESTVERSION
+SMART LIFE DESKTOP 0.1.5 – WINDOWS-TESTVERSION
 
 1. ZIP vollstaendig mit „Alle extrahieren“ entpacken.
 2. Installieren.cmd doppelt anklicken. Keine Administratorrechte erforderlich.

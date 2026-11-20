@@ -1,8 +1,8 @@
 # Smart Life Desktop
 
-Windows test release 0.1.4 for temperature sensors, switches, dimmers, blinds and air purifiers. Reads Smart Life home membership and per-device room assignments. Capability-driven controls, read-only sensor values, scenes and a Windows update button.
+Windows test release 0.1.5 for temperature sensors, switches, dimmers, blinds and air purifiers. Reads Smart Life home membership and per-device room assignments. Capability-driven controls, read-only sensor values, scenes and a Windows update button.
 
-Download: [Windows setup](downloads/SmartLife-Desktop-0.1.4-Setup.zip). Extract the ZIP and run `Installieren.cmd`. The small setup downloads pinned, hash-verified official Python/PyPI dependencies once. A fully bundled Windows package is supplied separately in the conversation.
+Download: [Windows setup](downloads/SmartLife-Desktop-0.1.5-Setup.zip). Extract the ZIP and run `Installieren.cmd`. The small setup downloads pinned, hash-verified official Python/PyPI dependencies once. A fully bundled Windows package is supplied separately in the conversation.
 
 ## Authentication
 
@@ -48,3 +48,6 @@ Red update text appears only when a newer version exists. The current-version re
 
 ### Scenes in 0.1.4
 German desktop scene editor with device/function/value selection, ordered actions, save/edit/delete, and preflight validation before execution. Cloud scene actions are retained and displayed, and can be copied only when all actions are supported. No undocumented cloud write endpoint is called. Desktop scene execution requires the app to be running; cloud automation continues independently. 39 unit/UI tests and an editor save smoke check pass.
+
+## 0.1.5
+Separate device battery column, informative unknown-function labels preserving the manufacturer name and code, purifier countdown/child-lock labels, and a readable German diagnostic summary. Technical details are optional and explicitly styled with light background and dark text. 43 local tests pass and diagnostic text colors were verified under a dark system palette. Empty QR-sharing device data for the user's curtain switch and cloud-scene editing remain unresolved; this release does not claim to fix those access limitations.

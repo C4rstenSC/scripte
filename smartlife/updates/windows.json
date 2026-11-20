@@ -1,9 +1,9 @@
 {
   "status": "available",
   "platform": "win32",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "runtime": "win64-py313-qt683-v1",
-  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.1.4-app.zip",
-  "sha256": "68fe968b3814fd783ae1e0419c0e82ba6a89bf7abe238c04a3f6149e71a5c3cf",
-  "notes": "Rote Schrift nur bei neuerer Version. Neue deutsche Desktop-Szenen erstellen/bearbeiten und Smart-Life-Szenenaktionen ansehen. Desktop-Szenen sind auf diesem PC gespeichert."
+  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.1.5-app.zip",
+  "sha256": "0b8db450703f9334e61d6b7eb76bda35e12a4b38a8bf1d750a9ce6bc0583502a",
+  "notes": "Eigene Batteriespalte, aussagekräftige Funktionsnamen und lesbare Geräteprüfung. Rollladenzugriff und Bearbeiten der Original-Cloud-Szenen bleiben offen."
 }

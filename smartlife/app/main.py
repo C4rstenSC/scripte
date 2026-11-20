@@ -13,7 +13,7 @@ from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtWidgets import (QApplication,QMainWindow,QWidget,QVBoxLayout,QHBoxLayout,QLabel,
  QPushButton,QComboBox,QLineEdit,QTreeWidget,QTreeWidgetItem,QSplitter,QScrollArea,QFormLayout,
  QDoubleSpinBox,QSpinBox,QDialog,QCheckBox,QMessageBox,QFrame,QSizePolicy,QTabBar,QHeaderView,QPlainTextEdit,QFileDialog)
-from core import VERSION, Cloud, label, fmt, meta, ENUMS, validate, climate, TEMPERATURE_CODES, HUMIDITY_CODES, is_cover, cover_position, cover_text, enum_label
+from core import VERSION, Cloud, label, fmt, meta, ENUMS, validate, climate, TEMPERATURE_CODES, HUMIDITY_CODES, is_cover, cover_position, cover_text, enum_label, BATTERY_CODES, battery_text, probe_summary
 import updates
 from desktop_scenes import SceneStore,execute as execute_desktop_scene,scene_rows
 from scene_editor import SceneEditor,question_de
@@ -28,6 +28,7 @@ QPushButton:checked {background:#555f6c;color:white;font-weight:bold;border-colo
 QPushButton[active="true"] {background:#198360;color:white;font-weight:bold;}
 QPushButton:disabled {color:#8c9198;background:#d1d4d8;}
 QLineEdit,QComboBox,QSpinBox,QDoubleSpinBox {background:#f3f4f5;border:1px solid #9a9fa6;border-radius:4px;padding:7px;min-height:22px;}
+QPlainTextEdit,QTextEdit {background:#f3f4f5;color:#24272d;selection-background-color:#505b69;selection-color:#ffffff;border:1px solid #9a9fa6;padding:10px;}
 QTreeWidget {background:#edf0f2;border:0;alternate-background-color:#e0e4e8;}
 QHeaderView::section {background:#505358;color:white;padding:10px;border:0;font-weight:bold;}
 QTreeWidget::item {padding:9px 5px;} QTreeWidget::item:selected {background:#bdcfe0;color:#1d2e3d;}
@@ -178,17 +179,17 @@ class Main(QMainWindow):
                     if s['id']==selected:it.setSelected(True)
             self.summary.setText(f'{self.tree.topLevelItemCount()} Szenen');self.tree.setColumnWidth(0,380)
         else:
-            self.tree.setColumnCount(5);self.tree.setHeaderLabels(['Gerät','Raum','IP-Adresse (Tuya)','Verbindung','Werte / Zustand'])
+            self.tree.setColumnCount(6);self.tree.setHeaderLabels(['Gerät','Raum','IP-Adresse (Tuya)','Verbindung','Batteriestatus','Werte / Zustand'])
             ds=self.visible_devices()
             for d in ds:
-                summary=' · '.join(label(k,d['ranges'].get(k))+': '+fmt(v,d['ranges'].get(k)) for k,v in d['status'].items() if k in LABEL_SUMMARY)
-                if not summary:summary=' · '.join(label(k,d['ranges'].get(k))+': '+fmt(v,d['ranges'].get(k)) for k,v in list(d['status'].items())[:3])
+                summary=' · '.join(label(k,d['ranges'].get(k))+': '+fmt(v,d['ranges'].get(k)) for k,v in d['status'].items() if k in LABEL_SUMMARY and k not in BATTERY_CODES)
+                if not summary:summary=' · '.join(label(k,d['ranges'].get(k))+': '+fmt(v,d['ranges'].get(k)) for k,v in [(k,v) for k,v in d['status'].items() if k not in BATTERY_CODES][:3])
                 if is_cover(d):summary=cover_text(d)
                 ip=d.get('ip') or ('Über Gateway' if d.get('sub') else 'Nicht bereitgestellt')
-                it=QTreeWidgetItem([d['name'],d['room'] or 'Ohne Raumzuordnung',ip,'Online' if d['online'] else 'Offline',summary]);it.setData(0,Qt.UserRole,d);self.tree.addTopLevelItem(it)
+                it=QTreeWidgetItem([d['name'],d['room'] or 'Ohne Raumzuordnung',ip,'Online' if d['online'] else 'Offline',battery_text(d),summary]);it.setData(0,Qt.UserRole,d);self.tree.addTopLevelItem(it)
                 if d['id']==selected:it.setSelected(True)
             self.summary.setText(f'{len(ds)} Geräte · {sum(d["online"] for d in ds)} online · {len(ds)-sum(d["online"] for d in ds)} offline')
-            for col,width in enumerate([230,160,180,105,440]):self.tree.setColumnWidth(col,width)
+            for col,width in enumerate([230,160,180,105,135,440]):self.tree.setColumnWidth(col,width)
             if self.page=='Räume':self.tree.sortItems(1,Qt.AscendingOrder)
         self.tree.blockSignals(False)
         if self.tree.selectedItems() and self.page!='Szenen' and hasattr(self,'values_widget'):
@@ -253,11 +254,11 @@ class Main(QMainWindow):
                 if set(choices).issubset({'open','close','stop'}) and choices:
                     row=QHBoxLayout()
                     for v in choices:
-                        b=QPushButton(enum_label(v));b.setProperty('active',current==v);self.live_buttons.append((b,code,v));b.clicked.connect(lambda checked=False,c=code,v=v,w=frame:self.command(d,c,v,w));row.addWidget(b)
+                        b=QPushButton(enum_label(v,code));b.setProperty('active',current==v);self.live_buttons.append((b,code,v));b.clicked.connect(lambda checked=False,c=code,v=v,w=frame:self.command(d,c,v,w));row.addWidget(b)
                     fl.addLayout(row)
                 else:
                     box=QComboBox()
-                    for v in choices:box.addItem(enum_label(v),v)
+                    for v in choices:box.addItem(enum_label(v,code),v)
                     box.setCurrentIndex(max(0,box.findData(current)));fl.addWidget(box);b=QPushButton('Übernehmen');b.clicked.connect(lambda checked=False,c=code,w=frame,box=box:self.command(d,c,box.currentData(),w));fl.addWidget(b)
             else:
                 lo=int(m.get('min',0));hi=int(m.get('max',100));step=max(1,int(m.get('step',1)));scale=max(0,min(6,int(m.get('scale',0))))
@@ -303,9 +304,14 @@ class Main(QMainWindow):
             except RuntimeError:pass
             self.data['devices']=result['devices'];self.render();self.selected()
             text=json.dumps(result['report'],ensure_ascii=False,indent=2)
-            dlg=QDialog(self);dlg.setWindowTitle('Geräteprüfung – '+d['name']);dlg.resize(780,620);v=QVBoxLayout(dlg)
+            dlg=QDialog(self);dlg.setWindowTitle('Geräteprüfung – '+d['name']);dlg.resize(780,420);v=QVBoxLayout(dlg)
             explanation=QLabel('Diese Prüfung zeigt, welche Funktionen und Werte Tuya für dieses Modell freigibt. Zugangsschlüssel, Kontotoken und Netzwerkadressen werden nicht exportiert.');explanation.setWordWrap(True);v.addWidget(explanation)
-            view=QPlainTextEdit();view.setReadOnly(True);view.setPlainText(text);v.addWidget(view)
+            summary=QLabel(probe_summary(result['report']));summary.setWordWrap(True);summary.setTextInteractionFlags(Qt.TextSelectableByMouse);summary.setStyleSheet('background:#f3f4f5;color:#24272d;padding:14px;font-size:12pt;');v.addWidget(summary)
+            toggle=QPushButton('Technische Details anzeigen');toggle.setCheckable(True);v.addWidget(toggle)
+            view=QPlainTextEdit();view.setReadOnly(True);view.setPlainText(text);view.setMinimumHeight(230);v.addWidget(view);view.hide()
+            def details(show):
+                view.setVisible(show);toggle.setText('Technische Details ausblenden' if show else 'Technische Details anzeigen')
+            toggle.toggled.connect(details)
             save=QPushButton('Gerätebericht speichern');v.addWidget(save)
             def export():
                 filename,_=QFileDialog.getSaveFileName(dlg,'Gerätebericht speichern','SmartLife-Geraetepruefung.json','JSON-Datei (*.json)')

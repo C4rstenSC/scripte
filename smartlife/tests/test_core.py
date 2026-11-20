@@ -2,7 +2,7 @@ import sys,unittest,tempfile,zipfile
 from unittest.mock import patch
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'app'))
-from core import fmt,validate,safe_endpoint,Cloud,cover_position,cover_text,climate,TEMPERATURE_CODES,label,diagnostic_filter
+from core import fmt,validate,safe_endpoint,Cloud,cover_position,cover_text,climate,TEMPERATURE_CODES,label,diagnostic_filter,battery_text,enum_label,probe_summary
 from updates import extract,version,validate_url
 from demo import sample
 class CoreTests(unittest.TestCase):
@@ -26,6 +26,20 @@ class CoreTests(unittest.TestCase):
   with patch('updates.sys.platform','win32'),patch('updates.requests.get') as get:
    get.return_value.json.return_value={'status':'available','platform':'win32','version':'9.9.9'}
    self.assertTrue(updates.check()[1]);self.assertIn('_',get.call_args.kwargs['params']);self.assertIn('no-store',get.call_args.kwargs['headers']['Cache-Control'])
+ def test_battery_zero_missing_and_warning(self):
+  self.assertEqual(battery_text({'status':{'battery_percentage':0}}),'0 %')
+  self.assertEqual(battery_text({'status':{}}),'—')
+  self.assertEqual(battery_text({'status':{'battery_low':True}}),'Schwach')
+ def test_unknown_label_preserves_identity(self):
+  self.assertIn('custom_control',label('custom_control',{'name':'Custom control'}))
+  self.assertNotIn('Weitere Gerätefunktion',label('unknown_code'))
+ def test_purifier_labels(self):
+  self.assertEqual(label('countdown_set'),'Ausschaltzeit auswählen')
+  self.assertEqual(label('lock'),'Kindersicherung')
+  self.assertEqual(enum_label('cancel','countdown_set'),'Deaktiviert')
+  self.assertEqual(enum_label('1F','mode'),'Lüfterstufe 1 (1F)')
+ def test_probe_summary_explains_empty_response(self):
+  self.assertIn('keine Bedienfunktionen',probe_summary({'gerät':'Rollladen','bedienfunktionen':{},'werte':{}}))
  def test_scaled_temperature(self):self.assertEqual(fmt(223,{'values':{'scale':1,'unit':'°C'}}),'22,3 °C')
  def test_negative(self):self.assertEqual(fmt(-42,{'values':'{"scale":1}'}),'-4,2')
  def test_false(self):self.assertEqual(fmt(False),'Aus')

@@ -10,7 +10,7 @@ import sys
 import time
 from urllib.parse import urlparse
 
-VERSION = '0.1.4'
+VERSION = '0.1.5'
 RUNTIME = 'win64-py313-qt683-v1'
 # Public Tuya device-sharing registration also used by Home Assistant.
 CLIENT_ID = 'HA_3y9q4ak7g4ephrvke'
@@ -56,8 +56,17 @@ ENUMS.update({'memory':'Letzten Zustand wiederherstellen','click':'Einfacher Tas
  'wet':'Feucht','dry':'Trocken','alarm':'Alarm','normal':'Normal','cancel':'Abbrechen',
  'reset':'Zurücksetzen','start':'Starten','pause':'Pausieren','min':'Minimum','max':'Maximum'})
 
-def enum_label(value):
+LABELS.update({'countdown_set':'Ausschaltzeit auswählen','countdown_left':'Verbleibende Laufzeit',
+ 'countdown':'Ausschaltverzögerung','countdown_1':'Ausschaltverzögerung 1','lock':'Kindersicherung',
+ 'light_switch':'Beleuchtung','uv':'UV-Licht','uv_switch':'UV-Licht','ionizer':'Ionisierung',
+ 'filter_life':'Verbleibende Filterlebensdauer','filter_status':'Filterzustand',
+ 'battery_low':'Batterie schwach','battery_percent':'Batteriestand','battery_voltage':'Batteriespannung'})
+
+def enum_label(value,code=None):
     text=str(value)
+    if code in ('mode','fan_speed','fan_speed_enum') and re.fullmatch(r'[1-9]F',text):return 'Lüfterstufe '+text[0]+' ('+text+')'
+    if code in ('countdown_set','countdown') and text=='cancel':return 'Deaktiviert'
+    if re.fullmatch(r'[0-9]+[hH]',text):return text[:-1]+' Stunde'+('' if text[:-1]=='1' else 'n')
     if text in ENUMS:return ENUMS[text]
     if re.fullmatch(r'[0-9. +%°-]+',text):return text
     return 'Herstellerwert: '+text
@@ -69,7 +78,9 @@ def label(code, spec=None):
     if match:
         base=match.group(1).rstrip('_')
         if base in LABELS:return LABELS[base]+' '+match.group(2)
-    return 'Weitere Gerätefunktion'
+    original=str((spec or {}).get('name','')).strip()
+    if original and original!=code:return original+' ('+code+')'
+    return 'Herstellerfunktion: '+code
 
 def meta(spec):
     v=(spec or {}).get('values', {})
@@ -86,7 +97,7 @@ def fmt(value, spec=None):
         value=value/(10**scale)
         return (f'{value:.{max(0,min(scale,6))}f}').replace('.',',')+(' '+unit if unit else '')
     if isinstance(value,(dict,list)): return json.dumps(value,ensure_ascii=False)
-    return enum_label(value)
+    return enum_label(value,(spec or {}).get('code'))
 
 def validate(spec, value):
     typ=spec.get('type','').lower(); m=meta(spec)
@@ -331,3 +342,26 @@ def diagnostic_filter(value):
     if isinstance(value,dict):return {k:diagnostic_filter(v) for k,v in value.items() if k in allowed}
     if isinstance(value,list):return [diagnostic_filter(v) for v in value]
     return value
+
+
+BATTERY_CODES=('battery_percentage','battery_percent','battery_value','battery_state','battery_low','battery_voltage')
+def battery_text(d):
+    status=d.get('status',{})
+    for code in BATTERY_CODES:
+        if code not in status or status[code] is None:continue
+        value=status[code];spec=d.get('ranges',{}).get(code) or d.get('functions',{}).get(code) or {}
+        if code=='battery_low' and isinstance(value,bool):return 'Schwach' if value else 'In Ordnung'
+        text=fmt(value,spec)
+        if code in ('battery_percentage','battery_percent') and not meta(spec).get('unit'):text+=' %'
+        return text
+    return '—'
+
+def probe_summary(report):
+    functions=report.get('bedienfunktionen',{});values=report.get('werte',{})
+    lines=['Gerät: '+str(report.get('gerät','')), 'Produkt: '+str(report.get('produkt','')),
+           'Bedienfunktionen über diese Anbindung: '+str(len(functions)),
+           'Gemeldete Werte: '+str(len(values))]
+    if not functions:
+        lines+=['','Diese Gerätefreigabe liefert keine Bedienfunktionen für dieses Modell. Darum kann das Programm das Gerät darüber nicht steuern.']
+    if not values:lines+=['','Es wird auch keine aktuelle Position geliefert. Daraus folgt kein Defekt des Geräts; die Anzeige in der Smart-Life-App kann davon abweichen.']
+    return '\n'.join(lines)
