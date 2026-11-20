@@ -1,9 +1,9 @@
 {
   "status": "available",
   "platform": "win32",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "runtime": "win64-py313-qt683-v1",
-  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.5-app.zip",
-  "sha256": "162ca506941b7342b07cbe0432a0f1a22da789e517436a5d8625358a3c7ca38a",
-  "notes": "FRITZ!Box-Anmeldung mit lokalen IP-Adressen und Hostnamen statt öffentlicher Tuya-IP. Eindeutige MAC-Zuordnung und geschützte lokale Anmeldung. Bitte-warten-Sperre auch für Szenen und Automationen entfernt. Tuya-Fehler beim Umbenennen unterscheiden Speichern und Rücklesen; Cloud-Kontingentfehler werden verständlich angezeigt."
+  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.6-app.zip",
+  "sha256": "12498bf4b13519af8771625e17b92972fe628b994687cdd680fc0b3352696244",
+  "notes": "Signaturfehler bei der MAC-Sammelabfrage behoben: kommaseparierte Geräte-IDs nach dem offiziellen Tuya-SDK signieren. Automatischer FRITZ!Box-Abgleich läuft nach dem Update erneut; bestehende Zugangsdaten bleiben erhalten. Fehler 1004 wird bei bestehenden Verbindungen nicht mehr pauschal falschen Schlüsseln zugeschrieben. Die getrennte Cloud-Kontingentsperre 60001001 bleibt bestehen."
 }

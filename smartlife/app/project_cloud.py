@@ -29,10 +29,14 @@ class ProjectAPI:
         if not self.client or not self.secret or not self.uid:raise ValueError('Access ID, Access Secret und UID sind erforderlich.')
         self.endpoint=ENDPOINTS[self.region];self.session=session or requests.Session();self.token='';self.expires=0
     def _send(self,method,path,params=None,body=None,token=True):
-        params=params or {};query=urlencode(sorted(params.items()));url_path=path+('?' + query if query else '')
+        params=params or {};ordered=sorted(params.items());query=urlencode(ordered);url_path=path+('?' + query if query else '')
+        # Tuya's official SDK signs sorted, unescaped parameter values. The
+        # transport URL still needs normal escaping (e.g. commas become %2C).
+        sign_query='&'.join(str(key)+'='+str(value) for key,value in ordered)
+        sign_path=path+('?' + sign_query if sign_query else '')
         raw=json.dumps(body,ensure_ascii=False,separators=(',',':')).encode('utf-8') if body is not None else b''
         stamp=str(int(time.time()*1000));access=self.token if token else ''
-        canonical=method+'\n'+hashlib.sha256(raw).hexdigest()+'\n\n'+url_path
+        canonical=method+'\n'+hashlib.sha256(raw).hexdigest()+'\n\n'+sign_path
         signature=hmac.new(self.secret.encode(),(self.client+access+stamp+canonical).encode(),hashlib.sha256).hexdigest().upper()
         headers={'client_id':self.client,'sign':signature,'sign_method':'HMAC-SHA256','t':stamp,'lang':'de','Content-Type':'application/json'}
         if access:headers['access_token']=access
@@ -44,7 +48,7 @@ class ProjectAPI:
         except requests.RequestException as e:raise RuntimeError('Die Tuya-Cloud ist nicht erreichbar. Bitte Internetverbindung und Datenzentrum prüfen.') from e
         if not isinstance(reply,dict) or not reply.get('success'):
             code=str(reply.get('code','unbekannt')) if isinstance(reply,dict) else 'unbekannt'
-            tips={'1004':'Access ID oder Access Secret ist falsch; auch die Systemzeit prüfen.',
+            tips={'1004':('Die Signatur dieser Anfrage wurde abgelehnt. Das bedeutet bei bestehender Verbindung nicht automatisch falsche Zugangsdaten.' if token else 'Die Anmeldesignatur wurde abgelehnt. Access ID, Access Secret und Systemzeit prüfen.'),
              '1106':'Zugriff verweigert. Kontoverknüpfung, Datenzentrum und API-Berechtigung prüfen.',
              '1010':'Die Anmeldung ist ungültig. Bitte erneut verbinden.',
              '28841105':'Der benötigte API-Dienst ist für dieses Projekt nicht freigeschaltet.',

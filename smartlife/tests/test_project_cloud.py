@@ -35,6 +35,23 @@ class ProjectTests(unittest.TestCase):
   _,kw=session.calls[0];self.assertEqual(json.loads(kw['data']),body)
   canonical='PUT\n'+hashlib.sha256(kw['data']).hexdigest()+'\n\n/v1.0/devices/test'
   expected=hmac.new(CONFIG['access_secret'].encode(),('test-clientaccess1700000000000'+canonical).encode(),hashlib.sha256).hexdigest().upper();self.assertEqual(kw['headers']['sign'],expected)
+ def test_batch_mac_signature_matches_official_tuya_parameter_rules(self):
+  session=Session({'success':True,'result':[]});api=ProjectAPI(CONFIG,session);api.token='access';api.expires=10**15
+  with patch('project_cloud.time.time',return_value=1700000000):api.request('GET','/v1.0/devices/factory-infos',params={'device_ids':'first-device,second-device'})
+  args,kw=session.calls[0];self.assertTrue(args[1].endswith('device_ids=first-device%2Csecond-device'))
+  canonical='GET\n'+hashlib.sha256(b'').hexdigest()+'\n\n/v1.0/devices/factory-infos?device_ids=first-device,second-device'
+  expected=hmac.new(CONFIG['access_secret'].encode(),('test-clientaccess1700000000000'+canonical).encode(),hashlib.sha256).hexdigest().upper()
+  self.assertEqual(kw['headers']['sign'],expected)
+ def test_query_signature_orders_raw_values_but_escapes_transport(self):
+  session=Session({'success':True,'result':[]});api=ProjectAPI(CONFIG,session);api.token='access';api.expires=10**15
+  with patch('project_cloud.time.time',return_value=1700000000):api.request('GET','/test',params={'z':'Küche & Büro','a':'x+y'})
+  args,kw=session.calls[0];self.assertTrue(args[1].endswith('a=x%2By&z=K%C3%BCche+%26+B%C3%BCro'))
+  canonical='GET\n'+hashlib.sha256(b'').hexdigest()+'\n\n/test?a=x+y&z=Küche & Büro'
+  expected=hmac.new(CONFIG['access_secret'].encode(),('test-clientaccess1700000000000'+canonical).encode(),hashlib.sha256).hexdigest().upper()
+  self.assertEqual(kw['headers']['sign'],expected)
+ def test_signature_error_during_query_does_not_blame_credentials(self):
+  api=ProjectAPI(CONFIG,Session({'success':False,'code':1004,'msg':'sign invalid'}));api.token='access';api.expires=10**15
+  with self.assertRaisesRegex(RuntimeError,'nicht automatisch falsche Zugangsdaten'):api.request('GET','/v1.0/devices/factory-infos',{'device_ids':'a,b'})
  def test_api_error_never_exposes_secret(self):
   api=ProjectAPI(CONFIG,Session({'success':False,'code':1106,'msg':CONFIG['access_secret']}))
   with self.assertRaises(RuntimeError) as caught:api.connect()

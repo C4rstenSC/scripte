@@ -1,11 +1,11 @@
-SMART LIFE DESKTOP 0.2.5 – WINDOWS
+SMART LIFE DESKTOP 0.2.6 – WINDOWS
 
 UPDATE BESTEHENDER INSTALLATION
 Im Programm Update anklicken. Die Prüfung erfolgt außerdem beim Start und jede Minute.
 Nur eine neuere Version erscheint rot. Anmeldung und Laufzeit bleiben erhalten.
 
 ERSTE INSTALLATION ODER BLOCKIERTER ALTER UPDATE-BUTTON
-SmartLife-Desktop-0.2.5-Setup.zip vollständig entpacken.
+SmartLife-Desktop-0.2.6-Setup.zip vollständig entpacken.
 Installieren.cmd starten. Die erforderliche Laufzeit wird bei Bedarf heruntergeladen.
 
 DIREKTEN ZUGRIFF EINRICHTEN
@@ -52,7 +52,7 @@ Das Mac-Paket ist noch nicht veröffentlicht. Persönliche Zugangsdaten sind bis
 nicht in diesem Repository gespeichert.
 
 PRÜFSTAND
-113 lokale Tests bestanden. Windows-Installation und echter Projektzugriff müssen
+116 lokale Tests bestanden. Windows-Installation und echter Projektzugriff müssen
 auf dem Ziel-PC bestätigt werden. Keine Zusage vollständiger iOS-Funktionsgleichheit.
 Windows speichert den Zugang geschützt mit DPAPI für den aktuellen Benutzer.
 SmartScreen-Rückfragen können ohne Herausgebersignatur weiterhin auftreten.
@@ -133,3 +133,13 @@ Statusabfrage nicht mehr mit „Bitte warten“ gesperrt.
 Fehler beim Umbenennen nennen jetzt auch die Phase: Speichern oder Rücklesen.
 60001001: Kontingent für steuerbare Geräte im Tuya-Projekt prüfen.
 Ein solches Cloud-Limit kann das Programm nicht eigenständig aufheben.
+
+NEU IN 0.2.6
+Die Signatur der Tuya-MAC-Sammelabfrage wurde anhand des offiziellen SDKs
+korrigiert. Dadurch verursachen mehrere Geräte-IDs keine falsch signierten
+Kommas mehr. Bei bestehender FRITZ!Box-Anmeldung läuft der automatische
+MAC-Abgleich nach dem Update erneut. Zugangsdaten nicht neu eingeben.
+
+Fehler 1004 bei einer einzelnen Abfrage wird nicht mehr pauschal als falscher
+Zugangsschlüssel dargestellt. Die separate Umbenennungssperre 60001001
+bleibt ein Cloud-Kontingentproblem und wird durch diese Korrektur nicht aufgehoben.

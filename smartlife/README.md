@@ -1,8 +1,18 @@
-# Smart Life Desktop 0.2.5
+# Smart Life Desktop 0.2.6
 
 Deutscher Windows-Client für Smart Life mit direktem Zugriff auf ein verknüpftes Tuya-Cloud-Projekt.
 
-[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.5-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.6-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+
+## Änderungen in 0.2.6
+
+Fehler in der Signierung von Abfragen mit URL-Parametern behoben. Die Tuya-MAC-Sammelabfrage verwendet mehrere kommaseparierte Geräte-IDs. Bisher enthielt die Signatur die URL-kodierten Kommas (`%2C`); Tuyas offizielles Python-SDK signiert die sortierten, unveränderten Parameterwerte. Die Transportadresse bleibt korrekt URL-kodiert, die Signatur verwendet jetzt die separate kanonische Parameterdarstellung. Das betrifft auch andere Parameter mit Sonderzeichen. Tokenabfrage und Signierung der tatsächlich gesendeten JSON-Bytes bleiben erhalten.
+
+Bei bestehender Verbindung wird Fehler 1004 nicht mehr pauschal als falsche Access ID oder falsches Secret beschrieben. Nach dem Update werden die MAC-Adressen bei bestehender FRITZ!Box-Anmeldung automatisch erneut abgefragt. Keine erneute Eingabe der vorhandenen Zugangsdaten erforderlich. Der MAC-Abgleich ist weiterhin automatisch; manuelle Zuordnung ist nur eine optionale Rückfallmöglichkeit bei tatsächlich fehlender Kennung.
+
+116 lokale Tests bestanden, einschließlich kommaseparierter IDs, sortierter Parameter mit Umlauten und Sonderzeichen sowie unveränderter Token-/JSON-Signaturen. Referenz: offizielles Tuya SDK, `_calculate_sign`, https://github.com/tuya/tuya-iot-python-sdk/blob/main/tuya_iot/openapi.py . Die korrigierte Sammelabfrage kann aus dieser Umgebung ohne persönliche Projektdaten nicht live im Benutzerkonto verifiziert werden.
+
+Die getrennte Namensänderung wird im Benutzerkonto mit 60001001 bereits beim Speichern abgelehnt. Dafür wurde kein dokumentierter, funktionierender alternativer Schreibzugriff nachgewiesen. Diese Version hebt das Cloud-Projektkontingent nicht auf und behauptet nicht, die Namenssperre zu beheben.
 
 ## Änderungen in 0.2.5
 
