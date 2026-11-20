@@ -1,0 +1,8 @@
+Version 1.6 Build 3 – 20 November 2026
+- Correct VIN/VUSB register mapping against the manufacturer's definitions: VIN 5/6, VUSB 3/4; VOUT 7/8 and IOUT 9/10 remain separate output measurements. IOUT belongs to the 5 V output rail. Missing VIN no longer falls back to the active USB input.
+- Windows compares numeric versions and build revisions: 1.6 equals 1.6.0. An older build is no longer offered solely because the version text differs.
+- GPS indicator reads the existing WURB receiver status; direct USB mode does not require the retired GPSD/PTY chain. Unavailable status is unknown, with legacy compatibility fallback.
+- Repair wp5 I2C group membership, device and lock permissions during upgrades even with missing legacy model selection. Persist device/lock rules. Reconnect an existing SSH session once to apply group membership, then run wp5 without a sudo prefix.
+- Keep the existing 1.6 USB/Waveshare service topology and WURB receiver cycle. Carsten reports consumption matching the manual installation; no independent hardware power measurement.
+- Matching Windows DLL, module, content, full and Add-on packages, build revision 20261120.1600.3; German technical history from 1.5.0 included.
+Validation: 40 Python methods, 12 executable comparison cases, 16 DOM combinations and 12 migration scenarios passed; syntax, archive, embedded package equality and AES-GCM roundtrips checked. No physical Raspberry/Witty/GPS or native Windows WPF test.

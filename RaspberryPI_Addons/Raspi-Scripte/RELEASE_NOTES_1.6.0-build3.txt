@@ -1,0 +1,8 @@
+Version 1.6 Build 3 – 20.11.2026
+- V-IN/V-USB tatsächlich nach Herstellerregisterdefinition korrigiert: V-IN 5/6, V-USB 3/4. V-OUT 7/8 und I-OUT 9/10 bleiben getrennte Ausgangswerte. I-OUT ist der Strom auf der 5-V-Seite. Kein USB-Ersatzwert bei fehlendem V-IN.
+- Windows-Versionsvergleich korrigiert: 1.6 und 1.6.0 sind gleich; erst danach wird die numerische Buildrevision verglichen. Ein älterer Build wird nicht wegen eines abweichenden Versionstexts als Update angeboten.
+- GPS-Lampe liest denselben vorhandenen WURB-GPS-Status wie der GPS-Datenweg. Direkter USB-Betrieb benötigt keine GPSD-/PTY-Zusatzkette. Bei nicht erreichbarem Status unbekannt statt falscher roter Fehleranzeige; Legacy-Fallback bleibt vorhanden.
+- wp5-Berechtigungen bei Updates auch ohne passende alte Modellauswahl reparieren: i2c-Gruppenmitgliedschaft, Geräte- und Herstellerlockrechte sowie dauerhafte udev-/tmpfiles-Regeln. Bestehende SSH-Sitzung einmal neu verbinden, danach wp5 ohne vorangestelltes sudo.
+- USB-/Waveshare-GPS-Dienststruktur und WURB-Lesezyklus bleiben wie 1.6. Carsten meldet aktuell gleichen Verbrauch wie bei der manuellen Installation; keine eigene Hardwaremessung.
+- Windows-DLL, Modul-, Inhalts-, Voll- und Add-on-Pakete gemeinsam auf Buildrevision 20261120.1600.3 aktualisiert. Technischer Änderungsbericht ab 1.5.0 beigefügt.
+Prüfung: 40 Python-Testmethoden, 12 ausführbare Windows-Vergleichsfälle, 16 DOM-Kombinationen und 12 Modusmigrationen bestanden. Syntax, Archive, gleiche eingebettete Add-ons und AES-GCM-Rückprüfung geprüft. Kein physischer Raspberry-/Witty-/GPS-Test und kein nativer Windows-WPF-Test.

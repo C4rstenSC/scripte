@@ -2,9 +2,9 @@
   "version": "1.6.0",
   "contentVersion": "1.6.0",
   "windowsVersion": "1.6.0",
-  "windowsBinaryVersion": "1.5.9",
+  "windowsBinaryVersion": "1.6.0.3",
   "addonVersion": "1.6.0",
-  "buildRevision": "20261120.1600.1",
+  "buildRevision": "20261120.1600.3",
   "releaseDate": "2026-11-20",
   "supportedPairs": [
     {
@@ -16,5 +16,7 @@
       "firmware": "1.8"
     }
   ],
-  "powerConsumptionFixConfirmed": false
+  "powerConsumptionFixConfirmed": false,
+  "powerConsumptionUserReport": "Carsten reports consumption matching manual installation on 2026-11-20; no independent hardware measurement",
+  "physicalHardwareTest": false
 }
