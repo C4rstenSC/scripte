@@ -10,7 +10,7 @@ import sys
 import time
 from urllib.parse import urlparse
 
-VERSION = '0.2.2'
+VERSION = '0.2.3'
 RUNTIME = 'win64-py313-qt683-v1'
 # Public Tuya device-sharing registration also used by Home Assistant.
 CLIENT_ID = 'HA_3y9q4ak7g4ephrvke'
@@ -68,6 +68,44 @@ ENUMS.update({'single_click':'Einfacher Tastendruck','single':'Einfacher Tastend
  'double':'Doppelter Tastendruck','long':'Langer Tastendruck','long_click':'Langer Tastendruck',
  'press':'Gedrückt','press_up':'Losgelassen','press_down':'Gedrückt'})
 
+LABELS.update({'temp_current_external':'Temperatur am externen Fühler','humidity':'Luftfeuchte','humidity_current':'Luftfeuchte',
+ 'do_not_disturb':'Nach Stromausfall ausgeschaltet bleiben',
+ 'hum_calibration':'Luftfeuchte-Korrektur','humidity_calibration':'Luftfeuchte-Korrektur',
+ 'temp_calibration':'Temperatur-Korrektur','temp_correction':'Korrektur der Fühlertemperatur',
+ 'temperature_calibration':'Temperatur-Korrektur','humidity_correction':'Luftfeuchte-Korrektur',
+ 'temp_sensitivity':'Temperatur-Meldeschwelle','hum_sensitivity':'Luftfeuchte-Meldeschwelle',
+ 'temp_report':'Temperatur-Meldeintervall','hum_report':'Luftfeuchte-Meldeintervall',
+ 'temp_max':'Obere Temperaturgrenze','temp_min':'Untere Temperaturgrenze',
+ 'humidity_max':'Obere Luftfeuchtegrenze','humidity_min':'Untere Luftfeuchtegrenze',
+ 'temp_alarm':'Temperaturalarm','humidity_alarm':'Luftfeuchtealarm',
+ 'temp_periodic_report':'Temperatur-Meldeintervall','humidity_periodic_report':'Luftfeuchte-Meldeintervall',
+ 'temp_sensitivity':'Temperatur-Meldeschwelle','humidity_sensitivity':'Luftfeuchte-Meldeschwelle',
+ 'temp_unit':'Temperatureinheit','bright_state':'Helligkeitszustand','temp_value':'Farbtemperatur',
+ 'colour_data':'Farbe','scene_data':'Lichtszene','music_data':'Musiksteuerung',
+ 'switch_backlight':'Hintergrundbeleuchtung','backlight':'Hintergrundbeleuchtung',
+ 'indicator_status':'Kontrollleuchte','led_type':'Leuchtmitteltyp','power_on_behavior':'Verhalten nach Stromausfall',
+ 'cur_voltage':'Netzspannung','voltage_current':'Spannung','power_current':'Leistungsaufnahme',
+ 'electric_current':'Stromaufnahme','rssi':'WLAN-Signalstärke','battery':'Batteriestand'})
+ENUMS.update({'scene':'Lichtszene','music':'Musiksteuerung','warm':'Warmweiß','cold':'Kaltweiß',
+ 'reading':'Lesen','night':'Nachtlicht','working':'Arbeiten','leisure':'Freizeit',
+ 'small':'Niedrig','large':'Hoch','c':'Celsius','f':'Fahrenheit','centigrade':'Celsius','fahrenheit':'Fahrenheit'})
+
+def ui_label(code,spec=None):
+    if code in LABELS:return LABELS[code]
+    match=re.fullmatch(r'(.+?)(?:_)?([0-9]+)',str(code))
+    if match and match.group(1).rstrip('_') in LABELS:return LABELS[match.group(1).rstrip('_')]+' '+match.group(2)
+    return ''
+
+def unit_label(unit):
+    text=str(unit or '')
+    translated={'秒':'s','分钟':'min','小时':'h','摄氏度':'°C','华氏度':'°F','度':'°','伏':'V','安':'A','瓦':'W'}.get(text,text)
+    return '' if re.search(r'[\u3400-\u9fff]',translated) else translated
+
+def ui_control(code,spec):
+    if not ui_label(code,spec):return False
+    if spec.get('type','').lower()=='enum':return all(enum_label(v,code)!='Nicht zugeordnete Einstellung' for v in meta(spec).get('range',[]))
+    return spec.get('type','').lower() in ('boolean','integer')
+
 def enum_label(value,code=None):
     text=str(value)
     if code in ('mode','fan_speed','fan_speed_enum') and re.fullmatch(r'[1-9]F',text):return 'Lüfterstufe '+text[0]+' ('+text+')'
@@ -75,7 +113,7 @@ def enum_label(value,code=None):
     if re.fullmatch(r'[0-9]+[hH]',text):return text[:-1]+' Stunde'+('' if text[:-1]=='1' else 'n')
     if text in ENUMS:return ENUMS[text]
     if re.fullmatch(r'[0-9. +%°-]+',text):return text
-    return 'Herstellerwert: '+text
+    return 'Nicht zugeordnete Einstellung'
 
 def label(code, spec=None):
     if code in LABELS:return LABELS[code]
@@ -104,10 +142,10 @@ def fmt(value, spec=None):
     if code=='fault' and value==0:return 'Keine Störung'
     if isinstance(value,bool): return 'Ein' if value else 'Aus'
     if isinstance(value,(int,float)):
-        scale=int(m.get('scale',0)); unit=str(m.get('unit',''))
+        scale=int(m.get('scale',0)); unit=unit_label(m.get('unit',''))
         value=value/(10**scale)
         return (f'{value:.{max(0,min(scale,6))}f}').replace('.',',')+(' '+unit if unit else '')
-    if isinstance(value,(dict,list)): return json.dumps(value,ensure_ascii=False)
+    if isinstance(value,(dict,list)): return 'Erweiterte Geräteeinstellung'
     return enum_label(value,(spec or {}).get('code'))
 
 def validate(spec, value):
@@ -339,7 +377,7 @@ HUMIDITY_CODES=('va_humidity','humidity_value','humidity','humidity_current')
 def climate(d,codes,unit):
     parts=[]
     for code in codes:
-        if code not in d['status']:continue
+        if code not in d['status'] or d['status'][code] is None:continue
         spec=d['ranges'].get(code) or d['functions'].get(code) or {}
         value=fmt(d['status'][code],spec)
         if not meta(spec).get('unit'):value+=' '+('°F' if code.endswith('_f') else unit)

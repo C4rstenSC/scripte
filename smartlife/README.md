@@ -1,8 +1,18 @@
-# Smart Life Desktop 0.2.2
+# Smart Life Desktop 0.2.3
 
 Deutscher Windows-Client für Smart Life mit direktem Zugriff auf ein verknüpftes Tuya-Cloud-Projekt.
 
-[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.2-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.3-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+
+## Änderungen in 0.2.3
+
+Durchsicht der normalen Geräte-, Raum-, Szenen- und Automationsansichten sowie der Verwaltungsdialoge. Anzeige und Bedienung verwenden ausschließlich zugeordnete deutsche Funktionsbezeichnungen; fremdsprachige Herstellerbezeichnungen bleiben im technischen Bericht und werden nicht mehr als normaler Ersatztext eingesetzt. Nicht zugeordnete Zusatzfunktionen werden in der normalen Bedienansicht ausgeblendet, ohne Gerätedaten oder Einstellungen in der Cloud zu löschen. Unbekannte Auswahlwerte werden nicht als mehrere scheinbar gleichwertige Bedieneinträge angeboten. Vorhandene unbekannte Szenenaktionen bleiben erhalten.
+
+Ergänzte Übersetzungen betreffen unter anderem den Schutz vor unerwartetem Einschalten nach Stromausfall, Luftfeuchte- und Temperaturkorrekturen, externe Fühlertemperatur, Meldeintervalle, Meldeschwellen, Farbtemperatur und Kontrollleuchten. Nicht gelieferte Temperaturwerte erhalten auch kein leeres Einheitensuffix. Komplexe Rohdaten werden nicht als unlesbare JSON-Blöcke in den normalen Wertelisten dargestellt.
+
+Alle Tabellen einschließlich Raumverwaltung und Szenen-/Automationseditor bemessen jede Spalte nach dem breitesten Zellinhalt oder Spaltenkopf plus rund einem Zentimeter Reserve anhand der logischen Bildschirmauflösung. Die Berechnung erfolgt nach dem Füllen; feste Standardbreiten entfallen. Ein horizontaler Scrollbalken erscheint bei Bedarf. Scrollleisten haben eine helle Spur, einen dunklen Schieber und 20 logische Pixel Breite/Höhe; beim Darüberfahren wird der Schieber blau. Auswahl und Detailansicht werden beim Ansichtswechsel konsistent gehalten.
+
+84 lokale Tests bestanden. Hauptansichten sowie Raum-, Cloud-, Szenen- und Automationsdialoge unter Qt dargestellt und geprüft. Keine neue Behauptung zur vollständigen Geräte- oder KI-Unterstützung; die Einschränkungen aus 0.2.2 bleiben bestehen.
 
 ## Änderungen in 0.2.2
 

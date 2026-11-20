@@ -3,9 +3,9 @@ from copy import deepcopy
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QComboBox,
  QPushButton,QTreeWidget,QTreeWidgetItem,QDoubleSpinBox,QWidget,QMessageBox)
-from core import label,meta,fmt,enum_label,validate
+from core import ui_label as label,ui_control,unit_label,meta,fmt,enum_label,validate
 from desktop_scenes import scene_rows
-from ui_widgets import CleanSelectionDelegate
+from ui_widgets import CleanSelectionDelegate,fit_columns
 
 class SceneEditor(QDialog):
     def __init__(self,parent,store,home,devices,scene=None,cloud=False,save_handler=None,draft=False):
@@ -37,7 +37,7 @@ class SceneEditor(QDialog):
         self.function.blockSignals(True);self.function.clear();d=self.selected_device()
         if d:
             for code,spec in d['functions'].items():
-                if spec.get('type','').lower() in ('boolean','integer','enum'):self.function.addItem(label(code,spec),code)
+                if ui_control(code,spec):self.function.addItem(label(code,spec),code)
         self.function.blockSignals(False);self.choose_function()
     def choose_function(self):
         while self.value_layout.count():
@@ -51,7 +51,7 @@ class SceneEditor(QDialog):
             self.value=QComboBox()
             for value in ([True,False] if typ=='boolean' else m.get('range',[])):self.value.addItem(fmt(value,spec),value)
         else:
-            self.value=QDoubleSpinBox();sc=max(0,min(6,int(m.get('scale',0))));self.value.setDecimals(sc);self.value.setRange(m.get('min',0)/10**sc,m.get('max',100)/10**sc);self.value.setSingleStep(max(1,m.get('step',1))/10**sc);self.value.setSuffix(' '+str(m.get('unit','')))
+            self.value=QDoubleSpinBox();sc=max(0,min(6,int(m.get('scale',0))));self.value.setDecimals(sc);self.value.setRange(m.get('min',0)/10**sc,m.get('max',100)/10**sc);self.value.setSingleStep(max(1,m.get('step',1))/10**sc);self.value.setSuffix(' '+unit_label(m.get('unit','')))
         self.value_layout.addWidget(QLabel('Gewünschte Einstellung:'));self.value_layout.addWidget(self.value,1)
     def value_to_raw(self):
         d=self.selected_device();spec=d['functions'][self.function.currentData()]
@@ -72,7 +72,7 @@ class SceneEditor(QDialog):
     def render(self):
         self.tree.blockSignals(True);self.tree.clear()
         for name,code,value,_ in scene_rows({'actions':self.actions},self.devices):self.tree.addTopLevelItem(QTreeWidgetItem([name,code,value]))
-        for c in range(3):self.tree.resizeColumnToContents(c)
+        fit_columns(self.tree)
         self.tree.blockSignals(False)
     def select_action(self):
         i=self.tree.indexOfTopLevelItem(self.tree.currentItem())

@@ -13,15 +13,30 @@ from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtWidgets import (QApplication,QMainWindow,QWidget,QVBoxLayout,QHBoxLayout,QLabel,
  QPushButton,QComboBox,QLineEdit,QTreeWidget,QTreeWidgetItem,QSplitter,QScrollArea,QFormLayout,
  QDoubleSpinBox,QSpinBox,QDialog,QCheckBox,QMessageBox,QFrame,QSizePolicy,QTabBar,QHeaderView,QPlainTextEdit,QFileDialog)
-from core import VERSION, Cloud, label, fmt, meta, ENUMS, validate, climate, TEMPERATURE_CODES, HUMIDITY_CODES, is_cover, cover_position, cover_text, enum_label, BATTERY_CODES, battery_text, probe_summary
+from core import VERSION, Cloud, ui_label as label,ui_control,unit_label, fmt, meta, ENUMS, validate, climate, TEMPERATURE_CODES, HUMIDITY_CODES, is_cover, cover_position, cover_text, enum_label, BATTERY_CODES, battery_text, probe_summary
 import updates
-from ui_widgets import CleanSelectionDelegate
+from ui_widgets import CleanSelectionDelegate,fit_columns
 from automation_ui import AutomationEditor
 from desktop_scenes import SceneStore,execute as execute_desktop_scene,scene_rows,condition_rows,precondition_rows,scene_report
 from scene_editor import SceneEditor,question_de
 from cloud_ui import CloudSetupDialog,DeviceAdminDialog,RoomAdminDialog,CloudSceneStore
 
 STYLE='''
+QScrollBar:vertical {background:#e8edf2;width:20px;border:1px solid #aab3bd;margin:18px 0;}
+QScrollBar:horizontal {background:#e8edf2;height:20px;border:1px solid #aab3bd;margin:0 18px;}
+QScrollBar::handle {background:#657588;border:1px solid #405065;border-radius:5px;}
+QScrollBar::handle:vertical {min-height:40px;}
+QScrollBar::handle:horizontal {min-width:40px;}
+QScrollBar::handle:hover {background:#3375ae;}
+QScrollBar::handle:pressed {background:#215683;}
+QScrollBar::add-page,QScrollBar::sub-page {background:#e8edf2;}
+QScrollBar::add-line,QScrollBar::sub-line {background:#b8c4d1;border:1px solid #7b8b9c;}
+QScrollBar::sub-line:vertical {height:18px;subcontrol-position:top;subcontrol-origin:margin;}
+QScrollBar::add-line:vertical {height:18px;subcontrol-position:bottom;subcontrol-origin:margin;}
+QScrollBar::sub-line:horizontal {width:18px;subcontrol-position:left;subcontrol-origin:margin;}
+QScrollBar::add-line:horizontal {width:18px;subcontrol-position:right;subcontrol-origin:margin;}
+QTabBar QToolButton {background:#d3dde7;color:#203447;border:1px solid #708399;min-width:22px;}
+
 QWidget {font-family: "Segoe UI", "Arial"; font-size: 12pt; color:#24272d;}
 QMainWindow,QDialog {background:#c8cbcf;}
 QFrame#nav {background:#373a3f;} QFrame#nav QLabel {color:#f5f5f5;}
@@ -164,7 +179,7 @@ class Main(QMainWindow):
         for i in indices:
             tab=self.room_tabs.addTab(self.room.itemText(i));self.room_tabs.setTabData(tab,self.room.itemData(i))
         selected=next((i for i in range(self.room_tabs.count()) if self.room_tabs.tabData(i)==self.room.currentData()),0)
-        self.room_tabs.setCurrentIndex(selected);self.room_tabs.blockSignals(False);self.render();self.empty_detail()
+        self.room_tabs.setCurrentIndex(selected);self.room_tabs.blockSignals(False);self.render();self.selected() if self.tree.selectedItems() and self.page!='Übersicht' else self.empty_detail()
     def select_home_tab(self,index):
         if index>=0:self.home.setCurrentIndex(index)
     def select_room_tab(self,index):
@@ -175,7 +190,7 @@ class Main(QMainWindow):
     def navigate(self,page):
         self.page=page
         for n,b in self.buttons.items():b.setChecked(n==page)
-        self.manage_rooms_btn.setVisible(page=='Räume');self.new_scene_btn.setVisible(page in ('Szenen','Automationen'));self.new_scene_btn.setText('Neue Automation erstellen' if page=='Automationen' else 'Neue Szene erstellen');self.room_tabs.setVisible(page=='Räume'); self.render();self.empty_detail()
+        self.manage_rooms_btn.setVisible(page=='Räume');self.new_scene_btn.setVisible(page in ('Szenen','Automationen'));self.new_scene_btn.setText('Neue Automation erstellen' if page=='Automationen' else 'Neue Szene erstellen');self.room_tabs.setVisible(page=='Räume'); self.render();self.selected() if self.tree.selectedItems() and self.page!='Übersicht' else self.empty_detail()
     def visible_devices(self):
         home=self.home.currentData(); room=self.room.currentData() if self.page=='Räume' else None; search=self.search.text().casefold()
         return [d for d in self.data['devices'] if d['home']==home and (room is None or d['room_id']==room) and search in (d['name']+' '+d['room']).casefold()]
@@ -194,22 +209,22 @@ class Main(QMainWindow):
                     state=('Aktiviert' if s['enabled'] is True else 'Deaktiviert' if s['enabled'] is False else '') if automation else ('Verfügbar' if s['enabled'] else 'Deaktiviert')
                     it=QTreeWidgetItem([s['name'],'Dieser PC' if s.get('source')=='desktop' else 'Smart Life',state]);it.setData(0,Qt.UserRole,s);self.tree.addTopLevelItem(it)
                     if s['id']==selected:it.setSelected(True)
-            self.summary.setText(f'{self.tree.topLevelItemCount()} '+('Automationen' if automation else 'Szenen'));self.tree.setColumnWidth(0,380)
+            self.summary.setText(f'{self.tree.topLevelItemCount()} '+('Automationen' if automation else 'Szenen'))
             if automation and not self.cloud.direct and not self.demo:self.summary.setText('Automationen erfordern den direkten Cloudzugriff.')
             elif automation and self.data.get('automation_errors'):self.summary.setText(' · '.join(self.data['automation_errors']))
         else:
             self.tree.setColumnCount(6);self.tree.setHeaderLabels(['Gerät','Raum','IP-Adresse (Tuya)','Verbindung','Batteriestatus','Werte / Zustand'])
             ds=self.visible_devices()
             for d in ds:
-                summary=' · '.join(label(k,d['ranges'].get(k))+': '+fmt(v,d['ranges'].get(k)) for k,v in d['status'].items() if k in LABEL_SUMMARY and k not in BATTERY_CODES)
-                if not summary:summary=' · '.join(label(k,d['ranges'].get(k))+': '+fmt(v,d['ranges'].get(k)) for k,v in [(k,v) for k,v in d['status'].items() if k not in BATTERY_CODES][:3])
+                summary=' · '.join(label(k,d['ranges'].get(k))+': '+fmt(v,d['ranges'].get(k)) for k,v in d['status'].items() if k in LABEL_SUMMARY and k not in BATTERY_CODES and label(k,d['ranges'].get(k)))
+                if not summary:summary=' · '.join(label(k,d['ranges'].get(k))+': '+fmt(v,d['ranges'].get(k)) for k,v in [(k,v) for k,v in d['status'].items() if k not in BATTERY_CODES and label(k,d['ranges'].get(k))][:3])
                 if is_cover(d) and (cover_position(d) is not None or any(c in d['status'] for c in ('percent_control','percent_control_1'))):summary=cover_text(d)
                 ip=d.get('ip') or ('Über Gateway' if d.get('sub') else 'Nicht bereitgestellt')
                 it=QTreeWidgetItem([d['name'],d['room'] or 'Ohne Raumzuordnung',ip,'Online' if d['online'] else 'Offline',battery_text(d),summary]);it.setData(0,Qt.UserRole,d);self.tree.addTopLevelItem(it)
                 if d['id']==selected:it.setSelected(True)
             self.summary.setText(f'{len(ds)} Geräte · {sum(d["online"] for d in ds)} online · {len(ds)-sum(d["online"] for d in ds)} offline')
-            for col,width in enumerate([230,160,180,105,135,440]):self.tree.setColumnWidth(col,width)
             if self.page=='Räume':self.tree.sortItems(1,Qt.AscendingOrder)
+        fit_columns(self.tree)
         self.tree.blockSignals(False)
         if self.tree.selectedItems() and self.page not in ('Szenen','Automationen') and hasattr(self,'values_widget'):
             d=self.tree.selectedItems()[0].data(0,Qt.UserRole)
@@ -217,7 +232,7 @@ class Main(QMainWindow):
                 try:self.cover_label.setText(cover_text(d))
                 except RuntimeError:pass
             try:
-                reported='\n'.join(label(c,d['ranges'].get(c))+': '+fmt(v,d['ranges'].get(c)) for c,v in d['status'].items() if v is not None and c!='filter_reset')
+                reported='\n'.join(label(c,d['ranges'].get(c))+': '+fmt(v,d['ranges'].get(c)) for c,v in d['status'].items() if v is not None and not isinstance(v,(dict,list)) and c!='filter_reset' and label(c,d['ranges'].get(c)))
                 self.values_widget.setText(reported);self.values_widget.setVisible(bool(reported));self.values_heading.setVisible(bool(reported))
             except RuntimeError:pass
             for b,c,v in getattr(self,'live_buttons',[]):
@@ -235,7 +250,7 @@ class Main(QMainWindow):
             for d in sensors:
                 self.climate_tree.addTopLevelItem(QTreeWidgetItem([room,d['name'],climate(d,TEMPERATURE_CODES,'°C'),climate(d,HUMIDITY_CODES,'%'),'Online' if d['online'] else 'Offline · letzter gemeldeter Wert']))
                 count+=1
-        self.climate_tree.sortItems(0,Qt.AscendingOrder);self.summary.setText(f'Temperatur und Luftfeuchte · {count} Sensoren')
+        self.climate_tree.sortItems(0,Qt.AscendingOrder);fit_columns(self.climate_tree);self.summary.setText(f'Temperatur und Luftfeuchte · {count} Sensoren')
     def clear_detail(self):
         while self.dl.count():
             item=self.dl.takeAt(0)
@@ -261,9 +276,9 @@ class Main(QMainWindow):
         edit_device=QPushButton('Gerätename und Raum bearbeiten');edit_device.clicked.connect(lambda:self.edit_device(d));self.dl.addWidget(edit_device)
         for code,spec in d['functions'].items():
             typ=spec.get('type','').lower();m=meta(spec);current=d['status'].get(code)
-            if typ not in ('boolean','enum','integer'):continue
+            if not ui_control(code,spec):continue
             frame=QWidget();fl=QVBoxLayout(frame);fl.setContentsMargins(0,8,0,4)
-            fl.addWidget(QLabel('Zielposition (% offen)' if is_cover(d) and code in ('percent_control','percent_control_1','position') else label(code,spec)))
+            function_title=QLabel('Zielposition (% offen)' if is_cover(d) and code in ('percent_control','percent_control_1','position') else label(code,spec));function_title.setWordWrap(True);fl.addWidget(function_title)
             if typ=='boolean' and code=='filter_reset':
                 b=QPushButton('Filterzähler zurücksetzen')
                 def reset_filter(checked=False,c=code,w=frame):
@@ -287,13 +302,13 @@ class Main(QMainWindow):
                     box.setCurrentIndex(max(0,box.findData(current)));fl.addWidget(box);b=QPushButton('Übernehmen');b.clicked.connect(lambda checked=False,c=code,w=frame,box=box:self.command(d,c,box.currentData(),w));fl.addWidget(b)
             else:
                 lo=int(m.get('min',0));hi=int(m.get('max',100));step=max(1,int(m.get('step',1)));scale=max(0,min(6,int(m.get('scale',0))))
-                box=QDoubleSpinBox();box.setDecimals(scale);box.setRange(lo/10**scale,hi/10**scale);box.setSingleStep(step/10**scale);box.setSuffix(' '+str(m.get('unit','')))
+                box=QDoubleSpinBox();box.setDecimals(scale);box.setRange(lo/10**scale,hi/10**scale);box.setSingleStep(step/10**scale);box.setSuffix(' '+unit_label(m.get('unit','')))
                 if current is not None:
                     try:box.setValue(float(current)/10**scale)
                     except (ValueError,TypeError):pass
                 fl.addWidget(box);b=QPushButton('Übernehmen');b.clicked.connect(lambda checked=False,c=code,w=frame,box=box,sc=scale,lo=lo,st=step:self.command(d,c,lo+round((box.value()*10**sc-lo)/st)*st,w));fl.addWidget(b)
             frame.setEnabled(d['online'] and not self.demo);self.dl.addWidget(frame)
-        reported='\n'.join(label(c,d['ranges'].get(c))+': '+fmt(v,d['ranges'].get(c)) for c,v in d['status'].items() if v is not None and c!='filter_reset')
+        reported='\n'.join(label(c,d['ranges'].get(c))+': '+fmt(v,d['ranges'].get(c)) for c,v in d['status'].items() if v is not None and not isinstance(v,(dict,list)) and c!='filter_reset' and label(c,d['ranges'].get(c)))
         self.values_heading=QLabel('Gemeldete Werte');self.values_heading.setVisible(bool(reported));self.dl.addWidget(self.values_heading)
         self.values_widget=QLabel(reported);self.values_widget.setVisible(bool(reported));self.values_widget.setWordWrap(True);self.values_widget.setTextInteractionFlags(Qt.TextSelectableByMouse);self.dl.addWidget(self.values_widget);self.dl.addStretch()
     def show_scene_details(self,s):

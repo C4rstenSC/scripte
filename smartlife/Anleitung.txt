@@ -1,11 +1,11 @@
-SMART LIFE DESKTOP 0.2.2 – WINDOWS
+SMART LIFE DESKTOP 0.2.3 – WINDOWS
 
 UPDATE BESTEHENDER INSTALLATION
 Im Programm Update anklicken. Die Prüfung erfolgt außerdem beim Start und jede Minute.
 Nur eine neuere Version erscheint rot. Anmeldung und Laufzeit bleiben erhalten.
 
 ERSTE INSTALLATION ODER BLOCKIERTER ALTER UPDATE-BUTTON
-SmartLife-Desktop-0.2.2-Setup.zip vollständig entpacken.
+SmartLife-Desktop-0.2.3-Setup.zip vollständig entpacken.
 Installieren.cmd starten. Die erforderliche Laufzeit wird bei Bedarf heruntergeladen.
 
 DIREKTEN ZUGRIFF EINRICHTEN
@@ -52,7 +52,7 @@ Das Mac-Paket ist noch nicht veröffentlicht. Persönliche Zugangsdaten sind bis
 nicht in diesem Repository gespeichert.
 
 PRÜFSTAND
-78 lokale Tests bestanden. Windows-Installation und echter Projektzugriff müssen
+84 lokale Tests bestanden. Windows-Installation und echter Projektzugriff müssen
 auf dem Ziel-PC bestätigt werden. Keine Zusage vollständiger iOS-Funktionsgleichheit.
 Windows speichert den Zugang geschützt mit DPAPI für den aktuellen Benutzer.
 SmartScreen-Rückfragen können ohne Herausgebersignatur weiterhin auftreten.
@@ -88,3 +88,15 @@ Bei fehlenden Originalbedingungen oder zwischenzeitlicher Änderung wird nicht
 Die neue Updateprüfung ermittelt zuerst den aktuellen Git-Commit und lädt
 Manifest und Paket daraus. Keine zusätzliche Git-Installation erforderlich.
 Der alte Prüfweg wird durch das erste Update auf diese Version ersetzt.
+
+NEU IN 0.2.3
+Deutsche Beschriftungen für Stromausfallverhalten, Temperatur- und
+Luftfeuchtekorrekturen sowie weitere Sensor- und Lichtfunktionen.
+Keine chinesischen Herstellerbezeichnungen als Ersatz in normalen Ansichten.
+Nicht zugeordnete Zusatzfunktionen bleiben dort ausgeblendet; die Cloud-Daten
+werden dadurch nicht gelöscht. Unbekannte Originalaktionen bleiben erhalten.
+
+Alle Tabellenspalten passen sich an den längsten Inhalt oder Spaltenkopf an,
+zuzüglich rund einem Zentimeter Reserve. Bei Bedarf horizontal scrollen.
+Hellere Scrollspur, dunkler breiterer Schieber, blaue Hervorhebung mit der Maus.
+Markierte Zeile und Detailansicht bleiben beim Wechsel konsistent.

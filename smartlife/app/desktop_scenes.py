@@ -2,7 +2,7 @@
 from __future__ import annotations
 import copy,json,os,time,uuid
 from pathlib import Path
-from core import data_dir,validate,label,fmt
+from core import data_dir,validate,ui_label as label,fmt,ui_control
 
 class SceneStore:
     def __init__(self,folder=None):self.path=(Path(folder) if folder else data_dir())/'desktop-szenen.json'
@@ -80,11 +80,11 @@ def scene_rows(scene,devices):
                 matches=[key for key,spec in {**d.get('ranges',{}),**d['functions']}.items() if str(spec.get('dp_id',spec.get('dpId','')))==code]
                 if len(matches)==1:code=matches[0]
             spec=(d['functions'].get(code) or d['ranges'].get(code)) if d else None
-            mapped={'device':d['id'],'code':code,'value':value} if d and code in d['functions'] and executor in ('','dpIssue','device_issue') else None
+            mapped={'device':d['id'],'code':code,'value':value} if d and code in d['functions'] and executor in ('','dpIssue','device_issue') and ui_control(code,d['functions'][code]) else None
             if code.isdigit():
                 # Do not guess numeric DP meaning or make an executable copy.
                 title='Gerätedatenpunkt '+code
-            else:title=label(code,spec)
+            else:title=label(code,spec) or 'Nicht zugeordnete Funktion'
             rows.append((str(name),title,fmt(value,spec),mapped))
     return rows
 
@@ -98,9 +98,9 @@ def condition_rows(rule,devices):
             except ValueError:display={}
         if not isinstance(display,dict):display={}
         d=device_map.get(str(c.get('entity_id',c.get('entityId',''))));code=str(display.get('code',''));value=display.get('value');spec=(d.get('ranges',{}).get(code) or d['functions'].get(code)) if d else None
-        if d and code:rows.append((d['name'],label(code,spec),operators.get(display.get('operator'),'Bedingung')+' '+fmt(value,spec)))
+        if d and code:rows.append((d['name'],label(code,spec) or 'Nicht zugeordnete Funktion',operators.get(display.get('operator'),'Bedingung')+' '+fmt(value,spec)))
         elif 'time' in display:rows.append(('Zeitplan','Uhrzeit',str(display['time'])+(' · '+str(display['timezone_id']) if display.get('timezone_id') else '')))
-        elif code:rows.append((c.get('entity_name') or 'Umgebungsbedingung',label(code),operators.get(display.get('operator'),'Bedingung')+' '+str(value)))
+        elif code:rows.append((c.get('entity_name') or 'Umgebungsbedingung',label(code) or 'Nicht zugeordnete Bedingung',operators.get(display.get('operator'),'Bedingung')+' '+fmt(value)))
         else:rows.append(('Auslöser noch nicht erkannt','Bedingung','Die Originalbedingung muss geprüft werden.'))
     return rows
 

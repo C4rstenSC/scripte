@@ -1,9 +1,9 @@
 {
   "status": "available",
   "platform": "win32",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "runtime": "win64-py313-qt683-v1",
-  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.2-app.zip",
-  "sha256": "78fe01bdc8a66e7418b6f57aed6810fdd83bdc7874b796744ce6c1f7b8eb47ca",
-  "notes": "Automationen bearbeiten und erstellen: Gerätebedingungen, Grenzwerte und Aktionen. Vollständige Details nachladen, bestehende Zeitbedingungen erhalten und Änderungen auf Konflikte prüfen. Updateprüfung künftig über aktuellen Git-Commit statt zwischengespeicherter Hauptzweig-Datei."
+  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.3-app.zip",
+  "sha256": "2eebf62582e4ecc4fd95955c8f9d3be25e897e311592d3528891de741d1f6645",
+  "notes": "Deutsche Gerätebeschriftungen und Wertelisten, einschließlich Sensor-Korrekturwerten und Stromausfallverhalten. Alle Tabellenspalten nach Inhalt plus ca. 1 cm Reserve, deutlich sichtbare Scrollleisten und konsistente Detailauswahl. Nicht zugeordnete Zusatzfunktionen in normalen Ansichten ausgeblendet."
 }

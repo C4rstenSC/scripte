@@ -3,10 +3,10 @@ from copy import deepcopy
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QComboBox,
  QPushButton,QTreeWidget,QTreeWidgetItem,QDoubleSpinBox,QMessageBox,QFormLayout)
-from core import label,meta,fmt,validate
+from core import ui_label as label,ui_control,unit_label,meta,fmt,validate
 from desktop_scenes import scene_rows,condition_rows,precondition_rows
 from scene_editor import SceneEditor
-from ui_widgets import CleanSelectionDelegate
+from ui_widgets import CleanSelectionDelegate,fit_columns
 
 class ConditionDialog(QDialog):
     def __init__(self,parent,devices,condition=None):
@@ -34,7 +34,7 @@ class ConditionDialog(QDialog):
         self.function.blockSignals(True);self.function.clear();d=self.selected_device()
         if d:
             for code,spec in self.specs(d).items():
-                if spec.get('type','').lower() in ('integer','boolean','enum'):self.function.addItem(label(code,spec),code)
+                if ui_control(code,spec):self.function.addItem(label(code,spec),code)
         self.function.blockSignals(False);self.choose_function()
     def choose_function(self):
         self.operator.clear();self.value_combo.clear();spec=self.spec();typ=(spec or {}).get('type','').lower();numeric=typ=='integer'
@@ -43,7 +43,7 @@ class ConditionDialog(QDialog):
         if not spec:return
         m=meta(spec)
         if numeric:
-            scale=int(m.get('scale',0));self.value_number.setDecimals(scale);self.value_number.setRange(m.get('min',0)/10**scale,m.get('max',100)/10**scale);self.value_number.setSingleStep(max(1,m.get('step',1))/10**scale);self.value_number.setSuffix(' '+str(m.get('unit','')))
+            scale=int(m.get('scale',0));self.value_number.setDecimals(scale);self.value_number.setRange(m.get('min',0)/10**scale,m.get('max',100)/10**scale);self.value_number.setSingleStep(max(1,m.get('step',1))/10**scale);self.value_number.setSuffix(' '+unit_label(m.get('unit','')))
         else:
             for value in ([True,False] if typ=='boolean' else m.get('range',[])):self.value_combo.addItem(fmt(value,spec),value)
     def save(self):
@@ -95,7 +95,7 @@ class AutomationEditor(QDialog):
             for name,function,value in rows:self.condition_tree.addTopLevelItem(QTreeWidgetItem([str(c.get('order_num','')),name,function,value]))
         for name,function,value,_ in scene_rows({'actions':self.actions},self.devices):self.action_tree.addTopLevelItem(QTreeWidgetItem([name,function,value]))
         for tree in (self.condition_tree,self.action_tree):
-            for col in range(tree.columnCount()-1):tree.resizeColumnToContents(col)
+            fit_columns(tree)
     def edit_condition(self,existing):
         i=self.condition_tree.indexOfTopLevelItem(self.condition_tree.currentItem())
         c=self.conditions[i] if existing and 0<=i<len(self.conditions) else None

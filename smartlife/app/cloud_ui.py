@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QFormLayout,QLabe
 from project_cloud import ENDPOINTS
 from portable_credentials import encrypt_config,decrypt_config
 from scene_editor import question_de
+from ui_widgets import CleanSelectionDelegate,fit_columns
 
 REGION_NAMES={'Central Europe':'Mitteleuropa – Central Europe','Western Europe':'Westeuropa – Western Europe',
  'Western America':'Amerika West','Eastern America':'Amerika Ost','China':'China','India':'Indien','Singapore':'Singapur'}
@@ -90,7 +91,7 @@ class RoomAdminDialog(QDialog):
     def __init__(self,main,home):
         super().__init__(main);self.main=main;self.home=home;self.setWindowTitle('Räume in Smart Life verwalten');self.resize(730,540);v=QVBoxLayout(self)
         note=QLabel('Änderungen betreffen dein Smart-Life-Konto. Räume mit Geräten müssen vor dem Löschen geleert werden.');note.setWordWrap(True);v.addWidget(note)
-        self.tree=QTreeWidget();self.tree.setHeaderLabels(['Raum','Geräte']);self.tree.setRootIsDecorated(False);self.tree.itemSelectionChanged.connect(self.selected);v.addWidget(self.tree)
+        self.tree=QTreeWidget();self.tree.setItemDelegate(CleanSelectionDelegate(self.tree));self.tree.setHeaderLabels(['Raum','Geräte']);self.tree.setRootIsDecorated(False);self.tree.itemSelectionChanged.connect(self.selected);v.addWidget(self.tree)
         self.name=QLineEdit();self.name.setPlaceholderText('Name des Raums');v.addWidget(self.name);row=QHBoxLayout()
         for text,action in [('Raum erstellen',self.add),('Raum umbenennen',self.rename),('Raum löschen',self.delete)]:b=QPushButton(text);b.clicked.connect(action);row.addWidget(b)
         v.addLayout(row);self.message=QLabel('');self.message.setWordWrap(True);v.addWidget(self.message);close=QPushButton('Schließen');close.clicked.connect(self.reject);v.addWidget(close);self.render()
@@ -99,6 +100,7 @@ class RoomAdminDialog(QDialog):
         for r in self.main.cloud.direct.rooms:
             if r['home']==self.home:
                 count=sum(d['home']==self.home and d['room_id']==r['id'] for d in self.main.cloud.direct.devices);item=QTreeWidgetItem([r['name'],str(count)]);item.setData(0,Qt.UserRole,r);self.tree.addTopLevelItem(item)
+        fit_columns(self.tree)
     def selected(self):
         item=self.tree.currentItem()
         if item:self.name.setText(item.data(0,Qt.UserRole)['name'])
