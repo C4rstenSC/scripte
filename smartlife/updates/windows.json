@@ -1,9 +1,9 @@
 {
   "status": "available",
   "platform": "win32",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "runtime": "win64-py313-qt683-v1",
-  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.1.3-app.zip",
-  "sha256": "d439db0aca0b71aef78adb01990fad5f4777e82ce89afd116cfc5bd66e656f54",
-  "notes": "Updateprüfung jede Minute, unabhängig von Geräteabfragen. Sichtbare verfügbare Version, keine verlorenen Klicks und Cache-Korrektur."
+  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.1.4-app.zip",
+  "sha256": "68fe968b3814fd783ae1e0419c0e82ba6a89bf7abe238c04a3f6149e71a5c3cf",
+  "notes": "Rote Schrift nur bei neuerer Version. Neue deutsche Desktop-Szenen erstellen/bearbeiten und Smart-Life-Szenenaktionen ansehen. Desktop-Szenen sind auf diesem PC gespeichert."
 }

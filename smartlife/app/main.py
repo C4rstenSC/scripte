@@ -15,6 +15,8 @@ from PySide6.QtWidgets import (QApplication,QMainWindow,QWidget,QVBoxLayout,QHBo
  QDoubleSpinBox,QSpinBox,QDialog,QCheckBox,QMessageBox,QFrame,QSizePolicy,QTabBar,QHeaderView,QPlainTextEdit,QFileDialog)
 from core import VERSION, Cloud, label, fmt, meta, ENUMS, validate, climate, TEMPERATURE_CODES, HUMIDITY_CODES, is_cover, cover_position, cover_text, enum_label
 import updates
+from desktop_scenes import SceneStore,execute as execute_desktop_scene,scene_rows
+from scene_editor import SceneEditor,question_de
 
 STYLE='''
 QWidget {font-family: "Segoe UI", "Arial"; font-size: 12pt; color:#24272d;}
@@ -45,7 +47,7 @@ class Main(QMainWindow):
         self.pool=ThreadPoolExecutor(max_workers=1); self.bridge=Bridge(); self.bridge.done.connect(self.complete)
         self.update_pool=ThreadPoolExecutor(max_workers=1);self.update_bridge=Bridge();self.update_bridge.done.connect(self.complete_update)
         self.settings=QSettings('C4rstenSC','SmartLifeDesktop');self.cloud=Cloud(); self.demo=demo; self.closing=False; self.jobs=0; self.ready=False
-        self.data={'homes':[],'devices':[],'scenes':[]}; self.page='Übersicht'; self.pending=False; self.detail_id=None; self.login_dialog=None
+        self.scene_store=SceneStore();self.data={'homes':[],'devices':[],'scenes':[]}; self.page='Übersicht'; self.pending=False; self.detail_id=None; self.login_dialog=None
         root=QWidget(); self.setCentralWidget(root); layout=QHBoxLayout(root); layout.setContentsMargins(0,0,0,0); layout.setSpacing(0)
         nav=QFrame(); nav.setObjectName('nav'); nav.setFixedWidth(205); nl=QVBoxLayout(nav); nl.setContentsMargins(18,26,18,20)
         brand=QLabel('Smart Life\nDesktop'); brand.setStyleSheet('font-size:23pt;font-weight:bold;'); nl.addWidget(brand)
@@ -54,13 +56,14 @@ class Main(QMainWindow):
             b=QPushButton(name); b.setCheckable(True); b.clicked.connect(lambda checked=False,n=name:self.navigate(n)); nl.addWidget(b); self.buttons[name]=b
         nl.addStretch(); login=QPushButton('Konto / Anmeldung'); login.clicked.connect(self.login); nl.addWidget(login)
         self.update_btn=QPushButton('Update'); self.update_btn.clicked.connect(lambda:self.check_update(True)); nl.addWidget(self.update_btn)
-        self.update_note=QLabel(''); self.update_note.setWordWrap(True);self.update_note.setMinimumHeight(50);self.update_note.setStyleSheet('color:#ffb4a9;font-weight:bold;'); nl.addWidget(self.update_note); nl.addWidget(QLabel('Version '+VERSION)); layout.addWidget(nav)
+        self.update_note=QLabel(''); self.update_note.setWordWrap(True);self.update_note.setMinimumHeight(50);self.update_note.setStyleSheet('color:#e2e4e7;'); nl.addWidget(self.update_note); nl.addWidget(QLabel('Version '+VERSION)); layout.addWidget(nav)
         body=QWidget(); bl=QVBoxLayout(body); bl.setContentsMargins(24,22,24,18); bl.setSpacing(16); layout.addWidget(body,1)
         top=QHBoxLayout(); self.title=QLabel('Dein Zuhause'); self.title.setObjectName('title'); top.addWidget(self.title); top.addStretch(); self.account=QLabel('Smart Life · nicht verbunden'); top.addWidget(self.account); bl.addLayout(top)
         self.status=QLabel('Bitte mit dem Benutzercode aus deiner Smart-Life-App anmelden.'); self.status.setWordWrap(True); bl.addWidget(self.status)
         self.home=QComboBox();self.home.hide();self.home.currentIndexChanged.connect(self.change_home)
         self.room=QComboBox();self.room.hide();self.room.currentIndexChanged.connect(self.render)
         self.search=QLineEdit();self.search.hide();self.search.textChanged.connect(self.render)
+        self.new_scene_btn=QPushButton('Neue Szene erstellen');self.new_scene_btn.clicked.connect(lambda:self.edit_scene());self.new_scene_btn.hide();top.addWidget(self.new_scene_btn)
         self.reload=QPushButton('Neu laden');self.reload.clicked.connect(self.load);top.addWidget(self.reload)
         self.home_tabs=QTabBar();self.home_tabs.setExpanding(False);self.home_tabs.currentChanged.connect(self.select_home_tab);bl.addWidget(self.home_tabs)
         self.room_tabs=QTabBar();self.room_tabs.setMovable(True);self.room_tabs.tabMoved.connect(self.save_room_tab_order);self.room_tabs.setExpanding(False);self.room_tabs.setUsesScrollButtons(True);self.room_tabs.currentChanged.connect(self.select_room_tab);bl.addWidget(self.room_tabs)
@@ -156,7 +159,7 @@ class Main(QMainWindow):
     def navigate(self,page):
         self.page=page
         for n,b in self.buttons.items():b.setChecked(n==page)
-        self.room_tabs.setVisible(page=='Räume'); self.render();self.empty_detail()
+        self.new_scene_btn.setVisible(page=='Szenen');self.room_tabs.setVisible(page=='Räume'); self.render();self.empty_detail()
     def visible_devices(self):
         home=self.home.currentData(); room=self.room.currentData() if self.page=='Räume' else None; search=self.search.text().casefold()
         return [d for d in self.data['devices'] if d['home']==home and (room is None or d['room_id']==room) and search in (d['name']+' '+d['room']).casefold()]
@@ -166,10 +169,13 @@ class Main(QMainWindow):
             self.render_climate();return
         selected=self.detail_id; self.tree.blockSignals(True);self.tree.clear()
         if self.page=='Szenen':
-            self.tree.setColumnCount(2);self.tree.setHeaderLabels(['Szene','Status'])
-            for s in self.data['scenes']:
+            self.tree.setColumnCount(3);self.tree.setHeaderLabels(['Szene','Speicherort','Status'])
+            try:local=self.scene_store.all()
+            except RuntimeError as e:local=[];self.status.setText(str(e))
+            for s in self.data['scenes']+local:
                 if s['home']==self.home.currentData() and self.search.text().casefold() in s['name'].casefold():
-                    it=QTreeWidgetItem([s['name'],'Verfügbar' if s['enabled'] else 'Deaktiviert']);it.setData(0,Qt.UserRole,s);self.tree.addTopLevelItem(it)
+                    it=QTreeWidgetItem([s['name'],'Dieser PC' if s.get('source')=='desktop' else 'Smart Life','Verfügbar' if s['enabled'] else 'Deaktiviert']);it.setData(0,Qt.UserRole,s);self.tree.addTopLevelItem(it)
+                    if s['id']==selected:it.setSelected(True)
             self.summary.setText(f'{self.tree.topLevelItemCount()} Szenen');self.tree.setColumnWidth(0,380)
         else:
             self.tree.setColumnCount(5);self.tree.setHeaderLabels(['Gerät','Raum','IP-Adresse (Tuya)','Verbindung','Werte / Zustand'])
@@ -224,7 +230,7 @@ class Main(QMainWindow):
         d=rows[0].data(0,Qt.UserRole);self.clear_detail()
         title=QLabel(d['name']);title.setStyleSheet('font-size:16pt;font-weight:bold;');title.setWordWrap(True);self.dl.addWidget(title)
         if self.page=='Szenen':
-            self.detail_id=None;b=QPushButton('Szene ausführen');b.setEnabled(d['enabled']);b.clicked.connect(lambda:self.scene(d,b));self.dl.addWidget(b);self.dl.addStretch();return
+            self.detail_id=d['id'];self.show_scene_details(d);return
         self.detail_id=d['id'];self.live_buttons=[];
         if is_cover(d):
             position=QLabel(cover_text(d));position.setWordWrap(True);position.setStyleSheet('font-size:16pt;font-weight:bold;padding:8px 0;');self.dl.addWidget(position);self.cover_label=position
@@ -262,6 +268,34 @@ class Main(QMainWindow):
                 fl.addWidget(box);b=QPushButton('Übernehmen');b.clicked.connect(lambda checked=False,c=code,w=frame,box=box,sc=scale,lo=lo,st=step:self.command(d,c,lo+round((box.value()*10**sc-lo)/st)*st,w));fl.addWidget(b)
             frame.setEnabled(d['online'] and not self.demo);self.dl.addWidget(frame)
         self.dl.addWidget(QLabel('Gemeldete Werte'));self.values_widget=QLabel('\n'.join(label(c,d['ranges'].get(c))+': '+fmt(v,d['ranges'].get(c)) for c,v in d['status'].items()) or 'Keine Werte gemeldet.');self.values_widget.setWordWrap(True);self.values_widget.setTextInteractionFlags(Qt.TextSelectableByMouse);self.dl.addWidget(self.values_widget);self.dl.addStretch()
+    def show_scene_details(self,s):
+        own=s.get('source')=='desktop'
+        note=QLabel('Desktop-Szene · auf diesem PC gespeichert' if own else 'Smart-Life-Szene · über die QR-Anbindung schreibgeschützt');note.setWordWrap(True);self.dl.addWidget(note)
+        rows=scene_rows(s,self.data['devices'])
+        if not rows:
+            info=QLabel('Keine Geräteaktionen von Smart Life bereitgestellt.' if not own else 'Keine Geräteaktionen gespeichert.');info.setWordWrap(True);self.dl.addWidget(info)
+        for name,function,value,_ in rows:
+            detail=QLabel(name+'\n'+function+': '+value);detail.setWordWrap(True);detail.setStyleSheet('padding:10px 0;border-bottom:1px solid #abb0b7;');self.dl.addWidget(detail)
+        run=QPushButton('Szene ausführen');run.setEnabled(s['enabled'] and not self.demo);run.clicked.connect(lambda:self.scene(s,run));self.dl.addWidget(run)
+        edit=QPushButton('Szene bearbeiten' if own else 'Als Desktop-Szene kopieren und bearbeiten');edit.setEnabled(own or bool(rows) and all(row[3] is not None for row in rows));edit.clicked.connect(lambda:self.edit_scene(s));self.dl.addWidget(edit)
+        if not own:
+            why=QLabel('Änderungen an dieser Smart-Life-Szene erfolgen in der Smart-Life-App. Eine bearbeitbare Desktop-Kopie ist möglich, wenn alle Geräteaktionen eindeutig zugeordnet werden können.');why.setWordWrap(True);self.dl.addWidget(why)
+        else:
+            remove=QPushButton('Desktop-Szene löschen');remove.clicked.connect(lambda:self.delete_scene(s));self.dl.addWidget(remove)
+        self.dl.addStretch()
+    def edit_scene(self,s=None):
+        if not self.home.currentData():self.error(ValueError('Bitte zuerst ein Zuhause laden.'));return
+        if s and s.get('source')!='desktop':
+            rows=scene_rows(s,self.data['devices'])
+            if not rows or any(row[3] is None for row in rows):self.error(ValueError('Die Smart-Life-Aktionen sind nicht vollständig zugeordnet. Eine Kopie würde Teile der Szene verlieren.'));return
+            s={'name':s['name']+' – Kopie','home':s['home'],'actions':[row[3] for row in rows]}
+        dialog=SceneEditor(self,self.scene_store,self.home.currentData(),self.data['devices'],s)
+        if dialog.exec()==QDialog.Accepted:
+            self.detail_id=dialog.result_scene['id'];self.render();self.selected();self.status.setText('Desktop-Szene gespeichert. Es wurden noch keine Geräte geschaltet.')
+    def delete_scene(self,s):
+        if question_de(self,'Desktop-Szene löschen','Soll diese auf dem PC gespeicherte Szene gelöscht werden?')!=QMessageBox.Yes:return
+        try:self.scene_store.delete(s['id']);self.render()
+        except (RuntimeError,OSError) as e:self.error(e)
     def probe_device(self,d,button):
         button.setEnabled(False);self.status.setText('Gerätedaten werden gezielt geprüft …')
         def done(result):
@@ -303,12 +337,12 @@ class Main(QMainWindow):
         def done(_):
             try:b.setEnabled(True)
             except RuntimeError:pass
-            self.status.setText('Szene von Smart Life angenommen.');QTimer.singleShot(1200,self.refresh)
+            self.status.setText('Desktop-Szene ausgeführt.' if s.get('source')=='desktop' else 'Szene von Smart Life angenommen.');QTimer.singleShot(1200,self.refresh)
         def fail(e):
             try:b.setEnabled(True)
             except RuntimeError:pass
             self.error(e)
-        self.submit(lambda:self.cloud.scene(s['home'],s['id']),done,fail)
+        self.submit(lambda:execute_desktop_scene(s,self.cloud) if s.get('source')=='desktop' else self.cloud.scene(s['home'],s['id']),done,fail)
     def login(self):
         if self.login_dialog:self.login_dialog.raise_();return
         dlg=QDialog(self);self.login_dialog=dlg;dlg.setWindowTitle('Mit Smart Life verbinden');dlg.resize(590,700);v=QVBoxLayout(dlg)
@@ -351,6 +385,9 @@ class Main(QMainWindow):
             logout.clicked.connect(out)
         dlg.finished.connect(lambda _:(timer.stop(),setattr(self,'login_dialog',None)))
         dlg.setAttribute(Qt.WA_DeleteOnClose);dlg.open()
+    def set_update_note(self,text,newer=False):
+        self.update_note.setText(text)
+        self.update_note.setStyleSheet('color:#ffb4a9;font-weight:bold;' if newer else 'color:#e2e4e7;')
     def submit_update(self,fn,success,failure):
         if self.closing:return
         future=self.update_pool.submit(fn)
@@ -371,25 +408,25 @@ class Main(QMainWindow):
         if self.demo or getattr(self,'update_installing',False):return
         self.update_interactive=getattr(self,'update_interactive',False) or interactive
         if getattr(self,'update_checking',False):
-            self.update_note.setText('Updateprüfung läuft …');return
-        self.update_checking=True;self.update_note.setText('Updateprüfung läuft …')
+            self.set_update_note('Updateprüfung läuft …');return
+        self.update_checking=True;self.set_update_note('Updateprüfung läuft …')
         def done(result):
             self.update_checking=False;m,newer=result;show=self.update_interactive;self.update_interactive=False
-            self.update_note.setText('Update verfügbar: '+m['version'] if newer else 'Version '+VERSION+' ist aktuell')
+            self.set_update_note('Update verfügbar: '+m['version'] if newer else '',newer)
             self.update_btn.setText('Update · '+m['version'] if newer else 'Update')
             if not show:return
             if not newer:QMessageBox.information(self,'Updates','Installiert: '+VERSION+'\nDeine Version ist aktuell.');return
-            if QMessageBox.question(self,'Update',f"Installiert: {VERSION}\nVerfügbar: {m['version']}\n\n{m.get('notes','')}\n\nJetzt herunterladen und installieren?")!=QMessageBox.Yes:return
-            self.update_installing=True;self.update_btn.setEnabled(False);self.update_note.setText('Update wird geladen und geprüft …')
+            if question_de(self,'Update',f"Installiert: {VERSION}\nVerfügbar: {m['version']}\n\n{m.get('notes','')}\n\nJetzt herunterladen und installieren?")!=QMessageBox.Yes:return
+            self.update_installing=True;self.update_btn.setEnabled(False);self.set_update_note('Update wird geladen und geprüft …')
             def staged(path):
                 try:updates.install(path,Path(__file__).resolve().parent.parent)
                 except Exception as e:fail(e);return
                 self.close()
             def fail(e):
-                self.update_installing=False;self.update_btn.setEnabled(True);self.update_note.setText('Update fehlgeschlagen – erneut versuchen');self.error(e)
+                self.update_installing=False;self.update_btn.setEnabled(True);self.set_update_note('Update fehlgeschlagen – erneut versuchen');self.error(e)
             self.submit_update(lambda:updates.stage(m,Path(__file__).resolve().parent.parent),staged,fail)
         def failed(e):
-            self.update_checking=False;show=self.update_interactive;self.update_interactive=False;self.update_note.setText('Updateprüfung fehlgeschlagen')
+            self.update_checking=False;show=self.update_interactive;self.update_interactive=False;self.set_update_note('Updateprüfung fehlgeschlagen')
             if show:self.error(e)
         self.submit_update(updates.check,done,failed)
     def closeEvent(self,event):

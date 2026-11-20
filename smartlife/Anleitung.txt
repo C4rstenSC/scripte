@@ -1,3 +1,20 @@
+SZENEN IN 0.1.4
+Unter Szenen zeigt der Speicherort Smart Life oder Dieser PC.
+Vorhandene Smart-Life-Szenen: ausfuehren und bereitgestellte Aktionen ansehen.
+Die QR-Anbindung bietet keinen dokumentierten Schreibzugriff auf Cloud-Szenen.
+Neue Szene erstellen: Name, Geraet, Funktion und gewuenschten Wert waehlen,
+Aktion hinzufuegen, danach Szene speichern. Gespeichert wird auf diesem PC.
+Eine gespeicherte Desktop-Szene auswaehlen, um sie zu bearbeiten oder auszufuehren.
+Speichern allein fuehrt keine Aktionen aus. Die Geraete werden erst bei
+Szene ausfuehren geschaltet. Dabei muss das Programm geoeffnet sein.
+Cloud-Szenen lassen sich nur dann als Desktop-Kopie uebernehmen, wenn alle
+bereitgestellten Aktionen eindeutig zugeordnet und unterstuetzt werden.
+39 lokale Tests und Speichern des Szeneneditors geprueft.
+
+NEU IN 0.1.4
+Roter Hinweis nur bei neuerer Version. Bei aktueller Version bleibt das Feld leer.
+Pruefung weiterhin jede Minute. Fortschritt und Fehler neutral dargestellt.
+
 NEU IN 0.1.3
 Updatepruefung beim Start, alle 60 Sekunden und beim Klick auf Update.
 Eigene Warteschlange: Geraeteabfragen blockieren die Updatepruefung nicht.
@@ -27,7 +44,7 @@ Rollladen: gemeldete Istposition und Sollposition getrennt.
 Oeffnen/Stoppen/Schliessen und Positionswahl laut freigegebenen Funktionen.
 23 lokale Tests bestanden; konkrete Rollladen-Rueckmeldung noch live pruefen.
 
-SMART LIFE DESKTOP 0.1.3 – WINDOWS-TESTVERSION
+SMART LIFE DESKTOP 0.1.4 – WINDOWS-TESTVERSION
 
 1. ZIP vollstaendig mit „Alle extrahieren“ entpacken.
 2. Installieren.cmd doppelt anklicken. Keine Administratorrechte erforderlich.

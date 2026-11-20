@@ -10,7 +10,7 @@ import sys
 import time
 from urllib.parse import urlparse
 
-VERSION = '0.1.3'
+VERSION = '0.1.4'
 RUNTIME = 'win64-py313-qt683-v1'
 # Public Tuya device-sharing registration also used by Home Assistant.
 CLIENT_ID = 'HA_3y9q4ak7g4ephrvke'
@@ -205,7 +205,7 @@ class Cloud:
         self.scenes=[]
         scene_error=False
         try:
-            self.scenes=[{'id':s.scene_id,'name':s.name,'home':str(s.home_id),'enabled':getattr(s,'enabled',True)} for s in m.query_scenes()]
+            self.scenes=[{'id':s.scene_id,'name':s.name,'home':str(s.home_id),'enabled':getattr(s,'enabled',True),'source':'smartlife','actions':copy.deepcopy(getattr(s,'actions',[]))} for s in m.query_scenes()]
         except Exception: scene_error=True
         return {'homes':self.homes,'devices':copy.deepcopy(devices),'scenes':self.scenes,
                 'room_failed':len(room_failed),'scene_error':scene_error}

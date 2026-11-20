@@ -1,8 +1,8 @@
 # Smart Life Desktop
 
-Windows test release 0.1.3 for temperature sensors, switches, dimmers, blinds and air purifiers. Reads Smart Life home membership and per-device room assignments. Capability-driven controls, read-only sensor values, scenes and a Windows update button.
+Windows test release 0.1.4 for temperature sensors, switches, dimmers, blinds and air purifiers. Reads Smart Life home membership and per-device room assignments. Capability-driven controls, read-only sensor values, scenes and a Windows update button.
 
-Download: [Windows setup](downloads/SmartLife-Desktop-0.1.3-Setup.zip). Extract the ZIP and run `Installieren.cmd`. The small setup downloads pinned, hash-verified official Python/PyPI dependencies once. A fully bundled Windows package is supplied separately in the conversation.
+Download: [Windows setup](downloads/SmartLife-Desktop-0.1.4-Setup.zip). Extract the ZIP and run `Installieren.cmd`. The small setup downloads pinned, hash-verified official Python/PyPI dependencies once. A fully bundled Windows package is supplied separately in the conversation.
 
 ## Authentication
 
@@ -12,7 +12,7 @@ Tokens are protected using current-user Windows DPAPI. Credentials never enter t
 
 ## Current scope and limits
 
-Homes and rooms with devices are imported. Tuya's sharing SDK only offers per-device room lookup, so empty rooms cannot be reproduced. Device data refreshes every 30 seconds; explicit reload rereads room assignments and specifications. Functions are generated from device specs. Unknown raw/JSON functions are read-only. Existing scenes can run; scene editing and schedule editing are not yet implemented. Firmware and router management from the Shelly app do not apply to this client.
+Homes and rooms with devices are imported. Tuya's sharing SDK only offers per-device room lookup, so empty rooms cannot be reproduced. Device data refreshes every 30 seconds; explicit reload rereads room assignments and specifications. Functions are generated from device specs. Unknown raw/JSON functions are read-only. Existing Smart Life scenes can run and their supplied actions are displayed. Own desktop scenes can be created, edited and executed; they are stored on this PC and do not modify cloud scenes. Fully mapped cloud actions can be copied into a desktop scene. Cloud scene editing and schedule editing remain unavailable through the QR-sharing SDK. Firmware and router management from the Shelly app do not apply to this client.
 
 Checked on Linux: unit tests, mocked cloud responses and offscreen Qt widget interaction. Not yet checked: execution of the Windows runtime, DPAPI on Windows, real QR authentication and the user's devices. The macOS channel explicitly advertises `not_released`.
 
@@ -42,3 +42,9 @@ Persistently reorderable room tabs, climate-only sensor rows with one temperatur
 
 ## 0.1.3
 Independent update worker with startup, 60-second and explicit-click checks; cache-busted manifest queries, visible progress/version indicator, and retained manual intent while a check runs. Installation launch exceptions are shown and restore the button state. Future updates use the verified incoming runner. 31 local tests pass, including an update check while the device worker is blocked. Windows installation remains unverified locally.
+
+## 0.1.4
+Red update text appears only when a newer version exists. The current-version result leaves the sidebar message empty. Progress and error messages use neutral text. The 60-second check remains enabled.
+
+### Scenes in 0.1.4
+German desktop scene editor with device/function/value selection, ordered actions, save/edit/delete, and preflight validation before execution. Cloud scene actions are retained and displayed, and can be copied only when all actions are supported. No undocumented cloud write endpoint is called. Desktop scene execution requires the app to be running; cloud automation continues independently. 39 unit/UI tests and an editor save smoke check pass.
