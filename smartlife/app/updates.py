@@ -7,6 +7,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 from urllib.parse import urlparse
 import zipfile
 import requests
@@ -19,7 +20,7 @@ def version(s):
 def check():
     url=MANIFESTS.get(sys.platform)
     if not url: raise RuntimeError('Für dieses Betriebssystem gibt es keinen Updatekanal.')
-    r=requests.get(url,timeout=20,headers={'Cache-Control':'no-cache'}); r.raise_for_status(); m=r.json()
+    r=requests.get(url,params={'_':str(time.time_ns())},timeout=20,headers={'Cache-Control':'no-cache, no-store','Pragma':'no-cache'}); r.raise_for_status(); m=r.json()
     if m.get('status')!='available': return m,False
     if m.get('platform')!=sys.platform: raise ValueError('Update ist für ein anderes Betriebssystem bestimmt.')
     return m, version(m['version'])>version(VERSION)
@@ -60,7 +61,9 @@ def stage(m,root):
     if not declared or declared.group(1)!=m['version']: raise ValueError('Updateversion stimmt nicht überein.')
     # Runner is outside the app folder so the old version can be moved on Windows.
     import shutil
-    shutil.copy2(Path(__file__).with_name('update_runner.py'),dest/'runner.py')
+    runner=dest/'app'/'update_runner.py'
+    if not runner.is_file():raise ValueError('Update-Installationsdatei fehlt.')
+    shutil.copy2(runner,dest/'runner.py')
     return str(dest)
 
 def install(staged,root):

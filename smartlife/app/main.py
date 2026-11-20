@@ -43,6 +43,7 @@ class Main(QMainWindow):
     def __init__(self,demo=False):
         super().__init__(); self.setWindowTitle('Smart Life Desktop · '+VERSION); self.resize(1390,900); self.setMinimumSize(1020,680)
         self.pool=ThreadPoolExecutor(max_workers=1); self.bridge=Bridge(); self.bridge.done.connect(self.complete)
+        self.update_pool=ThreadPoolExecutor(max_workers=1);self.update_bridge=Bridge();self.update_bridge.done.connect(self.complete_update)
         self.settings=QSettings('C4rstenSC','SmartLifeDesktop');self.cloud=Cloud(); self.demo=demo; self.closing=False; self.jobs=0; self.ready=False
         self.data={'homes':[],'devices':[],'scenes':[]}; self.page='Übersicht'; self.pending=False; self.detail_id=None; self.login_dialog=None
         root=QWidget(); self.setCentralWidget(root); layout=QHBoxLayout(root); layout.setContentsMargins(0,0,0,0); layout.setSpacing(0)
@@ -53,7 +54,7 @@ class Main(QMainWindow):
             b=QPushButton(name); b.setCheckable(True); b.clicked.connect(lambda checked=False,n=name:self.navigate(n)); nl.addWidget(b); self.buttons[name]=b
         nl.addStretch(); login=QPushButton('Konto / Anmeldung'); login.clicked.connect(self.login); nl.addWidget(login)
         self.update_btn=QPushButton('Update'); self.update_btn.clicked.connect(lambda:self.check_update(True)); nl.addWidget(self.update_btn)
-        self.update_note=QLabel(''); self.update_note.setWordWrap(True); nl.addWidget(self.update_note); nl.addWidget(QLabel('Version '+VERSION)); layout.addWidget(nav)
+        self.update_note=QLabel(''); self.update_note.setWordWrap(True);self.update_note.setMinimumHeight(50);self.update_note.setStyleSheet('color:#ffb4a9;font-weight:bold;'); nl.addWidget(self.update_note); nl.addWidget(QLabel('Version '+VERSION)); layout.addWidget(nav)
         body=QWidget(); bl=QVBoxLayout(body); bl.setContentsMargins(24,22,24,18); bl.setSpacing(16); layout.addWidget(body,1)
         top=QHBoxLayout(); self.title=QLabel('Dein Zuhause'); self.title.setObjectName('title'); top.addWidget(self.title); top.addStretch(); self.account=QLabel('Smart Life · nicht verbunden'); top.addWidget(self.account); bl.addLayout(top)
         self.status=QLabel('Bitte mit dem Benutzercode aus deiner Smart-Life-App anmelden.'); self.status.setWordWrap(True); bl.addWidget(self.status)
@@ -73,7 +74,7 @@ class Main(QMainWindow):
         self.clock=QLabel(''); self.clock.setAlignment(Qt.AlignRight); bl.addWidget(self.clock)
         self.tick=QTimer(self); self.tick.timeout.connect(lambda:self.clock.setText(datetime.now().strftime('%H:%M:%S   %d.%m.%Y'))); self.tick.start(1000)
         self.poll=QTimer(self); self.poll.setInterval(30000); self.poll.timeout.connect(self.refresh)
-        self.update_timer=QTimer(self); self.update_timer.timeout.connect(lambda:self.check_update(False)); self.update_timer.start(300000)
+        self.update_timer=QTimer(self); self.update_timer.timeout.connect(lambda:self.check_update(False)); self.update_timer.start(60000)
         self.navigate('Übersicht'); self.empty_detail()
         if demo: self.demo_data()
         else: QTimer.singleShot(250,self.restore); QTimer.singleShot(1500,lambda:self.check_update(False))
@@ -350,27 +351,49 @@ class Main(QMainWindow):
             logout.clicked.connect(out)
         dlg.finished.connect(lambda _:(timer.stop(),setattr(self,'login_dialog',None)))
         dlg.setAttribute(Qt.WA_DeleteOnClose);dlg.open()
+    def submit_update(self,fn,success,failure):
+        if self.closing:return
+        future=self.update_pool.submit(fn)
+        def finish(f):
+            try:value,error=f.result(),None
+            except Exception as e:value,error=None,e
+            if not self.closing:self.update_bridge.done.emit(value,error,(success,failure))
+        future.add_done_callback(finish)
+    def complete_update(self,value,error,callbacks):
+        if self.closing:return
+        success,failure=callbacks
+        try:
+            if error:failure(error)
+            else:success(value)
+        except Exception as e:
+            self.update_btn.setEnabled(True);self.update_installing=False;self.error(e)
     def check_update(self,interactive=False):
-        if self.demo:return
-        if getattr(self,'update_checking',False):return
-        self.update_checking=True
+        if self.demo or getattr(self,'update_installing',False):return
+        self.update_interactive=getattr(self,'update_interactive',False) or interactive
+        if getattr(self,'update_checking',False):
+            self.update_note.setText('Updateprüfung läuft …');return
+        self.update_checking=True;self.update_note.setText('Updateprüfung läuft …')
         def done(result):
-            self.update_checking=False;m,newer=result;self.update_note.setText('Update verfügbar: '+m['version'] if newer else '')
-            if not interactive:return
-            if not newer:QMessageBox.information(self,'Updates','Deine Version '+VERSION+' ist aktuell.');return
-            if QMessageBox.question(self,'Update',f"Version {m['version']} ist verfügbar.\n{m.get('notes','')}\nJetzt herunterladen und installieren?")!=QMessageBox.Yes:return
-            self.status.setText('Update wird heruntergeladen und geprüft …');self.update_btn.setEnabled(False)
+            self.update_checking=False;m,newer=result;show=self.update_interactive;self.update_interactive=False
+            self.update_note.setText('Update verfügbar: '+m['version'] if newer else 'Version '+VERSION+' ist aktuell')
+            self.update_btn.setText('Update · '+m['version'] if newer else 'Update')
+            if not show:return
+            if not newer:QMessageBox.information(self,'Updates','Installiert: '+VERSION+'\nDeine Version ist aktuell.');return
+            if QMessageBox.question(self,'Update',f"Installiert: {VERSION}\nVerfügbar: {m['version']}\n\n{m.get('notes','')}\n\nJetzt herunterladen und installieren?")!=QMessageBox.Yes:return
+            self.update_installing=True;self.update_btn.setEnabled(False);self.update_note.setText('Update wird geladen und geprüft …')
             def staged(path):
-                updates.install(path,Path(__file__).resolve().parent.parent);self.close()
-            def fail(e):self.update_btn.setEnabled(True);self.error(e)
-            self.submit(lambda:updates.stage(m,Path(__file__).resolve().parent.parent),staged,fail)
+                try:updates.install(path,Path(__file__).resolve().parent.parent)
+                except Exception as e:fail(e);return
+                self.close()
+            def fail(e):
+                self.update_installing=False;self.update_btn.setEnabled(True);self.update_note.setText('Update fehlgeschlagen – erneut versuchen');self.error(e)
+            self.submit_update(lambda:updates.stage(m,Path(__file__).resolve().parent.parent),staged,fail)
         def failed(e):
-            self.update_checking=False
-            if interactive:self.error(e)
-            else:self.update_note.setText('Updateprüfung nicht erreichbar')
-        self.submit(updates.check,done,failed)
+            self.update_checking=False;show=self.update_interactive;self.update_interactive=False;self.update_note.setText('Updateprüfung fehlgeschlagen')
+            if show:self.error(e)
+        self.submit_update(updates.check,done,failed)
     def closeEvent(self,event):
-        self.closing=True;self.poll.stop();self.pool.shutdown(wait=False,cancel_futures=True);event.accept()
+        self.closing=True;self.poll.stop();self.update_timer.stop();self.update_pool.shutdown(wait=False,cancel_futures=True);self.pool.shutdown(wait=False,cancel_futures=True);event.accept()
     def demo_data(self):
         from demo import sample
         self.data=sample();self.populate_homes();self.status.setText('Vorschau mit Beispieldaten · keine Verbindung zu deinem Zuhause');self.account.setText('Smart Life · Vorschau')

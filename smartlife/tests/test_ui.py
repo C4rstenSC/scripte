@@ -1,4 +1,5 @@
-import os,sys,unittest
+import os,sys,unittest,time,threading
+from unittest.mock import patch
 from pathlib import Path
 os.environ['QT_QPA_PLATFORM']='offscreen'
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'app'))
@@ -28,6 +29,19 @@ class UiTests(unittest.TestCase):
   self.w.room_tabs.moveTab(index,1);self.w.room_tabs.setCurrentIndex(1)
   self.assertEqual(self.w.room.currentData(),'Wohnzimmer');self.assertEqual(self.w.tree.topLevelItemCount(),3)
   self.w.change_home();self.assertEqual(self.w.room_tabs.tabData(1),'Wohnzimmer');self.w.settings.remove('room-order/demo')
+ def test_update_interval_is_one_minute(self):self.assertEqual(self.w.update_timer.interval(),60000)
+ def test_update_check_not_blocked_by_devices(self):
+  gate=threading.Event();blocked=self.w.pool.submit(lambda:gate.wait(2));self.w.demo=False
+  try:
+   with patch('main.updates.check',return_value=({'version':'9.9.9'},True)):
+    self.w.check_update(False)
+    end=time.monotonic()+1
+    while getattr(self.w,'update_checking',False) and time.monotonic()<end:self.app.processEvents();time.sleep(.005)
+    self.assertIn('9.9.9',self.w.update_note.text());self.assertFalse(blocked.done())
+  finally:gate.set();blocked.result(timeout=2)
+ def test_click_during_check_is_not_lost(self):
+  self.w.demo=False;self.w.update_checking=True;self.w.check_update(True)
+  self.assertTrue(self.w.update_interactive);self.assertIn('läuft',self.w.update_note.text())
  def test_ip_column(self):
   self.w.navigate('Geräte');self.assertEqual(self.w.tree.headerItem().text(2),'IP-Adresse (Tuya)')
  def test_scenes(self):self.w.navigate('Szenen');self.assertEqual(self.w.tree.topLevelItemCount(),1)
