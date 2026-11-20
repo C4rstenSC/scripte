@@ -5,6 +5,7 @@ from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,
  QPushButton,QTreeWidget,QTreeWidgetItem,QDoubleSpinBox,QWidget,QMessageBox)
 from core import label,meta,fmt,enum_label,validate
 from desktop_scenes import scene_rows
+from ui_widgets import CleanSelectionDelegate
 
 class SceneEditor(QDialog):
     def __init__(self,parent,store,home,devices,scene=None,cloud=False,save_handler=None):
@@ -15,7 +16,7 @@ class SceneEditor(QDialog):
         if cloud:note.setText('Die Szene wird direkt in deinem Smart-Life-Konto gespeichert und erscheint auch in der App. Speichern führt die Szene nicht aus.')
         v.addWidget(note)
         self.name=QLineEdit(scene['name'] if scene else '');self.name.setPlaceholderText('Name der Szene');v.addWidget(self.name)
-        self.tree=QTreeWidget();self.tree.setHeaderLabels(['Gerät','Funktion','Einstellung']);self.tree.setRootIsDecorated(False);self.tree.itemSelectionChanged.connect(self.select_action);v.addWidget(self.tree,1)
+        self.tree=QTreeWidget();self.tree.setItemDelegate(CleanSelectionDelegate(self.tree));self.tree.setHeaderLabels(['Gerät','Funktion','Einstellung']);self.tree.setRootIsDecorated(False);self.tree.itemSelectionChanged.connect(self.select_action);v.addWidget(self.tree,1)
         selectors=QHBoxLayout();self.device=QComboBox();self.function=QComboBox();selectors.addWidget(self.device,1);selectors.addWidget(self.function,1);v.addLayout(selectors)
         for d in self.devices:
             if any(s.get('type','').lower() in ('boolean','enum','integer') for s in d['functions'].values()):self.device.addItem(d['name'],d['id'])
@@ -29,6 +30,7 @@ class SceneEditor(QDialog):
         order.addStretch();v.addLayout(order)
         bottom=QHBoxLayout();bottom.addStretch();save=QPushButton('Szene speichern');save.clicked.connect(self.save);bottom.addWidget(save);cancel=QPushButton('Abbrechen');cancel.clicked.connect(self.reject);bottom.addWidget(cancel);v.addLayout(bottom)
         self.device.currentIndexChanged.connect(self.choose_device);self.function.currentIndexChanged.connect(self.choose_function);self.choose_device();self.render()
+        if self.actions:self.tree.setCurrentItem(self.tree.topLevelItem(0))
     def selected_device(self):return next((d for d in self.devices if d['id']==self.device.currentData()),None)
     def choose_device(self):
         self.function.blockSignals(True);self.function.clear();d=self.selected_device()
@@ -76,7 +78,7 @@ class SceneEditor(QDialog):
         if not 0<=i<len(self.actions):return
         a=self.actions[i]
         if '_raw' in a:
-            self.replace.setEnabled(False);return
+            self.replace.setEnabled(False);self.device.setCurrentIndex(-1);self.device.setPlaceholderText('Gerät für eine neue Aktion auswählen');return
         self.replace.setEnabled(True);self.device.setCurrentIndex(self.device.findData(a['device']));self.function.setCurrentIndex(self.function.findData(a['code']))
         if isinstance(self.value,QComboBox):self.value.setCurrentIndex(self.value.findData(a['value']))
         elif self.value is not None:

@@ -1,8 +1,16 @@
-# Smart Life Desktop 0.2.0
+# Smart Life Desktop 0.2.1
 
 Deutscher Windows-Client für Smart Life mit direktem Zugriff auf ein verknüpftes Tuya-Cloud-Projekt.
 
-[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.0-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.1-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+
+## Änderungen in 0.2.1
+
+Eigene Ansicht **Automationen**: im Konto gelieferte Regeln mit Auslösern, Vergleichswerten, Geräteaktionen und Gültigkeitszeiten lesen. Beispielsweise lassen sich Strom- oder Leistungsbedingungen des TVs und das Schalten einer Hintergrundbeleuchtung nachvollziehen. Fehlgeschlagene Abfragen werden angezeigt. Die Ansicht ist schreibgeschützt; Bearbeiten oder Erstellen von Automationen und die KI-Funktionen der iOS-App sind weiterhin nicht implementiert.
+
+Szenen verwenden bevorzugt die dokumentierte v1.1-Abfrage mit v1.0-Rückfall. JSON-kodierte Aktionsparameter und eindeutige numerische Datenpunkte aus dem Gerätemodell werden erkannt. Nicht zugeordnete Originalaktionen erhalten keine erfundene Gerätezuordnung und wählen im Editor kein zufälliges Gerät vor. Die Bedeutung des im Benutzerkonto beobachteten `lightBase`-Formats ist noch nicht bestätigt. Unter der Szene kann ein **Szenenbericht** mit Aktionsstruktur und Geräteschemata gespeichert werden; er enthält keine Kontoanmeldung oder Netzadressen. Erst dieser Bericht ermöglicht bei weiterhin unbekannten Aktionen eine konkrete Zuordnung.
+
+`switch_type_1/2` und `single_click` werden als **Tastenereignis 1/2** und **Einfacher Tastendruck** übersetzt. Die Seitenleiste bemisst sich nach dem längsten Buttontext. Der zusätzliche Fokusrahmen in Tabellen entfällt bei erhaltener Zeilenauswahl und Tastaturbedienung. 66 lokale Tests bestanden; Automationsdarstellung und Szenenauswahl mit Qt geprüft. Echte Kontoantworten bleiben auf dem Ziel-PC zu bestätigen.
 
 ## Direkten Cloudzugriff einrichten
 

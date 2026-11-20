@@ -10,7 +10,7 @@ import sys
 import time
 from urllib.parse import urlparse
 
-VERSION = '0.2.0'
+VERSION = '0.2.1'
 RUNTIME = 'win64-py313-qt683-v1'
 # Public Tuya device-sharing registration also used by Home Assistant.
 CLIENT_ID = 'HA_3y9q4ak7g4ephrvke'
@@ -61,6 +61,12 @@ LABELS.update({'countdown_set':'Ausschaltzeit auswählen','countdown_left':'Verb
  'light_switch':'Beleuchtung','uv':'UV-Licht','uv_switch':'UV-Licht','ionizer':'Ionisierung',
  'filter_life':'Verbleibende Filterlebensdauer','filter_status':'Filterzustand',
  'battery_low':'Batterie schwach','battery_percent':'Batteriestand','battery_voltage':'Batteriespannung'})
+LABELS.update({'switch_type':'Tastenereignis','cur_current':'Stromaufnahme','cur_power':'Leistungsaufnahme',
+ 'add_ele':'Energieverbrauch','total_forward_energy':'Gesamtenergieverbrauch','cur_voltage':'Netzspannung',
+ 'power':'Leistung','voltage':'Spannung','current':'Stromaufnahme','electricity':'Energieverbrauch'})
+ENUMS.update({'single_click':'Einfacher Tastendruck','single':'Einfacher Tastendruck',
+ 'double':'Doppelter Tastendruck','long':'Langer Tastendruck','long_click':'Langer Tastendruck',
+ 'press':'Gedrückt','press_up':'Losgelassen','press_down':'Gedrückt'})
 
 def enum_label(value,code=None):
     text=str(value)

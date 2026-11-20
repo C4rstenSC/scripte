@@ -54,7 +54,7 @@ def scene_rows(scene,devices):
     for action in scene.get('actions',[]):
         if not isinstance(action,dict):rows.append(('Weitere Aktion','Unbekannter Aktionstyp','Keine Zuordnung möglich',None));continue
         if '_raw' in action:
-            raw=action['_raw'];parts=scene_rows({'actions':[raw]},devices);rows.append(('Originalaktion',str(raw.get('action_executor','Szenenaktion')), ' · '.join(x[0]+': '+x[1]+' = '+x[2] for x in parts),None));continue
+            rows.extend((name,title,value,None) for name,title,value,_ in scene_rows({'actions':[action['_raw']]},devices));continue
         dev_id=action.get('device') or action.get('device_id') or action.get('devId') or action.get('entityId') or action.get('entity_id')
         d=device_map.get(str(dev_id));name=d['name'] if d else action.get('entityName') or action.get('name') or 'Nicht zugeordnetes Gerät'
         pairs=[]
@@ -62,14 +62,73 @@ def scene_rows(scene,devices):
         elif isinstance(action.get('commands'),list):pairs=[(str(x['code']),x['value']) for x in action['commands'] if isinstance(x,dict) and 'code' in x and 'value' in x]
         else:
             props=action.get('executorProperty') or action.get('executor_property') or {}
-            if isinstance(props,dict):pairs=list(props.items())
-        if not pairs:rows.append((str(name),'Weitere Szenenaktion','Details nicht als Gerätebefehl bereitgestellt',None));continue
+            if isinstance(props,str):
+                try:props=json.loads(props)
+                except ValueError:props={}
+            if isinstance(props,dict):
+                if 'function_code' in props and 'function_value' in props:pairs=[(str(props['function_code']),props['function_value'])]
+                else:pairs=list(props.items())
+        executor=action.get('action_executor',action.get('actionExecutor',''))
+        if executor=='delay':
+            rows.append(('Wartezeit','Verzögerung',' · '.join(str(v)+' '+{'hours':'Stunden','minutes':'Minuten','seconds':'Sekunden','delay_seconds':'Sekunden'}.get(c,c) for c,v in pairs),None));continue
+        if executor in ('ruleEnable','ruleDisable','ruleTrigger'):
+            rows.append((action.get('entityName') or 'Verknüpfte Szene',{'ruleEnable':'Automation aktivieren','ruleDisable':'Automation deaktivieren','ruleTrigger':'Szene ausführen'}[executor],'',None));continue
+        if not pairs:
+            rows.append((str(name) if d or name!='Nicht zugeordnetes Gerät' else 'Gerät noch nicht erkannt','Aktion noch nicht lesbar','Die Zuordnung dieser Originalaktion muss geprüft werden.',None));continue
         for code,value in pairs:
+            if d and code.isdigit():
+                matches=[key for key,spec in {**d.get('ranges',{}),**d['functions']}.items() if str(spec.get('dp_id',spec.get('dpId','')))==code]
+                if len(matches)==1:code=matches[0]
             spec=(d['functions'].get(code) or d['ranges'].get(code)) if d else None
-            mapped={'device':d['id'],'code':code,'value':value} if d and code in d['functions'] else None
+            mapped={'device':d['id'],'code':code,'value':value} if d and code in d['functions'] and executor in ('','dpIssue','device_issue') else None
             if code.isdigit():
                 # Do not guess numeric DP meaning or make an executable copy.
                 title='Gerätedatenpunkt '+code
             else:title=label(code,spec)
             rows.append((str(name),title,fmt(value,spec),mapped))
     return rows
+
+def condition_rows(rule,devices):
+    device_map={d['id']:d for d in devices};rows=[]
+    operators={'==':'ist gleich','>':'ist größer als','<':'ist kleiner als','>=':'ist mindestens','<=':'ist höchstens','!=':'ist ungleich'}
+    for c in rule.get('conditions',[]):
+        display=c.get('display') or {}
+        if isinstance(display,str):
+            try:display=json.loads(display)
+            except ValueError:display={}
+        if not isinstance(display,dict):display={}
+        d=device_map.get(str(c.get('entity_id',c.get('entityId',''))));code=str(display.get('code',''));value=display.get('value');spec=(d.get('ranges',{}).get(code) or d['functions'].get(code)) if d else None
+        if d and code:rows.append((d['name'],label(code,spec),operators.get(display.get('operator'),'Bedingung')+' '+fmt(value,spec)))
+        elif 'time' in display:rows.append(('Zeitplan','Uhrzeit',str(display['time'])+(' · '+str(display['timezone_id']) if display.get('timezone_id') else '')))
+        elif code:rows.append((c.get('entity_name') or 'Umgebungsbedingung',label(code),operators.get(display.get('operator'),'Bedingung')+' '+str(value)))
+        else:rows.append(('Auslöser noch nicht erkannt','Bedingung','Die Originalbedingung muss geprüft werden.'))
+    return rows
+
+def precondition_rows(rule):
+    rows=[];days=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag']
+    for pre in rule.get('preconditions',[]):
+        display=pre.get('display') or {}
+        if not isinstance(display,dict):continue
+        if pre.get('cond_type')=='timeCheck':
+            text='Gültig von '+str(display.get('start',''))+' bis '+str(display.get('end',''))
+            loops=str(display.get('loops',''))
+            if len(loops)==7:
+                enabled=[day for day,bit in zip(days,loops) if bit=='1']
+                if enabled:text+=' · '+', '.join(enabled)
+            if display.get('timezone_id'):text+=' · Zeitzone: '+str(display['timezone_id'])
+            rows.append(text)
+        else:rows.append('Zusätzliche Gültigkeitsbedingung noch nicht zugeordnet.')
+    return rows
+
+def scene_report(scene,devices):
+    # Deliberately excludes account config, network addresses and device status.
+    def clean(value):
+        if isinstance(value,dict):return {k:clean(v) for k,v in value.items() if not any(s in k.lower() for s in ('secret','token','password','local_key','access_id','uid','email','latitude','longitude'))}
+        if isinstance(value,list):return [clean(v) for v in value]
+        if isinstance(value,str):
+            try:decoded=json.loads(value)
+            except (ValueError,TypeError):decoded=None
+            if isinstance(decoded,(dict,list)):return clean(decoded)
+            if value.startswith(('http://','https://')):return '[Adresse ausgeblendet]'
+        return value
+    return clean({'schema':1,'scene':{k:scene[k] for k in ('id','name','actions','conditions','match_type','condition_rule','preconditions') if k in scene},'devices':[{'id':d['id'],'name':d['name'],'functions':d['functions'],'ranges':d.get('ranges',{})} for d in devices if d['home']==scene['home']]})

@@ -70,7 +70,7 @@ class DirectCloud:
         return len(homes)
     def load(self):
         homes=items(self.api.request('GET',f'/v1.0/users/{part(self.config["uid"])}/homes'),'homes')
-        hs=[];rs=[];ds=[];ss=[];warnings=[]
+        hs=[];rs=[];ds=[];ss=[];automations=[];automation_errors=[];warnings=[]
         for h in homes:
             hid=str(h.get('home_id',h.get('id','')));part(hid);hs.append({'id':hid,'name':h.get('name','Zuhause')})
             room_list=items(self.api.request('GET',f'/v1.0/homes/{part(hid)}/rooms'),'rooms')
@@ -100,14 +100,28 @@ class DirectCloud:
                 except Exception as e:warnings.append(device['name']+': Status nicht aktuell ('+str(e)+')')
                 ds.append(device)
             try:
-                scenes=items(self.api.request('GET',f'/v1.0/homes/{part(hid)}/scenes'),'scenes')
+                scenes=self.read_scenes(hid)
                 for s in scenes:
                     sid=str(s.get('scene_id',s.get('id','')))
                     ss.append({'id':sid,'name':s.get('name','Szene'),'home':hid,'enabled':s.get('enabled',True),'source':'project',
                                'actions':copy.deepcopy(s.get('actions',[])),'original':copy.deepcopy(s)})
             except Exception as e:warnings.append('Szenen: '+str(e))
+            try:
+                for rule in items(self.api.request('GET',f'/v1.1/homes/{part(hid)}/automations'),'automations'):
+                    aid=str(rule.get('automation_id',rule.get('id','')));part(aid)
+                    if not isinstance(rule.get('conditions'),list) or not isinstance(rule.get('actions'),list):
+                        rule=self.api.request('GET',f'/v1.0/homes/{part(hid)}/automations/{part(aid)}')
+                    automations.append({'id':aid,'name':rule.get('name','Automation'),'home':hid,'source':'automation',
+                        'enabled':rule.get('enabled'),'conditions':copy.deepcopy(rule.get('conditions',[])),
+                        'actions':copy.deepcopy(rule.get('actions',[])),'match_type':rule.get('match_type'),'condition_rule':rule.get('condition_rule'),
+                        'preconditions':copy.deepcopy(rule.get('preconditions',[]))})
+            except Exception as e:
+                message='Automationen konnten nicht vollständig geladen werden: '+str(e);automation_errors.append(message);warnings.append(message)
         self.homes,self.rooms,self.devices,self.scenes,self.warnings=hs,rs,ds,ss,warnings
-        return {'homes':hs,'rooms':rs,'devices':copy.deepcopy(ds),'scenes':ss,'room_failed':0,'scene_error':False,'warnings':warnings,'direct':True}
+        return {'homes':hs,'rooms':rs,'devices':copy.deepcopy(ds),'scenes':ss,'automations':automations,'automation_errors':automation_errors,'room_failed':0,'scene_error':False,'warnings':warnings,'direct':True}
+    def read_scenes(self,home):
+        try:return items(self.api.request('GET',f'/v1.1/homes/{part(home)}/scenes'),'scenes')
+        except RuntimeError:return items(self.api.request('GET',f'/v1.0/homes/{part(home)}/scenes'),'scenes')
     def read_status(self,d):
         if d.get('raw_control'):
             r=self.api.request('GET',f'/v2.0/cloud/thing/{part(d["id"])}/shadow/properties')
@@ -171,7 +185,7 @@ class DirectCloud:
         device_map={d['id']:d for d in self.devices if d['home']==home};cloud_actions=[]
         if original:
             sid=str(original.get('scene_id',original.get('id','')))
-            latest=next((x for x in items(self.api.request('GET',f'/v1.0/homes/{part(home)}/scenes'),'scenes') if str(x.get('scene_id',x.get('id','')))==sid),None)
+            latest=next((x for x in self.read_scenes(home) if str(x.get('scene_id',x.get('id','')))==sid),None)
             if not latest or any(latest.get(k)!=original.get(k) for k in ('name','actions','background')):raise RuntimeError('Die Szene wurde inzwischen geändert oder entfernt. Bitte neu laden, bevor du Änderungen speicherst.')
         for a in actions:
             if '_raw' in a:
@@ -219,6 +233,7 @@ def parse_model(result):
             typ={'bool':'Boolean','value':'Integer','enum':'Enum','string':'String','json':'Json'}.get(spec.get('type'))
             if not typ:continue
             obj={'code':code,'name':p.get('name',code),'type':typ,'values':{k:v for k,v in spec.items() if k!='type'}}
+            if p.get('abilityId',p.get('dpId',p.get('id'))) is not None:obj['dp_id']=p.get('abilityId',p.get('dpId',p.get('id')))
             ranges[code]=obj
             if p.get('accessMode') in ('rw','wr','write','readWrite'):functions[code]=copy.deepcopy(obj)
     if not ranges:raise ValueError('Tuya liefert keine Eigenschaften im Gerätemodell.')

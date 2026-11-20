@@ -15,7 +15,8 @@ from PySide6.QtWidgets import (QApplication,QMainWindow,QWidget,QVBoxLayout,QHBo
  QDoubleSpinBox,QSpinBox,QDialog,QCheckBox,QMessageBox,QFrame,QSizePolicy,QTabBar,QHeaderView,QPlainTextEdit,QFileDialog)
 from core import VERSION, Cloud, label, fmt, meta, ENUMS, validate, climate, TEMPERATURE_CODES, HUMIDITY_CODES, is_cover, cover_position, cover_text, enum_label, BATTERY_CODES, battery_text, probe_summary
 import updates
-from desktop_scenes import SceneStore,execute as execute_desktop_scene,scene_rows
+from ui_widgets import CleanSelectionDelegate
+from desktop_scenes import SceneStore,execute as execute_desktop_scene,scene_rows,condition_rows,precondition_rows,scene_report
 from scene_editor import SceneEditor,question_de
 from cloud_ui import CloudSetupDialog,DeviceAdminDialog,RoomAdminDialog,CloudSceneStore
 
@@ -54,12 +55,13 @@ class Main(QMainWindow):
         nav=QFrame(); nav.setObjectName('nav'); nav.setFixedWidth(205); nl=QVBoxLayout(nav); nl.setContentsMargins(18,26,18,20)
         brand=QLabel('Smart Life\nDesktop'); brand.setStyleSheet('font-size:23pt;font-weight:bold;'); nl.addWidget(brand)
         nl.addWidget(QLabel('Dein Zuhause im Blick')); nl.addSpacing(30); self.buttons={}
-        for name in ['Übersicht','Räume','Geräte','Szenen']:
+        for name in ['Übersicht','Räume','Geräte','Szenen','Automationen']:
             b=QPushButton(name); b.setCheckable(True); b.clicked.connect(lambda checked=False,n=name:self.navigate(n)); nl.addWidget(b); self.buttons[name]=b
         nl.addStretch(); login=QPushButton('Konto / Anmeldung'); login.clicked.connect(self.login); nl.addWidget(login)
         direct_button=QPushButton('Direkter Cloudzugriff');direct_button.clicked.connect(self.setup_direct);nl.addWidget(direct_button)
         self.update_btn=QPushButton('Update'); self.update_btn.clicked.connect(lambda:self.check_update(True)); nl.addWidget(self.update_btn)
         self.update_note=QLabel(''); self.update_note.setWordWrap(True);self.update_note.setMinimumHeight(50);self.update_note.setStyleSheet('color:#e2e4e7;'); nl.addWidget(self.update_note); nl.addWidget(QLabel('Version '+VERSION)); layout.addWidget(nav)
+        nav.setFixedWidth(max(260,direct_button.sizeHint().width()+36,login.sizeHint().width()+36))
         body=QWidget(); bl=QVBoxLayout(body); bl.setContentsMargins(24,22,24,18); bl.setSpacing(16); layout.addWidget(body,1)
         top=QHBoxLayout(); self.title=QLabel('Dein Zuhause'); self.title.setObjectName('title'); top.addWidget(self.title); top.addStretch(); self.account=QLabel('Smart Life · nicht verbunden'); top.addWidget(self.account); bl.addLayout(top)
         self.status=QLabel('Bitte mit dem Benutzercode aus deiner Smart-Life-App anmelden.'); self.status.setWordWrap(True); bl.addWidget(self.status)
@@ -75,6 +77,7 @@ class Main(QMainWindow):
         self.summary=QLabel(''); bl.addWidget(self.summary)
         self.split=QSplitter(); bl.addWidget(self.split,1)
         self.tree=QTreeWidget(); self.tree.setAlternatingRowColors(True); self.tree.setRootIsDecorated(False); self.tree.setSortingEnabled(True)
+        self.tree.setItemDelegate(CleanSelectionDelegate(self.tree));self.climate_tree.setItemDelegate(CleanSelectionDelegate(self.climate_tree))
         self.tree.itemSelectionChanged.connect(self.selected); self.split.addWidget(self.tree)
         self.detail=QFrame(); self.detail.setObjectName('detail'); self.dl=QVBoxLayout(self.detail); self.dl.setContentsMargins(18,18,18,18)
         scroll=QScrollArea(); scroll.setWidgetResizable(True); scroll.setFrameShape(QFrame.NoFrame); scroll.setWidget(self.detail); scroll.setMinimumWidth(300); self.split.addWidget(scroll); self.split.setSizes([740,380])
@@ -180,15 +183,19 @@ class Main(QMainWindow):
         if overview:
             self.render_climate();return
         selected=self.detail_id; self.tree.blockSignals(True);self.tree.clear()
-        if self.page=='Szenen':
-            self.tree.setColumnCount(3);self.tree.setHeaderLabels(['Szene','Speicherort','Status'])
+        if self.page in ('Szenen','Automationen'):
+            automation=self.page=='Automationen'
+            self.tree.setColumnCount(3);self.tree.setHeaderLabels(['Automation' if automation else 'Szene','Speicherort','Status'])
             try:local=self.scene_store.all()
             except RuntimeError as e:local=[];self.status.setText(str(e))
-            for s in self.data['scenes']+local:
+            for s in (self.data.get('automations',[]) if automation else self.data['scenes']+local):
                 if s['home']==self.home.currentData() and self.search.text().casefold() in s['name'].casefold():
-                    it=QTreeWidgetItem([s['name'],'Dieser PC' if s.get('source')=='desktop' else ('Smart Life · Cloudzugriff' if s.get('source')=='project' else 'Smart Life'),'Verfügbar' if s['enabled'] else 'Deaktiviert']);it.setData(0,Qt.UserRole,s);self.tree.addTopLevelItem(it)
+                    state=('Aktiviert' if s['enabled'] is True else 'Deaktiviert' if s['enabled'] is False else '') if automation else ('Verfügbar' if s['enabled'] else 'Deaktiviert')
+                    it=QTreeWidgetItem([s['name'],'Dieser PC' if s.get('source')=='desktop' else 'Smart Life',state]);it.setData(0,Qt.UserRole,s);self.tree.addTopLevelItem(it)
                     if s['id']==selected:it.setSelected(True)
-            self.summary.setText(f'{self.tree.topLevelItemCount()} Szenen');self.tree.setColumnWidth(0,380)
+            self.summary.setText(f'{self.tree.topLevelItemCount()} '+('Automationen' if automation else 'Szenen'));self.tree.setColumnWidth(0,380)
+            if automation and not self.cloud.direct and not self.demo:self.summary.setText('Automationen erfordern den direkten Cloudzugriff.')
+            elif automation and self.data.get('automation_errors'):self.summary.setText(' · '.join(self.data['automation_errors']))
         else:
             self.tree.setColumnCount(6);self.tree.setHeaderLabels(['Gerät','Raum','IP-Adresse (Tuya)','Verbindung','Batteriestatus','Werte / Zustand'])
             ds=self.visible_devices()
@@ -203,7 +210,7 @@ class Main(QMainWindow):
             for col,width in enumerate([230,160,180,105,135,440]):self.tree.setColumnWidth(col,width)
             if self.page=='Räume':self.tree.sortItems(1,Qt.AscendingOrder)
         self.tree.blockSignals(False)
-        if self.tree.selectedItems() and self.page!='Szenen' and hasattr(self,'values_widget'):
+        if self.tree.selectedItems() and self.page not in ('Szenen','Automationen') and hasattr(self,'values_widget'):
             d=self.tree.selectedItems()[0].data(0,Qt.UserRole)
             if is_cover(d) and hasattr(self,'cover_label'):
                 try:self.cover_label.setText(cover_text(d))
@@ -243,7 +250,7 @@ class Main(QMainWindow):
         if not rows:return
         d=rows[0].data(0,Qt.UserRole);self.clear_detail()
         title=QLabel(d['name']);title.setStyleSheet('font-size:16pt;font-weight:bold;');title.setWordWrap(True);self.dl.addWidget(title)
-        if self.page=='Szenen':
+        if self.page in ('Szenen','Automationen'):
             self.detail_id=d['id'];self.show_scene_details(d);return
         self.detail_id=d['id'];self.live_buttons=[];
         if is_cover(d) and (cover_position(d) is not None or any(c in d['status'] for c in ('percent_control','percent_control_1'))):
@@ -289,6 +296,20 @@ class Main(QMainWindow):
         self.values_heading=QLabel('Gemeldete Werte');self.values_heading.setVisible(bool(reported));self.dl.addWidget(self.values_heading)
         self.values_widget=QLabel(reported);self.values_widget.setVisible(bool(reported));self.values_widget.setWordWrap(True);self.values_widget.setTextInteractionFlags(Qt.TextSelectableByMouse);self.dl.addWidget(self.values_widget);self.dl.addStretch()
     def show_scene_details(self,s):
+        if s.get('source')=='automation':
+            self.dl.addWidget(QLabel('Wenn – Auslöser und Bedingungen'))
+            self.dl.addWidget(QLabel('Alle Bedingungen müssen zutreffen' if s.get('match_type') in (2,'2','and') else 'Mindestens eine Bedingung muss zutreffen' if s.get('match_type') in (1,'1','or') else ''))
+            if s.get('match_type') in (3,'3'):
+                rule=QLabel('Eigene Bedingungsverknüpfung: '+str(s.get('condition_rule') or 'noch nicht geliefert'));rule.setWordWrap(True);self.dl.addWidget(rule)
+            for name,function,value in condition_rows(s,self.data['devices']):
+                row=QLabel(name+'\n'+function+': '+value);row.setWordWrap(True);self.dl.addWidget(row)
+            for text in precondition_rows(s):
+                pre=QLabel(text);pre.setWordWrap(True);self.dl.addWidget(pre)
+            self.dl.addWidget(QLabel('Dann – Geräteaktionen'))
+            for name,function,value,_ in scene_rows(s,self.data['devices']):
+                row=QLabel(name+'\n'+function+': '+value);row.setWordWrap(True);self.dl.addWidget(row)
+            info=QLabel('Aus deinem Smart-Life-Konto gelesen. Diese Ansicht verändert die Automation nicht.');info.setWordWrap(True);self.dl.addWidget(info)
+            self.add_scene_report_button(s);self.dl.addStretch();return
         own=s.get('source')=='desktop'
         note=QLabel('Desktop-Szene · auf diesem PC gespeichert' if own else ('Smart-Life-Szene · direkt im Konto bearbeitbar' if s.get('source')=='project' else 'Smart-Life-Szene · über die QR-Anbindung schreibgeschützt'));note.setWordWrap(True);self.dl.addWidget(note)
         rows=scene_rows(s,self.data['devices'])
@@ -298,11 +319,19 @@ class Main(QMainWindow):
             detail=QLabel(name+'\n'+function+': '+value);detail.setWordWrap(True);detail.setStyleSheet('padding:10px 0;border-bottom:1px solid #abb0b7;');self.dl.addWidget(detail)
         run=QPushButton('Szene ausführen');run.setEnabled(s['enabled'] and not self.demo);run.clicked.connect(lambda:self.scene(s,run));self.dl.addWidget(run)
         edit=QPushButton('Szene bearbeiten' if own or s.get('source')=='project' else 'Cloudzugriff für Bearbeitung einrichten');edit.setEnabled(True);edit.clicked.connect(lambda:self.edit_scene(s));self.dl.addWidget(edit)
+        if not own:self.add_scene_report_button(s)
         if not own and s.get('source')!='project':
             why=QLabel('Änderungen an dieser Smart-Life-Szene erfolgen in der Smart-Life-App. Eine bearbeitbare Desktop-Kopie ist möglich, wenn alle Geräteaktionen eindeutig zugeordnet werden können.');why.setWordWrap(True);self.dl.addWidget(why)
         elif own:
             remove=QPushButton('Desktop-Szene löschen');remove.clicked.connect(lambda:self.delete_scene(s));self.dl.addWidget(remove)
         self.dl.addStretch()
+    def add_scene_report_button(self,s):
+        button=QPushButton('Szenenbericht speichern');button.clicked.connect(lambda:self.export_scene_report(s));self.dl.addWidget(button)
+    def export_scene_report(self,s):
+        filename,_=QFileDialog.getSaveFileName(self,'Szenenbericht speichern','SmartLife-Szenenbericht.json','JSON-Datei (*.json)')
+        if not filename:return
+        try:Path(filename).write_text(json.dumps(scene_report(s,self.data['devices']),ensure_ascii=False,indent=2),encoding='utf-8')
+        except OSError as e:self.error(e)
     def setup_direct(self):
         if self.login_dialog:self.login_dialog.reject()
         dlg=CloudSetupDialog(self)

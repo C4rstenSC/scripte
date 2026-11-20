@@ -1,11 +1,11 @@
-SMART LIFE DESKTOP 0.2.0 – WINDOWS
+SMART LIFE DESKTOP 0.2.1 – WINDOWS
 
 UPDATE BESTEHENDER INSTALLATION
 Im Programm Update anklicken. Die Prüfung erfolgt außerdem beim Start und jede Minute.
 Nur eine neuere Version erscheint rot. Anmeldung und Laufzeit bleiben erhalten.
 
 ERSTE INSTALLATION ODER BLOCKIERTER ALTER UPDATE-BUTTON
-SmartLife-Desktop-0.2.0-Setup.zip vollständig entpacken.
+SmartLife-Desktop-0.2.1-Setup.zip vollständig entpacken.
 Installieren.cmd starten. Die erforderliche Laufzeit wird bei Bedarf heruntergeladen.
 
 DIREKTEN ZUGRIFF EINRICHTEN
@@ -52,8 +52,24 @@ Das Mac-Paket ist noch nicht veröffentlicht. Persönliche Zugangsdaten sind bis
 nicht in diesem Repository gespeichert.
 
 PRÜFSTAND
-55 lokale Tests bestanden. Windows-Installation und echter Projektzugriff müssen
+66 lokale Tests bestanden. Windows-Installation und echter Projektzugriff müssen
 auf dem Ziel-PC bestätigt werden. Keine Zusage vollständiger iOS-Funktionsgleichheit.
 Windows speichert den Zugang geschützt mit DPAPI für den aktuellen Benutzer.
 SmartScreen-Rückfragen können ohne Herausgebersignatur weiterhin auftreten.
 Details, Quellen und Grenzen siehe README.md.
+
+NEU IN 0.2.1
+Links unter „Automationen“ eine Regel auswählen. Rechts stehen Auslöser und
+Bedingungen sowie die zugehörigen Geräteaktionen und Gültigkeitszeiten.
+Diese Ansicht liest die vorhandenen Regeln; Automationsbearbeitung und KI
+sind noch nicht eingebaut. Die Regeln laufen weiterhin bei Smart Life.
+
+Szenen: neuere Abfrage, JSON-Aktionsparameter und eindeutige Datenpunktzuordnung.
+Wenn eine Originalaktion weiterhin nicht erkannt wird: Szene auswählen →
+„Szenenbericht speichern“. Diese JSON-Datei zur Analyse weitergeben.
+Der Bericht enthält Szenen- und Gerätenamen, Aktionsstruktur und Geräteschemata,
+keine Kontoschlüssel oder Netzwerkadressen. Die Bedeutung der gemeldeten
+lightBase-Aktion ist noch nicht bestätigt; es wird kein Gerät geraten.
+
+Tastenereignisse und Einfacher Tastendruck auf Deutsch. Breitere Seitenleiste.
+Zusätzlichen Tabellen-Fokusrahmen entfernt, Tastaturbedienung bleibt erhalten.
