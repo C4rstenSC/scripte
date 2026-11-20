@@ -9,7 +9,7 @@ import sys
 import time
 from urllib.parse import urlparse
 
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 RUNTIME = 'win64-py313-qt683-v1'
 # Public Tuya device-sharing registration also used by Home Assistant.
 CLIENT_ID = 'HA_3y9q4ak7g4ephrvke'
@@ -182,7 +182,7 @@ class Cloud:
     def snapshot(d,home,room=None):
         return {'id':d.id,'name':d.name,'home':str(home),'room_id':str(room.id) if room else '',
                 'room':room.name if room else '', 'room_order':getattr(room,'display_order',0) if room else 0,
-                'online':bool(d.online),'category':getattr(d,'category',''),
+                'online':bool(d.online),'category':getattr(d,'category',''), 'ip':getattr(d,'ip','') or '', 'sub':bool(getattr(d,'sub',False)),
                 'status':copy.deepcopy(d.status),'functions':{k:vars(v).copy() for k,v in d.function.items()},
                 'ranges':{k:vars(v).copy() for k,v in d.status_range.items()}}
     def refresh(self):
@@ -196,7 +196,7 @@ class Cloud:
                 if isinstance(status,list): status={x['code']:x['value'] for x in status if 'code' in x and 'value' in x}
                 for d in self.devices:
                     if d['id']==item['id']:
-                        d['status']=status; d['online']=bool(item.get('online',d['online'])); d['name']=item.get('name',d['name'])
+                        d['ip']=item.get('ip',d.get('ip','')) or ''; d['sub']=bool(item.get('sub',d.get('sub',False))); d['status']=status; d['online']=bool(item.get('online',d['online'])); d['name']=item.get('name',d['name'])
         return copy.deepcopy(self.devices)
     def command(self,device_id,code,value):
         d=next((d for d in self.devices if d['id']==device_id),None)
@@ -224,3 +224,40 @@ class Cloud:
             if self.manager.mq: self.manager.mq.stop()
             self.manager.customer_api.session.close()
         self.manager=None
+
+
+TEMPERATURE_CODES=('va_temperature','temp_current','temperature','temp_current_f','temp_current_external')
+HUMIDITY_CODES=('va_humidity','humidity_value','humidity','humidity_current')
+def climate(d,codes,unit):
+    parts=[]
+    for code in codes:
+        if code not in d['status']:continue
+        spec=d['ranges'].get(code) or d['functions'].get(code) or {}
+        value=fmt(d['status'][code],spec)
+        if not meta(spec).get('unit'):value+=' '+('°F' if code.endswith('_f') else unit)
+        parts.append(value)
+    return ' / '.join(parts) if parts else '—'
+
+def is_cover(d):
+    return d.get('category') in ('cl','clkg','jdcljqr') or any(c in d['functions'] for c in ('percent_control','control','mach_operate')) or any(c in d['status'] for c in ('percent_state','percent_state_1'))
+
+def cover_position(d):
+    # Actual position feedback only. percent_control is a target on many devices.
+    for c in ('percent_state','percent_state_1','position','position_state','curtain_position'):
+        v=d['status'].get(c)
+        if isinstance(v,(int,float)) and not isinstance(v,bool):
+            spec=d['ranges'].get(c) or d['functions'].get(c) or {};m=meta(spec)
+            lo=float(m.get('min',0));hi=float(m.get('max',100))
+            if hi<=lo:return None
+            # Tuya cover percentage uses 0 closed, 100 open (same convention as HA).
+            return max(0,min(100,round((v-lo)*100/(hi-lo))))
+    return None
+
+def cover_text(d):
+    v=cover_position(d)
+    if v is not None:
+        return 'Geschlossen · 0 % offen' if v==0 else ('Vollständig offen · 100 % offen' if v==100 else f'{v} % offen')
+    target=next((d['status'][c] for c in ('percent_control','percent_control_1') if c in d['status']),None)
+    text='Position nicht zurückgemeldet'
+    if target is not None:text+=' · gemeldeter Sollwert: '+str(target)+' %'
+    return text

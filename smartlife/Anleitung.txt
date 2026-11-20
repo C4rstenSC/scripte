@@ -1,4 +1,13 @@
-SMART LIFE DESKTOP 0.1.0 – WINDOWS-TESTVERSION
+NEU IN 0.1.1
+Uebersicht: nur Temperatur und Luftfeuchte, nach Raum aufgelistet.
+Raeume: Alle Raeume und einzelne Raeume als Tabs; keine Auswahlfelder oben.
+Geraete: IP-Adresse wie von Tuya bereitgestellt. Zigbee-Untergeraete haben
+keine eigene IP; nicht gelieferte Adressen werden nicht erfunden.
+Rollladen: gemeldete Istposition und Sollposition getrennt.
+Oeffnen/Stoppen/Schliessen und Positionswahl laut freigegebenen Funktionen.
+23 lokale Tests bestanden; konkrete Rollladen-Rueckmeldung noch live pruefen.
+
+SMART LIFE DESKTOP 0.1.1 – WINDOWS-TESTVERSION
 
 1. ZIP vollstaendig mit „Alle extrahieren“ entpacken.
 2. Installieren.cmd doppelt anklicken. Keine Administratorrechte erforderlich.

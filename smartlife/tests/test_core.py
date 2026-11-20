@@ -1,10 +1,15 @@
 import sys,unittest,tempfile,zipfile
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'app'))
-from core import fmt,validate,safe_endpoint,Cloud
+from core import fmt,validate,safe_endpoint,Cloud,cover_position,cover_text,climate,TEMPERATURE_CODES
 from updates import extract,version,validate_url
 from demo import sample
 class CoreTests(unittest.TestCase):
+ def test_cover_actual_position(self):
+  d=sample()['devices'][3];self.assertEqual(cover_position(d),75)
+  d['status']={'percent_control':25};self.assertIsNone(cover_position(d));self.assertIn('Sollwert',cover_text(d))
+  d['status']={'percent_state':0};self.assertIn('Geschlossen',cover_text(d))
+  d['status']={'percent_state':100};self.assertIn('Vollständig offen',cover_text(d))
  def test_scaled_temperature(self):self.assertEqual(fmt(223,{'values':{'scale':1,'unit':'°C'}}),'22,3 °C')
  def test_negative(self):self.assertEqual(fmt(-42,{'values':'{"scale":1}'}),'-4,2')
  def test_false(self):self.assertEqual(fmt(False),'Aus')

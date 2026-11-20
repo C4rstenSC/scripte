@@ -1,8 +1,8 @@
 # Smart Life Desktop
 
-Windows test release 0.1.0 for temperature sensors, switches, dimmers, blinds and air purifiers. Reads Smart Life home membership and per-device room assignments. Capability-driven controls, read-only sensor values, scenes and a Windows update button.
+Windows test release 0.1.1 for temperature sensors, switches, dimmers, blinds and air purifiers. Reads Smart Life home membership and per-device room assignments. Capability-driven controls, read-only sensor values, scenes and a Windows update button.
 
-Download: [Windows setup](downloads/SmartLife-Desktop-0.1.0-Setup.zip). Extract the ZIP and run `Installieren.cmd`. The small setup downloads pinned, hash-verified official Python/PyPI dependencies once. A fully bundled Windows package is supplied separately in the conversation.
+Download: [Windows setup](downloads/SmartLife-Desktop-0.1.1-Setup.zip). Extract the ZIP and run `Installieren.cmd`. The small setup downloads pinned, hash-verified official Python/PyPI dependencies once. A fully bundled Windows package is supplied separately in the conversation.
 
 ## Authentication
 
@@ -33,3 +33,6 @@ For a release, bump `app/core.py` VERSION, run tests, package `app/` into a vers
 ## Third-party notices
 
 Tuya device-sharing SDK: MIT, https://github.com/tuya/tuya-device-sharing-sdk . Public registration reference: https://github.com/home-assistant/core/tree/dev/homeassistant/components/tuya . Python PSF license. PySide6/Qt distributed under LGPLv3/GPLv3 or commercial terms, license notices included in runtime wheel metadata; library binaries remain dynamically replaceable. Other dependencies retain their wheel license metadata. This project does not claim affiliation with Tuya or Home Assistant.
+
+## 0.1.1
+Climate-only overview, room tabs in Rooms, Tuya-reported IP addresses, actual blind position separate from target, short follow-up refreshes after blind commands. 23 local tests pass; live blind feedback is pending.

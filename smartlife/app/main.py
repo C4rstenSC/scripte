@@ -12,12 +12,12 @@ from PySide6.QtCore import Qt, Signal, QObject, QTimer
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtWidgets import (QApplication,QMainWindow,QWidget,QVBoxLayout,QHBoxLayout,QLabel,
  QPushButton,QComboBox,QLineEdit,QTreeWidget,QTreeWidgetItem,QSplitter,QScrollArea,QFormLayout,
- QDoubleSpinBox,QSpinBox,QDialog,QCheckBox,QMessageBox,QFrame,QSizePolicy)
-from core import VERSION, Cloud, label, fmt, meta, ENUMS, validate
+ QDoubleSpinBox,QSpinBox,QDialog,QCheckBox,QMessageBox,QFrame,QSizePolicy,QTabBar,QHeaderView)
+from core import VERSION, Cloud, label, fmt, meta, ENUMS, validate, climate, TEMPERATURE_CODES, HUMIDITY_CODES, is_cover, cover_position, cover_text
 import updates
 
 STYLE='''
-QWidget {font-family: "Segoe UI", "Arial"; font-size: 11pt; color:#24272d;}
+QWidget {font-family: "Segoe UI", "Arial"; font-size: 12pt; color:#24272d;}
 QMainWindow,QDialog {background:#c8cbcf;}
 QFrame#nav {background:#373a3f;} QFrame#nav QLabel {color:#f5f5f5;}
 QPushButton {background:#e2e4e7;border:1px solid #9a9fa6;border-radius:5px;padding:9px 13px;min-height:20px;}
@@ -30,6 +30,9 @@ QTreeWidget {background:#edf0f2;border:0;alternate-background-color:#e0e4e8;}
 QHeaderView::section {background:#505358;color:white;padding:10px;border:0;font-weight:bold;}
 QTreeWidget::item {padding:9px 5px;} QTreeWidget::item:selected {background:#bdcfe0;color:#1d2e3d;}
 QFrame#detail {background:#e1e4e7;border-radius:8px;}
+QTabBar::tab {background:#e2e4e7;color:#24272d;padding:12px 18px;border:1px solid #9a9fa6;margin-right:4px;}
+QTabBar::tab:selected {background:#505b69;color:white;font-weight:bold;}
+QComboBox QAbstractItemView {background:#f3f4f5;color:#24272d;selection-background-color:#505b69;selection-color:white;}
 QLabel#title {font-size:22pt;font-weight:bold;} QLabel#subtitle {color:#626971;}
 '''
 
@@ -54,10 +57,13 @@ class Main(QMainWindow):
         body=QWidget(); bl=QVBoxLayout(body); bl.setContentsMargins(24,22,24,18); bl.setSpacing(16); layout.addWidget(body,1)
         top=QHBoxLayout(); self.title=QLabel('Dein Zuhause'); self.title.setObjectName('title'); top.addWidget(self.title); top.addStretch(); self.account=QLabel('Smart Life · nicht verbunden'); top.addWidget(self.account); bl.addLayout(top)
         self.status=QLabel('Bitte mit dem Benutzercode aus deiner Smart-Life-App anmelden.'); self.status.setWordWrap(True); bl.addWidget(self.status)
-        filters=QHBoxLayout(); self.home=QComboBox(); self.home.setMinimumWidth(200); self.home.currentIndexChanged.connect(self.change_home); filters.addWidget(self.home)
-        self.room=QComboBox(); self.room.setMinimumWidth(190); self.room.currentIndexChanged.connect(self.render); filters.addWidget(self.room)
-        self.search=QLineEdit(); self.search.setPlaceholderText('Geräte suchen …'); self.search.textChanged.connect(self.render); filters.addWidget(self.search,1)
-        self.reload=QPushButton('Neu laden'); self.reload.clicked.connect(self.load); filters.addWidget(self.reload); bl.addLayout(filters)
+        self.home=QComboBox();self.home.hide();self.home.currentIndexChanged.connect(self.change_home)
+        self.room=QComboBox();self.room.hide();self.room.currentIndexChanged.connect(self.render)
+        self.search=QLineEdit();self.search.hide();self.search.textChanged.connect(self.render)
+        self.reload=QPushButton('Neu laden');self.reload.clicked.connect(self.load);top.addWidget(self.reload)
+        self.home_tabs=QTabBar();self.home_tabs.setExpanding(False);self.home_tabs.currentChanged.connect(self.select_home_tab);bl.addWidget(self.home_tabs)
+        self.room_tabs=QTabBar();self.room_tabs.setExpanding(False);self.room_tabs.setUsesScrollButtons(True);self.room_tabs.currentChanged.connect(self.select_room_tab);bl.addWidget(self.room_tabs)
+        self.climate_tree=QTreeWidget();self.climate_tree.setHeaderLabels(['Raum','Sensor','Temperatur','Luftfeuchte','Verbindung']);self.climate_tree.setRootIsDecorated(False);self.climate_tree.setAlternatingRowColors(True);self.climate_tree.setSortingEnabled(True);self.climate_tree.setStyleSheet('QTreeWidget::item {padding:14px 10px;}');self.climate_tree.header().setSectionResizeMode(QHeaderView.ResizeToContents);self.climate_tree.header().setStretchLastSection(True);bl.addWidget(self.climate_tree,1)
         self.summary=QLabel(''); bl.addWidget(self.summary)
         self.split=QSplitter(); bl.addWidget(self.split,1)
         self.tree=QTreeWidget(); self.tree.setAlternatingRowColors(True); self.tree.setRootIsDecorated(False); self.tree.setSortingEnabled(True)
@@ -118,22 +124,37 @@ class Main(QMainWindow):
     def populate_homes(self):
         prior=self.home.currentData(); self.home.blockSignals(True);self.home.clear()
         for h in self.data['homes']:self.home.addItem(h['name'],h['id'])
-        ix=self.home.findData(prior);self.home.setCurrentIndex(max(0,ix));self.home.blockSignals(False);self.change_home()
+        ix=self.home.findData(prior);self.home.setCurrentIndex(max(0,ix));self.home.blockSignals(False)
+        self.home_tabs.blockSignals(True)
+        while self.home_tabs.count():self.home_tabs.removeTab(0)
+        for h in self.data['homes']:self.home_tabs.addTab(h['name'])
+        self.home_tabs.setCurrentIndex(self.home.currentIndex());self.home_tabs.setVisible(len(self.data['homes'])>1);self.home_tabs.blockSignals(False);self.change_home()
     def change_home(self):
         self.title.setText(self.home.currentText() or 'Dein Zuhause'); prior=self.room.currentData();self.room.blockSignals(True);self.room.clear();self.room.addItem('Alle Räume',None)
         rooms={}
         for d in self.data['devices']:
             if d['home']==self.home.currentData() and d['room_id']:rooms[d['room_id']]=(d['room'],d.get('room_order',0))
         for rid,(name,order) in sorted(rooms.items(),key=lambda p:(p[1][1],p[1][0].casefold())):self.room.addItem(name,rid)
-        self.room.addItem('Ohne Raumzuordnung',''); ix=self.room.findData(prior);self.room.setCurrentIndex(max(0,ix));self.room.blockSignals(False);self.render();self.empty_detail()
+        self.room.addItem('Ohne Raumzuordnung',''); ix=self.room.findData(prior);self.room.setCurrentIndex(max(0,ix));self.room.blockSignals(False)
+        self.room_tabs.blockSignals(True)
+        while self.room_tabs.count():self.room_tabs.removeTab(0)
+        for i in range(self.room.count()):self.room_tabs.addTab(self.room.itemText(i))
+        self.room_tabs.setCurrentIndex(self.room.currentIndex());self.room_tabs.blockSignals(False);self.render();self.empty_detail()
+    def select_home_tab(self,index):
+        if index>=0:self.home.setCurrentIndex(index)
+    def select_room_tab(self,index):
+        if index>=0:self.room.setCurrentIndex(index)
     def navigate(self,page):
         self.page=page
         for n,b in self.buttons.items():b.setChecked(n==page)
-        self.room.setVisible(page!='Szenen'); self.render();self.empty_detail()
+        self.room_tabs.setVisible(page=='Räume'); self.render();self.empty_detail()
     def visible_devices(self):
-        home=self.home.currentData(); room=self.room.currentData(); search=self.search.text().casefold()
+        home=self.home.currentData(); room=self.room.currentData() if self.page=='Räume' else None; search=self.search.text().casefold()
         return [d for d in self.data['devices'] if d['home']==home and (room is None or d['room_id']==room) and search in (d['name']+' '+d['room']).casefold()]
     def render(self,*_):
+        overview=self.page=='Übersicht';self.climate_tree.setVisible(overview);self.split.setVisible(not overview)
+        if overview:
+            self.render_climate();return
         selected=self.detail_id; self.tree.blockSignals(True);self.tree.clear()
         if self.page=='Szenen':
             self.tree.setColumnCount(2);self.tree.setHeaderLabels(['Szene','Status'])
@@ -142,19 +163,24 @@ class Main(QMainWindow):
                     it=QTreeWidgetItem([s['name'],'Verfügbar' if s['enabled'] else 'Deaktiviert']);it.setData(0,Qt.UserRole,s);self.tree.addTopLevelItem(it)
             self.summary.setText(f'{self.tree.topLevelItemCount()} Szenen');self.tree.setColumnWidth(0,380)
         else:
-            self.tree.setColumnCount(4);self.tree.setHeaderLabels(['Gerät','Raum','Verbindung','Werte / Zustand'])
+            self.tree.setColumnCount(5);self.tree.setHeaderLabels(['Gerät','Raum','IP-Adresse (Tuya)','Verbindung','Werte / Zustand'])
             ds=self.visible_devices()
             for d in ds:
                 summary=' · '.join(label(k,d['ranges'].get(k))+': '+fmt(v,d['ranges'].get(k)) for k,v in d['status'].items() if k in LABEL_SUMMARY)
                 if not summary:summary=' · '.join(label(k,d['ranges'].get(k))+': '+fmt(v,d['ranges'].get(k)) for k,v in list(d['status'].items())[:3])
-                it=QTreeWidgetItem([d['name'],d['room'] or 'Ohne Raumzuordnung','Online' if d['online'] else 'Offline',summary]);it.setData(0,Qt.UserRole,d);self.tree.addTopLevelItem(it)
+                if is_cover(d):summary=cover_text(d)
+                ip=d.get('ip') or ('Über Gateway' if d.get('sub') else 'Nicht bereitgestellt')
+                it=QTreeWidgetItem([d['name'],d['room'] or 'Ohne Raumzuordnung',ip,'Online' if d['online'] else 'Offline',summary]);it.setData(0,Qt.UserRole,d);self.tree.addTopLevelItem(it)
                 if d['id']==selected:it.setSelected(True)
             self.summary.setText(f'{len(ds)} Geräte · {sum(d["online"] for d in ds)} online · {len(ds)-sum(d["online"] for d in ds)} offline')
-            for col,width in enumerate([230,160,105,440]):self.tree.setColumnWidth(col,width)
+            for col,width in enumerate([230,160,180,105,440]):self.tree.setColumnWidth(col,width)
             if self.page=='Räume':self.tree.sortItems(1,Qt.AscendingOrder)
         self.tree.blockSignals(False)
         if self.tree.selectedItems() and self.page!='Szenen' and hasattr(self,'values_widget'):
             d=self.tree.selectedItems()[0].data(0,Qt.UserRole)
+            if is_cover(d) and hasattr(self,'cover_label'):
+                try:self.cover_label.setText(cover_text(d))
+                except RuntimeError:pass
             try:self.values_widget.setText('\n'.join(label(c,d['ranges'].get(c))+': '+fmt(v,d['ranges'].get(c)) for c,v in d['status'].items()))
             except RuntimeError:pass
             for b,c,v in getattr(self,'live_buttons',[]):
@@ -162,6 +188,17 @@ class Main(QMainWindow):
                     b.setProperty('active',d['status'].get(c)==v);b.style().unpolish(b);b.style().polish(b)
                 except RuntimeError:pass
         if not self.tree.selectedItems():self.empty_detail()
+    def render_climate(self):
+        self.climate_tree.clear();ds=self.visible_devices();count=0
+        rooms={}
+        for d in ds:rooms.setdefault(d['room'] or 'Ohne Raumzuordnung',[]).append(d)
+        for room,devices in sorted(rooms.items(),key=lambda x:x[0].casefold()):
+            sensors=[d for d in devices if any(c in d['status'] for c in TEMPERATURE_CODES+HUMIDITY_CODES)]
+            if not sensors:self.climate_tree.addTopLevelItem(QTreeWidgetItem([room,'Kein Klimasensor gemeldet','—','—','']))
+            for d in sensors:
+                self.climate_tree.addTopLevelItem(QTreeWidgetItem([room,d['name'],climate(d,TEMPERATURE_CODES,'°C'),climate(d,HUMIDITY_CODES,'%'),'Online' if d['online'] else 'Offline · letzter gemeldeter Wert']))
+                count+=1
+        self.climate_tree.sortItems(0,Qt.AscendingOrder);self.summary.setText(f'Temperatur und Luftfeuchte · {len(rooms)} Räume · {count} Sensoren')
     def clear_detail(self):
         while self.dl.count():
             item=self.dl.takeAt(0)
@@ -179,12 +216,15 @@ class Main(QMainWindow):
         title=QLabel(d['name']);title.setStyleSheet('font-size:16pt;font-weight:bold;');title.setWordWrap(True);self.dl.addWidget(title)
         if self.page=='Szenen':
             self.detail_id=None;b=QPushButton('Szene ausführen');b.setEnabled(d['enabled']);b.clicked.connect(lambda:self.scene(d,b));self.dl.addWidget(b);self.dl.addStretch();return
-        self.detail_id=d['id'];self.live_buttons=[];self.dl.addWidget(QLabel((d['room'] or 'Ohne Raumzuordnung')+' · '+('Online' if d['online'] else 'Offline')))
+        self.detail_id=d['id'];self.live_buttons=[];
+        if is_cover(d):
+            position=QLabel(cover_text(d));position.setWordWrap(True);position.setStyleSheet('font-size:16pt;font-weight:bold;padding:8px 0;');self.dl.addWidget(position);self.cover_label=position
+        self.dl.addWidget(QLabel((d['room'] or 'Ohne Raumzuordnung')+' · '+('Online' if d['online'] else 'Offline')))
         for code,spec in d['functions'].items():
             typ=spec.get('type','').lower();m=meta(spec);current=d['status'].get(code)
             if typ not in ('boolean','enum','integer'):continue
             frame=QWidget();fl=QVBoxLayout(frame);fl.setContentsMargins(0,8,0,4)
-            fl.addWidget(QLabel(label(code,spec)))
+            fl.addWidget(QLabel('Zielposition (% offen)' if is_cover(d) and code in ('percent_control','percent_control_1','position') else label(code,spec)))
             if typ=='boolean':
                 row=QHBoxLayout()
                 for value,title in [(True,'Ein'),(False,'Aus')]:
@@ -216,6 +256,8 @@ class Main(QMainWindow):
             try:widget.setEnabled(True)
             except RuntimeError:pass
             self.status.setText('Befehl von Smart Life angenommen · Gerätestatus wird neu gelesen.');QTimer.singleShot(1200,self.refresh)
+            if is_cover(d):
+                for delay in (4000,8000,15000,25000):QTimer.singleShot(delay,self.refresh)
         def failed(e):
             try:widget.setEnabled(True)
             except RuntimeError:pass
