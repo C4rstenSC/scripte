@@ -1,8 +1,20 @@
-# Smart Life Desktop 0.2.8
+# Smart Life Desktop 0.2.9
 
 Deutscher Windows-Client für Smart Life mit direktem Zugriff auf ein verknüpftes Tuya-Cloud-Projekt.
 
-[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.8-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.9-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+
+## Änderungen in 0.2.9
+
+Optionaler offizieller Tuya-Smart-Control-Endnutzerzugang für Gerätenamen. Unter „Direkter Cloudzugriff“ lässt sich zusätzlich ein Endnutzer-API-Schlüssel (sk-…) eintragen. Der Schlüssel stammt von https://www.tuya.ai/developer und ist eine andere Berechtigung als Access ID/Secret des Entwicklerprojekts. Beim Verbinden erfolgt ausschließlich eine lesende Abfrage. Der Schlüssel wird zusammen mit den bestehenden Zugangsdaten im geschützten lokalen Tresor gespeichert, wenn die Speicheroption aktiv ist; er kann auch im vorhandenen verschlüsselten Zugangsarchiv gesichert werden. Keine Schlüssel werden in Quelltext oder Updatepakete eingebaut.
+
+Bei konfiguriertem Schlüssel nutzt die Namensänderung POST /v1.0/end-user/devices/{device_id}/attribute und liest davor und danach genau dieses Gerät per GET /v1.0/end-user/devices/{device_id}/detail. Eine fremde oder fehlende Geräte-ID verhindert das Schreiben. Eine fehlgeschlagene Bestätigung wird nicht als Erfolg angezeigt. Schreibaufrufe werden nicht wiederholt. Die regionale API-Adresse wird aus dem Schlüsselpräfix nach offizieller Dokumentation gewählt; Weiterleitungen werden abgelehnt. Bei Fehlern wird niemals automatisch ein zweiter Schreibweg versucht.
+
+Dies ist kein vollständiger Ersatz aller bisherigen Cloudfunktionen: Räume, Szenen und Automationen verwenden weiterhin den bisherigen Zugang. Für sie werden keine zusätzlichen Möglichkeiten behauptet. Der Endnutzerzugang wird von Tuya derzeit kostenlos angeboten, ausdrücklich als Testphase mit Aufrufgrenzen. Kostenfreiheit auf Dauer oder eine erfolgreiche Verbindung mit dem persönlichen Smart-Life-Konto sind noch nicht bestätigt.
+
+137 lokale Tests bestanden. Der Live-Test im persönlichen Konto erfordert dessen Endnutzer-Schlüssel; bisherige Projekt-Zugangsdaten können ihn nicht ersetzen.
+
+Referenz: https://www.tuya.ai/developer/docs (End User API, Device Management / Rename Device).
 
 ## Änderungen in 0.2.8
 

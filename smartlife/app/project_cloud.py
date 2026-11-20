@@ -6,6 +6,7 @@ import copy,hashlib,hmac,json,re,time,threading
 from urllib.parse import quote,urlencode
 import requests
 from core import Vault,data_dir,validate,meta
+from end_user import EndUserAPI
 
 ENDPOINTS={'Central Europe':'https://openapi.tuyaeu.com','Western Europe':'https://openapi-weaz.tuyaeu.com',
  'Western America':'https://openapi.tuyaus.com','Eastern America':'https://openapi-ueaz.tuyaus.com',
@@ -68,10 +69,11 @@ class ProjectAPI:
 
 class DirectCloud:
     def __init__(self,config,api=None):
-        self.config=copy.deepcopy(config);self.api=api or ProjectAPI(config);self.homes=[];self.rooms=[];self.devices=[];self.scenes=[];self.spec_cache={};self.warnings=[];self.automations=[];self.background_pause=threading.Event();self.name_checked=set();self.mac_attempted=set()
+        self.config=copy.deepcopy(config);self.api=api or ProjectAPI(config);self.homes=[];self.rooms=[];self.devices=[];self.scenes=[];self.spec_cache={};self.warnings=[];self.automations=[];self.background_pause=threading.Event();self.name_checked=set();self.mac_attempted=set();self.end_user=EndUserAPI(config["end_user_key"]) if config.get("end_user_key") else None
     def verify(self):
         self.api.connect();homes=items(self.api.request('GET',f'/v1.0/users/{part(self.config["uid"])}/homes'),'homes')
         if not homes:raise RuntimeError('Die Anmeldung funktioniert, aber für diese UID werden keine Zuhause geliefert. UID und App-Verknüpfung prüfen.')
+        if self.end_user:self.end_user.devices()
         return len(homes)
     def load(self):
         homes=items(self.api.request('GET',f'/v1.0/users/{part(self.config["uid"])}/homes'),'homes')
@@ -174,6 +176,10 @@ class DirectCloud:
         name=checked_name(name);self._write('PUT',f'/v1.0/devices/{part(did)}',{'name':name});return True
     def rename_and_refresh(self,did,name):
         name=checked_name(name)
+        if self.end_user:
+            if not any(d['id']==did for d in self.devices):raise ValueError('Unbekanntes Gerät.')
+            record=self.end_user.rename(did,name)
+            return self.refresh_changed_device(did,expected_name=name,confirmed_record=record)
         try:self.rename_device(did,name)
         except Exception as e:raise RuntimeError('Gerätename konnte nicht gespeichert werden. '+str(e)) from e
         try:return self.refresh_changed_device(did,expected_name=name)
@@ -181,12 +187,12 @@ class DirectCloud:
     def move_and_refresh(self,did,room):
         self.move_device(did,room)
         return self.refresh_changed_device(did,target_room=room)
-    def refresh_changed_device(self,did,expected_name=None,target_room=None):
+    def refresh_changed_device(self,did,expected_name=None,target_room=None,confirmed_record=None):
         device=next((d for d in self.devices if d['id']==did),None)
         if not device:raise ValueError('Unbekanntes Gerät.')
         record=None
         for attempt in range(3):
-            record=self.api.request('GET',f'/v1.0/devices/{part(did)}')
+            record=confirmed_record if confirmed_record is not None else self.api.request('GET',f'/v1.0/devices/{part(did)}')
             if not isinstance(record,dict) or str(record.get('id',did))!=did:raise RuntimeError('Die Cloud hat keine passenden Gerätedetails zurückgegeben.')
             if isinstance(record.get('name'),str) and record['name'] and (expected_name is None or record['name']==expected_name):break
             if attempt<2:time.sleep(.2)
@@ -346,7 +352,9 @@ class DirectCloud:
             aid=str(result.get('automation_id',result.get('id',''))) if isinstance(result,dict) else str(result)
             part(aid)
         return {'id':aid,'home':home,'name':name,'source':'automation','conditions':conditions,'actions':encoded,'match_type':match_type}
-    def close(self):self.api.close()
+    def close(self):
+        self.api.close()
+        if self.end_user:self.end_user.close()
 
 def checked_name(name):
     name=str(name).strip()

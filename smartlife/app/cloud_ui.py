@@ -24,21 +24,24 @@ class PasswordDialog(QDialog):
 
 class CloudSetupDialog(QDialog):
     def __init__(self,main):
-        super().__init__(main);self.main=main;self.setWindowTitle('Direkten Tuya-Cloudzugriff einrichten');self.resize(720,540);v=QVBoxLayout(self)
+        super().__init__(main);self.main=main;self.setWindowTitle('Direkten Tuya-Cloudzugriff einrichten');self.resize(760,650);v=QVBoxLayout(self)
         text=QLabel('Die Angaben stammen aus deinem verknüpften Tuya-Cloud-Projekt. Der Verbindungstest liest nur Daten und verändert keine Geräte, Räume oder Szenen.');text.setWordWrap(True);v.addWidget(text)
         form=QFormLayout();self.client=QLineEdit();self.secret=QLineEdit();self.secret.setEchoMode(QLineEdit.Password);self.uid=QLineEdit();self.region=QComboBox()
         for key in ENDPOINTS:self.region.addItem(REGION_NAMES[key],key)
         for title,w in [('Access ID / Client ID',self.client),('Access Secret / Client Secret',self.secret),('UID des Smart-Life-Kontos',self.uid),('Datenzentrum',self.region)]:form.addRow(title,w)
+        self.end_user_key=QLineEdit();self.end_user_key.setEchoMode(QLineEdit.Password);self.end_user_key.setPlaceholderText('Optional: sk-… von tuya.ai, nicht die Access ID')
+        form.addRow('Endnutzer-API-Schlüssel',self.end_user_key)
+        help_text=QLabel('Mit einem Endnutzer-Schlüssel verwendet das Programm für Gerätenamen den offiziellen Smart-Control-Zugang. Der Schlüssel wird beim Verbinden nur lesend geprüft. Dieser Zugang ist derzeit eine Testphase mit Aufrufgrenzen; die Nutzung mit deinem Konto muss geprüft werden. <a href="https://www.tuya.ai/developer">Schlüssel auf der Tuya-Endnutzerseite erhalten</a>');help_text.setWordWrap(True);help_text.setOpenExternalLinks(True);v.addWidget(help_text)
         v.addLayout(form);self.remember=QCheckBox('Zugang auf diesem PC geschützt speichern');self.remember.setChecked(True);v.addWidget(self.remember)
         current=getattr(main.cloud,'direct',None)
         if current:
-            cfg=current.config;self.client.setText(cfg['access_id']);self.secret.setText(cfg['access_secret']);self.uid.setText(cfg['uid']);self.region.setCurrentIndex(self.region.findData(cfg['region']))
+            cfg=current.config;self.end_user_key.setText(cfg.get('end_user_key',''));self.client.setText(cfg['access_id']);self.secret.setText(cfg['access_secret']);self.uid.setText(cfg['uid']);self.region.setCurrentIndex(self.region.findData(cfg['region']))
         self.result_label=QLabel('Noch nicht geprüft. Die Berechtigungen werden mit deinem Konto geprüft.');self.result_label.setWordWrap(True);v.addWidget(self.result_label)
         self.connect_btn=QPushButton('Prüfen und verbinden');self.connect_btn.clicked.connect(self.connect);v.addWidget(self.connect_btn)
         row=QHBoxLayout();export=QPushButton('Zugang verschlüsselt sichern');export.clicked.connect(self.export);row.addWidget(export);imp=QPushButton('Verschlüsselten Zugang laden');imp.clicked.connect(self.load_file);row.addWidget(imp);v.addLayout(row)
         close=QPushButton('Schließen');close.clicked.connect(self.reject);v.addWidget(close)
     def connect(self):
-        config={'access_id':self.client.text().strip(),'access_secret':self.secret.text().strip(),'uid':self.uid.text().strip(),'region':self.region.currentData()}
+        config={'access_id':self.client.text().strip(),'access_secret':self.secret.text().strip(),'uid':self.uid.text().strip(),'region':self.region.currentData(),'end_user_key':self.end_user_key.text().strip()}
         remember=self.remember.isChecked();self.setEnabled(False);self.result_label.setText('Anmeldung und Zugriff auf dein Zuhause werden geprüft …')
         def done(_):self.setEnabled(True);self.accept()
         def failed(e):self.setEnabled(True);self.result_label.setText(str(e))
@@ -61,7 +64,7 @@ class CloudSetupDialog(QDialog):
         if password.exec()!=QDialog.Accepted:return
         try:
             cfg=decrypt_config(Path(filename).read_bytes(),password.password.text())
-            self.client.setText(cfg['access_id']);self.secret.setText(cfg['access_secret']);self.uid.setText(cfg['uid']);self.region.setCurrentIndex(self.region.findData(cfg['region']));self.result_label.setText('Datei entschlüsselt. Bitte jetzt prüfen und verbinden.')
+            self.end_user_key.setText(cfg.get('end_user_key',''));self.client.setText(cfg['access_id']);self.secret.setText(cfg['access_secret']);self.uid.setText(cfg['uid']);self.region.setCurrentIndex(self.region.findData(cfg['region']));self.result_label.setText('Datei entschlüsselt. Bitte jetzt prüfen und verbinden.')
         except (OSError,ValueError) as e:QMessageBox.warning(self,'Zugang laden',str(e))
 
 class DeviceAdminDialog(QDialog):

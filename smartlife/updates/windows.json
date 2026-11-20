@@ -1,9 +1,9 @@
 {
   "status": "available",
   "platform": "win32",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "runtime": "win64-py313-qt683-v1",
-  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.8-app.zip",
-  "sha256": "f7cc73fd673ffca261a7a3483e5ae80bb685c09ebced9f1a35b9554a363f2efb",
-  "notes": "Gespeicherte lokale IP-Adressen inaktiver FRITZ!Box-Geräte werden mit „zuletzt bekannt“ angezeigt. Schutz gegen inzwischen anderweitig vergebene IP-Adressen bleibt aktiv. Tuya-Hinweis zur ausgeschöpften Steuergerätefreigabe präzisiert. Dieses Update behebt nicht die Kontingentsperre für Cloud-Namensänderungen."
+  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.9-app.zip",
+  "sha256": "d7e6b2dd40db900de4cc3e043dd5e46c971f1bdf00c3cf2162e207ee2681405b",
+  "notes": "Offiziellen Endnutzerzugang für Gerätenamen ergänzt: optionalen Schlüssel sk-… unter Direkter Cloudzugriff eintragen. Gerät wird vor und nach der Namensänderung gezielt gelesen; kein zweiter Schreibversuch über das Entwicklerprojekt. Benötigt den separaten Endnutzer-Schlüssel; Live-Test mit deinem Konto steht aus. Räume, Szenen und Automationen verwenden weiterhin den bisherigen Zugang."
 }
