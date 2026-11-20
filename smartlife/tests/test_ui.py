@@ -43,7 +43,7 @@ class UiTests(unittest.TestCase):
   self.w.demo=False;self.w.update_checking=True;self.w.check_update(True)
   self.assertTrue(self.w.update_interactive);self.assertIn('läuft',self.w.update_note.text())
  def test_ip_column(self):
-  self.w.navigate('Geräte');self.assertEqual(self.w.tree.headerItem().text(2),'IP-Adresse (Tuya)')
+  self.w.navigate('Geräte');self.assertEqual(self.w.tree.headerItem().text(2),'Lokale IP-Adresse')
  def test_scenes(self):self.w.navigate('Szenen');self.assertEqual(self.w.tree.topLevelItemCount(),1)
  def test_navigation(self):
   self.w.navigate('Räume');self.assertTrue(self.w.buttons['Räume'].isChecked());self.assertFalse(self.w.buttons['Geräte'].isChecked())

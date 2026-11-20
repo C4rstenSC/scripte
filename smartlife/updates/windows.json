@@ -1,9 +1,9 @@
 {
   "status": "available",
   "platform": "win32",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "runtime": "win64-py313-qt683-v1",
-  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.4-app.zip",
-  "sha256": "c72b9fd90aaa92faabb218859b983f0690500596aa4c9803ade697c578898369",
-  "notes": "Gerätenamen nach dem Speichern gezielt zurücklesen und in Liste sowie Details übernehmen. Nur das geänderte Gerät, betroffene Räume und geladene zugehörige Automationen aktualisieren. Gerätebearbeitung während Hintergrundabfragen ermöglichen; sichtbarer Speicherfortschritt und bestätigte Rückmeldung."
+  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.5-app.zip",
+  "sha256": "162ca506941b7342b07cbe0432a0f1a22da789e517436a5d8625358a3c7ca38a",
+  "notes": "FRITZ!Box-Anmeldung mit lokalen IP-Adressen und Hostnamen statt öffentlicher Tuya-IP. Eindeutige MAC-Zuordnung und geschützte lokale Anmeldung. Bitte-warten-Sperre auch für Szenen und Automationen entfernt. Tuya-Fehler beim Umbenennen unterscheiden Speichern und Rücklesen; Cloud-Kontingentfehler werden verständlich angezeigt."
 }

@@ -47,7 +47,8 @@ class ProjectAPI:
             tips={'1004':'Access ID oder Access Secret ist falsch; auch die Systemzeit prüfen.',
              '1106':'Zugriff verweigert. Kontoverknüpfung, Datenzentrum und API-Berechtigung prüfen.',
              '1010':'Die Anmeldung ist ungültig. Bitte erneut verbinden.',
-             '28841105':'Der benötigte API-Dienst ist für dieses Projekt nicht freigeschaltet.'}
+             '28841105':'Der benötigte API-Dienst ist für dieses Projekt nicht freigeschaltet.',
+             '60001001':'Das Tuya-Kontingent für steuerbare Geräte reicht nicht aus. Das Geräte-Kontingent im Tuya-Cloud-Projekt prüfen.'}
             message=tips.get(code,'Die Anfrage wurde von Tuya abgelehnt.')
             raise RuntimeError('Tuya-Fehler '+code+': '+message)
         return reply
@@ -63,7 +64,7 @@ class ProjectAPI:
 
 class DirectCloud:
     def __init__(self,config,api=None):
-        self.config=copy.deepcopy(config);self.api=api or ProjectAPI(config);self.homes=[];self.rooms=[];self.devices=[];self.scenes=[];self.spec_cache={};self.warnings=[];self.automations=[];self.background_pause=threading.Event();self.name_checked=set()
+        self.config=copy.deepcopy(config);self.api=api or ProjectAPI(config);self.homes=[];self.rooms=[];self.devices=[];self.scenes=[];self.spec_cache={};self.warnings=[];self.automations=[];self.background_pause=threading.Event();self.name_checked=set();self.mac_attempted=set()
     def verify(self):
         self.api.connect();homes=items(self.api.request('GET',f'/v1.0/users/{part(self.config["uid"])}/homes'),'homes')
         if not homes:raise RuntimeError('Die Anmeldung funktioniert, aber für diese UID werden keine Zuhause geliefert. UID und App-Verknüpfung prüfen.')
@@ -83,7 +84,7 @@ class DirectCloud:
                 did=str(item.get('id',item.get('device_id','')));part(did);rid,name=room_map.get(did,('',''))
                 device={'id':did,'home':hid,'name':item.get('name','Gerät'),'room_id':rid,'room':name,'room_order':0,
                  'category':item.get('category',''),'product_id':item.get('product_id',''),'product_name':item.get('product_name',''),
-                 'online':bool(item.get('online',False)),'ip':item.get('ip','') or '','sub':bool(item.get('sub',False)),
+                 'mac':item.get('mac','') or '', 'online':bool(item.get('online',False)),'ip':item.get('ip','') or '','sub':bool(item.get('sub',False)),
                  'status':normalize_status(item.get('status',[])),'functions':{},'ranges':{},'raw_control':False}
                 if did in self.name_checked:
                     try:
@@ -126,6 +127,20 @@ class DirectCloud:
                 message='Automationen konnten nicht vollständig geladen werden: '+str(e);automation_errors.append(message);warnings.append(message)
         self.homes,self.rooms,self.devices,self.scenes,self.warnings=hs,rs,ds,ss,warnings;self.automations=automations
         return {'homes':hs,'rooms':rs,'devices':copy.deepcopy(ds),'scenes':ss,'automations':automations,'automation_errors':automation_errors,'room_failed':0,'scene_error':False,'warnings':warnings,'direct':True}
+    def network_macs(self,device_ids=None):
+        from fritz import mac
+        allowed={d['id']:d for d in self.devices if not d.get('sub')};requested=set(device_ids) if device_ids is not None else set(allowed)
+        ids=[did for did in allowed if did in requested and not mac(allowed[did].get('mac')) and did not in self.mac_attempted];warnings=[]
+        for start in range(0,len(ids),20):
+            batch=ids[start:start+20]
+            try:
+                rows=items(self.api.request('GET','/v1.0/devices/factory-infos',params={'device_ids':','.join(batch)}),'devices')
+                for row in rows:
+                    did=str(row.get('id',''));value=mac(row.get('mac'))
+                    if did in batch and value:allowed[did]['mac']=value
+                self.mac_attempted.update(batch)
+            except Exception as e:warnings.append('Tuya-MAC-Adressen konnten nicht vollständig gelesen werden: '+str(e));self.mac_attempted.update(batch)
+        return {'macs':{did:mac(d.get('mac')) for did,d in allowed.items() if did in requested and mac(d.get('mac'))},'warnings':warnings}
     def read_scenes(self,home):
         try:return items(self.api.request('GET',f'/v1.1/homes/{part(home)}/scenes'),'scenes')
         except RuntimeError:return items(self.api.request('GET',f'/v1.0/homes/{part(home)}/scenes'),'scenes')
@@ -154,8 +169,11 @@ class DirectCloud:
         if not any(d['id']==did for d in self.devices):raise ValueError('Unbekanntes Gerät.')
         name=checked_name(name);self._write('PUT',f'/v1.0/devices/{part(did)}',{'name':name});return True
     def rename_and_refresh(self,did,name):
-        name=checked_name(name);self.rename_device(did,name)
-        return self.refresh_changed_device(did,expected_name=name)
+        name=checked_name(name)
+        try:self.rename_device(did,name)
+        except Exception as e:raise RuntimeError('Gerätename konnte nicht gespeichert werden. '+str(e)) from e
+        try:return self.refresh_changed_device(did,expected_name=name)
+        except Exception as e:raise RuntimeError('Tuya hat die Umbenennung angenommen, aber das Rücklesen ist fehlgeschlagen. '+str(e)) from e
     def move_and_refresh(self,did,room):
         self.move_device(did,room)
         return self.refresh_changed_device(did,target_room=room)

@@ -1,8 +1,30 @@
-# Smart Life Desktop 0.2.4
+# Smart Life Desktop 0.2.5
 
 Deutscher Windows-Client für Smart Life mit direktem Zugriff auf ein verknüpftes Tuya-Cloud-Projekt.
 
-[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.4-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.5-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+
+## Änderungen in 0.2.5
+
+### FRITZ!Box im Heimnetz
+
+Die Spalte „IP-Adresse (Tuya)“ entfällt. Geräte und Räume zeigen stattdessen **Lokale IP-Adresse** und **FRITZ!Box-Hostname**. Unter **FRITZ!Box anmelden** die lokale Adresse (standardmäßig `fritz.box`), den FRITZ!Box-Benutzer und dessen Kennwort eingeben. „Anmelden und Netzwerk lesen“ liest die Netzwerkgeräteliste über die lokale, dokumentierte TR-064-Schnittstelle mit HTTP-Digest-Anmeldung. In den Netzwerkeinstellungen der FRITZ!Box muss „Zugriff für Anwendungen zulassen“ aktiviert sein. Der Benutzer benötigt die passenden Leserechte. Der Vorgang liest nur Netzwerkdaten und ändert keine Routereinstellungen oder DHCP-Reservierungen. Die Anmeldung wird auf Wunsch auf Windows mit DPAPI bzw. später unter macOS im Schlüsselbund geschützt gespeichert; keine Routerkennwörter in GitHub.
+
+Automatische Zuordnung erfolgt ausschließlich anhand einer eindeutigen MAC-Adresse. Fehlende MAC-Adressen werden für geladene Geräte über Tuyas dokumentierte Factory-Info-Abfrage in Gruppen von höchstens 20 ermittelt. Namen oder gemeinsame öffentliche IP-Adressen werden nicht als Identitätsbeweis verwendet. Unklare Zuordnungen bleiben leer. Geräte hinter einem Gateway erhalten keine erfundene Gateway-IP. Nicht aktive FRITZ!Box-Einträge erhalten keine als aktuell dargestellte lokale Adresse. Wenn Tuya keine passende MAC liefert, kann im FRITZ!Box-Dialog ein Gerät bewusst einem Netzwerk-MAC-Eintrag zugeordnet werden. Die Zuordnung wird bei geschützter Speicherung mitgesichert.
+
+Netzwerkdaten aktualisieren sich nach Anmeldung alle 60 Sekunden sowie auf „Netzwerk aktualisieren“. Nach Geräteänderungen wird, soweit zugeordnet, nur der betreffende Routereintrag nachgelesen. Der FRITZ!Box-Zugriff hat eine eigene Warteschlange; er verwendet keine Tuya-Cloud-Brücke. Unveränderte Smart-Life-Steuerungen bleiben cloudbasiert. Der lokale Programmstart allein macht Tuya-Steuerbefehle nicht zu lokalen Befehlen.
+
+### Bearbeitung während Hintergrundabfragen
+
+Die globale „Bitte warten“-Meldung wurde auch für Szenen, Automationen und Raumverwaltung entfernt. Die vorhandenen Daten können geöffnet werden; neue periodische Abfragen pausieren während der Bearbeitung. Eine laufende Geräteabfrage gibt die Warteschlange zwischen Geräten frei. Ein bereits gesendeter HTTP-Aufruf kann bis zu seinem Timeout noch laufen. Die Bandbreite des Internetanschlusses verhindert solche Serverwartezeiten nicht.
+
+### Aussagekräftige Umbenennungsfehler
+
+Die ursprüngliche PUT-Anfrage zum Umbenennen bleibt gleich. Fehlermeldungen unterscheiden nun „Speichern von Tuya abgelehnt“ von „angenommen, aber Rücklesen fehlgeschlagen“. Code 60001001 wird als Problem des Kontingents für steuerbare Geräte eingeordnet. Ein ausgeschöpftes Cloud-Projektkontingent wird durch dieses Update nicht aufgehoben; es wird keine lokale Umbenennung als erfolgreiche Cloud-Änderung ausgegeben.
+
+113 lokale Tests bestanden: TR-064-Nachrichten, Digest-Konfiguration, lokale Zieladressen, XML-Schutz, Fehlerfälle, eindeutige MAC-Zuordnung, fehlende/mehrdeutige Zuordnung, Geräte ohne eigene IP, gezielte MAC-Abfrage, Netzwerkspalten und Bearbeitungsdialoge bei aktiven Hintergrundabfragen. FRITZ!Box-Dialog und Spalten unter Qt dargestellt. Keine echte FRITZ!Box oder Tuya-Kontingentfreigabe aus dieser Entwicklungsumgebung getestet.
+
+Quellen: FRITZ! TR-064 Hosts https://fritz.support/resources/TR-064_Hosts.pdf ; TR-064-Anmeldung https://fritz.support/schnittstellen/TR-064_first_steps.pdf ; Tuya Factory-Informationen https://developer.tuya.com/en/docs/cloud/device-management?id=K9g6rfntdz78a .
 
 ## Änderungen in 0.2.4
 

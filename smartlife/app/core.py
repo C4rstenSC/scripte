@@ -10,7 +10,7 @@ import sys
 import time
 from urllib.parse import urlparse
 
-VERSION = '0.2.4'
+VERSION = '0.2.5'
 RUNTIME = 'win64-py313-qt683-v1'
 # Public Tuya device-sharing registration also used by Home Assistant.
 CLIENT_ID = 'HA_3y9q4ak7g4ephrvke'
@@ -288,7 +288,7 @@ class Cloud:
     def snapshot(d,home,room=None):
         return {'id':d.id,'name':d.name,'home':str(home),'room_id':str(room.id) if room else '',
                 'room':room.name if room else '', 'room_order':getattr(room,'display_order',0) if room else 0,
-                'product_id':getattr(d,'product_id',''), 'product_name':getattr(d,'product_name',''), 'online':bool(d.online),'category':getattr(d,'category',''), 'ip':getattr(d,'ip','') or '', 'sub':bool(getattr(d,'sub',False)),
+                'mac':getattr(d,'mac','') or '', 'product_id':getattr(d,'product_id',''), 'product_name':getattr(d,'product_name',''), 'online':bool(d.online),'category':getattr(d,'category',''), 'ip':getattr(d,'ip','') or '', 'sub':bool(getattr(d,'sub',False)),
                 'status':copy.deepcopy(d.status),'functions':{k:vars(v).copy() for k,v in d.function.items()},
                 'ranges':{k:vars(v).copy() for k,v in d.status_range.items()}}
     def refresh(self,device_id=None):

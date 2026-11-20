@@ -15,6 +15,8 @@ from PySide6.QtWidgets import (QApplication,QMainWindow,QWidget,QVBoxLayout,QHBo
  QDoubleSpinBox,QSpinBox,QDialog,QCheckBox,QMessageBox,QFrame,QSizePolicy,QTabBar,QHeaderView,QPlainTextEdit,QFileDialog)
 from core import VERSION, Cloud, ui_label as label,ui_control,unit_label, fmt, meta, ENUMS, validate, climate, TEMPERATURE_CODES, HUMIDITY_CODES, is_cover, cover_position, cover_text, enum_label, BATTERY_CODES, battery_text, probe_summary
 import updates
+from fritz import FritzAccount
+from fritz_ui import FritzDialog
 from ui_widgets import CleanSelectionDelegate,fit_columns
 from automation_ui import AutomationEditor
 from desktop_scenes import SceneStore,execute as execute_desktop_scene,scene_rows,condition_rows,precondition_rows,scene_report
@@ -65,6 +67,7 @@ class Main(QMainWindow):
         super().__init__(); self.setWindowTitle('Smart Life Desktop · '+VERSION); self.resize(1390,900); self.setMinimumSize(1020,680)
         self.pool=ThreadPoolExecutor(max_workers=1); self.bridge=Bridge(); self.bridge.done.connect(self.complete)
         self.update_pool=ThreadPoolExecutor(max_workers=1);self.update_bridge=Bridge();self.update_bridge.done.connect(self.complete_update)
+        self.fritz=FritzAccount();self.fritz_pool=ThreadPoolExecutor(max_workers=1);self.fritz_bridge=Bridge();self.fritz_bridge.done.connect(self.complete_fritz);self.fritz_matching=False;self.fritz_reading=False
         self.settings=QSettings('C4rstenSC','SmartLifeDesktop');self.cloud=Cloud(); self.demo=demo; self.closing=False; self.jobs=0; self.ready=False
         self.scene_store=SceneStore();self.data={'homes':[],'devices':[],'scenes':[]}; self.page='Übersicht'; self.pending=False; self.detail_id=None; self.login_dialog=None
         root=QWidget(); self.setCentralWidget(root); layout=QHBoxLayout(root); layout.setContentsMargins(0,0,0,0); layout.setSpacing(0)
@@ -75,6 +78,8 @@ class Main(QMainWindow):
             b=QPushButton(name); b.setCheckable(True); b.clicked.connect(lambda checked=False,n=name:self.navigate(n)); nl.addWidget(b); self.buttons[name]=b
         nl.addStretch(); login=QPushButton('Konto / Anmeldung'); login.clicked.connect(self.login); nl.addWidget(login)
         direct_button=QPushButton('Direkter Cloudzugriff');direct_button.clicked.connect(self.setup_direct);nl.addWidget(direct_button)
+        self.fritz_button=QPushButton('FRITZ!Box anmelden');self.fritz_button.clicked.connect(self.fritz_login);nl.addWidget(self.fritz_button)
+        self.fritz_status=QLabel('FRITZ!Box · nicht verbunden');self.fritz_status.setWordWrap(True);nl.addWidget(self.fritz_status)
         self.update_btn=QPushButton('Update'); self.update_btn.clicked.connect(lambda:self.check_update(True)); nl.addWidget(self.update_btn)
         self.update_note=QLabel(''); self.update_note.setWordWrap(True);self.update_note.setMinimumHeight(50);self.update_note.setStyleSheet('color:#e2e4e7;'); nl.addWidget(self.update_note); nl.addWidget(QLabel('Version '+VERSION)); layout.addWidget(nav)
         nav.setFixedWidth(max(260,direct_button.sizeHint().width()+36,login.sizeHint().width()+36))
@@ -100,10 +105,56 @@ class Main(QMainWindow):
         self.clock=QLabel(''); self.clock.setAlignment(Qt.AlignRight); bl.addWidget(self.clock)
         self.tick=QTimer(self); self.tick.timeout.connect(lambda:self.clock.setText(datetime.now().strftime('%H:%M:%S   %d.%m.%Y'))); self.tick.start(1000)
         self.poll=QTimer(self); self.poll.setInterval(30000); self.poll.timeout.connect(self.refresh)
+        self.fritz_timer=QTimer(self);self.fritz_timer.setInterval(60000);self.fritz_timer.timeout.connect(self.refresh_fritz)
         self.update_timer=QTimer(self); self.update_timer.timeout.connect(lambda:self.check_update(False)); self.update_timer.start(60000)
         self.navigate('Übersicht'); self.empty_detail()
         if demo: self.demo_data()
-        else: QTimer.singleShot(250,self.restore); QTimer.singleShot(1500,lambda:self.check_update(False))
+        else: QTimer.singleShot(250,self.restore); QTimer.singleShot(1500,lambda:self.check_update(False));QTimer.singleShot(500,self.restore_fritz)
+    def submit_fritz(self,fn,success,failure):
+        if self.closing:return
+        future=self.fritz_pool.submit(fn)
+        def finish(f):
+            try:value,error=f.result(),None
+            except Exception as e:value,error=None,e
+            if not self.closing:self.fritz_bridge.done.emit(value,error,(success,failure))
+        future.add_done_callback(finish)
+    def complete_fritz(self,value,error,callbacks):
+        if self.closing:return
+        success,failure=callbacks
+        if error:failure(error)
+        else:success(value)
+    def fritz_login(self):
+        self.begin_edit()
+        try:FritzDialog(self).exec()
+        finally:self.end_edit()
+    def restore_fritz(self):
+        def done(ok):
+            if ok:self.fritz_connected()
+        self.submit_fritz(self.fritz.restore,done,lambda e:self.fritz_status.setText('FRITZ!Box · '+str(e)))
+    def fritz_connected(self,retry=False):
+        self.fritz_status.setText('FRITZ!Box · verbunden');self.fritz_timer.start();self.render();self.read_network_macs(retry)
+    def refresh_fritz(self):
+        if not self.fritz.client or self.fritz_reading:return
+        self.fritz_reading=True
+        def done(_):self.fritz_reading=False;self.render()
+        def failed(e):self.fritz_reading=False;self.fritz_status.setText('FRITZ!Box · '+str(e));self.render()
+        self.submit_fritz(self.fritz.refresh,done,failed)
+    def read_network_macs(self,retry=False):
+        if not self.fritz.client or not self.cloud.direct or not self.data['devices'] or self.fritz_matching:return
+        self.fritz_matching=True;direct=self.cloud.direct
+        def done(result):
+            self.fritz_matching=False
+            for device in self.data['devices']:
+                if device['id'] in result['macs']:device['mac']=result['macs'][device['id']]
+            matched=sum(bool(self.fritz.match(d)) for d in self.data['devices']);self.fritz_status.setText('FRITZ!Box · '+str(matched)+' Geräte zugeordnet'+(' · '+result['warnings'][0] if result.get('warnings') else ''));self.render()
+        def failed(e):self.fritz_matching=False;self.fritz_status.setText('FRITZ!Box · Zuordnung fehlgeschlagen: '+str(e))
+        def worker():
+            if retry:direct.mac_attempted.clear()
+            return direct.network_macs()
+        self.submit(worker,done,failed)
+    def refresh_fritz_device(self,device):
+        if not self.fritz.client:return
+        self.submit_fritz(lambda:self.fritz.refresh_device(device),lambda _:self.render(),lambda e:self.fritz_status.setText('FRITZ!Box · '+str(e)))
     def submit(self,fn,callback=None,error=None):
         if self.closing: return
         self.jobs+=1
@@ -134,7 +185,7 @@ class Main(QMainWindow):
         if self.pending:return
         self.pending=True; self.reload.setEnabled(False); self.status.setText('Zuhause, Räume und Geräte werden geladen …')
         def done(data):
-            self.pending=False; self.reload.setEnabled(True); self.data=data; self.populate_homes()
+            self.pending=False; self.reload.setEnabled(True); self.data=data; self.populate_homes();self.read_network_macs()
             notes=[]
             if data.get('room_failed'):notes.append(f"Raumzuordnung für {data['room_failed']} Gerät(e) konnte nicht gelesen werden; bitte erneut laden.")
             if data.get('scene_error'):notes.append('Szenen konnten nicht gelesen werden.')
@@ -213,14 +264,14 @@ class Main(QMainWindow):
             if automation and not self.cloud.direct and not self.demo:self.summary.setText('Automationen erfordern den direkten Cloudzugriff.')
             elif automation and self.data.get('automation_errors'):self.summary.setText(' · '.join(self.data['automation_errors']))
         else:
-            self.tree.setColumnCount(6);self.tree.setHeaderLabels(['Gerät','Raum','IP-Adresse (Tuya)','Verbindung','Batteriestatus','Werte / Zustand'])
+            self.tree.setColumnCount(7);self.tree.setHeaderLabels(['Gerät','Raum','Lokale IP-Adresse','FRITZ!Box-Hostname','Verbindung','Batteriestatus','Werte / Zustand'])
             ds=self.visible_devices()
             for d in ds:
                 summary=' · '.join(label(k,d['ranges'].get(k))+': '+fmt(v,d['ranges'].get(k)) for k,v in d['status'].items() if k in LABEL_SUMMARY and k not in BATTERY_CODES and label(k,d['ranges'].get(k)))
                 if not summary:summary=' · '.join(label(k,d['ranges'].get(k))+': '+fmt(v,d['ranges'].get(k)) for k,v in [(k,v) for k,v in d['status'].items() if k not in BATTERY_CODES and label(k,d['ranges'].get(k))][:3])
                 if is_cover(d) and (cover_position(d) is not None or any(c in d['status'] for c in ('percent_control','percent_control_1'))):summary=cover_text(d)
-                ip=d.get('ip') or ('Über Gateway' if d.get('sub') else 'Nicht bereitgestellt')
-                it=QTreeWidgetItem([d['name'],d['room'] or 'Ohne Raumzuordnung',ip,'Online' if d['online'] else 'Offline',battery_text(d),summary]);it.setData(0,Qt.UserRole,d);self.tree.addTopLevelItem(it)
+                network=self.fritz.match(d);ip=network['ip'] if network else '';hostname=network['hostname'] if network else ''
+                it=QTreeWidgetItem([d['name'],d['room'] or 'Ohne Raumzuordnung',ip,hostname,'Online' if d['online'] else 'Offline',battery_text(d),summary]);it.setData(0,Qt.UserRole,d);self.tree.addTopLevelItem(it)
                 if d['id']==selected:it.setSelected(True)
             self.summary.setText(f'{len(ds)} Geräte · {sum(d["online"] for d in ds)} online · {len(ds)-sum(d["online"] for d in ds)} offline')
             if self.page=='Räume':self.tree.sortItems(1,Qt.AscendingOrder)
@@ -355,16 +406,23 @@ class Main(QMainWindow):
     def require_direct(self,allow_background=False):
         if not self.cloud.direct:
             self.setup_direct();return False
-        if self.pending and not allow_background:
-            QMessageBox.information(self,'Bitte warten','Die Kontodaten werden noch geladen. Bitte nach Abschluss erneut öffnen.');return False
         return True
+    def begin_edit(self):
+        depth=getattr(self,'edit_depth',0);self.edit_depth=depth+1
+        if depth:return
+        self.edit_poll_active=self.poll.isActive();self.poll.stop();self.device_editing=True
+        if self.cloud.direct:self.cloud.direct.background_pause.set()
+    def end_edit(self):
+        self.edit_depth=max(0,getattr(self,'edit_depth',1)-1)
+        if self.edit_depth:return
+        self.device_editing=False
+        if self.cloud.direct:self.cloud.direct.background_pause.clear()
+        if getattr(self,'edit_poll_active',False):self.poll.start()
     def edit_device(self,d):
         if not self.require_direct(allow_background=True):return
-        active=self.poll.isActive();self.poll.stop();self.device_editing=True;direct=self.cloud.direct;direct.background_pause.set()
+        self.begin_edit()
         try:DeviceAdminDialog(self,d).exec()
-        finally:
-            self.device_editing=False;direct.background_pause.clear()
-            if active:self.poll.start()
+        finally:self.end_edit()
     def apply_device_update(self,result):
         changed=result['device']
         for device in self.data['devices']:
@@ -374,19 +432,26 @@ class Main(QMainWindow):
             if rule['id'] in by_id:rule.update(by_id[rule['id']])
         self.detail_id=changed['id'];self.render()
         if self.tree.selectedItems():self.selected()
+        self.refresh_fritz_device(changed)
         self.status.setText('Änderung bestätigt · '+changed['name']+' gezielt aktualisiert'+(' · '+' · '.join(result['warnings']) if result.get('warnings') else ''))
     def manage_rooms(self):
         if not self.require_direct():return
         if not self.home.currentData():return
-        RoomAdminDialog(self,self.home.currentData()).exec()
+        self.begin_edit()
+        try:RoomAdminDialog(self,self.home.currentData()).exec()
+        finally:self.end_edit()
     def edit_automation(self,s=None):
         if not self.require_direct():return
         home=self.home.currentData()
         if not home:return
+        self.begin_edit()
         def open_editor(original):
-            dialog=AutomationEditor(self,home,original)
-            if dialog.exec()==QDialog.Accepted:self.detail_id=dialog.result_rule['id'];self.load()
-        if s:self.submit(lambda:self.cloud.direct.get_automation(home,s['id']),open_editor)
+            try:
+                dialog=AutomationEditor(self,home,original)
+                if dialog.exec()==QDialog.Accepted:self.detail_id=dialog.result_rule['id'];self.load()
+            finally:self.end_edit()
+        def failed(e):self.end_edit();self.error(e)
+        if s:self.submit(lambda:self.cloud.direct.get_automation(home,s['id']),open_editor,failed)
         else:open_editor(None)
     def edit_scene(self,s=None):
         if not self.home.currentData():self.error(ValueError('Bitte zuerst ein Zuhause laden.'));return
@@ -406,11 +471,14 @@ class Main(QMainWindow):
             s=dict(s,actions=editable)
         store=self.scene_store if own else CloudSceneStore(self.cloud.direct,original)
         dialog=SceneEditor(self,store,self.home.currentData(),self.data['devices'],s,cloud=not own,save_handler=self.submit if not own else None)
-        if dialog.exec()==QDialog.Accepted:
-            self.detail_id=dialog.result_scene['id']
-            if own:self.render();self.selected()
-            else:self.load()
-            self.status.setText('Szene gespeichert. Es wurden noch keine Geräte geschaltet.')
+        self.begin_edit()
+        try:
+            if dialog.exec()==QDialog.Accepted:
+                self.detail_id=dialog.result_scene['id']
+                if own:self.render();self.selected()
+                else:self.load()
+                self.status.setText('Szene gespeichert. Es wurden noch keine Geräte geschaltet.')
+        finally:self.end_edit()
     def delete_scene(self,s):
         if question_de(self,'Desktop-Szene löschen','Soll diese auf dem PC gespeicherte Szene gelöscht werden?')!=QMessageBox.Yes:return
         try:self.scene_store.delete(s['id']);self.render()
@@ -556,7 +624,7 @@ class Main(QMainWindow):
             if show:self.error(e)
         self.submit_update(updates.check,done,failed)
     def closeEvent(self,event):
-        self.closing=True;self.poll.stop();self.update_timer.stop();self.update_pool.shutdown(wait=False,cancel_futures=True);self.pool.shutdown(wait=False,cancel_futures=True);event.accept()
+        self.closing=True;self.fritz_timer.stop();self.poll.stop();self.update_timer.stop();self.update_pool.shutdown(wait=False,cancel_futures=True);self.fritz_pool.shutdown(wait=False,cancel_futures=True);self.pool.shutdown(wait=False,cancel_futures=True);event.accept()
     def demo_data(self):
         from demo import sample
         self.data=sample();self.populate_homes();self.status.setText('Vorschau mit Beispieldaten · keine Verbindung zu deinem Zuhause');self.account.setText('Smart Life · Vorschau')
