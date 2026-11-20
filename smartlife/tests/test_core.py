@@ -1,7 +1,7 @@
 import sys,unittest,tempfile,zipfile
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'app'))
-from core import fmt,validate,safe_endpoint,Cloud,cover_position,cover_text,climate,TEMPERATURE_CODES
+from core import fmt,validate,safe_endpoint,Cloud,cover_position,cover_text,climate,TEMPERATURE_CODES,label,diagnostic_filter
 from updates import extract,version,validate_url
 from demo import sample
 class CoreTests(unittest.TestCase):
@@ -10,6 +10,16 @@ class CoreTests(unittest.TestCase):
   d['status']={'percent_control':25};self.assertIsNone(cover_position(d));self.assertIn('Sollwert',cover_text(d))
   d['status']={'percent_state':0};self.assertIn('Geschlossen',cover_text(d))
   d['status']={'percent_state':100};self.assertIn('Vollständig offen',cover_text(d))
+ def test_german_numbered_labels(self):
+  self.assertEqual(label('bright_value_1'),'Helligkeit 1')
+  self.assertEqual(label('switch_led_1'),'Licht 1')
+  self.assertEqual(label('brightness_min_1'),'Mindesthelligkeit 1')
+  self.assertEqual(fmt('memory'),'Letzten Zustand wiederherstellen')
+ def test_climate_single_temperature(self):
+  d=sample()['devices'][0];d['status']['temp_current']=224
+  self.assertEqual(climate(d,TEMPERATURE_CODES,'°C'),'22,3 °C')
+ def test_diagnostics_exclude_credentials(self):
+  self.assertEqual(diagnostic_filter({'local_key':'secret','ip':'1.2.3.4','access_token':'secret','result':{'status':[],'localKey':'secret'}}),{'result':{'status':[]}})
  def test_scaled_temperature(self):self.assertEqual(fmt(223,{'values':{'scale':1,'unit':'°C'}}),'22,3 °C')
  def test_negative(self):self.assertEqual(fmt(-42,{'values':'{"scale":1}'}),'-4,2')
  def test_false(self):self.assertEqual(fmt(False),'Aus')

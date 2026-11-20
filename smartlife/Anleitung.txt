@@ -1,3 +1,14 @@
+NEU IN 0.1.2
+Raum-Tabs lassen sich mit gedrueckter linker Maustaste verschieben.
+Die Reihenfolge wird pro Zuhause auf diesem PC gespeichert.
+Klimaliste: nur Sensoren, ein Temperaturwert je Sensor.
+Geraetefunktionen und bekannte Auswahlwerte auf Deutsch.
+Rollladen ohne Daten: Geraet auswaehlen -> Geraetedaten pruefen ->
+Geraetebericht speichern. Die Datei kann zur Fehleranalyse weitergegeben werden.
+Es werden keine Zugangsschluessel und Kontotoken exportiert.
+Die Rollladen-Steuerung ist fuer das betroffene Modell noch nicht bestaetigt.
+27 lokale Pruefungen bestanden.
+
 NEU IN 0.1.1
 Uebersicht: nur Temperatur und Luftfeuchte, nach Raum aufgelistet.
 Raeume: Alle Raeume und einzelne Raeume als Tabs; keine Auswahlfelder oben.
@@ -7,7 +18,7 @@ Rollladen: gemeldete Istposition und Sollposition getrennt.
 Oeffnen/Stoppen/Schliessen und Positionswahl laut freigegebenen Funktionen.
 23 lokale Tests bestanden; konkrete Rollladen-Rueckmeldung noch live pruefen.
 
-SMART LIFE DESKTOP 0.1.1 – WINDOWS-TESTVERSION
+SMART LIFE DESKTOP 0.1.2 – WINDOWS-TESTVERSION
 
 1. ZIP vollstaendig mit „Alle extrahieren“ entpacken.
 2. Installieren.cmd doppelt anklicken. Keine Administratorrechte erforderlich.

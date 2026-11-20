@@ -1,9 +1,9 @@
 {
   "status": "available",
   "platform": "win32",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "runtime": "win64-py313-qt683-v1",
-  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.1.1-app.zip",
-  "sha256": "d552971e711f66b7d0152dab5694369eb1784beadb876e29ae60b1132f011ced",
-  "notes": "Temperatur-/Luftfeuchteübersicht, Raum-Tabs unter Räume, IP-Spalte und erweiterte Rollladenanzeige."
+  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.1.2-app.zip",
+  "sha256": "91bdbf541e2e8d1f9b7587ba4b036b5656235201d2eaad58f48ae1696ea0dc3f",
+  "notes": "Verschiebbare Raum-Tabs mit gespeicherter Reihenfolge, deutsche Funktionen, bereinigte Klimaübersicht und gezielte Rollladen-Geräteprüfung."
 }

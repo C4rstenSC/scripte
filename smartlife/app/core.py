@@ -3,13 +3,14 @@ from __future__ import annotations
 import copy
 import json
 import math
+import re
 import os
 from pathlib import Path
 import sys
 import time
 from urllib.parse import urlparse
 
-VERSION = '0.1.1'
+VERSION = '0.1.2'
 RUNTIME = 'win64-py313-qt683-v1'
 # Public Tuya device-sharing registration also used by Home Assistant.
 CLIENT_ID = 'HA_3y9q4ak7g4ephrvke'
@@ -37,8 +38,38 @@ ENUMS = {'open':'Öffnen','close':'Schließen','stop':'Stoppen','on':'Ein','off'
  'middle':'Mittel','medium':'Mittel','high':'Hoch','normal':'Normal','good':'Gut',
  'excellent':'Sehr gut','poor':'Schlecht','bright':'Hell','white':'Weiß','colour':'Farbe'}
 
+LABELS.update({'bright_value':'Helligkeit','brightness_min':'Mindesthelligkeit','brightness_max':'Maximalhelligkeit',
+ 'relay_status':'Verhalten nach Stromausfall','countdown':'Ausschaltverzögerung','switch_mode':'Tastenereignis',
+ 'doorcontact_state':'Türkontakt','temper_alarm':'Manipulationsalarm','tamper_alarm':'Manipulationsalarm',
+ 'switch_led':'Licht','switch_usb':'USB-Anschluss','work_mode':'Betriebsmodus','control':'Rollladensteuerung',
+ 'mach_operate':'Rollladensteuerung','situation_set':'Gemeldete Rollladenstellung','position':'Position',
+ 'percent_state':'Istposition','percent_control':'Zielposition','motor_direction':'Motorrichtung',
+ 'control_back_mode':'Positionsrichtung','calibration':'Kalibrierung','light_mode':'Lichtmodus',
+ 'temp_set':'Solltemperatur','temp_unit_convert':'Temperatureinheit','filter_reset':'Filterzähler zurücksetzen',
+ 'filter_life':'Filterlebensdauer','pm25_value':'Feinstaub PM2,5','fault':'Störung'})
+ENUMS.update({'memory':'Letzten Zustand wiederherstellen','click':'Einfacher Tastendruck',
+ 'double_click':'Doppelter Tastendruck','long_press':'Langer Tastendruck','hold':'Gedrückt halten',
+ 'release':'Losgelassen','true':'Ein','false':'Aus','forward':'Vorwärts','reverse':'Rückwärts',
+ 'power_on':'Einschalten','power_off':'Ausschalten','last':'Letzter Zustand','strong':'Stark',
+ 'soft':'Sanft','level_1':'Stufe 1','level_2':'Stufe 2','level_3':'Stufe 3','opening':'Öffnet',
+ 'closing':'Schließt','opened':'Geöffnet','closed':'Geschlossen','continue':'Weiterfahren',
+ 'wet':'Feucht','dry':'Trocken','alarm':'Alarm','normal':'Normal','cancel':'Abbrechen',
+ 'reset':'Zurücksetzen','start':'Starten','pause':'Pausieren','min':'Minimum','max':'Maximum'})
+
+def enum_label(value):
+    text=str(value)
+    if text in ENUMS:return ENUMS[text]
+    if re.fullmatch(r'[0-9. +%°-]+',text):return text
+    return 'Herstellerwert: '+text
+
 def label(code, spec=None):
-    return LABELS.get(code) or (spec or {}).get('name') or code.replace('_',' ').capitalize()
+    if code in LABELS:return LABELS[code]
+    # Tuya uses both switch_mode1 and switch_led_1 for numbered channels.
+    match=re.fullmatch(r'(.+?)(?:_)?([0-9]+)',code)
+    if match:
+        base=match.group(1).rstrip('_')
+        if base in LABELS:return LABELS[base]+' '+match.group(2)
+    return 'Weitere Gerätefunktion'
 
 def meta(spec):
     v=(spec or {}).get('values', {})
@@ -55,7 +86,7 @@ def fmt(value, spec=None):
         value=value/(10**scale)
         return (f'{value:.{max(0,min(scale,6))}f}').replace('.',',')+(' '+unit if unit else '')
     if isinstance(value,(dict,list)): return json.dumps(value,ensure_ascii=False)
-    return ENUMS.get(str(value), str(value))
+    return enum_label(value)
 
 def validate(spec, value):
     typ=spec.get('type','').lower(); m=meta(spec)
@@ -182,7 +213,7 @@ class Cloud:
     def snapshot(d,home,room=None):
         return {'id':d.id,'name':d.name,'home':str(home),'room_id':str(room.id) if room else '',
                 'room':room.name if room else '', 'room_order':getattr(room,'display_order',0) if room else 0,
-                'online':bool(d.online),'category':getattr(d,'category',''), 'ip':getattr(d,'ip','') or '', 'sub':bool(getattr(d,'sub',False)),
+                'product_id':getattr(d,'product_id',''), 'product_name':getattr(d,'product_name',''), 'online':bool(d.online),'category':getattr(d,'category',''), 'ip':getattr(d,'ip','') or '', 'sub':bool(getattr(d,'sub',False)),
                 'status':copy.deepcopy(d.status),'functions':{k:vars(v).copy() for k,v in d.function.items()},
                 'ranges':{k:vars(v).copy() for k,v in d.status_range.items()}}
     def refresh(self):
@@ -198,6 +229,34 @@ class Cloud:
                     if d['id']==item['id']:
                         d['ip']=item.get('ip',d.get('ip','')) or ''; d['sub']=bool(item.get('sub',d.get('sub',False))); d['status']=status; d['online']=bool(item.get('online',d['online'])); d['name']=item.get('name',d['name'])
         return copy.deepcopy(self.devices)
+    def probe(self,device_id):
+        """Read documented SDK endpoints for one device; no guessed commands."""
+        if not self.manager:raise RuntimeError('Bitte zuerst anmelden.')
+        d=next(d for d in self.devices if d['id']==device_id)
+        report={'programmversion':VERSION,'gerät':d['name'],'kategorie':d.get('category',''),
+                'produkt':d.get('product_name',''),'produktkennung':d.get('product_id',''),'abfragen':{}}
+        api=self.manager.customer_api
+        queries=[('gerätedetails','/v1.0/m/life/ha/devices/detail',{'devIds':device_id}),
+                 ('funktionen',f'/v1.1/m/life/{device_id}/specifications',None),
+                 ('datenpunktzuordnung',f'/v1.0/m/life/devices/{device_id}/status',None)]
+        for name,path,params in queries:
+            try:
+                reply=api.get(path,params)
+                report['abfragen'][name]=diagnostic_filter(reply)
+            except Exception as e:
+                report['abfragen'][name]={'fehlercode':str(getattr(e,'error_code',type(e).__name__))}
+        # Re-read the complete SDK device representation in case Tuya has now supplied specs.
+        try:
+            fresh=self.manager.device_repository.query_devices_by_ids([device_id])
+            if fresh:
+                obj=fresh[0];self.manager.device_map[device_id]=obj
+                d['status']=copy.deepcopy(obj.status)
+                d['functions']={k:vars(v).copy() for k,v in obj.function.items()}
+                d['ranges']={k:vars(v).copy() for k,v in obj.status_range.items()}
+        except Exception:pass
+        report['werte']=copy.deepcopy(d['status']);report['bedienfunktionen']=copy.deepcopy(d['functions'])
+        return {'report':report,'devices':copy.deepcopy(self.devices)}
+
     def command(self,device_id,code,value):
         d=next((d for d in self.devices if d['id']==device_id),None)
         if not d or not d['online']: raise RuntimeError('Gerät ist nicht online.')
@@ -235,11 +294,11 @@ def climate(d,codes,unit):
         spec=d['ranges'].get(code) or d['functions'].get(code) or {}
         value=fmt(d['status'][code],spec)
         if not meta(spec).get('unit'):value+=' '+('°F' if code.endswith('_f') else unit)
-        parts.append(value)
-    return ' / '.join(parts) if parts else '—'
+        return value
+    return '—'
 
 def is_cover(d):
-    return d.get('category') in ('cl','clkg','jdcljqr') or any(c in d['functions'] for c in ('percent_control','control','mach_operate')) or any(c in d['status'] for c in ('percent_state','percent_state_1'))
+    return any(word in d.get('name','').casefold() for word in ('rollladen','rolladen','jalousie','vorhang')) or d.get('category') in ('cl','clkg','jdcljqr') or any(c in d['functions'] for c in ('percent_control','control','mach_operate')) or any(c in d['status'] for c in ('percent_state','percent_state_1'))
 
 def cover_position(d):
     # Actual position feedback only. percent_control is a target on many devices.
@@ -261,3 +320,14 @@ def cover_text(d):
     text='Position nicht zurückgemeldet'
     if target is not None:text+=' · gemeldeter Sollwert: '+str(target)+' %'
     return text
+
+
+def diagnostic_filter(value):
+    # Allowlist only device schema/status fields. IDs, local keys, tokens, MACs and IPs are dropped.
+    allowed={'success','code','msg','result','status','functions','values','value','name','type',
+      'desc','dpId','dp_id','statusCode','status_code','valueConvert','statusFormat','valueDesc',
+      'valueType','enumMappingMap','dpStatusRelationDTOS','supportLocal','productKey',
+      'min','max','step','scale','unit','range'}
+    if isinstance(value,dict):return {k:diagnostic_filter(v) for k,v in value.items() if k in allowed}
+    if isinstance(value,list):return [diagnostic_filter(v) for v in value]
+    return value

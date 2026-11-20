@@ -21,7 +21,13 @@ class UiTests(unittest.TestCase):
  def test_overview_only_climate(self):
   self.assertEqual(self.w.climate_tree.columnCount(),5)
   self.assertFalse(self.w.room_tabs.isVisible())
-  self.assertEqual(self.w.climate_tree.topLevelItemCount(),3)
+  self.assertEqual(self.w.climate_tree.topLevelItemCount(),1)
+ def test_move_room_tabs_keeps_room_identity(self):
+  self.w.settings.remove('room-order/demo');self.w.change_home();self.w.navigate('Räume')
+  index=next(i for i in range(self.w.room_tabs.count()) if self.w.room_tabs.tabData(i)=='Wohnzimmer')
+  self.w.room_tabs.moveTab(index,1);self.w.room_tabs.setCurrentIndex(1)
+  self.assertEqual(self.w.room.currentData(),'Wohnzimmer');self.assertEqual(self.w.tree.topLevelItemCount(),3)
+  self.w.change_home();self.assertEqual(self.w.room_tabs.tabData(1),'Wohnzimmer');self.w.settings.remove('room-order/demo')
  def test_ip_column(self):
   self.w.navigate('Geräte');self.assertEqual(self.w.tree.headerItem().text(2),'IP-Adresse (Tuya)')
  def test_scenes(self):self.w.navigate('Szenen');self.assertEqual(self.w.tree.topLevelItemCount(),1)

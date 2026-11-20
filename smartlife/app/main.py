@@ -8,12 +8,12 @@ import os
 from pathlib import Path
 import sys
 import time
-from PySide6.QtCore import Qt, Signal, QObject, QTimer
+from PySide6.QtCore import Qt, Signal, QObject, QTimer, QSettings
 from PySide6.QtGui import QPixmap, QImage
 from PySide6.QtWidgets import (QApplication,QMainWindow,QWidget,QVBoxLayout,QHBoxLayout,QLabel,
  QPushButton,QComboBox,QLineEdit,QTreeWidget,QTreeWidgetItem,QSplitter,QScrollArea,QFormLayout,
- QDoubleSpinBox,QSpinBox,QDialog,QCheckBox,QMessageBox,QFrame,QSizePolicy,QTabBar,QHeaderView)
-from core import VERSION, Cloud, label, fmt, meta, ENUMS, validate, climate, TEMPERATURE_CODES, HUMIDITY_CODES, is_cover, cover_position, cover_text
+ QDoubleSpinBox,QSpinBox,QDialog,QCheckBox,QMessageBox,QFrame,QSizePolicy,QTabBar,QHeaderView,QPlainTextEdit,QFileDialog)
+from core import VERSION, Cloud, label, fmt, meta, ENUMS, validate, climate, TEMPERATURE_CODES, HUMIDITY_CODES, is_cover, cover_position, cover_text, enum_label
 import updates
 
 STYLE='''
@@ -43,7 +43,7 @@ class Main(QMainWindow):
     def __init__(self,demo=False):
         super().__init__(); self.setWindowTitle('Smart Life Desktop · '+VERSION); self.resize(1390,900); self.setMinimumSize(1020,680)
         self.pool=ThreadPoolExecutor(max_workers=1); self.bridge=Bridge(); self.bridge.done.connect(self.complete)
-        self.cloud=Cloud(); self.demo=demo; self.closing=False; self.jobs=0; self.ready=False
+        self.settings=QSettings('C4rstenSC','SmartLifeDesktop');self.cloud=Cloud(); self.demo=demo; self.closing=False; self.jobs=0; self.ready=False
         self.data={'homes':[],'devices':[],'scenes':[]}; self.page='Übersicht'; self.pending=False; self.detail_id=None; self.login_dialog=None
         root=QWidget(); self.setCentralWidget(root); layout=QHBoxLayout(root); layout.setContentsMargins(0,0,0,0); layout.setSpacing(0)
         nav=QFrame(); nav.setObjectName('nav'); nav.setFixedWidth(205); nl=QVBoxLayout(nav); nl.setContentsMargins(18,26,18,20)
@@ -62,7 +62,7 @@ class Main(QMainWindow):
         self.search=QLineEdit();self.search.hide();self.search.textChanged.connect(self.render)
         self.reload=QPushButton('Neu laden');self.reload.clicked.connect(self.load);top.addWidget(self.reload)
         self.home_tabs=QTabBar();self.home_tabs.setExpanding(False);self.home_tabs.currentChanged.connect(self.select_home_tab);bl.addWidget(self.home_tabs)
-        self.room_tabs=QTabBar();self.room_tabs.setExpanding(False);self.room_tabs.setUsesScrollButtons(True);self.room_tabs.currentChanged.connect(self.select_room_tab);bl.addWidget(self.room_tabs)
+        self.room_tabs=QTabBar();self.room_tabs.setMovable(True);self.room_tabs.tabMoved.connect(self.save_room_tab_order);self.room_tabs.setExpanding(False);self.room_tabs.setUsesScrollButtons(True);self.room_tabs.currentChanged.connect(self.select_room_tab);bl.addWidget(self.room_tabs)
         self.climate_tree=QTreeWidget();self.climate_tree.setHeaderLabels(['Raum','Sensor','Temperatur','Luftfeuchte','Verbindung']);self.climate_tree.setRootIsDecorated(False);self.climate_tree.setAlternatingRowColors(True);self.climate_tree.setSortingEnabled(True);self.climate_tree.setStyleSheet('QTreeWidget::item {padding:14px 10px;}');self.climate_tree.header().setSectionResizeMode(QHeaderView.ResizeToContents);self.climate_tree.header().setStretchLastSection(True);bl.addWidget(self.climate_tree,1)
         self.summary=QLabel(''); bl.addWidget(self.summary)
         self.split=QSplitter(); bl.addWidget(self.split,1)
@@ -138,12 +138,20 @@ class Main(QMainWindow):
         self.room.addItem('Ohne Raumzuordnung',''); ix=self.room.findData(prior);self.room.setCurrentIndex(max(0,ix));self.room.blockSignals(False)
         self.room_tabs.blockSignals(True)
         while self.room_tabs.count():self.room_tabs.removeTab(0)
-        for i in range(self.room.count()):self.room_tabs.addTab(self.room.itemText(i))
-        self.room_tabs.setCurrentIndex(self.room.currentIndex());self.room_tabs.blockSignals(False);self.render();self.empty_detail()
+        try:order=json.loads(self.settings.value('room-order/'+str(self.home.currentData()),'[]'))
+        except (ValueError,TypeError):order=[]
+        indices=list(range(self.room.count()));indices.sort(key=lambda i:order.index(self.room.itemData(i)) if self.room.itemData(i) in order else len(order)+i)
+        for i in indices:
+            tab=self.room_tabs.addTab(self.room.itemText(i));self.room_tabs.setTabData(tab,self.room.itemData(i))
+        selected=next((i for i in range(self.room_tabs.count()) if self.room_tabs.tabData(i)==self.room.currentData()),0)
+        self.room_tabs.setCurrentIndex(selected);self.room_tabs.blockSignals(False);self.render();self.empty_detail()
     def select_home_tab(self,index):
         if index>=0:self.home.setCurrentIndex(index)
     def select_room_tab(self,index):
-        if index>=0:self.room.setCurrentIndex(index)
+        if index>=0:self.room.setCurrentIndex(self.room.findData(self.room_tabs.tabData(index)))
+    def save_room_tab_order(self,*_):
+        order=[self.room_tabs.tabData(i) for i in range(self.room_tabs.count())]
+        self.settings.setValue('room-order/'+str(self.home.currentData()),json.dumps(order));self.settings.sync()
     def navigate(self,page):
         self.page=page
         for n,b in self.buttons.items():b.setChecked(n==page)
@@ -194,11 +202,11 @@ class Main(QMainWindow):
         for d in ds:rooms.setdefault(d['room'] or 'Ohne Raumzuordnung',[]).append(d)
         for room,devices in sorted(rooms.items(),key=lambda x:x[0].casefold()):
             sensors=[d for d in devices if any(c in d['status'] for c in TEMPERATURE_CODES+HUMIDITY_CODES)]
-            if not sensors:self.climate_tree.addTopLevelItem(QTreeWidgetItem([room,'Kein Klimasensor gemeldet','—','—','']))
+            if not sensors:continue
             for d in sensors:
                 self.climate_tree.addTopLevelItem(QTreeWidgetItem([room,d['name'],climate(d,TEMPERATURE_CODES,'°C'),climate(d,HUMIDITY_CODES,'%'),'Online' if d['online'] else 'Offline · letzter gemeldeter Wert']))
                 count+=1
-        self.climate_tree.sortItems(0,Qt.AscendingOrder);self.summary.setText(f'Temperatur und Luftfeuchte · {len(rooms)} Räume · {count} Sensoren')
+        self.climate_tree.sortItems(0,Qt.AscendingOrder);self.summary.setText(f'Temperatur und Luftfeuchte · {count} Sensoren')
     def clear_detail(self):
         while self.dl.count():
             item=self.dl.takeAt(0)
@@ -220,6 +228,9 @@ class Main(QMainWindow):
         if is_cover(d):
             position=QLabel(cover_text(d));position.setWordWrap(True);position.setStyleSheet('font-size:16pt;font-weight:bold;padding:8px 0;');self.dl.addWidget(position);self.cover_label=position
         self.dl.addWidget(QLabel((d['room'] or 'Ohne Raumzuordnung')+' · '+('Online' if d['online'] else 'Offline')))
+        if not d['functions']:
+            notice=QLabel('Die bisherige Smart-Life-Abfrage liefert für dieses Gerät keine Bedienfunktionen. Eine Position ist damit ebenfalls nicht bestätigt.');notice.setWordWrap(True);self.dl.addWidget(notice)
+        probe=QPushButton('Gerätedaten prüfen');probe.setEnabled(not self.demo);probe.clicked.connect(lambda:self.probe_device(d,probe));self.dl.addWidget(probe)
         for code,spec in d['functions'].items():
             typ=spec.get('type','').lower();m=meta(spec);current=d['status'].get(code)
             if typ not in ('boolean','enum','integer'):continue
@@ -235,11 +246,11 @@ class Main(QMainWindow):
                 if set(choices).issubset({'open','close','stop'}) and choices:
                     row=QHBoxLayout()
                     for v in choices:
-                        b=QPushButton(ENUMS.get(v,v));b.setProperty('active',current==v);self.live_buttons.append((b,code,v));b.clicked.connect(lambda checked=False,c=code,v=v,w=frame:self.command(d,c,v,w));row.addWidget(b)
+                        b=QPushButton(enum_label(v));b.setProperty('active',current==v);self.live_buttons.append((b,code,v));b.clicked.connect(lambda checked=False,c=code,v=v,w=frame:self.command(d,c,v,w));row.addWidget(b)
                     fl.addLayout(row)
                 else:
                     box=QComboBox()
-                    for v in choices:box.addItem(ENUMS.get(v,str(v)),v)
+                    for v in choices:box.addItem(enum_label(v),v)
                     box.setCurrentIndex(max(0,box.findData(current)));fl.addWidget(box);b=QPushButton('Übernehmen');b.clicked.connect(lambda checked=False,c=code,w=frame,box=box:self.command(d,c,box.currentData(),w));fl.addWidget(b)
             else:
                 lo=int(m.get('min',0));hi=int(m.get('max',100));step=max(1,int(m.get('step',1)));scale=max(0,min(6,int(m.get('scale',0))))
@@ -250,6 +261,28 @@ class Main(QMainWindow):
                 fl.addWidget(box);b=QPushButton('Übernehmen');b.clicked.connect(lambda checked=False,c=code,w=frame,box=box,sc=scale,lo=lo,st=step:self.command(d,c,lo+round((box.value()*10**sc-lo)/st)*st,w));fl.addWidget(b)
             frame.setEnabled(d['online'] and not self.demo);self.dl.addWidget(frame)
         self.dl.addWidget(QLabel('Gemeldete Werte'));self.values_widget=QLabel('\n'.join(label(c,d['ranges'].get(c))+': '+fmt(v,d['ranges'].get(c)) for c,v in d['status'].items()) or 'Keine Werte gemeldet.');self.values_widget.setWordWrap(True);self.values_widget.setTextInteractionFlags(Qt.TextSelectableByMouse);self.dl.addWidget(self.values_widget);self.dl.addStretch()
+    def probe_device(self,d,button):
+        button.setEnabled(False);self.status.setText('Gerätedaten werden gezielt geprüft …')
+        def done(result):
+            try:button.setEnabled(True)
+            except RuntimeError:pass
+            self.data['devices']=result['devices'];self.render();self.selected()
+            text=json.dumps(result['report'],ensure_ascii=False,indent=2)
+            dlg=QDialog(self);dlg.setWindowTitle('Geräteprüfung – '+d['name']);dlg.resize(780,620);v=QVBoxLayout(dlg)
+            explanation=QLabel('Diese Prüfung zeigt, welche Funktionen und Werte Tuya für dieses Modell freigibt. Zugangsschlüssel, Kontotoken und Netzwerkadressen werden nicht exportiert.');explanation.setWordWrap(True);v.addWidget(explanation)
+            view=QPlainTextEdit();view.setReadOnly(True);view.setPlainText(text);v.addWidget(view)
+            save=QPushButton('Gerätebericht speichern');v.addWidget(save)
+            def export():
+                filename,_=QFileDialog.getSaveFileName(dlg,'Gerätebericht speichern','SmartLife-Geraetepruefung.json','JSON-Datei (*.json)')
+                if filename:
+                    try:Path(filename).write_text(text,encoding='utf-8')
+                    except OSError as e:self.error(e)
+            save.clicked.connect(export);dlg.exec()
+        def fail(e):
+            try:button.setEnabled(True)
+            except RuntimeError:pass
+            self.error(e)
+        self.submit(lambda:self.cloud.probe(d['id']),done,fail)
     def command(self,d,code,value,widget):
         widget.setEnabled(False);self.status.setText('Befehl wird gesendet …')
         def done(_):

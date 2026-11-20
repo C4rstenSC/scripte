@@ -1,8 +1,8 @@
 # Smart Life Desktop
 
-Windows test release 0.1.1 for temperature sensors, switches, dimmers, blinds and air purifiers. Reads Smart Life home membership and per-device room assignments. Capability-driven controls, read-only sensor values, scenes and a Windows update button.
+Windows test release 0.1.2 for temperature sensors, switches, dimmers, blinds and air purifiers. Reads Smart Life home membership and per-device room assignments. Capability-driven controls, read-only sensor values, scenes and a Windows update button.
 
-Download: [Windows setup](downloads/SmartLife-Desktop-0.1.1-Setup.zip). Extract the ZIP and run `Installieren.cmd`. The small setup downloads pinned, hash-verified official Python/PyPI dependencies once. A fully bundled Windows package is supplied separately in the conversation.
+Download: [Windows setup](downloads/SmartLife-Desktop-0.1.2-Setup.zip). Extract the ZIP and run `Installieren.cmd`. The small setup downloads pinned, hash-verified official Python/PyPI dependencies once. A fully bundled Windows package is supplied separately in the conversation.
 
 ## Authentication
 
@@ -36,3 +36,6 @@ Tuya device-sharing SDK: MIT, https://github.com/tuya/tuya-device-sharing-sdk . 
 
 ## 0.1.1
 Climate-only overview, room tabs in Rooms, Tuya-reported IP addresses, actual blind position separate from target, short follow-up refreshes after blind commands. 23 local tests pass; live blind feedback is pending.
+
+## 0.1.2
+Persistently reorderable room tabs, climate-only sensor rows with one temperature per sensor, German numbered function labels and enum values. A targeted read-only device probe exports schema/status metadata while excluding credentials and network addresses. This is diagnostic support, not a verified repair for the user's blind, whose standard schema and status are currently empty. 27 local tests pass.
