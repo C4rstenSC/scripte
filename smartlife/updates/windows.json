@@ -1,9 +1,9 @@
 {
   "status": "available",
   "platform": "win32",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "runtime": "win64-py313-qt683-v1",
-  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.1-app.zip",
-  "sha256": "d58055b9f391bab37cb1ffbcd011b337ecca14adf2589e3881d0e0393d5a38a3",
-  "notes": "Automationen mit Auslösern und Aktionen ansehen; verbesserte Szenenabfrage und Datenpunktzuordnung; deutsche Tastenereignisse; breitere Seitenleiste und kein zusätzlicher Tabellenrahmen. Unbekannte Originalaktionen können als Szenenbericht geprüft werden."
+  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.2-app.zip",
+  "sha256": "78fe01bdc8a66e7418b6f57aed6810fdd83bdc7874b796744ce6c1f7b8eb47ca",
+  "notes": "Automationen bearbeiten und erstellen: Gerätebedingungen, Grenzwerte und Aktionen. Vollständige Details nachladen, bestehende Zeitbedingungen erhalten und Änderungen auf Konflikte prüfen. Updateprüfung künftig über aktuellen Git-Commit statt zwischengespeicherter Hauptzweig-Datei."
 }

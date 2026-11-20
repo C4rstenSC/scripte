@@ -8,12 +8,13 @@ from desktop_scenes import scene_rows
 from ui_widgets import CleanSelectionDelegate
 
 class SceneEditor(QDialog):
-    def __init__(self,parent,store,home,devices,scene=None,cloud=False,save_handler=None):
+    def __init__(self,parent,store,home,devices,scene=None,cloud=False,save_handler=None,draft=False):
         super().__init__(parent);self.cloud=cloud;self.save_handler=save_handler;self.setWindowTitle('Desktop-Szene bearbeiten' if scene and scene.get('source')=='desktop' else 'Neue Desktop-Szene');self.resize(930,720)
         if cloud:self.setWindowTitle('Smart-Life-Szene bearbeiten' if scene else 'Neue Smart-Life-Szene')
         self.store=store;self.home=home;self.devices=[d for d in devices if d['home']==home];self.scene=scene;self.actions=deepcopy(scene.get('actions',[])) if scene else [];self.result_scene=None
         v=QVBoxLayout(self);note=QLabel('Diese Szene wird auf diesem PC gespeichert. Sie verändert keine vorhandene Smart-Life-Szene. Beim Ausführen werden die Geräte über Smart Life gesteuert.');note.setWordWrap(True)
         if cloud:note.setText('Die Szene wird direkt in deinem Smart-Life-Konto gespeichert und erscheint auch in der App. Speichern führt die Szene nicht aus.')
+        if draft:note.setText('Geräteaktionen für die Automation bearbeiten. Erst „Automation speichern“ im Hauptfenster des Editors überträgt die Änderungen.')
         v.addWidget(note)
         self.name=QLineEdit(scene['name'] if scene else '');self.name.setPlaceholderText('Name der Szene');v.addWidget(self.name)
         self.tree=QTreeWidget();self.tree.setItemDelegate(CleanSelectionDelegate(self.tree));self.tree.setHeaderLabels(['Gerät','Funktion','Einstellung']);self.tree.setRootIsDecorated(False);self.tree.itemSelectionChanged.connect(self.select_action);v.addWidget(self.tree,1)
@@ -28,7 +29,7 @@ class SceneEditor(QDialog):
         for title,delta in [('Nach oben',-1),('Nach unten',1)]:
             b=QPushButton(title);b.clicked.connect(lambda checked=False,d=delta:self.move_action(d));order.addWidget(b)
         order.addStretch();v.addLayout(order)
-        bottom=QHBoxLayout();bottom.addStretch();save=QPushButton('Szene speichern');save.clicked.connect(self.save);bottom.addWidget(save);cancel=QPushButton('Abbrechen');cancel.clicked.connect(self.reject);bottom.addWidget(cancel);v.addLayout(bottom)
+        bottom=QHBoxLayout();bottom.addStretch();save=QPushButton('Aktionen übernehmen' if draft else 'Szene speichern');save.clicked.connect(self.save);bottom.addWidget(save);cancel=QPushButton('Abbrechen');cancel.clicked.connect(self.reject);bottom.addWidget(cancel);v.addLayout(bottom)
         self.device.currentIndexChanged.connect(self.choose_device);self.function.currentIndexChanged.connect(self.choose_function);self.choose_device();self.render()
         if self.actions:self.tree.setCurrentItem(self.tree.topLevelItem(0))
     def selected_device(self):return next((d for d in self.devices if d['id']==self.device.currentData()),None)

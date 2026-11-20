@@ -17,12 +17,33 @@ def version(s):
     if not re.fullmatch(r'\d+\.\d+\.\d+',str(s)): raise ValueError('Ungültige Versionsnummer.')
     return tuple(map(int,s.split('.')))
 
+def branch_head():
+    # Git's ref advertisement is revalidated by GitHub, unlike mutable raw URLs.
+    r=requests.get('https://github.com/C4rstenSC/scripte.git/info/refs',params={'service':'git-upload-pack'},timeout=20,headers={'Cache-Control':'no-cache, no-store','Pragma':'no-cache'},allow_redirects=False)
+    r.raise_for_status()
+    if r.is_redirect:raise ValueError('Unerwartete Weiterleitung bei der Updateprüfung.')
+    raw=r.content
+    if len(raw)>1024*1024:raise ValueError('Die GitHub-Antwort ist zu groß.')
+    position=0
+    while position<len(raw):
+        try:length=int(raw[position:position+4],16)
+        except ValueError:raise ValueError('GitHub hat keine gültige Versionsreferenz geliefert.')
+        position+=4
+        if length==0:continue
+        if length<4 or position+length-4>len(raw):raise ValueError('Unvollständige Versionsreferenz von GitHub.')
+        line=raw[position:position+length-4].split(b'\x00',1)[0].strip();position+=length-4
+        match=re.fullmatch(rb'([0-9a-f]{40}) refs/heads/main',line)
+        if match:return match.group(1).decode('ascii')
+    raise ValueError('Der aktuelle Updatezweig konnte nicht ermittelt werden.')
+
 def check():
     url=MANIFESTS.get(sys.platform)
     if not url: raise RuntimeError('Für dieses Betriebssystem gibt es keinen Updatekanal.')
+    commit=branch_head();url=url.replace('/main/','/'+commit+'/',1)
     r=requests.get(url,params={'_':str(time.time_ns())},timeout=20,headers={'Cache-Control':'no-cache, no-store','Pragma':'no-cache'}); r.raise_for_status(); m=r.json()
-    if m.get('status')!='available': return m,False
+    if m.get('status')!='available':raise RuntimeError('Für dieses Betriebssystem ist noch keine Version freigegeben.')
     if m.get('platform')!=sys.platform: raise ValueError('Update ist für ein anderes Betriebssystem bestimmt.')
+    validate_url(m['url']);m['url']=m['url'].replace('/main/','/'+commit+'/',1)
     return m, version(m['version'])>version(VERSION)
 
 def validate_url(url):

@@ -23,8 +23,8 @@ class CoreTests(unittest.TestCase):
   self.assertEqual(diagnostic_filter({'local_key':'secret','ip':'1.2.3.4','access_token':'secret','result':{'status':[],'localKey':'secret'}}),{'result':{'status':[]}})
  def test_update_check_bypasses_cache(self):
   import updates
-  with patch('updates.sys.platform','win32'),patch('updates.requests.get') as get:
-   get.return_value.json.return_value={'status':'available','platform':'win32','version':'9.9.9'}
+  with patch('updates.sys.platform','win32'),patch('updates.branch_head',return_value='a'*40),patch('updates.requests.get') as get:
+   get.return_value.json.return_value={'status':'available','platform':'win32','version':'9.9.9','url':'https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/test.zip'}
    self.assertTrue(updates.check()[1]);self.assertIn('_',get.call_args.kwargs['params']);self.assertIn('no-store',get.call_args.kwargs['headers']['Cache-Control'])
  def test_battery_zero_missing_and_warning(self):
   self.assertEqual(battery_text({'status':{'battery_percentage':0}}),'0 %')

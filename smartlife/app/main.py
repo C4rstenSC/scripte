@@ -16,6 +16,7 @@ from PySide6.QtWidgets import (QApplication,QMainWindow,QWidget,QVBoxLayout,QHBo
 from core import VERSION, Cloud, label, fmt, meta, ENUMS, validate, climate, TEMPERATURE_CODES, HUMIDITY_CODES, is_cover, cover_position, cover_text, enum_label, BATTERY_CODES, battery_text, probe_summary
 import updates
 from ui_widgets import CleanSelectionDelegate
+from automation_ui import AutomationEditor
 from desktop_scenes import SceneStore,execute as execute_desktop_scene,scene_rows,condition_rows,precondition_rows,scene_report
 from scene_editor import SceneEditor,question_de
 from cloud_ui import CloudSetupDialog,DeviceAdminDialog,RoomAdminDialog,CloudSceneStore
@@ -68,7 +69,7 @@ class Main(QMainWindow):
         self.home=QComboBox();self.home.hide();self.home.currentIndexChanged.connect(self.change_home)
         self.room=QComboBox();self.room.hide();self.room.currentIndexChanged.connect(self.render)
         self.search=QLineEdit();self.search.hide();self.search.textChanged.connect(self.render)
-        self.new_scene_btn=QPushButton('Neue Szene erstellen');self.new_scene_btn.clicked.connect(lambda:self.edit_scene());self.new_scene_btn.hide();top.addWidget(self.new_scene_btn)
+        self.new_scene_btn=QPushButton('Neue Szene erstellen');self.new_scene_btn.clicked.connect(lambda:self.edit_automation() if self.page=='Automationen' else self.edit_scene());self.new_scene_btn.hide();top.addWidget(self.new_scene_btn)
         self.manage_rooms_btn=QPushButton('Räume verwalten');self.manage_rooms_btn.clicked.connect(self.manage_rooms);self.manage_rooms_btn.hide();top.addWidget(self.manage_rooms_btn)
         self.reload=QPushButton('Neu laden');self.reload.clicked.connect(self.load);top.addWidget(self.reload)
         self.home_tabs=QTabBar();self.home_tabs.setExpanding(False);self.home_tabs.currentChanged.connect(self.select_home_tab);bl.addWidget(self.home_tabs)
@@ -174,7 +175,7 @@ class Main(QMainWindow):
     def navigate(self,page):
         self.page=page
         for n,b in self.buttons.items():b.setChecked(n==page)
-        self.manage_rooms_btn.setVisible(page=='Räume');self.new_scene_btn.setVisible(page=='Szenen');self.room_tabs.setVisible(page=='Räume'); self.render();self.empty_detail()
+        self.manage_rooms_btn.setVisible(page=='Räume');self.new_scene_btn.setVisible(page in ('Szenen','Automationen'));self.new_scene_btn.setText('Neue Automation erstellen' if page=='Automationen' else 'Neue Szene erstellen');self.room_tabs.setVisible(page=='Räume'); self.render();self.empty_detail()
     def visible_devices(self):
         home=self.home.currentData(); room=self.room.currentData() if self.page=='Räume' else None; search=self.search.text().casefold()
         return [d for d in self.data['devices'] if d['home']==home and (room is None or d['room_id']==room) and search in (d['name']+' '+d['room']).casefold()]
@@ -308,7 +309,7 @@ class Main(QMainWindow):
             self.dl.addWidget(QLabel('Dann – Geräteaktionen'))
             for name,function,value,_ in scene_rows(s,self.data['devices']):
                 row=QLabel(name+'\n'+function+': '+value);row.setWordWrap(True);self.dl.addWidget(row)
-            info=QLabel('Aus deinem Smart-Life-Konto gelesen. Diese Ansicht verändert die Automation nicht.');info.setWordWrap(True);self.dl.addWidget(info)
+            edit=QPushButton('Automation bearbeiten');edit.clicked.connect(lambda:self.edit_automation(s));self.dl.addWidget(edit)
             self.add_scene_report_button(s);self.dl.addStretch();return
         own=s.get('source')=='desktop'
         note=QLabel('Desktop-Szene · auf diesem PC gespeichert' if own else ('Smart-Life-Szene · direkt im Konto bearbeitbar' if s.get('source')=='project' else 'Smart-Life-Szene · über die QR-Anbindung schreibgeschützt'));note.setWordWrap(True);self.dl.addWidget(note)
@@ -350,6 +351,15 @@ class Main(QMainWindow):
         if not self.require_direct():return
         if not self.home.currentData():return
         RoomAdminDialog(self,self.home.currentData()).exec()
+    def edit_automation(self,s=None):
+        if not self.require_direct():return
+        home=self.home.currentData()
+        if not home:return
+        def open_editor(original):
+            dialog=AutomationEditor(self,home,original)
+            if dialog.exec()==QDialog.Accepted:self.detail_id=dialog.result_rule['id'];self.load()
+        if s:self.submit(lambda:self.cloud.direct.get_automation(home,s['id']),open_editor)
+        else:open_editor(None)
     def edit_scene(self,s=None):
         if not self.home.currentData():self.error(ValueError('Bitte zuerst ein Zuhause laden.'));return
         own=s and s.get('source')=='desktop'

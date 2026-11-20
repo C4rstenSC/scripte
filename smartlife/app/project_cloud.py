@@ -109,12 +109,13 @@ class DirectCloud:
             try:
                 for rule in items(self.api.request('GET',f'/v1.1/homes/{part(hid)}/automations'),'automations'):
                     aid=str(rule.get('automation_id',rule.get('id','')));part(aid)
-                    if not isinstance(rule.get('conditions'),list) or not isinstance(rule.get('actions'),list):
-                        rule=self.api.request('GET',f'/v1.0/homes/{part(hid)}/automations/{part(aid)}')
+                    try:rule=self.get_automation(hid,aid)
+                    except (ValueError,RuntimeError) as e:
+                        if not rule.get('conditions'):warnings.append(rule.get('name','Automation')+': '+str(e))
                     automations.append({'id':aid,'name':rule.get('name','Automation'),'home':hid,'source':'automation',
                         'enabled':rule.get('enabled'),'conditions':copy.deepcopy(rule.get('conditions',[])),
                         'actions':copy.deepcopy(rule.get('actions',[])),'match_type':rule.get('match_type'),'condition_rule':rule.get('condition_rule'),
-                        'preconditions':copy.deepcopy(rule.get('preconditions',[]))})
+                        'preconditions':copy.deepcopy(rule.get('preconditions',[])),'original':copy.deepcopy(rule)})
             except Exception as e:
                 message='Automationen konnten nicht vollständig geladen werden: '+str(e);automation_errors.append(message);warnings.append(message)
         self.homes,self.rooms,self.devices,self.scenes,self.warnings=hs,rs,ds,ss,warnings
@@ -209,6 +210,73 @@ class DirectCloud:
         else:
             sid=str(self._write('POST',f'/v1.0/homes/{part(home)}/scenes',body))
         return {'id':sid,'home':home,'name':name,'enabled':True,'source':'project','actions':cloud_actions,'original':dict(body,scene_id=sid)}
+    def get_automation(self,home,aid):
+        result=self.api.request('GET',f'/v1.0/homes/{part(home)}/automations/{part(aid)}')
+        if isinstance(result,list):result=next((r for r in result if str(r.get('automation_id',r.get('id','')))==str(aid)),None)
+        if not isinstance(result,dict):raise ValueError('Die Cloud hat keine vollständigen Automationsdetails geliefert.')
+        returned=result.get('automation_id',result.get('id'))
+        if returned is not None and str(returned)!=str(aid):raise ValueError('Die Cloudantwort gehört zu einer anderen Automation.')
+        result=copy.deepcopy(result)
+        for key in ('conditions','actions','preconditions'):
+            if isinstance(result.get(key),str):
+                try:result[key]=json.loads(result[key])
+                except ValueError:raise ValueError('Die Cloud liefert unlesbare '+key+'.')
+        if not isinstance(result.get('conditions'),list) or not result['conditions'] or not isinstance(result.get('actions'),list):
+            raise ValueError('Die Cloudantwort enthält keine vollständigen Auslöser und Aktionen. Die bestehende Regel wird nicht überschrieben.')
+        result['automation_id']=str(aid)
+        return result
+    def encode_actions(self,home,actions,original=None):
+        if not actions:raise ValueError('Mindestens eine Geräteaktion ist erforderlich.')
+        device_map={d['id']:d for d in self.devices if d['home']==home};out=[]
+        for a in actions:
+            if '_raw' in a:
+                if not original or a['_raw'] not in original.get('actions',[]):raise ValueError('Eine Originalaktion ist nicht mehr zugeordnet.')
+                out.append(copy.deepcopy(a['_raw']));continue
+            d=device_map.get(a.get('device'));code=a.get('code')
+            if not d or code not in d['functions']:raise ValueError('Eine Geräteaktion ist nicht mehr verfügbar.')
+            validate(d['functions'][code],a['value'])
+            out.append({'entity_id':d['id'],'action_executor':'dpIssue','executor_property':{code:a['value']}})
+        return out
+    def save_automation(self,home,name,conditions,actions,match_type,original=None,condition_rule=''):
+        self._home(home);name=checked_name(name)
+        if not conditions:raise ValueError('Mindestens eine Auslösebedingung ist erforderlich.')
+        if match_type not in (1,2,3):raise ValueError('Ungültige Bedingungsverknüpfung.')
+        if original:
+            aid=str(original['automation_id']);latest=self.get_automation(home,aid)
+            fields=('name','conditions','actions','match_type','condition_rule','preconditions','background','enabled')
+            if any(latest.get(k)!=original.get(k) for k in fields):raise RuntimeError('Diese Automation wurde inzwischen geändert. Bitte neu laden; es wurde nichts überschrieben.')
+        numbers=[];devices={d['id']:d for d in self.devices if d['home']==home}
+        for c in conditions:
+            number=c.get('order_num')
+            if not isinstance(number,int) or number<1 or number in numbers:raise ValueError('Bedingungsnummern müssen eindeutig sein.')
+            numbers.append(number)
+            if original and c in original.get('conditions',[]):continue
+            if c.get('entity_type')!=1:raise ValueError('Neue Bedingungen müssen eine gemeldete Gerätefunktion verwenden.')
+            d=devices.get(str(c.get('entity_id')));display=c.get('display',{});code=display.get('code')
+            spec=({**d['functions'],**d.get('ranges',{})}).get(code) if d else None
+            if not spec:raise ValueError('Eine Bedingung verweist auf eine unbekannte Gerätefunktion.')
+            validate(spec,display.get('value'))
+            allowed=('==','>','<') if spec.get('type','').lower()=='integer' else ('==',)
+            if display.get('operator') not in allowed:raise ValueError('Dieser Vergleich ist für die Gerätefunktion nicht zulässig.')
+        if match_type==3:validate_condition_expression(condition_rule,numbers)
+        encoded=self.encode_actions(home,actions,original)
+        background=(original or {}).get('background')
+        if not background:
+            pictures=self.api.request('GET','/v1.0/scenes/default-pictures');pool=pictures.get('pictures',[]) if isinstance(pictures,dict) else pictures
+            if isinstance(pool,list) and pool:
+                first=pool[0];background=first if isinstance(first,str) else first.get('url',first.get('background'))
+        if not background:raise RuntimeError('Die Cloud hat kein erforderliches Szenenbild geliefert. Es wurde nichts gespeichert.')
+        body={'name':name,'background':background,'conditions':copy.deepcopy(conditions),'actions':encoded,'match_type':match_type}
+        if original:
+            for key in ('preconditions','timezone_id'):
+                if key in original:body[key]=copy.deepcopy(original[key])
+        if match_type==3:body['condition_rule']=condition_rule
+        if original:self._write('PUT',f'/v1.0/homes/{part(home)}/automations/{part(aid)}',body)
+        else:
+            result=self._write('POST',f'/v1.0/homes/{part(home)}/automations',body)
+            aid=str(result.get('automation_id',result.get('id',''))) if isinstance(result,dict) else str(result)
+            part(aid)
+        return {'id':aid,'home':home,'name':name,'source':'automation','conditions':conditions,'actions':encoded,'match_type':match_type}
     def close(self):self.api.close()
 
 def checked_name(name):
@@ -238,3 +306,24 @@ def parse_model(result):
             if p.get('accessMode') in ('rw','wr','write','readWrite'):functions[code]=copy.deepcopy(obj)
     if not ranges:raise ValueError('Tuya liefert keine Eigenschaften im Gerätemodell.')
     return functions,ranges
+
+
+def validate_condition_expression(expression,numbers):
+    tokens=re.findall(r'\d+|&&|\|\||[()]',expression)
+    if ''.join(tokens)!=re.sub(r'\s+','',expression) or not tokens:raise ValueError('Die eigene Verknüpfung enthält ungültige Zeichen.')
+    position=0
+    def term():
+        nonlocal position
+        if position>=len(tokens):raise ValueError('Die Bedingungsverknüpfung ist unvollständig.')
+        token=tokens[position];position+=1
+        if token=='(':
+            chain()
+            if position>=len(tokens) or tokens[position]!=')':raise ValueError('Eine schließende Klammer fehlt.')
+            position+=1
+        elif not token.isdigit() or int(token) not in numbers:raise ValueError('Die Verknüpfung verweist auf eine nicht vorhandene Bedingung.')
+    def chain():
+        nonlocal position
+        term()
+        while position<len(tokens) and tokens[position] in ('&&','||'):position+=1;term()
+    chain()
+    if position!=len(tokens):raise ValueError('Die Bedingungsverknüpfung ist ungültig.')

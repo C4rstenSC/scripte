@@ -1,8 +1,16 @@
-# Smart Life Desktop 0.2.1
+# Smart Life Desktop 0.2.2
 
 Deutscher Windows-Client für Smart Life mit direktem Zugriff auf ein verknüpftes Tuya-Cloud-Projekt.
 
-[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.1-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.2-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+
+## Änderungen in 0.2.2
+
+**Automationseditor:** „Automationen“ → Regel auswählen → „Automation bearbeiten“. Vollständige Details werden vor dem Bearbeiten zusätzlich abgefragt. Name, Gerätebedingungen, Vergleiche, Grenzwerte und Geräteaktionen lassen sich ändern; Bedingungen können ergänzt und entfernt werden. Auch neue Automationen mit Gerätebedingungen sind möglich. Beliebige/eine oder alle Bedingungen sowie eigene logische Verknüpfungen werden unterstützt. Vorhandene besondere Bedingungen und Aktionen sowie Zeitfenster werden unverändert erhalten; besondere Wetter-/Zeitbedingungen sind noch nicht über einen eigenen Editor bearbeitbar. Vor dem Schreiben werden die ursprünglichen Daten erneut gelesen; bei zwischenzeitlicher Änderung wird nicht überschrieben. Fehlen vollständige Originalbedingungen, wird keine bestehende Regel überschrieben. Das ist insbesondere bei den noch ungeklärten Kontoantworten zu prüfen; bloße Listenabfragen reichen nicht mehr.
+
+**Updateprüfung:** Der aktuelle Hauptzweig wird über GitHubs Git-Referenzabfrage ermittelt (Serverantwort: no-cache, max-age=0, must-revalidate). Manifest und ZIP werden danach über denselben unveränderlichen Commit geladen. Schlägt die Referenzprüfung fehl, erscheint ein Fehler statt „aktuell“. Die vorher installierte Version behält ihren alten Prüfweg bis zur ersten Installation dieses Updates. Die neue Prüfung benötigt kein Git-Programm und keinen GitHub-Schlüssel.
+
+78 lokale Tests bestanden. Zusätzlich wurde der Qt-Editor mit geänderter Bedingung und Aktion bis zum erzeugten PUT-Aufruf getestet; Zeitfenster blieben erhalten. Die Git-Referenzabfrage wurde am öffentlichen Repository geprüft. Echtes Speichern mit dem Benutzerkonto ist ohne Zugriff auf dieses Konto nicht verifiziert. Die unbekannte `lightBase`-Aktion und KI-Funktionen bleiben ungelöst; diese Version behauptet keine vollständige iOS-Parität.
 
 ## Änderungen in 0.2.1
 
