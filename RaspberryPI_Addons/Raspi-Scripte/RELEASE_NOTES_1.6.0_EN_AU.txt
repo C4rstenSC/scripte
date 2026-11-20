@@ -1,0 +1,5 @@
+Version 1.6.0 – 20 November 2026
+- Windows GPS status now recognises direct USB GPS through WURB on Raspberry Pi 5 without requiring the retired auxiliary services.
+- Retains Pi 3/4, Waveshare bridge and no-GPS checks. Adds no services or continuous GPS polling.
+- Updates Windows content, bundled Add-on and both update paths to 1.6.0.
+- Validation: simulated status matrix, existing GPS regressions, shell syntax, archive integrity and encryption round trip. No physical Raspberry Pi or native Windows test.

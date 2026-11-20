@@ -1,0 +1,9 @@
+{
+  "version": "1.6.0",
+  "de": [
+    "Version 1.6.0 – 20.11.2026\n- GPS-Status im Windowsprogramm: Direkter USB-GPS-Betrieb durch WURB wird jetzt auch auf Raspberry Pi 5 erkannt. Die abgeschaltete Zusatzkette wird nicht mehr vorausgesetzt.\n- Vorhandene Prüfung für Pi 3/4, Waveshare-Bridge und kein GPS bleibt erhalten. Keine zusätzlichen Dienste oder dauerhaften GPS-Abfragen.\n- Windowsinhalt, eingebettetes Addon und beide Updatewege auf 1.6.0 aktualisiert.\n- Geprüft: simulierte Statusmatrix, vorhandene GPS-Regressionen, Shellsyntax, Archivintegrität und Verschlüsselungsrückprüfung. Kein physischer Raspberry-/Windows-Test.\n"
+  ],
+  "en-AU": [
+    "Version 1.6.0 – 20 November 2026\n- Windows GPS status now recognises direct USB GPS through WURB on Raspberry Pi 5 without requiring the retired auxiliary services.\n- Retains Pi 3/4, Waveshare bridge and no-GPS checks. Adds no services or continuous GPS polling.\n- Updates Windows content, bundled Add-on and both update paths to 1.6.0.\n- Validation: simulated status matrix, existing GPS regressions, shell syntax, archive integrity and encryption round trip. No physical Raspberry Pi or native Windows test.\n"
+  ]
+}
