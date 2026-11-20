@@ -131,9 +131,10 @@ class FritzAccount:
         if not address:return None
         primary=[h for h in self.hosts if h['mac']==address];matches=primary or [h for h in self.hosts if address in h.get('aliases',[])]
         if len(matches)!=1:return None
-        host=matches[0];ip=host['ip'] if host['active'] else ''
-        if ip and any(h['active'] and h['ip']==ip and h['mac']!=host['mac'] for h in self.hosts):ip=''
-        return dict(host,ip=ip,manual=device['id'] in self.bindings)
+        host=matches[0];ip=host['ip']
+        conflict=bool(ip and any(h['active'] and h['ip']==ip and h['mac']!=host['mac'] for h in self.hosts))
+        if conflict:ip=''
+        return dict(host,ip=ip,last_known=bool(ip and not host['active']),ip_conflict=conflict,manual=device['id'] in self.bindings)
     def refresh_device(self,device):
         old=self.match(device)
         if not self.client or not old:return False

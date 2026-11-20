@@ -52,7 +52,7 @@ class ProjectAPI:
              '1106':'Zugriff verweigert. Kontoverknüpfung, Datenzentrum und API-Berechtigung prüfen.',
              '1010':'Die Anmeldung ist ungültig. Bitte erneut verbinden.',
              '28841105':'Der benötigte API-Dienst ist für dieses Projekt nicht freigeschaltet.',
-             '60001001':'Das Tuya-Kontingent für steuerbare Geräte reicht nicht aus. Das Geräte-Kontingent im Tuya-Cloud-Projekt prüfen.'}
+             '60001001':'Das Kontingent für steuerbare Geräte im Tuya-Projekt ist ausgeschöpft. Geräte mit nur Leseberechtigung können deshalb nicht für Änderungen freigegeben werden. Die Freigabe wird in Tuya unter Geräte → Geräteberechtigung verwaltet.'}
             message=tips.get(code,'Die Anfrage wurde von Tuya abgelehnt.')
             raise RuntimeError('Tuya-Fehler '+code+': '+message)
         return reply

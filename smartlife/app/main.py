@@ -276,6 +276,11 @@ class Main(QMainWindow):
                 if is_cover(d) and (cover_position(d) is not None or any(c in d['status'] for c in ('percent_control','percent_control_1'))):summary=cover_text(d)
                 network=self.fritz.match(d);ip=network['ip'] if network else '';hostname=network['hostname'] if network else ''
                 it=DeviceItem([d['name'],d['room'] or 'Ohne Raumzuordnung',ip,hostname,'Online' if d['online'] else 'Offline',battery_text(d),summary]);it.setData(0,Qt.UserRole,d);self.tree.addTopLevelItem(it)
+                if network:
+                    if network.get('last_known'):
+                        it.setText(2,ip+' (zuletzt bekannt)');it.setToolTip(2,'In der FRITZ!Box gespeicherte IP-Adresse. Das Gerät wird dort derzeit als inaktiv gemeldet; die aktuelle Erreichbarkeit ist damit nicht bestätigt.')
+                    elif network.get('ip_conflict'):it.setToolTip(2,'Die gespeicherte IP-Adresse ist laut FRITZ!Box derzeit einem anderen aktiven Gerät zugeordnet und wird deshalb nicht als Geräteadresse angezeigt.')
+                    elif not ip:it.setToolTip(2,'Für diesen Netzwerkeintrag meldet die FRITZ!Box keine lokale IP-Adresse.')
                 if d['id']==selected:it.setSelected(True)
             self.summary.setText(f'{len(ds)} Geräte · {sum(d["online"] for d in ds)} online · {len(ds)-sum(d["online"] for d in ds)} offline')
         fit_columns(self.tree)

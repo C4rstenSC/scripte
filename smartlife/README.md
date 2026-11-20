@@ -1,8 +1,16 @@
-# Smart Life Desktop 0.2.7
+# Smart Life Desktop 0.2.8
 
 Deutscher Windows-Client für Smart Life mit direktem Zugriff auf ein verknüpftes Tuya-Cloud-Projekt.
 
-[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.7-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.8-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+
+## Änderungen in 0.2.8
+
+Inaktive FRITZ!Box-Einträge behalten ihre gespeicherte lokale IP-Adresse in der Geräte- und Raumansicht. Die Anzeige kennzeichnet sie als „zuletzt bekannt“; der Hinweis erklärt, dass die FRITZ!Box das Gerät als inaktiv meldet. Ein gespeicherter Hostname bedeutet nicht, dass die IP aktuell erreichbar ist. Ist die IP laut Router inzwischen bei einem anderen aktiven Gerät in Verwendung, wird sie nicht als Geräteadresse angezeigt. Fehlende IPs und Gateway-Untergeräte erhalten keine erfundene Adresse.
+
+Die Tuya-Konsole zeigt für TV Hintergrund Leseberechtigung und bei der Umstellung explizit ein ausgeschöpftes Kontingent für steuerbare Geräte. Dies ist eine Projektgrenze und wird durch dieses Update nicht aufgehoben. Es wurde kein Erfolg beim Umbenennen oder Freigeben aller Geräte bestätigt. Die Fehlermeldung erklärt die notwendige Gerätefreigabe nun genauer. Es werden keine Berechtigungen automatisch erweitert.
+
+129 lokale Tests bestanden, einschließlich gespeicherter inaktiver IPs, bereits anderweitig verwendeter Adressen und der Kennzeichnung im echten Listenwidget.
 
 ## Änderungen in 0.2.7
 

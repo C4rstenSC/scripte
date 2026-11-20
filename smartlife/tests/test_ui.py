@@ -44,6 +44,11 @@ class UiTests(unittest.TestCase):
   self.assertTrue(self.w.update_interactive);self.assertIn('läuft',self.w.update_note.text())
  def test_ip_column(self):
   self.w.navigate('Geräte');self.assertEqual(self.w.tree.headerItem().text(2),'Lokale IP-Adresse')
+ def test_inactive_fritz_address_is_visible_but_marked(self):
+  from unittest.mock import Mock
+  self.w.fritz.match=Mock(return_value={'ip':'192.168.178.25','hostname':'sensor','active':False,'last_known':True})
+  self.w.navigate('Geräte');item=self.w.tree.topLevelItem(0)
+  self.assertEqual(item.text(2),'192.168.178.25 (zuletzt bekannt)');self.assertIn('inaktiv',item.toolTip(2))
  def test_scenes(self):self.w.navigate('Szenen');self.assertEqual(self.w.tree.topLevelItemCount(),1)
  def test_navigation(self):
   self.w.navigate('Räume');self.assertTrue(self.w.buttons['Räume'].isChecked());self.assertFalse(self.w.buttons['Geräte'].isChecked())

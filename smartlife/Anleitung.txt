@@ -145,3 +145,5 @@ Zugangsschlüssel dargestellt. Die separate Umbenennungssperre 60001001
 bleibt ein Cloud-Kontingentproblem und wird durch diese Korrektur nicht aufgehoben.
 
 0.2.7: Raum sortieren gruppiert die Geräte nach Raum und sortiert innerhalb jedes Raums nach Gerätename A–Z. Im Geräte-Popup lässt sich zusätzlich der FRITZ!Box-Hostname separat speichern.
+
+0.2.8: Inaktive FRITZ!Box-Geräte zeigen gespeicherte IP-Adressen mit „zuletzt bekannt“. Eine aktuell bei einem anderen aktiven Gerät verwendete Adresse wird ausgeblendet. Tuya-Geräte mit nur Leseberechtigung benötigen freie Plätze im Kontingent für steuerbare Geräte, bevor Änderungen freigegeben werden können. Das Update erhöht dieses Kontingent nicht.

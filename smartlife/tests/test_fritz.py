@@ -47,7 +47,7 @@ class FritzTests(unittest.TestCase):
    with self.subTest(path=path),self.assertRaises(ValueError):safe_path(path)
  def test_only_getter_actions_are_allowed(self):
   client,session=self.client([])
-  with self.assertRaises(ValueError):client.call('X_AVM-DE_SetHostNameByMACAddress',{'NewHostName':'bad'})
+  with self.assertRaises(ValueError):client.call('X_AVM-DE_WakeOnLANByMACAddress',{'NewMACAddress':'AA:BB:CC:DD:EE:FF'})
   self.assertEqual(session.calls,[])
  def test_fallback_reads_generic_host_entries(self):
   actions=b'<scpd><action><name>GetHostNumberOfEntries</name></action><action><name>GetGenericHostEntry</name></action></scpd>'
@@ -63,8 +63,16 @@ class FritzTests(unittest.TestCase):
   account=self.account();self.assertIsNone(account.match({'id':'sensor','mac':'AA:BB:CC:DD:EE:FF','sub':True}))
  def test_ambiguous_mac_is_not_guessed(self):
   account=self.account();account.hosts.append(dict(account.hosts[0],hostname='Anderer Eintrag'));self.assertIsNone(account.match({'id':'a','mac':'AA:BB:CC:DD:EE:FF'}))
- def test_inactive_entry_has_no_current_ip(self):
-  account=self.account();account.hosts[0]['active']=False;self.assertEqual(account.match({'id':'a','mac':'AA:BB:CC:DD:EE:FF'})['ip'],'')
+ def test_inactive_entry_keeps_marked_last_known_ip(self):
+  account=self.account();account.hosts[0]['active']=False;host=account.match({'id':'a','mac':'AA:BB:CC:DD:EE:FF'});self.assertEqual(host['ip'],'192.168.178.20');self.assertTrue(host['last_known'])
+ def test_inactive_address_now_used_by_another_active_device_is_hidden(self):
+  account=self.account();account.hosts[0]['active']=False
+  account.hosts.append(dict(account.hosts[0],mac='11:22:33:44:55:66',active=True))
+  host=account.match({'id':'a','mac':'AA:BB:CC:DD:EE:FF'})
+  self.assertEqual(host['ip'],'');self.assertTrue(host['ip_conflict']);self.assertFalse(host['last_known']);self.assertEqual(host['hostname'],'TV')
+ def test_empty_inactive_ip_is_not_invented(self):
+  account=self.account();account.hosts[0].update(active=False,ip='')
+  host=account.match({'id':'a','mac':'AA:BB:CC:DD:EE:FF'});self.assertEqual(host['ip'],'');self.assertFalse(host['last_known'])
  def test_manual_association_is_saved_only_to_protected_vault(self):
   vault=Mock();account=self.account();account.vault=vault;account.remember=True;account.config=copy.deepcopy(CONFIG);account.bind('tuya-device','AA:BB:CC:DD:EE:FF')
   self.assertEqual(vault.save.call_args.args[0]['bindings']['tuya-device'],'AA:BB:CC:DD:EE:FF');self.assertTrue(account.match({'id':'tuya-device'})['manual'])
