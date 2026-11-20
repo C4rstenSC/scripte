@@ -1,0 +1,54 @@
+SMART LIFE DESKTOP 0.1.0 – WINDOWS-TESTVERSION
+
+1. ZIP vollstaendig mit „Alle extrahieren“ entpacken.
+2. Installieren.cmd doppelt anklicken. Keine Administratorrechte erforderlich.
+3. Smart Life oeffnet sich und legt ein Desktop-Symbol an.
+   Mitgelieferte Laufzeit: kein Python separat installieren.
+   Beim kleinen GitHub-Setup werden die geprueften Laufzeitdateien einmal heruntergeladen.
+
+ANMELDUNG MIT DEM IPHONE
+Smart Life -> Ich / Profil -> Einstellungen -> Konto und Sicherheit -> Benutzercode.
+Diesen Code im Windows-Programm eintragen und „QR-Code anzeigen“ anklicken.
+In Smart Life ueber + -> Scannen den QR-Code scannen und Anmeldung bestaetigen.
+Die Freigabe kann als „Home Assistant“ angezeigt werden: verwendet wird dessen
+veroeffentlichte Tuya-Geraetefreigabe. Home Assistant muss nicht installiert sein.
+Kein App-Passwort und kein eigenes Tuya-Cloud-Projekt erforderlich.
+Die Funktion dieses Freigabewegs in einer eigenen Anwendung ist mit deinem
+Konto noch nicht live bestaetigt; Tuya kann Freigaben beschraenken oder widerrufen.
+
+Zuhause auswaehlen. Raeume und Geraetezuordnungen werden aus Smart Life gelesen.
+Es werden die durch die API gemeldeten Raeume mit Geraeten dargestellt;
+leere Raeume stellt diese Freigabe nicht als eigene Liste bereit.
+Neu laden liest Zuhause, Raumzuordnungen, Funktionen und Szenen erneut.
+Der Geraetestatus wird bei laufendem Programm alle 30 Sekunden aktualisiert.
+Batteriesensoren zeigen den zuletzt von Smart Life gemeldeten Wert.
+
+Ein Geraet anklicken: rechts erscheinen freigegebene Bedienfunktionen und Werte.
+Temperaturen beruecksichtigen Einheit und Dezimalskalierung des Geraetes.
+Dimmerwerte verwenden den vom Hersteller freigegebenen Wertebereich.
+Rollladen: Oeffnen / Stoppen / Schliessen und Position, sofern bereitgestellt.
+Luftreiniger: verfuegbare Betriebsmodi, Stufen und Messwerte.
+Nicht freigegebene Sonderfunktionen bleiben nur als Werte sichtbar.
+Offline-Geraete koennen nicht bedient werden.
+Szenen koennen ausgefuehrt werden. Cloud-Zeitplaene und Szenenbearbeitung
+sind in dieser ersten Version noch nicht eingebaut; vorhandene Smart-Life-
+Automationen laufen bei Smart Life weiter.
+
+UPDATE
+Update prueft bei jedem Oeffnen den Windows-Kanal in C4rstenSC/scripte/smartlife.
+Beim Programmstart und alle 5 Minuten wird ebenfalls geprueft.
+Ein Hinweis erscheint, sobald eine hoehere Version veroeffentlicht ist.
+Installation ueber den Update-Button: Download, SHA-256-Pruefung, Programmneustart.
+Fehlgeschlagener Start der neuen Version stellt den alten Programmordner wieder her.
+Anmeldung und Windows-Laufzeit bleiben dabei erhalten.
+Der macOS-Kanal ist vorbereitet, aber noch nicht als installierbare Mac-Version freigegeben.
+
+SICHERHEIT / PRUEFGRENZEN
+Anmeldung wird auf Windows mit DPAPI fuer den angemeldeten Windows-Benutzer
+verschluesselt gespeichert. Keine persoenlichen Zugangsdaten in GitHub.
+Abmelden entfernt die lokale Anmeldung und versucht die Cloud-Freigabe zu widerrufen.
+Die Python-Laufzeit stammt von python.org; das Gesamtprogramm ist nicht mit
+einem eigenen Herausgeberzertifikat signiert. SmartScreen kann deshalb eine
+Rueckfrage anzeigen. Das Paket deaktiviert keine Windows-Schutzfunktionen.
+Getestet: Modell-/Updatepruefungen und Qt-Oberflaeche unter Linux.
+Offen: Start auf Windows, echte QR-Anmeldung und Steuerung deiner Geraete.

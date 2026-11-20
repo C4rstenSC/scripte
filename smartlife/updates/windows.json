@@ -1,0 +1,9 @@
+{
+  "status": "available",
+  "platform": "win32",
+  "version": "0.1.0",
+  "runtime": "win64-py313-qt683-v1",
+  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.1.0-app.zip",
+  "sha256": "470e0f18e3b2edd7b6c951e42ef2ea30c3ce7b3d6fc8c6048ccd0be5f1065b7c",
+  "notes": "Erste Windows-Testversion mit QR-Anmeldung, Raumzuordnung und gerätespezifischen Funktionen."
+}
