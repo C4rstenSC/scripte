@@ -143,14 +143,14 @@ class Main(QMainWindow):
         def failed(e):self.pending=False;self.reload.setEnabled(True);self.error(e)
         self.submit(self.cloud.load,done,failed)
     def refresh(self):
-        if not self.ready or self.pending or self.jobs or self.demo:return
+        if not self.ready or self.pending or self.jobs or self.demo or getattr(self,'device_editing',False):return
         self.pending=True
         def done(ds):
             self.pending=False; self.data['devices']=ds; self.render(); self.status.setText('Verbunden · Datenstand '+datetime.now().strftime('%H:%M:%S'))
         def failed(e):self.pending=False;self.status.setText('Status nicht aktuell: '+str(e))
         self.submit(self.cloud.refresh,done,failed)
     def refresh_device(self,device_id):
-        if not self.ready or self.pending or self.jobs or self.demo:return
+        if not self.ready or self.pending or self.jobs or self.demo or getattr(self,'device_editing',False):return
         def done(devices):
             self.data['devices']=devices;self.render();self.status.setText('Gerätestatus aktualisiert · '+datetime.now().strftime('%H:%M:%S'))
         self.submit(lambda:self.cloud.refresh(device_id),done,lambda e:self.status.setText(str(e)))
@@ -352,16 +352,29 @@ class Main(QMainWindow):
         if self.login_dialog:self.login_dialog.reject()
         dlg=CloudSetupDialog(self)
         if dlg.exec()==QDialog.Accepted:self.connected()
-    def require_direct(self):
+    def require_direct(self,allow_background=False):
         if not self.cloud.direct:
             self.setup_direct();return False
-        if self.pending:
+        if self.pending and not allow_background:
             QMessageBox.information(self,'Bitte warten','Die Kontodaten werden noch geladen. Bitte nach Abschluss erneut öffnen.');return False
         return True
     def edit_device(self,d):
-        if not self.require_direct():return
-        dialog=DeviceAdminDialog(self,d)
-        if dialog.exec()==QDialog.Accepted:self.load()
+        if not self.require_direct(allow_background=True):return
+        active=self.poll.isActive();self.poll.stop();self.device_editing=True;direct=self.cloud.direct;direct.background_pause.set()
+        try:DeviceAdminDialog(self,d).exec()
+        finally:
+            self.device_editing=False;direct.background_pause.clear()
+            if active:self.poll.start()
+    def apply_device_update(self,result):
+        changed=result['device']
+        for device in self.data['devices']:
+            if device['id']==changed['id']:device.update(changed);break
+        by_id={rule['id']:rule for rule in result.get('automations',[])}
+        for rule in self.data.get('automations',[]):
+            if rule['id'] in by_id:rule.update(by_id[rule['id']])
+        self.detail_id=changed['id'];self.render()
+        if self.tree.selectedItems():self.selected()
+        self.status.setText('Änderung bestätigt · '+changed['name']+' gezielt aktualisiert'+(' · '+' · '.join(result['warnings']) if result.get('warnings') else ''))
     def manage_rooms(self):
         if not self.require_direct():return
         if not self.home.currentData():return

@@ -1,8 +1,18 @@
-# Smart Life Desktop 0.2.3
+# Smart Life Desktop 0.2.4
 
 Deutscher Windows-Client für Smart Life mit direktem Zugriff auf ein verknüpftes Tuya-Cloud-Projekt.
 
-[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.3-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.4-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+
+## Änderungen in 0.2.4
+
+Gerätenamen und Raumzuordnungen aktualisieren die Anzeige gezielt. Nach einer Namensänderung wird das ausgewählte Gerät über die Gerätedetails zurückgelesen und der Name geprüft. Eine bloße Schreibbestätigung reicht nicht mehr; bei abweichendem Rücklesewert gibt es keine Erfolgsmeldung. Nur die Leseprüfung wird bei Bedarf wiederholt, nicht der Schreibvorgang. Der neue Name wird danach im Dialog, in Liste, Detailansicht und den gerätebezogenen Szenen-/Automationsdarstellungen übernommen. Bereits bestätigte Namen werden während derselben Sitzung auch bei explizitem Neuladen aus den Gerätedetails gelesen, damit ein alter Name aus einer Zuhause-Liste sie nicht direkt zurücksetzt.
+
+Nach der Änderung werden ausschließlich dieses Gerät, seine betroffenen Raumzuordnungen und bereits geladene Automationen mit Bezug auf seine Kennung nachgelesen. Andere Geräte, ganze Zuhause, Raumlisten und vollständige Automationslisten werden nicht erneut abgefragt. Raumzählungen und Anzeigen werden aus den vorhandenen Daten neu berechnet; Szenen verwenden weiterhin dieselbe Gerätekennung. Nicht geladene Regeln können dadurch nicht entdeckt werden.
+
+Die Gerätebearbeitung öffnet sich auch bei einer laufenden Statusabfrage. Die Abfrage pausiert zwischen Geräten; ein bereits laufender HTTP-Aufruf darf zuerst abschließen. Während der Bearbeitung startet keine neue periodische Abfrage. Der Dialog zeigt Speichern und Rücklesen sichtbar an; nach Erfolg bleibt er mit bestätigtem Namen und Erfolgstext geöffnet. Ein vollständiges Neuladen nach dem Schließen entfällt.
+
+91 lokale Tests bestanden, darunter tatsächlicher Klick auf den Speicherbutton, bestätigter und nicht bestätigter Name, gezielte Raum-/Automationsabfragen, erhaltene andere Gerätedaten und Öffnen während einer Hintergrundabfrage. Der ursprüngliche Fehler auf dem Benutzerkonto ist ohne dessen Antworten nicht nachgestellt; echte Tuya-Berechtigungen und Bestätigungen werden zur Laufzeit geprüft.
 
 ## Änderungen in 0.2.3
 

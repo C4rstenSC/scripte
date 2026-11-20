@@ -2,7 +2,7 @@
 Protocol references: Tuya openapi.py, User Permission Package, Smart Home APIs.
 """
 from __future__ import annotations
-import copy,hashlib,hmac,json,re,time
+import copy,hashlib,hmac,json,re,time,threading
 from urllib.parse import quote,urlencode
 import requests
 from core import Vault,data_dir,validate,meta
@@ -63,7 +63,7 @@ class ProjectAPI:
 
 class DirectCloud:
     def __init__(self,config,api=None):
-        self.config=copy.deepcopy(config);self.api=api or ProjectAPI(config);self.homes=[];self.rooms=[];self.devices=[];self.scenes=[];self.spec_cache={};self.warnings=[]
+        self.config=copy.deepcopy(config);self.api=api or ProjectAPI(config);self.homes=[];self.rooms=[];self.devices=[];self.scenes=[];self.spec_cache={};self.warnings=[];self.automations=[];self.background_pause=threading.Event();self.name_checked=set()
     def verify(self):
         self.api.connect();homes=items(self.api.request('GET',f'/v1.0/users/{part(self.config["uid"])}/homes'),'homes')
         if not homes:raise RuntimeError('Die Anmeldung funktioniert, aber für diese UID werden keine Zuhause geliefert. UID und App-Verknüpfung prüfen.')
@@ -85,6 +85,12 @@ class DirectCloud:
                  'category':item.get('category',''),'product_id':item.get('product_id',''),'product_name':item.get('product_name',''),
                  'online':bool(item.get('online',False)),'ip':item.get('ip','') or '','sub':bool(item.get('sub',False)),
                  'status':normalize_status(item.get('status',[])),'functions':{},'ranges':{},'raw_control':False}
+                if did in self.name_checked:
+                    try:
+                        detail=self.api.request('GET',f'/v1.0/devices/{part(did)}')
+                        if not isinstance(detail,dict) or not isinstance(detail.get('name'),str):raise ValueError('Gerätename fehlt in den Gerätedetails.')
+                        device['name']=detail['name']
+                    except Exception as e:warnings.append(device['name']+': Name konnte nicht bestätigt werden ('+str(e)+')')
                 if did not in self.spec_cache:
                     try:
                         model=self.api.request('GET',f'/v2.0/cloud/thing/{part(did)}/model');functions,ranges=parse_model(model)
@@ -118,7 +124,7 @@ class DirectCloud:
                         'preconditions':copy.deepcopy(rule.get('preconditions',[])),'original':copy.deepcopy(rule)})
             except Exception as e:
                 message='Automationen konnten nicht vollständig geladen werden: '+str(e);automation_errors.append(message);warnings.append(message)
-        self.homes,self.rooms,self.devices,self.scenes,self.warnings=hs,rs,ds,ss,warnings
+        self.homes,self.rooms,self.devices,self.scenes,self.warnings=hs,rs,ds,ss,warnings;self.automations=automations
         return {'homes':hs,'rooms':rs,'devices':copy.deepcopy(ds),'scenes':ss,'automations':automations,'automation_errors':automation_errors,'room_failed':0,'scene_error':False,'warnings':warnings,'direct':True}
     def read_scenes(self,home):
         try:return items(self.api.request('GET',f'/v1.1/homes/{part(home)}/scenes'),'scenes')
@@ -130,6 +136,7 @@ class DirectCloud:
         return normalize_status(self.api.request('GET',f'/v1.0/devices/{part(d["id"])}/status'))
     def refresh(self,device_id=None):
         for d in self.devices:
+            if device_id is None and self.background_pause.is_set():break
             if device_id is None or d['id']==device_id:d['status']=self.read_status(d)
         return copy.deepcopy(self.devices)
     def command(self,did,code,value):
@@ -146,6 +153,46 @@ class DirectCloud:
     def rename_device(self,did,name):
         if not any(d['id']==did for d in self.devices):raise ValueError('Unbekanntes Gerät.')
         name=checked_name(name);self._write('PUT',f'/v1.0/devices/{part(did)}',{'name':name});return True
+    def rename_and_refresh(self,did,name):
+        name=checked_name(name);self.rename_device(did,name)
+        return self.refresh_changed_device(did,expected_name=name)
+    def move_and_refresh(self,did,room):
+        self.move_device(did,room)
+        return self.refresh_changed_device(did,target_room=room)
+    def refresh_changed_device(self,did,expected_name=None,target_room=None):
+        device=next((d for d in self.devices if d['id']==did),None)
+        if not device:raise ValueError('Unbekanntes Gerät.')
+        record=None
+        for attempt in range(3):
+            record=self.api.request('GET',f'/v1.0/devices/{part(did)}')
+            if not isinstance(record,dict) or str(record.get('id',did))!=did:raise RuntimeError('Die Cloud hat keine passenden Gerätedetails zurückgegeben.')
+            if isinstance(record.get('name'),str) and record['name'] and (expected_name is None or record['name']==expected_name):break
+            if attempt<2:time.sleep(.2)
+        else:raise RuntimeError('Der neue Gerätename wurde beim Rücklesen von Tuya nicht bestätigt. Die Anzeige wurde nicht als erfolgreich geändert.')
+        fresh=copy.deepcopy(device);fresh['name']=record['name'];warnings=[]
+        for key in ('online','ip','sub'):
+            if key in record:fresh[key]=record[key]
+        if target_room:
+            members=items(self.api.request('GET',f'/v1.0/homes/{part(device["home"])}/rooms/{part(target_room)}/devices'),'devices')
+            if not any(str(x.get('id',x.get('device_id','')))==did for x in members):raise RuntimeError('Die neue Raumzuordnung wurde beim Rücklesen nicht bestätigt.')
+            room=next(r for r in self.rooms if r['id']==target_room and r['home']==device['home']);fresh['room_id']=room['id'];fresh['room']=room['name']
+        elif device.get('room_id'):
+            try:
+                members=items(self.api.request('GET',f'/v1.0/homes/{part(device["home"])}/rooms/{part(device["room_id"])}/devices'),'devices')
+                if not any(str(x.get('id',x.get('device_id','')))==did for x in members):warnings.append('Die bisherige Raumzuordnung wird von der Cloud nicht mehr bestätigt.')
+            except Exception as e:warnings.append('Gerätename bestätigt; Raumzuordnung konnte nicht nachgelesen werden: '+str(e))
+        try:fresh['status']=self.read_status(fresh)
+        except Exception as e:warnings.append('Gerätename bestätigt; Status nicht aktuell: '+str(e))
+        device.update(fresh);self.name_checked.add(did);updated=[]
+        for automation in self.automations:
+            if automation['home']!=device['home'] or not references_device(automation.get('original',automation),did):continue
+            try:
+                raw=self.get_automation(automation['home'],automation['id'])
+                for key in ('name','enabled','conditions','actions','match_type','condition_rule','preconditions'):
+                    if key in raw:automation[key]=copy.deepcopy(raw[key])
+                automation['original']=copy.deepcopy(raw);updated.append(copy.deepcopy(automation))
+            except Exception as e:warnings.append('Gerätename bestätigt; zugehörige Automation „'+automation['name']+'“ konnte nicht nachgelesen werden: '+str(e))
+        return {'device':copy.deepcopy(device),'automations':updated,'warnings':warnings}
     def add_room(self,home,name):
         self._home(home);return self._write('POST',f'/v1.0/homes/{part(home)}/room',{'name':checked_name(name)})
     def rename_room(self,home,room,name):
@@ -327,3 +374,14 @@ def validate_condition_expression(expression,numbers):
         while position<len(tokens) and tokens[position] in ('&&','||'):position+=1;term()
     chain()
     if position!=len(tokens):raise ValueError('Die Bedingungsverknüpfung ist ungültig.')
+
+
+def references_device(value,did):
+    if isinstance(value,dict):return any(references_device(v,did) for v in value.values())
+    if isinstance(value,list):return any(references_device(v,did) for v in value)
+    if isinstance(value,str):
+        if value==did:return True
+        if value.startswith(('{','[')):
+            try:return references_device(json.loads(value),did)
+            except ValueError:pass
+    return False

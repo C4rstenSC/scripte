@@ -67,7 +67,7 @@ class CloudSetupDialog(QDialog):
 class DeviceAdminDialog(QDialog):
     def __init__(self,main,device):
         super().__init__(main);self.main=main;self.device=device;self.setWindowTitle('Gerät in Smart Life bearbeiten');self.resize(650,360);v=QVBoxLayout(self)
-        v.addWidget(QLabel(device['name']));v.addWidget(QLabel('Änderungen werden direkt in deinem Smart-Life-Konto gespeichert.'))
+        self.device_title=QLabel(device['name']);v.addWidget(self.device_title);v.addWidget(QLabel('Änderungen werden direkt in deinem Smart-Life-Konto gespeichert.'))
         self.name=QLineEdit(device['name']);v.addWidget(self.name);rename=QPushButton('Gerätenamen speichern');rename.clicked.connect(self.rename);v.addWidget(rename)
         self.room=QComboBox()
         for r in main.cloud.direct.rooms:
@@ -76,16 +76,19 @@ class DeviceAdminDialog(QDialog):
         move=QPushButton('Gerät diesem Raum zuordnen');move.clicked.connect(self.move);v.addWidget(move)
         self.message=QLabel('');self.message.setWordWrap(True);v.addWidget(self.message);close=QPushButton('Schließen');close.clicked.connect(self.reject);v.addWidget(close)
     def run(self,action):
-        self.setEnabled(False)
-        def done(_):self.setEnabled(True);self.accept()
+        self.message.setText('Änderung wird gespeichert und gezielt aus der Cloud zurückgelesen …');self.setEnabled(False)
+        def done(result):
+            self.setEnabled(True);self.device=result['device'];self.name.setText(self.device['name']);self.device_title.setText(self.device['name']);self.room.setCurrentIndex(self.room.findData(self.device['room_id']))
+            self.main.apply_device_update(result)
+            self.message.setText('Änderung von Tuya bestätigt. Gerät und zugehörige Ansichten aktualisiert.'+('\n'+'\n'.join(result['warnings']) if result.get('warnings') else ''))
         def fail(e):self.setEnabled(True);self.message.setText(str(e))
         self.main.submit(action,done,fail)
     def rename(self):
-        name=self.name.text();self.run(lambda:self.main.cloud.direct.rename_device(self.device['id'],name))
+        name=self.name.text();self.run(lambda:self.main.cloud.direct.rename_and_refresh(self.device['id'],name))
     def move(self):
         room=self.room.currentData()
         if not room:QMessageBox.warning(self,'Raumzuordnung','Bitte einen Raum auswählen.');return
-        self.run(lambda:self.main.cloud.direct.move_device(self.device['id'],room))
+        self.run(lambda:self.main.cloud.direct.move_and_refresh(self.device['id'],room))
 
 class RoomAdminDialog(QDialog):
     def __init__(self,main,home):

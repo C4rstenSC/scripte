@@ -1,9 +1,9 @@
 {
   "status": "available",
   "platform": "win32",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "runtime": "win64-py313-qt683-v1",
-  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.3-app.zip",
-  "sha256": "2eebf62582e4ecc4fd95955c8f9d3be25e897e311592d3528891de741d1f6645",
-  "notes": "Deutsche Gerätebeschriftungen und Wertelisten, einschließlich Sensor-Korrekturwerten und Stromausfallverhalten. Alle Tabellenspalten nach Inhalt plus ca. 1 cm Reserve, deutlich sichtbare Scrollleisten und konsistente Detailauswahl. Nicht zugeordnete Zusatzfunktionen in normalen Ansichten ausgeblendet."
+  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.4-app.zip",
+  "sha256": "c72b9fd90aaa92faabb218859b983f0690500596aa4c9803ade697c578898369",
+  "notes": "Gerätenamen nach dem Speichern gezielt zurücklesen und in Liste sowie Details übernehmen. Nur das geänderte Gerät, betroffene Räume und geladene zugehörige Automationen aktualisieren. Gerätebearbeitung während Hintergrundabfragen ermöglichen; sichtbarer Speicherfortschritt und bestätigte Rückmeldung."
 }
