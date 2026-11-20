@@ -17,7 +17,7 @@ from core import VERSION, Cloud, ui_label as label,ui_control,unit_label, fmt, m
 import updates
 from fritz import FritzAccount
 from fritz_ui import FritzDialog
-from ui_widgets import CleanSelectionDelegate,fit_columns
+from ui_widgets import CleanSelectionDelegate,fit_columns,DeviceItem
 from automation_ui import AutomationEditor
 from desktop_scenes import SceneStore,execute as execute_desktop_scene,scene_rows,condition_rows,precondition_rows,scene_report
 from scene_editor import SceneEditor,question_de
@@ -239,7 +239,11 @@ class Main(QMainWindow):
         order=[self.room_tabs.tabData(i) for i in range(self.room_tabs.count())]
         self.settings.setValue('room-order/'+str(self.home.currentData()),json.dumps(order));self.settings.sync()
     def navigate(self,page):
+        if not hasattr(self,"page_sorts"):self.page_sorts={}
+        self.page_sorts[self.page]=(self.tree.sortColumn(),self.tree.header().sortIndicatorOrder())
         self.page=page
+        column,order=self.page_sorts.get(page,(1 if page=="Räume" else 0,Qt.AscendingOrder))
+        self.tree.header().setSortIndicator(column,order)
         for n,b in self.buttons.items():b.setChecked(n==page)
         self.manage_rooms_btn.setVisible(page=='Räume');self.new_scene_btn.setVisible(page in ('Szenen','Automationen'));self.new_scene_btn.setText('Neue Automation erstellen' if page=='Automationen' else 'Neue Szene erstellen');self.room_tabs.setVisible(page=='Räume'); self.render();self.selected() if self.tree.selectedItems() and self.page!='Übersicht' else self.empty_detail()
     def visible_devices(self):
@@ -271,10 +275,9 @@ class Main(QMainWindow):
                 if not summary:summary=' · '.join(label(k,d['ranges'].get(k))+': '+fmt(v,d['ranges'].get(k)) for k,v in [(k,v) for k,v in d['status'].items() if k not in BATTERY_CODES and label(k,d['ranges'].get(k))][:3])
                 if is_cover(d) and (cover_position(d) is not None or any(c in d['status'] for c in ('percent_control','percent_control_1'))):summary=cover_text(d)
                 network=self.fritz.match(d);ip=network['ip'] if network else '';hostname=network['hostname'] if network else ''
-                it=QTreeWidgetItem([d['name'],d['room'] or 'Ohne Raumzuordnung',ip,hostname,'Online' if d['online'] else 'Offline',battery_text(d),summary]);it.setData(0,Qt.UserRole,d);self.tree.addTopLevelItem(it)
+                it=DeviceItem([d['name'],d['room'] or 'Ohne Raumzuordnung',ip,hostname,'Online' if d['online'] else 'Offline',battery_text(d),summary]);it.setData(0,Qt.UserRole,d);self.tree.addTopLevelItem(it)
                 if d['id']==selected:it.setSelected(True)
             self.summary.setText(f'{len(ds)} Geräte · {sum(d["online"] for d in ds)} online · {len(ds)-sum(d["online"] for d in ds)} offline')
-            if self.page=='Räume':self.tree.sortItems(1,Qt.AscendingOrder)
         fit_columns(self.tree)
         self.tree.blockSignals(False)
         if self.tree.selectedItems() and self.page not in ('Szenen','Automationen') and hasattr(self,'values_widget'):
@@ -411,6 +414,7 @@ class Main(QMainWindow):
         depth=getattr(self,'edit_depth',0);self.edit_depth=depth+1
         if depth:return
         self.edit_poll_active=self.poll.isActive();self.poll.stop();self.device_editing=True
+        self.edit_fritz_active=self.fritz_timer.isActive();self.fritz_timer.stop()
         if self.cloud.direct:self.cloud.direct.background_pause.set()
     def end_edit(self):
         self.edit_depth=max(0,getattr(self,'edit_depth',1)-1)
@@ -418,6 +422,7 @@ class Main(QMainWindow):
         self.device_editing=False
         if self.cloud.direct:self.cloud.direct.background_pause.clear()
         if getattr(self,'edit_poll_active',False):self.poll.start()
+        if getattr(self,'edit_fritz_active',False):self.fritz_timer.start()
     def edit_device(self,d):
         if not self.require_direct(allow_background=True):return
         self.begin_edit()

@@ -1,8 +1,16 @@
-# Smart Life Desktop 0.2.6
+# Smart Life Desktop 0.2.7
 
 Deutscher Windows-Client für Smart Life mit direktem Zugriff auf ein verknüpftes Tuya-Cloud-Projekt.
 
-[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.6-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.7-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+
+## Änderungen in 0.2.7
+
+Gerätelisten sortieren bei Auswahl der Spalte Raum zuerst nach Raum und innerhalb jedes Raums nach Gerätename A–Z (deutsche Sortierung). Auch bei absteigenden Raumgruppen bleibt die Namensfolge aufsteigend. Aktualisierung und Ansichtswechsel behalten die Sortierung je Ansicht bei.
+
+Im Popup zur Gerätebearbeitung kann der FRITZ!Box-Hostname mit eigener Speichern-Schaltfläche geändert werden. Die Änderung prüft die eindeutige MAC-Zuordnung vor dem Schreiben und liest genau diesen Routereintrag anschließend erneut. Kein vollständiger Cloud-Neuladevorgang. Die FRITZ!Box muss die dokumentierte Aktion X_AVM-DE_SetHostNameByMACAddress unterstützen und dem angemeldeten Benutzer erlauben. Hostnamen bestehen aus ASCII-Buchstaben, Zahlen und Bindestrichen. Der Smart-Life-Gerätename und der Routerhostname bleiben getrennte Angaben.
+
+126 lokale Tests bestanden. Der Tuya-Fehler 60001001 bei der Cloud-Namensänderung wird damit nicht aufgehoben; ein erfolgreicher Live-Schreibzugriff im persönlichen Konto ist nicht nachgewiesen.
 
 ## Änderungen in 0.2.6
 

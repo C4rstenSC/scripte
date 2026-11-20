@@ -143,3 +143,5 @@ MAC-Abgleich nach dem Update erneut. Zugangsdaten nicht neu eingeben.
 Fehler 1004 bei einer einzelnen Abfrage wird nicht mehr pauschal als falscher
 Zugangsschlüssel dargestellt. Die separate Umbenennungssperre 60001001
 bleibt ein Cloud-Kontingentproblem und wird durch diese Korrektur nicht aufgehoben.
+
+0.2.7: Raum sortieren gruppiert die Geräte nach Raum und sortiert innerhalb jedes Raums nach Gerätename A–Z. Im Geräte-Popup lässt sich zusätzlich der FRITZ!Box-Hostname separat speichern.

@@ -1,9 +1,9 @@
 {
   "status": "available",
   "platform": "win32",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "runtime": "win64-py313-qt683-v1",
-  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.6-app.zip",
-  "sha256": "12498bf4b13519af8771625e17b92972fe628b994687cdd680fc0b3352696244",
-  "notes": "Signaturfehler bei der MAC-Sammelabfrage behoben: kommaseparierte Geräte-IDs nach dem offiziellen Tuya-SDK signieren. Automatischer FRITZ!Box-Abgleich läuft nach dem Update erneut; bestehende Zugangsdaten bleiben erhalten. Fehler 1004 wird bei bestehenden Verbindungen nicht mehr pauschal falschen Schlüsseln zugeschrieben. Die getrennte Cloud-Kontingentsperre 60001001 bleibt bestehen."
+  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.7-app.zip",
+  "sha256": "744166456beefc09e9354b964fedacd3166f2d42fab36f6cba201ff057843535",
+  "notes": "Raumsortierung mit Gerätenamen A–Z innerhalb jedes Raums; Sortierung bleibt bei Aktualisierungen erhalten. FRITZ!Box-Hostname im Geräte-Popup separat bearbeiten und anhand der MAC-Adresse gezielt prüfen. Die Tuya-Kontingentsperre 60001001 wird damit nicht aufgehoben."
 }

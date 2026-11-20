@@ -1,4 +1,4 @@
-"""Read-only local FRITZ!Box host inventory using the documented TR-064 service."""
+"""Local FRITZ!Box host inventory and explicitly requested hostname changes."""
 import copy,ipaddress,json,re,socket
 from urllib.parse import urlparse
 from xml.etree import ElementTree as ET
@@ -35,9 +35,9 @@ def host_record(data):
 class FritzFault(RuntimeError):
     def __init__(self,code):
         self.code=str(code)
-        super().__init__({'606':'FRITZ!Box-Berechtigung zum Lesen der Netzwerkgeräte fehlt.',
+        super().__init__({'606':'Die FRITZ!Box-Berechtigung für diesen Netzwerkzugriff fehlt.',
          '714':'Dieser Netzwerkeintrag ist nicht mehr in der FRITZ!Box vorhanden.',
-         '401':'Diese TR-064-Aktion wird nicht unterstützt oder die Anmeldung wurde abgelehnt.'}.get(self.code,'FRITZ!Box lehnt den Leseaufruf ab (Fehler '+self.code+').'))
+         '401':'Diese TR-064-Aktion wird nicht unterstützt oder die Anmeldung wurde abgelehnt.'}.get(self.code,'FRITZ!Box lehnt den Auftrag ab (Fehler '+self.code+').'))
 class FritzClient:
     def __init__(self,config,session=None):
         address=str(config.get('address','fritz.box')).strip();p=urlparse(address if '://' in address else 'http://'+address)
@@ -70,14 +70,14 @@ class FritzClient:
         self.control=safe_path(child(service,'controlURL'));description=self.request('GET',safe_path(child(service,'SCPDURL')))
         self.actions={child(n,'name') for n in description.iter() if n.tag.split('}')[-1]=='action'}
     def call(self,action,params=None):
-        if action not in ('X_AVM-DE_GetHostListPath','GetHostNumberOfEntries','GetGenericHostEntry','GetSpecificHostEntry'):raise ValueError('Nur lesende Netzwerkabfragen sind erlaubt.')
+        if action not in ('X_AVM-DE_GetHostListPath','GetHostNumberOfEntries','GetGenericHostEntry','GetSpecificHostEntry','X_AVM-DE_SetHostNameByMACAddress'):raise ValueError('Dieser Router-Aufruf ist nicht freigegeben.')
         if not self.control:self.discover()
         if action not in self.actions:raise FritzFault('401')
         values=''.join('<'+k+'>'+escape(str(v))+'</'+k+'>' for k,v in (params or {}).items())
         body=('<?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:'+action+' xmlns:u="'+HOSTS+'">'+values+'</u:'+action+'></s:Body></s:Envelope>').encode()
         doc=self.request('POST',self.control,data=body,headers={'Content-Type':'text/xml; charset=utf-8','SOAPACTION':'"'+HOSTS+'#'+action+'"'})
         response=next((n for n in doc.iter() if n.tag.split('}')[-1]==action+'Response'),None)
-        if response is None:raise RuntimeError('Die FRITZ!Box hat die Leseabfrage nicht bestätigt.')
+        if response is None:raise RuntimeError('Die FRITZ!Box hat den Auftrag nicht bestätigt.')
         return fields(response)
     def hosts(self):
         if not self.control:self.discover()
@@ -91,7 +91,16 @@ class FritzClient:
         if not 0<=count<=2048:raise RuntimeError('Die FRITZ!Box meldet eine ungültige Anzahl Netzwerkgeräte.')
         return [host_record(self.call('GetGenericHostEntry',{'NewIndex':i})) for i in range(count)]
     def host(self,address):
-        result=self.call('GetSpecificHostEntry',{'NewMACAddress':address});result['NewMACAddress']=address;return host_record(result)
+        address=mac(address)
+        if not address:raise ValueError('Ungültige MAC-Adresse.')
+        result=self.call('GetSpecificHostEntry',{'NewMACAddress':address})
+        returned=result.get('NewMACAddress',address)
+        if mac(returned)!=address:raise RuntimeError('Der FRITZ!Box-Eintrag gehört zu einer anderen MAC-Adresse. Es wurde nichts geändert.')
+        result['NewMACAddress']=address;return host_record(result)
+    def set_hostname(self,address,name):
+        name=hostname(name);address=mac(address)
+        if not address:raise ValueError('Ungültige MAC-Adresse.')
+        return self.call('X_AVM-DE_SetHostNameByMACAddress',{'NewMACAddress':address,'NewHostName':name})
     def close(self):self.session.close()
 class FritzAccount:
     def __init__(self,vault=None):self.vault=vault or Vault(data_dir()/'fritzbox');self.config=None;self.client=None;self.hosts=[];self.bindings={};self.remember=False
@@ -132,6 +141,22 @@ class FritzAccount:
         except Exception:
             self.hosts=[h for h in self.hosts if h['mac']!=old['mac']];raise
         self.hosts=[fresh if h['mac']==old['mac'] else h for h in self.hosts];return True
+    def rename_hostname(self,device,name,expected_mac=None):
+        name=hostname(name)
+        if not self.client:raise RuntimeError('Bitte zuerst bei der FRITZ!Box anmelden.')
+        selected=self.match(device)
+        if not selected:raise ValueError('Für dieses Gerät ist kein eindeutiger FRITZ!Box-Eintrag zugeordnet.')
+        address=selected['mac']
+        if expected_mac and mac(expected_mac)!=address:raise RuntimeError('Die Netzwerkzuordnung hat sich geändert. Bitte den Gerätedialog erneut öffnen.')
+        before=self.client.host(address)
+        if mac(before.get('mac'))!=address:raise RuntimeError('Die MAC-Adresse wurde nicht bestätigt. Es wurde nichts geändert.')
+        self.client.set_hostname(address,name)
+        try:after=self.client.host(address)
+        except Exception as e:raise RuntimeError('FRITZ!Box hat die Änderung angenommen, aber der Hostname konnte nicht zurückgelesen werden. '+str(e)) from e
+        if mac(after.get('mac'))!=address:raise RuntimeError('Die Rückmeldung gehört zu einer anderen MAC-Adresse. Der neue Hostname ist nicht bestätigt.')
+        self.hosts=[copy.deepcopy(after) if h['mac']==address else h for h in self.hosts]
+        if after['hostname'].casefold()!=name.casefold():raise RuntimeError('FRITZ!Box hat den gewünschten Hostnamen beim Rücklesen nicht bestätigt. Der tatsächlich gemeldete Name wurde in der Liste aktualisiert.')
+        return copy.deepcopy(after)
     def bind(self,did,address):
         address=mac(address)
         if not address or sum(h['mac']==address for h in self.hosts)!=1:raise ValueError('Bitte einen eindeutigen FRITZ!Box-Eintrag auswählen.')
@@ -142,3 +167,9 @@ class FritzAccount:
         self.vault.clear()
         if self.client:self.client.close()
         self.config=None;self.client=None;self.hosts=[];self.bindings={};self.remember=False
+
+
+def hostname(value):
+    value=str(value).strip()
+    if not re.fullmatch(r'[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?',value):raise ValueError('Hostname: 1 bis 63 Buchstaben oder Zahlen, innen auch Bindestriche. Keine Leerzeichen, Umlaute oder Punkte. Beispiel: tv-hintergrund.')
+    return value

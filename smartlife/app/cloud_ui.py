@@ -66,15 +66,30 @@ class CloudSetupDialog(QDialog):
 
 class DeviceAdminDialog(QDialog):
     def __init__(self,main,device):
-        super().__init__(main);self.main=main;self.device=device;self.setWindowTitle('Gerät in Smart Life bearbeiten');self.resize(650,360);v=QVBoxLayout(self)
-        self.device_title=QLabel(device['name']);v.addWidget(self.device_title);v.addWidget(QLabel('Änderungen werden direkt in deinem Smart-Life-Konto gespeichert.'))
+        super().__init__(main);self.main=main;self.device=device;self.setWindowTitle('Gerät und FRITZ!Box-Hostname bearbeiten');self.resize(700,570);v=QVBoxLayout(self)
+        self.device_title=QLabel(device['name']);v.addWidget(self.device_title)
+        note=QLabel('Gerätename und Raum werden in Smart Life gespeichert. Der FRITZ!Box-Hostname wird separat direkt in deinem Router geändert.');note.setWordWrap(True);v.addWidget(note);v.addWidget(QLabel('Gerätename (Smart Life)'))
         self.name=QLineEdit(device['name']);v.addWidget(self.name);rename=QPushButton('Gerätenamen speichern');rename.clicked.connect(self.rename);v.addWidget(rename)
         self.room=QComboBox()
         for r in main.cloud.direct.rooms:
             if r['home']==device['home']:self.room.addItem(r['name'],r['id'])
         self.room.setCurrentIndex(self.room.findData(device['room_id']));v.addWidget(self.room)
         move=QPushButton('Gerät diesem Raum zuordnen');move.clicked.connect(self.move);v.addWidget(move)
+        v.addWidget(QLabel('FRITZ!Box-Hostname'))
+        network=main.fritz.match(device);self.fritz_mac=network['mac'] if network else ''
+        self.hostname=QLineEdit(network['hostname'] if network else '');self.hostname.setPlaceholderText('Zum Beispiel: tv-hintergrund');v.addWidget(self.hostname)
+        self.hostname_button=QPushButton('FRITZ!Box-Hostnamen speichern');self.hostname_button.clicked.connect(self.rename_hostname);v.addWidget(self.hostname_button)
+        available=bool(network and main.fritz.client);self.hostname.setEnabled(available);self.hostname_button.setEnabled(available)
+        if not available:
+            info=QLabel('Für die Hostnamenänderung zuerst bei der FRITZ!Box anmelden und dieses Gerät eindeutig zuordnen.');info.setWordWrap(True);v.addWidget(info)
         self.message=QLabel('');self.message.setWordWrap(True);v.addWidget(self.message);close=QPushButton('Schließen');close.clicked.connect(self.reject);v.addWidget(close)
+    def rename_hostname(self):
+        device=dict(self.device);value=self.hostname.text();address=self.fritz_mac
+        self.message.setText('FRITZ!Box-Hostname wird gespeichert und für dieses Gerät zurückgelesen …');self.setEnabled(False)
+        def done(host):
+            self.setEnabled(True);self.hostname.setText(host['hostname']);self.main.render();self.message.setText('FRITZ!Box-Hostname gespeichert und bestätigt: '+host['hostname'])
+        def failed(e):self.setEnabled(True);self.main.render();self.message.setText(str(e))
+        self.main.submit_fritz(lambda:self.main.fritz.rename_hostname(device,value,address),done,failed)
     def run(self,action):
         self.message.setText('Änderung wird gespeichert und gezielt aus der Cloud zurückgelesen …');self.setEnabled(False)
         def done(result):
