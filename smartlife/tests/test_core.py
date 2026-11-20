@@ -28,7 +28,7 @@ class CoreTests(unittest.TestCase):
    self.assertTrue(updates.check()[1]);self.assertIn('_',get.call_args.kwargs['params']);self.assertIn('no-store',get.call_args.kwargs['headers']['Cache-Control'])
  def test_battery_zero_missing_and_warning(self):
   self.assertEqual(battery_text({'status':{'battery_percentage':0}}),'0 %')
-  self.assertEqual(battery_text({'status':{}}),'—')
+  self.assertEqual(battery_text({'status':{}}),'')
   self.assertEqual(battery_text({'status':{'battery_low':True}}),'Schwach')
  def test_unknown_label_preserves_identity(self):
   self.assertIn('custom_control',label('custom_control',{'name':'Custom control'}))

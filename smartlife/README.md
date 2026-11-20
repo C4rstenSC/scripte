@@ -1,53 +1,46 @@
-# Smart Life Desktop
+# Smart Life Desktop 0.2.0
 
-Windows test release 0.1.5 for temperature sensors, switches, dimmers, blinds and air purifiers. Reads Smart Life home membership and per-device room assignments. Capability-driven controls, read-only sensor values, scenes and a Windows update button.
+Deutscher Windows-Client für Smart Life mit direktem Zugriff auf ein verknüpftes Tuya-Cloud-Projekt.
 
-Download: [Windows setup](downloads/SmartLife-Desktop-0.1.5-Setup.zip). Extract the ZIP and run `Installieren.cmd`. The small setup downloads pinned, hash-verified official Python/PyPI dependencies once. A fully bundled Windows package is supplied separately in the conversation.
+[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.0-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
 
-## Authentication
+## Direkten Cloudzugriff einrichten
 
-User Code + QR confirmation in Smart Life on iPhone. Uses Tuya's official `tuya-device-sharing-sdk` and the public Home Assistant device-sharing registration (`HA_3y9q4ak7g4ephrvke`, `haauthorize`). This is an independent desktop client, not Home Assistant or an official Tuya product. The authorization may appear as Home Assistant in Smart Life. No Home Assistant installation or personal cloud developer project is required. Third-party registration availability for this standalone app is not guaranteed; real account authentication remains unverified.
+1. Im Tuya-Cloud-Projekt das Smart-Life-Konto unter Devices mit Automatic Link verknüpfen.
+2. Unter Service API die erforderlichen Dienste autorisieren. Das Projekt benötigt Zugriff auf Geräte sowie die verwendeten Zuhause-, Raum- und Szenen-APIs.
+3. Unter Overview Access ID und Access Secret ablesen. Die UID des verknüpften App-Kontos steht unter Devices / Link Tuya App Account.
+4. Im Desktop-Programm „Direkter Cloudzugriff“ öffnen, die Angaben und das zum Konto passende Datenzentrum eintragen. Für das eingerichtete Konto: Mitteleuropa / Central Europe.
+5. „Prüfen und verbinden“ anklicken. Der Verbindungstest liest nur Daten.
 
-Tokens are protected using current-user Windows DPAPI. Credentials never enter this repository. macOS Keychain support is present in the core; the Mac package is pending. SmartScreen behavior is not guaranteed: the Python runtime comes from python.org, but this application has no publisher signing certificate.
+Schlüssel nur im Programm eingeben. Die Anmeldung wird unter Windows mit DPAPI für den aktuellen Benutzer geschützt gespeichert. Die QR-Anmeldung bleibt als eingeschränkter alternativer Zugang verfügbar.
 
-## Current scope and limits
+## Funktionen in 0.2.0
 
-Homes and rooms with devices are imported. Tuya's sharing SDK only offers per-device room lookup, so empty rooms cannot be reproduced. Device data refreshes every 30 seconds; explicit reload rereads room assignments and specifications. Functions are generated from device specs. Unknown raw/JSON functions are read-only. Existing Smart Life scenes can run and their supplied actions are displayed. Own desktop scenes can be created, edited and executed; they are stored on this PC and do not modify cloud scenes. Fully mapped cloud actions can be copied into a desktop scene. Cloud scene editing and schedule editing remain unavailable through the QR-sharing SDK. Firmware and router management from the Shelly app do not apply to this client.
+- Direkte Cloud-Anmeldung, Zuhause und Räume einschließlich leerer Räume, Geräte und Original-Szenen laden.
+- Gerätemodelle und Datenpunkte abfragen, einschließlich des Rohmodells und gemeldeter Schattenwerte; unterstützte Steuerungen aus den tatsächlichen Schreibrechten ableiten.
+- Rollladen: gelieferte Istposition getrennt vom Sollwert anzeigen; angebotene Öffnen-/Stoppen-/Schließen- und Positionsfunktionen bedienen. Keine Position schätzen.
+- Original-Cloud-Szenen mit Geräteaktionen am PC erstellen und bearbeiten. Speichern führt die Szene nicht aus. Fremde oder nicht unterstützte Aktionen bleiben erhalten und werden schreibgeschützt angezeigt. Vor Überschreiben wird auf zwischenzeitliche Änderungen geprüft.
+- Geräte umbenennen und vorhandenen Räumen zuweisen. Räume erstellen, umbenennen und löschen; nur leere Räume können gelöscht werden.
+- Übersicht nur mit Temperatursensoren und Luftfeuchte. Raum-Tabs per Maus verschieben; Reihenfolge lokal speichern.
+- Eigene Batteriespalte. Ohne gemeldete Batterie keine Batterieanzeige. Nicht gelieferte Werte und leere Werteblöcke bleiben ausgeblendet. Ein tatsächlicher Wert 0 wird angezeigt.
+- Deutsche bekannte Funktions- und Auswahlbezeichnungen; unbekannte Herstellerfunktionen behalten ihre eindeutige Bezeichnung und ihren Code.
 
-Checked on Linux: unit tests, mocked cloud responses and offscreen Qt widget interaction. Not yet checked: execution of the Windows runtime, DPAPI on Windows, real QR authentication and the user's devices. The macOS channel explicitly advertises `not_released`.
+## Verschlüsselter Zugang für einen weiteren Rechner
 
-## Source and updates
+Nach erfolgreicher Verbindung unter „Direkter Cloudzugriff“ → „Zugang verschlüsselt sichern“ eine `.enc`-Datei exportieren. Ein separates Kennwort mit mindestens zwölf Zeichen schützt die Datei mit Scrypt und AES-256-GCM. Das Kennwort wird nicht mitgespeichert. Nur diese verschlüsselte Datei darf ins Repository, niemals die unverschlüsselten Projektdaten. Zum Import auf einem weiteren Rechner wird das Kennwort einmalig benötigt. Ein Mac-Paket ist noch nicht veröffentlicht. Dieses Repository enthält bisher keine persönliche Zugangsdatei.
 
-- `app/`: cross-platform Python/Qt client and Windows updater.
-- `updates/windows.json`, `updates/macos.json`: separate platform manifests.
-- `updates/windows/`: versioned app-only ZIPs.
-- `runtime-lock.json`: exact Python/PyPI dependency sources and hashes.
-- `build/assemble.py`: constructs fully bundled Windows distribution.
-- `tests/`: protocol/model, archive and UI tests.
+## Prüfung und Grenzen
 
-Run tests with dependencies installed: `python -m unittest discover -s tests -v`.
-Run preview: `python app/main.py --demo`.
+55 lokale Modell-, Protokoll-, Verschlüsselungs- und Oberflächentests bestanden; Qt-Dialoge unter Linux geprüft. Windows-Laufzeit, echter Projektzugriff, konkrete Rollladen-Datenpunkte und Änderungen im Benutzerkonto müssen auf dem Ziel-PC bestätigt werden. Die direkte Cloud-Anbindung ist eine neue Funktion und keine Zusage vollständiger iOS-Funktionsgleichheit. Bearbeitbare Geräteaktionen verwenden Boolean-, Enum- und Integer-Datenpunkte; komplexe JSON-Aktionen und Automationsbedingungen werden nicht vollständig editiert. API-Berechtigungen und Cloud-Abonnements bestimmen den verfügbaren Zugriff. Ein fehlgeschlagener Abruf wird als Fehler gemeldet.
 
-For a release, bump `app/core.py` VERSION, run tests, package `app/` into a versioned ZIP, calculate its SHA-256 and publish the package before its manifest. Do not include `session.dat`, logs or personal data. Future macOS builds need signing, notarization and a tested Mac updater before changing the channel to `available`.
+SmartScreen lässt sich ohne geeignete Herausgebersignatur und Reputation nicht zuverlässig vermeiden. Die Installation deaktiviert keine Windows-Schutzfunktionen. Der macOS-Kanal bleibt nicht freigegeben.
 
-## Third-party notices
+## Quellcode und Updates
 
-Tuya device-sharing SDK: MIT, https://github.com/tuya/tuya-device-sharing-sdk . Public registration reference: https://github.com/home-assistant/core/tree/dev/homeassistant/components/tuya . Python PSF license. PySide6/Qt distributed under LGPLv3/GPLv3 or commercial terms, license notices included in runtime wheel metadata; library binaries remain dynamically replaceable. Other dependencies retain their wheel license metadata. This project does not claim affiliation with Tuya or Home Assistant.
+`app/` enthält den Python-/Qt-Client, `tests/` die Tests, `updates/windows.json` das Manifest und `updates/windows/` die versionierten App-Pakete. `runtime-lock.json` legt die offiziellen Laufzeitquellen und SHA-256-Werte fest. Das kleine Setup lädt diese Abhängigkeiten bei Bedarf einmalig herunter. Die Updateinstallation prüft die Prüfsumme und behält Anmeldung und Laufzeit.
 
-## 0.1.1
-Climate-only overview, room tabs in Rooms, Tuya-reported IP addresses, actual blind position separate from target, short follow-up refreshes after blind commands. 23 local tests pass; live blind feedback is pending.
+Tests: `python -m unittest discover -s tests -v`. Vorschau: `python app/main.py --demo`.
 
-## 0.1.2
-Persistently reorderable room tabs, climate-only sensor rows with one temperature per sensor, German numbered function labels and enum values. A targeted read-only device probe exports schema/status metadata while excluding credentials and network addresses. This is diagnostic support, not a verified repair for the user's blind, whose standard schema and status are currently empty. 27 local tests pass.
+## Hinweise zu Fremdsoftware
 
-## 0.1.3
-Independent update worker with startup, 60-second and explicit-click checks; cache-busted manifest queries, visible progress/version indicator, and retained manual intent while a check runs. Installation launch exceptions are shown and restore the button state. Future updates use the verified incoming runner. 31 local tests pass, including an update check while the device worker is blocked. Windows installation remains unverified locally.
-
-## 0.1.4
-Red update text appears only when a newer version exists. The current-version result leaves the sidebar message empty. Progress and error messages use neutral text. The 60-second check remains enabled.
-
-### Scenes in 0.1.4
-German desktop scene editor with device/function/value selection, ordered actions, save/edit/delete, and preflight validation before execution. Cloud scene actions are retained and displayed, and can be copied only when all actions are supported. No undocumented cloud write endpoint is called. Desktop scene execution requires the app to be running; cloud automation continues independently. 39 unit/UI tests and an editor save smoke check pass.
-
-## 0.1.5
-Separate device battery column, informative unknown-function labels preserving the manufacturer name and code, purifier countdown/child-lock labels, and a readable German diagnostic summary. Technical details are optional and explicitly styled with light background and dark text. 43 local tests pass and diagnostic text colors were verified under a dark system palette. Empty QR-sharing device data for the user's curtain switch and cloud-scene editing remain unresolved; this release does not claim to fix those access limitations.
+Unabhängiges Projekt ohne Zugehörigkeit zu Tuya oder Home Assistant. Tuya Device Sharing SDK (MIT): https://github.com/tuya/tuya-device-sharing-sdk . Referenz der öffentlichen QR-Registrierung: https://github.com/home-assistant/core/tree/dev/homeassistant/components/tuya . Python: PSF-Lizenz. PySide6/Qt: LGPLv3/GPLv3 oder kommerzielle Lizenz; Hinweise liegen den Abhängigkeiten bei. Dynamische Qt-Bibliotheken bleiben austauschbar. Weitere Pakete behalten ihre jeweiligen Lizenzdateien.

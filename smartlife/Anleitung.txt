@@ -1,110 +1,59 @@
-NEU IN 0.1.5
-Separate Spalte Batteriestatus in der Geraeteliste.
-Prozentwert oder gemeldeter Zustand; ohne Batteriedaten steht ein Gedankenstrich.
-Batterieangaben werden aus der Sammelspalte entfernt.
-Aussagekraeftige Funktionsnamen statt Weitere Geraetefunktion.
-Unbekannte Funktionen zeigen ihre Herstellerbezeichnung und den Funktionscode.
-Geraetepruefung: lesbare Zusammenfassung; technische Details optional einblenden.
-43 lokale Tests und Textfarben bei dunkler Systempalette geprueft.
-Rollladen ohne Freigabedaten und Bearbeiten von Original-Cloud-Szenen bleiben offen.
+SMART LIFE DESKTOP 0.2.0 – WINDOWS
 
-SZENEN IN 0.1.4
-Unter Szenen zeigt der Speicherort Smart Life oder Dieser PC.
-Vorhandene Smart-Life-Szenen: ausfuehren und bereitgestellte Aktionen ansehen.
-Die QR-Anbindung bietet keinen dokumentierten Schreibzugriff auf Cloud-Szenen.
-Neue Szene erstellen: Name, Geraet, Funktion und gewuenschten Wert waehlen,
-Aktion hinzufuegen, danach Szene speichern. Gespeichert wird auf diesem PC.
-Eine gespeicherte Desktop-Szene auswaehlen, um sie zu bearbeiten oder auszufuehren.
-Speichern allein fuehrt keine Aktionen aus. Die Geraete werden erst bei
-Szene ausfuehren geschaltet. Dabei muss das Programm geoeffnet sein.
-Cloud-Szenen lassen sich nur dann als Desktop-Kopie uebernehmen, wenn alle
-bereitgestellten Aktionen eindeutig zugeordnet und unterstuetzt werden.
-39 lokale Tests und Speichern des Szeneneditors geprueft.
+UPDATE BESTEHENDER INSTALLATION
+Im Programm Update anklicken. Die Prüfung erfolgt außerdem beim Start und jede Minute.
+Nur eine neuere Version erscheint rot. Anmeldung und Laufzeit bleiben erhalten.
 
-NEU IN 0.1.4
-Roter Hinweis nur bei neuerer Version. Bei aktueller Version bleibt das Feld leer.
-Pruefung weiterhin jede Minute. Fortschritt und Fehler neutral dargestellt.
+ERSTE INSTALLATION ODER BLOCKIERTER ALTER UPDATE-BUTTON
+SmartLife-Desktop-0.2.0-Setup.zip vollständig entpacken.
+Installieren.cmd starten. Die erforderliche Laufzeit wird bei Bedarf heruntergeladen.
 
-NEU IN 0.1.3
-Updatepruefung beim Start, alle 60 Sekunden und beim Klick auf Update.
-Eigene Warteschlange: Geraeteabfragen blockieren die Updatepruefung nicht.
-Laufende Pruefung wird sichtbar angezeigt. Klicks gehen nicht mehr verloren.
-Installationsfehler werden angezeigt; der Updatebutton wird wieder freigegeben.
-Falls eine alte Version den Button blockiert: Smart Life schliessen und
-das aktuelle Setup einmalig ueber Installieren.cmd installieren.
-Die vorhandene Windows-Laufzeit und Anmeldung bleiben erhalten.
+DIREKTEN ZUGRIFF EINRICHTEN
+1. Im Programm „Direkter Cloudzugriff“ öffnen.
+2. Access ID und Access Secret aus Overview des Tuya-Cloud-Projekts eintragen.
+3. UID des verknüpften App-Kontos aus Devices / Link Tuya App Account eintragen.
+4. Datenzentrum „Mitteleuropa – Central Europe“ für das eingerichtete Konto wählen.
+5. „Prüfen und verbinden“ anklicken. Der Test liest nur Daten.
+Schlüssel nur lokal eingeben, nicht im Chat oder als Klartext auf GitHub speichern.
 
-NEU IN 0.1.2
-Raum-Tabs lassen sich mit gedrueckter linker Maustaste verschieben.
-Die Reihenfolge wird pro Zuhause auf diesem PC gespeichert.
-Klimaliste: nur Sensoren, ein Temperaturwert je Sensor.
-Geraetefunktionen und bekannte Auswahlwerte auf Deutsch.
-Rollladen ohne Daten: Geraet auswaehlen -> Geraetedaten pruefen ->
-Geraetebericht speichern. Die Datei kann zur Fehleranalyse weitergegeben werden.
-Es werden keine Zugangsschluessel und Kontotoken exportiert.
-Die Rollladen-Steuerung ist fuer das betroffene Modell noch nicht bestaetigt.
-27 lokale Pruefungen bestanden.
+GERÄTE UND RÄUME
+Gerät auswählen → „Gerätename und Raum bearbeiten“.
+Unter Räume → „Räume verwalten“ können Räume angelegt und umbenannt werden.
+Löschen ist nur bei leeren Räumen möglich. Geräte vorher einem anderen Raum zuordnen.
+Diese Änderungen werden direkt im Smart-Life-Konto gespeichert.
+Die Raum-Tabs können mit gedrückter linker Maustaste verschoben werden.
 
-NEU IN 0.1.1
-Uebersicht: nur Temperatur und Luftfeuchte, nach Raum aufgelistet.
-Raeume: Alle Raeume und einzelne Raeume als Tabs; keine Auswahlfelder oben.
-Geraete: IP-Adresse wie von Tuya bereitgestellt. Zigbee-Untergeraete haben
-keine eigene IP; nicht gelieferte Adressen werden nicht erfunden.
-Rollladen: gemeldete Istposition und Sollposition getrennt.
-Oeffnen/Stoppen/Schliessen und Positionswahl laut freigegebenen Funktionen.
-23 lokale Tests bestanden; konkrete Rollladen-Rueckmeldung noch live pruefen.
+SZENEN
+Mit direktem Cloudzugriff werden Original-Szenen geladen.
+„Neue Szene“ erstellt eine Cloud-Szene mit Geräteaktionen.
+Vorhandene Szene auswählen und bearbeiten: Name und unterstützte Geräteaktionen ändern.
+Nicht unterstützte Original-Aktionen bleiben erhalten und sind schreibgeschützt.
+Speichern allein führt keine Aktionen aus. Vor Überschreiben wird auf Änderungen geprüft.
+Komplexe Automationsbedingungen sind noch nicht vollständig bearbeitbar.
 
-SMART LIFE DESKTOP 0.1.5 – WINDOWS-TESTVERSION
+ANZEIGEN
+Übersicht: Temperatur und Luftfeuchte je Sensor und Raum.
+Ohne Sensor keine künstliche Sensorzeile. Fehlende Einzelwerte bleiben leer.
+Batteriestatus nur bei tatsächlich gemeldeten Batteriedaten; bei Netzgeräten leer.
+Rollladen: tatsächliche Position und Zielposition getrennt, sofern Tuya sie liefert.
+Es werden keine Positionen und keine Ersatzwerte erfunden.
+Der direkte Zugriff fragt auch Gerätemodelle und rohe Datenpunkte ab.
+Konkrete Datenpunkte und die Steuerung müssen mit dem echten Konto bestätigt werden.
+Ein fehlgeschlagener Abruf wird separat angezeigt.
+Gerätestatus wird alle 30 Sekunden aktualisiert; nach Rollladenbefehlen mehrfach gezielt.
 
-1. ZIP vollstaendig mit „Alle extrahieren“ entpacken.
-2. Installieren.cmd doppelt anklicken. Keine Administratorrechte erforderlich.
-3. Smart Life oeffnet sich und legt ein Desktop-Symbol an.
-   Mitgelieferte Laufzeit: kein Python separat installieren.
-   Beim kleinen GitHub-Setup werden die geprueften Laufzeitdateien einmal heruntergeladen.
+VERSCHLÜSSELTEN ZUGANG SICHERN
+Nach erfolgreicher Verbindung „Zugang verschlüsselt sichern“ wählen.
+Kennwort mit mindestens zwölf Zeichen vergeben und .enc-Datei speichern.
+Nur diese verschlüsselte Datei kann für die spätere Wiederverwendung nach GitHub.
+Das Kennwort separat behalten; nicht in die Datei oder ins Repository speichern.
+Auf einem weiteren Rechner „Verschlüsselten Zugang laden“ wählen und entsperren.
+Das Mac-Paket ist noch nicht veröffentlicht. Persönliche Zugangsdaten sind bisher
+nicht in diesem Repository gespeichert.
 
-ANMELDUNG MIT DEM IPHONE
-Smart Life -> Ich / Profil -> Einstellungen -> Konto und Sicherheit -> Benutzercode.
-Diesen Code im Windows-Programm eintragen und „QR-Code anzeigen“ anklicken.
-In Smart Life ueber + -> Scannen den QR-Code scannen und Anmeldung bestaetigen.
-Die Freigabe kann als „Home Assistant“ angezeigt werden: verwendet wird dessen
-veroeffentlichte Tuya-Geraetefreigabe. Home Assistant muss nicht installiert sein.
-Kein App-Passwort und kein eigenes Tuya-Cloud-Projekt erforderlich.
-Die Funktion dieses Freigabewegs in einer eigenen Anwendung ist mit deinem
-Konto noch nicht live bestaetigt; Tuya kann Freigaben beschraenken oder widerrufen.
-
-Zuhause auswaehlen. Raeume und Geraetezuordnungen werden aus Smart Life gelesen.
-Es werden die durch die API gemeldeten Raeume mit Geraeten dargestellt;
-leere Raeume stellt diese Freigabe nicht als eigene Liste bereit.
-Neu laden liest Zuhause, Raumzuordnungen, Funktionen und Szenen erneut.
-Der Geraetestatus wird bei laufendem Programm alle 30 Sekunden aktualisiert.
-Batteriesensoren zeigen den zuletzt von Smart Life gemeldeten Wert.
-
-Ein Geraet anklicken: rechts erscheinen freigegebene Bedienfunktionen und Werte.
-Temperaturen beruecksichtigen Einheit und Dezimalskalierung des Geraetes.
-Dimmerwerte verwenden den vom Hersteller freigegebenen Wertebereich.
-Rollladen: Oeffnen / Stoppen / Schliessen und Position, sofern bereitgestellt.
-Luftreiniger: verfuegbare Betriebsmodi, Stufen und Messwerte.
-Nicht freigegebene Sonderfunktionen bleiben nur als Werte sichtbar.
-Offline-Geraete koennen nicht bedient werden.
-Szenen koennen ausgefuehrt werden. Cloud-Zeitplaene und Szenenbearbeitung
-sind in dieser ersten Version noch nicht eingebaut; vorhandene Smart-Life-
-Automationen laufen bei Smart Life weiter.
-
-UPDATE
-Update prueft bei jedem Oeffnen den Windows-Kanal in C4rstenSC/scripte/smartlife.
-Beim Programmstart und jede Minute wird ebenfalls geprueft.
-Ein Hinweis erscheint, sobald eine hoehere Version veroeffentlicht ist.
-Installation ueber den Update-Button: Download, SHA-256-Pruefung, Programmneustart.
-Fehlgeschlagener Start der neuen Version stellt den alten Programmordner wieder her.
-Anmeldung und Windows-Laufzeit bleiben dabei erhalten.
-Der macOS-Kanal ist vorbereitet, aber noch nicht als installierbare Mac-Version freigegeben.
-
-SICHERHEIT / PRUEFGRENZEN
-Anmeldung wird auf Windows mit DPAPI fuer den angemeldeten Windows-Benutzer
-verschluesselt gespeichert. Keine persoenlichen Zugangsdaten in GitHub.
-Abmelden entfernt die lokale Anmeldung und versucht die Cloud-Freigabe zu widerrufen.
-Die Python-Laufzeit stammt von python.org; das Gesamtprogramm ist nicht mit
-einem eigenen Herausgeberzertifikat signiert. SmartScreen kann deshalb eine
-Rueckfrage anzeigen. Das Paket deaktiviert keine Windows-Schutzfunktionen.
-Getestet: Modell-/Updatepruefungen und Qt-Oberflaeche unter Linux.
-Offen: Start auf Windows, echte QR-Anmeldung und Steuerung deiner Geraete.
+PRÜFSTAND
+55 lokale Tests bestanden. Windows-Installation und echter Projektzugriff müssen
+auf dem Ziel-PC bestätigt werden. Keine Zusage vollständiger iOS-Funktionsgleichheit.
+Windows speichert den Zugang geschützt mit DPAPI für den aktuellen Benutzer.
+SmartScreen-Rückfragen können ohne Herausgebersignatur weiterhin auftreten.
+Details, Quellen und Grenzen siehe README.md.

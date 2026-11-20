@@ -53,6 +53,8 @@ def scene_rows(scene,devices):
     device_map={d['id']:d for d in devices};rows=[]
     for action in scene.get('actions',[]):
         if not isinstance(action,dict):rows.append(('Weitere Aktion','Unbekannter Aktionstyp','Keine Zuordnung möglich',None));continue
+        if '_raw' in action:
+            raw=action['_raw'];parts=scene_rows({'actions':[raw]},devices);rows.append(('Originalaktion',str(raw.get('action_executor','Szenenaktion')), ' · '.join(x[0]+': '+x[1]+' = '+x[2] for x in parts),None));continue
         dev_id=action.get('device') or action.get('device_id') or action.get('devId') or action.get('entityId') or action.get('entity_id')
         d=device_map.get(str(dev_id));name=d['name'] if d else action.get('entityName') or action.get('name') or 'Nicht zugeordnetes Gerät'
         pairs=[]

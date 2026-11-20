@@ -10,7 +10,7 @@ import sys
 import time
 from urllib.parse import urlparse
 
-VERSION = '0.1.5'
+VERSION = '0.2.0'
 RUNTIME = 'win64-py313-qt683-v1'
 # Public Tuya device-sharing registration also used by Home Assistant.
 CLIENT_ID = 'HA_3y9q4ak7g4ephrvke'
@@ -91,6 +91,11 @@ def meta(spec):
 
 def fmt(value, spec=None):
     m=meta(spec)
+    if value is None:return ''
+    code=(spec or {}).get('code')
+    if isinstance(value,bool) and code in ('doorcontact_state','doorcontact_state_2','doorcontact_state_3'):return 'Offen' if value else 'Geschlossen'
+    if isinstance(value,bool) and code in ('tamper_alarm','temper_alarm'):return 'Alarm' if value else 'Kein Alarm'
+    if code=='fault' and value==0:return 'Keine Störung'
     if isinstance(value,bool): return 'Ein' if value else 'Aus'
     if isinstance(value,(int,float)):
         scale=int(m.get('scale',0)); unit=str(m.get('unit',''))
@@ -142,7 +147,7 @@ class Vault:
             target=self.folder/'session.dat'; tmp=target.with_suffix('.tmp'); tmp.write_bytes(self._crypt(raw)); tmp.replace(target)
         elif sys.platform=='darwin':
             import keyring
-            keyring.set_password('SmartLifeDesktop','session',raw.decode())
+            keyring.set_password('SmartLifeDesktop','session:'+self.folder.name,raw.decode())
         else: raise RuntimeError('Sichere Speicherung ist hier nicht verfügbar.')
     def load(self):
         if sys.platform=='win32':
@@ -150,12 +155,12 @@ class Vault:
             return json.loads(self._crypt(p.read_bytes(),True)) if p.exists() else None
         if sys.platform=='darwin':
             import keyring
-            raw=keyring.get_password('SmartLifeDesktop','session'); return json.loads(raw) if raw else None
+            raw=keyring.get_password('SmartLifeDesktop','session:'+self.folder.name); return json.loads(raw) if raw else None
         return None
     def clear(self):
         if sys.platform=='darwin':
             import keyring
-            try: keyring.delete_password('SmartLifeDesktop','session')
+            try: keyring.delete_password('SmartLifeDesktop','session:'+self.folder.name)
             except keyring.errors.PasswordDeleteError: pass
         else: (self.folder/'session.dat').unlink(missing_ok=True)
 
@@ -166,7 +171,7 @@ class Cloud:
         userapi.DEFAULT_TIMEOUT=20
         from tuya_sharing import LoginControl
         self.login=LoginControl(); self.login.session.trust_env=True; self.manager=None; self.state=None; self.vault=Vault(); self.remember=True
-        self.homes=[]; self.devices=[]; self.scenes=[]; self.room_warnings=0; self.room_failed=[]; self.qr_created=0
+        self.direct=None;self.direct_vault=Vault(data_dir()/'cloud-project');self.homes=[]; self.devices=[]; self.scenes=[]; self.room_warnings=0; self.room_failed=[]; self.qr_created=0
     def qr(self,code):
         code=code.strip()
         if not code: raise ValueError('Bitte deinen Benutzercode aus Smart Life eingeben.')
@@ -195,11 +200,26 @@ class Cloud:
                 if self.owner.remember: self.owner.vault.save(self.owner.state)
         self.manager=Manager(CLIENT_ID,state['user_code'],info['terminal_id'],info['endpoint'],info,Tokens(self))
         if save and self.remember: self.vault.save(self.state)
+    def connect_direct(self,config,save=True):
+        from project_cloud import DirectCloud
+        candidate=DirectCloud(config)
+        try:
+            candidate.verify()
+            if save:self.direct_vault.save(config)
+        except Exception:
+            candidate.close();raise
+        self.stop();self.direct=candidate
+        return True
     def restore(self):
+        project=self.direct_vault.load()
+        if project:
+            self.connect_direct(project,save=False);return True
         s=self.vault.load()
         if s: self.attach(s)
         return bool(s)
     def load(self):
+        if self.direct:
+            data=self.direct.load();self.homes=data['homes'];self.devices=self.direct.devices;self.scenes=data['scenes'];return data
         if not self.manager: raise RuntimeError('Bitte zuerst mit Smart Life verbinden.')
         m=self.manager
         homes=m.home_repository.query_homes()
@@ -227,7 +247,9 @@ class Cloud:
                 'product_id':getattr(d,'product_id',''), 'product_name':getattr(d,'product_name',''), 'online':bool(d.online),'category':getattr(d,'category',''), 'ip':getattr(d,'ip','') or '', 'sub':bool(getattr(d,'sub',False)),
                 'status':copy.deepcopy(d.status),'functions':{k:vars(v).copy() for k,v in d.function.items()},
                 'ranges':{k:vars(v).copy() for k,v in d.status_range.items()}}
-    def refresh(self):
+    def refresh(self,device_id=None):
+        if self.direct:
+            self.devices=self.direct.devices;return self.direct.refresh(device_id)
         # Read status without repeatedly fetching specifications, rooms or strategies.
         ids=list(dict.fromkeys(d['id'] for d in self.devices))
         for start in range(0,len(ids),20):
@@ -241,7 +263,12 @@ class Cloud:
                         d['ip']=item.get('ip',d.get('ip','')) or ''; d['sub']=bool(item.get('sub',d.get('sub',False))); d['status']=status; d['online']=bool(item.get('online',d['online'])); d['name']=item.get('name',d['name'])
         return copy.deepcopy(self.devices)
     def probe(self,device_id):
-        """Read documented SDK endpoints for one device; no guessed commands."""
+        """Read documented API endpoints for one device; no guessed commands."""
+        if self.direct:
+            d=next(d for d in self.direct.devices if d['id']==device_id)
+            d['status']=self.direct.read_status(d)
+            report={'programmversion':VERSION,'gerät':d['name'],'produkt':d.get('product_name',''),'kategorie':d['category'],'bedienfunktionen':copy.deepcopy(d['functions']),'werte':copy.deepcopy(d['status']),'anbindung':'Direkter Cloudzugriff'}
+            return {'report':report,'devices':copy.deepcopy(self.direct.devices)}
         if not self.manager:raise RuntimeError('Bitte zuerst anmelden.')
         d=next(d for d in self.devices if d['id']==device_id)
         report={'programmversion':VERSION,'gerät':d['name'],'kategorie':d.get('category',''),
@@ -269,6 +296,7 @@ class Cloud:
         return {'report':report,'devices':copy.deepcopy(self.devices)}
 
     def command(self,device_id,code,value):
+        if getattr(self,'direct',None):return self.direct.command(device_id,code,value)
         d=next((d for d in self.devices if d['id']==device_id),None)
         if not d or not d['online']: raise RuntimeError('Gerät ist nicht online.')
         if code not in d['functions']: raise ValueError('Funktion ist für dieses Gerät nicht freigegeben.')
@@ -277,10 +305,13 @@ class Cloud:
         if not reply or not reply.get('success') or reply.get('result') is False: raise RuntimeError('Smart Life hat den Befehl nicht bestätigt.')
         return True
     def scene(self,home,scene):
+        if self.direct:return self.direct.trigger(home,scene)
         reply=self.manager.customer_api.post('/v1.0/m/scene/ha/trigger',None,{'homeId':home,'sceneId':scene})
         if not reply or not reply.get('success') or reply.get('result') is False: raise RuntimeError('Szene konnte nicht gestartet werden.')
         return True
     def logout(self):
+        if self.direct:
+            self.direct_vault.clear();self.stop();self.state=None;self.devices=[];self.homes=[];return None
         error=None
         try:
             if self.manager:
@@ -290,6 +321,7 @@ class Cloud:
             self.vault.clear(); self.stop(); self.state=None; self.devices=[]; self.homes=[]
         return error
     def stop(self):
+        if self.direct:self.direct.close();self.direct=None
         if self.manager:
             if self.manager.mq: self.manager.mq.stop()
             self.manager.customer_api.session.close()
@@ -306,7 +338,7 @@ def climate(d,codes,unit):
         value=fmt(d['status'][code],spec)
         if not meta(spec).get('unit'):value+=' '+('°F' if code.endswith('_f') else unit)
         return value
-    return '—'
+    return ''
 
 def is_cover(d):
     return any(word in d.get('name','').casefold() for word in ('rollladen','rolladen','jalousie','vorhang')) or d.get('category') in ('cl','clkg','jdcljqr') or any(c in d['functions'] for c in ('percent_control','control','mach_operate')) or any(c in d['status'] for c in ('percent_state','percent_state_1'))
@@ -328,9 +360,7 @@ def cover_text(d):
     if v is not None:
         return 'Geschlossen · 0 % offen' if v==0 else ('Vollständig offen · 100 % offen' if v==100 else f'{v} % offen')
     target=next((d['status'][c] for c in ('percent_control','percent_control_1') if c in d['status']),None)
-    text='Position nicht zurückgemeldet'
-    if target is not None:text+=' · gemeldeter Sollwert: '+str(target)+' %'
-    return text
+    return 'Gemeldeter Sollwert: '+str(target)+' %' if target is not None else ''
 
 
 def diagnostic_filter(value):
@@ -354,7 +384,7 @@ def battery_text(d):
         text=fmt(value,spec)
         if code in ('battery_percentage','battery_percent') and not meta(spec).get('unit'):text+=' %'
         return text
-    return '—'
+    return ''
 
 def probe_summary(report):
     functions=report.get('bedienfunktionen',{});values=report.get('werte',{})

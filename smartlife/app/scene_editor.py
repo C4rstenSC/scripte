@@ -7,10 +7,13 @@ from core import label,meta,fmt,enum_label,validate
 from desktop_scenes import scene_rows
 
 class SceneEditor(QDialog):
-    def __init__(self,parent,store,home,devices,scene=None):
-        super().__init__(parent);self.setWindowTitle('Desktop-Szene bearbeiten' if scene and scene.get('source')=='desktop' else 'Neue Desktop-Szene');self.resize(930,720)
+    def __init__(self,parent,store,home,devices,scene=None,cloud=False,save_handler=None):
+        super().__init__(parent);self.cloud=cloud;self.save_handler=save_handler;self.setWindowTitle('Desktop-Szene bearbeiten' if scene and scene.get('source')=='desktop' else 'Neue Desktop-Szene');self.resize(930,720)
+        if cloud:self.setWindowTitle('Smart-Life-Szene bearbeiten' if scene else 'Neue Smart-Life-Szene')
         self.store=store;self.home=home;self.devices=[d for d in devices if d['home']==home];self.scene=scene;self.actions=deepcopy(scene.get('actions',[])) if scene else [];self.result_scene=None
-        v=QVBoxLayout(self);note=QLabel('Diese Szene wird auf diesem PC gespeichert. Sie verändert keine vorhandene Smart-Life-Szene. Beim Ausführen werden die Geräte über Smart Life gesteuert.');note.setWordWrap(True);v.addWidget(note)
+        v=QVBoxLayout(self);note=QLabel('Diese Szene wird auf diesem PC gespeichert. Sie verändert keine vorhandene Smart-Life-Szene. Beim Ausführen werden die Geräte über Smart Life gesteuert.');note.setWordWrap(True)
+        if cloud:note.setText('Die Szene wird direkt in deinem Smart-Life-Konto gespeichert und erscheint auch in der App. Speichern führt die Szene nicht aus.')
+        v.addWidget(note)
         self.name=QLineEdit(scene['name'] if scene else '');self.name.setPlaceholderText('Name der Szene');v.addWidget(self.name)
         self.tree=QTreeWidget();self.tree.setHeaderLabels(['Gerät','Funktion','Einstellung']);self.tree.setRootIsDecorated(False);self.tree.itemSelectionChanged.connect(self.select_action);v.addWidget(self.tree,1)
         selectors=QHBoxLayout();self.device=QComboBox();self.function=QComboBox();selectors.addWidget(self.device,1);selectors.addWidget(self.function,1);v.addLayout(selectors)
@@ -71,7 +74,10 @@ class SceneEditor(QDialog):
     def select_action(self):
         i=self.tree.indexOfTopLevelItem(self.tree.currentItem())
         if not 0<=i<len(self.actions):return
-        a=self.actions[i];self.device.setCurrentIndex(self.device.findData(a['device']));self.function.setCurrentIndex(self.function.findData(a['code']))
+        a=self.actions[i]
+        if '_raw' in a:
+            self.replace.setEnabled(False);return
+        self.replace.setEnabled(True);self.device.setCurrentIndex(self.device.findData(a['device']));self.function.setCurrentIndex(self.function.findData(a['code']))
         if isinstance(self.value,QComboBox):self.value.setCurrentIndex(self.value.findData(a['value']))
         elif self.value is not None:
             spec=self.selected_device()['functions'][a['code']];self.value.setValue(a['value']/10**int(meta(spec).get('scale',0)))
@@ -82,9 +88,15 @@ class SceneEditor(QDialog):
         i=self.tree.indexOfTopLevelItem(self.tree.currentItem());j=i+delta
         if i>=0 and 0<=j<len(self.actions):self.actions[i],self.actions[j]=self.actions[j],self.actions[i];self.render();self.tree.setCurrentItem(self.tree.topLevelItem(j))
     def save(self):
-        try:self.result_scene=self.store.save(self.name.text(),self.home,self.actions,self.devices,self.scene['id'] if self.scene and self.scene.get('source')=='desktop' else None)
-        except (ValueError,RuntimeError,OSError) as e:QMessageBox.warning(self,'Szene speichern',str(e));return
-        self.accept()
+        name=self.name.text();home=self.home;actions=deepcopy(self.actions);sid=self.scene['id'] if self.scene and self.scene.get('source')=='desktop' else None
+        def action():return self.store.save(name,home,actions,self.devices,sid)
+        def done(result):self.result_scene=result;self.setEnabled(True);self.accept()
+        def failed(e):self.setEnabled(True);QMessageBox.warning(self,'Szene speichern',str(e))
+        if self.save_handler:
+            self.setEnabled(False);self.save_handler(action,done,failed)
+        else:
+            try:done(action())
+            except (ValueError,RuntimeError,OSError) as e:failed(e)
 
 def question_de(parent,title,text):
     m=QMessageBox(parent);m.setWindowTitle(title);m.setText(text);m.setIcon(QMessageBox.Question);m.setStandardButtons(QMessageBox.Yes|QMessageBox.No);m.button(QMessageBox.Yes).setText('Ja');m.button(QMessageBox.No).setText('Nein');return m.exec()
