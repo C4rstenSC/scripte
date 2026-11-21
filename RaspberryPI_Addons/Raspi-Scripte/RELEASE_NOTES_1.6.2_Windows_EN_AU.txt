@@ -1,0 +1,5 @@
+Windows update correction 1.6.2 build 20261121.1602.3:
+- Publish a complete package through the separate updater; disable the module route in the manifest so this release does not use the in-process content-only route.
+- Align Windows version constants, build comparisons, CLR assembly version and file version with 1.6.2.3 / 20261121.1602.3. Every method's IL instruction stream remains byte-identical.
+- No Raspberry, Witty, GPS or Allsky script changes in this correction.
+- Validate downloads, authentication, archive structure, updater files, checksums and version decisions. No native Windows WPF run; the user's exact error message is not available.

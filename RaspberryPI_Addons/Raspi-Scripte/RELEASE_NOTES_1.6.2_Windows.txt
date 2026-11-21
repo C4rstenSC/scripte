@@ -1,0 +1,5 @@
+Windows-Updatekorrektur 1.6.2 Build 20261121.1602.3:
+- Windows-Update wieder als vollständiges Paket mit separatem Updater veröffentlichen. Dazu wird die Modulroute im Manifest deaktiviert; die Inhaltsroute während des laufenden Programms wird für diese Veröffentlichung nicht gewählt.
+- Windows-Versionskonstanten, Buildvergleich, CLR-Assemblyversion und Dateiversion auf 1.6.2.3 beziehungsweise 20261121.1602.3 abgeglichen. Die IL-Anweisungsfolgen aller Methoden bleiben bytegleich.
+- Keine Änderungen an Raspberry-, Witty-, GPS- oder Allsky-Skripten in dieser Korrektur.
+- Download, Entschlüsselung, Paketstruktur, Updater-Dateien, Prüfsummen und Versionsentscheidung geprüft. Kein nativer Windows-WPF-Lauf; der konkrete vom Benutzer beobachtete Fehlertext liegt nicht vor.
