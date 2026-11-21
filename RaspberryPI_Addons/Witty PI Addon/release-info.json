@@ -1,10 +1,10 @@
 {
-  "version": "1.6.5.1",
-  "contentVersion": "1.6.5.1",
-  "windowsVersion": "1.6.5.1",
-  "windowsBinaryVersion": "1.6.5.1",
-  "addonVersion": "1.6.5.1",
-  "buildRevision": "20261122.1605.3",
+  "version": "1.6.6",
+  "contentVersion": "1.6.6",
+  "windowsVersion": "1.6.6",
+  "windowsBinaryVersion": "1.6.6",
+  "addonVersion": "1.6.6",
+  "buildRevision": "20261122.1606.1",
   "releaseDate": "2026-11-22",
   "supportedPairs": [
     {

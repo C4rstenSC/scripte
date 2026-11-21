@@ -1,0 +1,8 @@
+Version 1.6.6 – Build 20261122.1606.1
+- Layout fix: move the existing WIFI button directly to the left of Apply hostname. Keep labels unchanged. Disable Apply hostname until its value changes; disable it again when restored. Refreshing Wi-Fi profiles retains this change check.
+- Windows Settings adds Change WIFI hostname below the hostname controls. Change an existing NetworkManager hotspot SSID independently, including manual WURB/Allsky installations without the base software or Witty Add-on.
+- Read existing access-point profiles over SSH and select a profile when several exist. Supports the official manual WURB wurb-hotspot configuration. Preserve client profiles, password, IP settings and profile names.
+- Reuse existing SSH/sudo authentication and terminal output. Validate 1–32 UTF-8 bytes, reject control characters, pass names without shell interpolation, verify saved values and roll back on write or scheduling errors.
+- Reactivate an active hotspot through NetworkManager after eight seconds; reconnect using its new name and existing password. Save inactive profiles for their next activation. No Raspberry or Witty reboot required.
+- Delivered as a complete package through the existing Windows update button. Align Windows and Witty Add-on versions at 1.6.6. Only Add-on version and package metadata change; preserve Pi installation/update behaviour.
+Validation: 10 automated hotspot cases, clean WPF build, IL verification, comparison of 2615 other methods apart from version constants, archive/dependency/hash checks. No native Windows UI or physical Raspberry Pi test available.
