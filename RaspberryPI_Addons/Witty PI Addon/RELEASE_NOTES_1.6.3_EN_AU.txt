@@ -1,0 +1,8 @@
+Version 1.6.3 – 22 November 2026
+- Capture the two internal wp5 menus during installation clock sync. Keep the manufacturer daemon running; retain explicit write confirmation and RTC readback. Use main-menu commands 1 and 14.
+- Order the existing manufacturer reboot notifier after the running wp5d has fully stopped, using only a systemd drop-in (Conflicts/After=wp5d.service; Before=wp5d_poweroff.service). Keep the vendor service unchanged and invoke normal systemctl reboot, with no poweroff or forced reboot.
+- Activate the ordering during both base installation and update. Add no background daemon, reboot detector or direct firmware write command.
+- Verify affected menu and reboot commands against vendor 5.3.0, 5.3.1 and 5.4.0 sources. Main-menu 1/14 is unchanged. Other Settings returns through 14 on 5.3.x and 16 on 5.4.0; installation clock sync never enters that submenu.
+- Homepage: Witty temperature, followed directly by RPI temperature read from the Raspberry CPU thermal sensor. Missing readings are shown as unavailable.
+- No changes to GPS, electrical readings, Windows update logic or Allsky installation logic. Align release metadata and embedded packages with 1.6.3.
+Validation: subprocess clock-sync and silent output, rejected failed writes, no daemon stop/start during clock sync; sandbox reboot helper, systemd verification for three vendor releases, base/update activation, CPU temperature and change-scope checks; archive/version/hash and syntax checks. No physical Pi/Witty reboot test. The cause of the previous failed reboot cannot be proven retrospectively without its device log.

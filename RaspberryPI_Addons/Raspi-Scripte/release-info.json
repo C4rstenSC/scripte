@@ -1,11 +1,11 @@
 {
-  "version": "1.6.2",
-  "contentVersion": "1.6.2",
-  "windowsVersion": "1.6.2",
-  "windowsBinaryVersion": "1.6.2.4",
-  "addonVersion": "1.6.2",
-  "buildRevision": "20261121.1602.4",
-  "releaseDate": "2026-11-21",
+  "version": "1.6.3",
+  "contentVersion": "1.6.3",
+  "windowsVersion": "1.6.3",
+  "windowsBinaryVersion": "1.6.3.1",
+  "addonVersion": "1.6.3",
+  "buildRevision": "20261122.1603.1",
+  "releaseDate": "2026-11-22",
   "supportedPairs": [
     {
       "software": "5.3.1",
@@ -19,5 +19,10 @@
   "powerConsumptionFixConfirmed": false,
   "powerConsumptionUserReport": "Carsten reports consumption matching manual installation on 2026-11-20; no independent hardware measurement",
   "physicalHardwareTest": false,
-  "windowsUpdateMode": "full-package"
+  "windowsUpdateMode": "full-package",
+  "menuCompatibilityChecked": [
+    "5.3.0",
+    "5.3.1",
+    "5.4.0"
+  ]
 }
