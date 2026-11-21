@@ -1,20 +1,6 @@
-Windows-Updatekorrektur 1.6.2 Build 20261121.1602.3:
-- Windows-Update wieder als vollständiges Paket mit separatem Updater veröffentlichen. Dazu wird die Modulroute im Manifest deaktiviert; die Inhaltsroute während des laufenden Programms wird für diese Veröffentlichung nicht gewählt.
-- Windows-Versionskonstanten, Buildvergleich, CLR-Assemblyversion und Dateiversion auf 1.6.2.3 beziehungsweise 20261121.1602.3 abgeglichen. Die IL-Anweisungsfolgen aller Methoden bleiben bytegleich.
-- Keine Änderungen an Raspberry-, Witty-, GPS- oder Allsky-Skripten in dieser Korrektur.
-- Download, Entschlüsselung, Paketstruktur, Updater-Dateien, Prüfsummen und Versionsentscheidung geprüft. Kein nativer Windows-WPF-Lauf; der konkrete vom Benutzer beobachtete Fehlertext liegt nicht vor.
-
-Version 1.6.2 – 21.11.2026
-Basisinstallation:
-- Fehlenden gemeinsamen Vorbereitungsabschnitt aus 1.3.8 wiederhergestellt: Bestätigung, Fortschritt, Linux-Pakete, Region, Benutzergruppen. git, Python-Installationshelfer und GPS-Lesehelfer stehen vor WURB/WIRC bereit. Paketfehler stoppen die Installation.
-- Allsky allein erhält ebenfalls wieder die notwendige Vorbereitung; Allsky-spezifische Installationsdateien und die abschließende Allsky-Phase bleiben unverändert zum veröffentlichten Build 3. Keine Rückkehr zur alten USB-GPS-Zusatzkette.
-Update:
-- Übernimmt Homepage, I2C-Leser und Berechtigungshelfer über den bestehenden inkrementellen Dateiabgleich. Die Basisinstallation wird dafür nicht erneut ausgeführt.
-- Zweites Überschreiben der wp5-tmpfiles-Regeln mit der älteren Fassung entfernt. Beide Hersteller-Locks behalten ihre persistenten Gruppenrechte. Auch der aufrufende SSH-Benutzer wird berücksichtigt.
-Gemeinsam:
-- Weitere Einstellungen: Onboard-Lüfter mit gemessener Drehzahl. Ohne Tachosignal wird die Ansteuerung ausdrücklich als solche angezeigt; fehlende Daten gelten nicht als Aus.
-- Messwerte über den kombinierten I2C-Leseweg des Herstellers; High-/Low-Byte-Paare mit Wiederholung bei Bytewechsel. Register und Skalierung bleiben VIN 5/6, VUSB 3/4, VOUT 7/8, IOUT 9/10, jeweils /1000. Statuscache maximal fünf statt 45 Sekunden. Keine Änderung der Kalibrierung; IOUT ist Ausgangsstrom.
-- wp5: i2c-Gruppe, Geräte-/Lockrechte und Rechteanwendung vor Herstellerdaemon-Start; Dateizugriff wird als normaler Benutzer geprüft. Nach Gruppenänderung bestehende SSH-Sitzung neu verbinden. Herstellerprogramm bleibt unverändert.
-- Pi-Modell in der USB-GPS-Meldung korrigiert. Direkter USB-GPS-Betrieb bleibt erhalten, Waveshare nutzt weiterhin die vorhandene Bridge.
-- Windows-Inhalte und eingebettete Add-ons 1.6.2. Windows-Binärmodul unverändert 1.6.0.3; dessen Modulversion und Prüfsumme bleiben erhalten.
-Prüfung: neun automatisierte Testmethoden. Basis-Matrix: WURB/WIRC USB, Allsky mit/ohne Witty, WURB Waveshare und Abbruch bei Paketfehler. Update-Dateiabgleich für bestehende WURB-/Allsky-Installationen mit Erhalt zusätzlicher Einstellungen/Zeitpläne. Allsky-Dateivergleich, Lüfterzustände, Messwerte für Firmware 1.7/1.8, Bytewechsel, kombinierter I2C-Aufruf und Berechtigungshelfer. Shell-/Python-/JavaScript-Syntax, ZIP und AES-GCM geprüft. Keine physische Raspberry-/Witty-Strommessung und kein nativer Windows-WPF-Test.
+Version 1.6.2 Build 20261121.1602.4
+- Windows aktualisiert über den bisherigen Update-Button automatisch das vollständige Paket. Kein separater Download oder manueller Updateaufruf erforderlich. Die bisherige Modulroute bleibt für diese Veröffentlichung deaktiviert; Versions- und Buildangaben sind konsistent.
+- Elektrische Website-Messwerte stammen jetzt direkt aus der Ausgabe des installierten Herstellerprogramms wp5 (Menü 14 = Beenden). Keine eigenen Spannungs-/Stromberechnungen, keine Rundung und kein Umrechnungsfaktor. Der Herstellerdaemon bleibt aktiv. Bei belegtem Terminal oder Lesefehler keine berechneten Ersatzwerte; I-OUT wird dann als unbekannt angezeigt.
+- wp5-Kommandopfad auf die aktuelle Herstellerdatei /usr/bin/wp5 vereinheitlicht. Abweichende lokale Kopien werden vor dem Ersetzen gesichert. i2c-Gruppe, Geräte- und Lockrechte bleiben erhalten; ein normaler Benutzer öffnet beide Sperrdateien und das vorhandene I2C-Gerät zur Berechtigungsprüfung.
+- Basisinstallation und inkrementelles Update enthalten dieselben Korrekturen. Die wiederhergestellte Basisvorbereitung und die Allsky-spezifische Installation bleiben erhalten.
+Prüfung: ausführbare Basis-/Update-Sandboxtests, Berechtigungs-/Pfadprüfung, unveränderte Übernahme von Hersteller-Ausgabe bis zu den tatsächlichen Website-Parsern, belegt/fehlende Daten, Windows-Paket-/Versionsentscheidung, Syntax und Archive/Prüfsummen. Kein physischer Raspberry/Witty und kein nativer Windows-WPF-Lauf verfügbar.

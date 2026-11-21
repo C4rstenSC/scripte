@@ -1,13 +1,13 @@
 {
   "version": "1.6.2",
-  "buildRevision": "20261121.1602.3",
-  "files": {
-    "Raspi-Scripte-Programm.zip.enc": "9d00ac9addbc0200f5e5f3911ad15c019b97b46f839b44494cdb1a969c6de1c4",
-    "Raspi-Scripte-Content.zip.enc": "1cd190955e3521b017c76b4d10f78792e4128a1288d225810de07fcb5c1c08f3",
-    "Raspi-Scripte-Modular-Content.zip.enc": "1cd190955e3521b017c76b4d10f78792e4128a1288d225810de07fcb5c1c08f3",
-    "Raspi-Scripte-Module.zip.enc": "9089e6fafec5349f17d805d314d3c56962f92229a0124c3b2930ce37f44bac7e",
-    "Raspi-Scripte.zip.enc": "9d00ac9addbc0200f5e5f3911ad15c019b97b46f839b44494cdb1a969c6de1c4"
-  },
+  "buildRevision": "20261121.1602.4",
   "windowsUpdateMode": "full-package",
-  "raspberryPayloadUnchanged": true
+  "files": {
+    "RaspberryPI_Addons/Witty PI Addon/witty_addon.zip.enc": "d461d360c2cd8ef6317fc6783ae93c0742f6357d02d631d04cd8818582e69c95",
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Programm.zip.enc": "851b994f68f5512661b07062b465ec5871e2f81ed26921f7a121005a767b4cd6",
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Content.zip.enc": "b5ed1345de6aef44eaf8a6a1a032679038cd99c9da665644ef05698c6acfe7ed",
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Modular-Content.zip.enc": "b5ed1345de6aef44eaf8a6a1a032679038cd99c9da665644ef05698c6acfe7ed",
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Module.zip.enc": "9089e6fafec5349f17d805d314d3c56962f92229a0124c3b2930ce37f44bac7e",
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte.zip.enc": "851b994f68f5512661b07062b465ec5871e2f81ed26921f7a121005a767b4cd6"
+  }
 }
