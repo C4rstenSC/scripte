@@ -1,9 +1,9 @@
 {
   "status": "available",
   "platform": "win32",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "runtime": "win64-py313-qt683-v1",
-  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.9-app.zip",
-  "sha256": "d7e6b2dd40db900de4cc3e043dd5e46c971f1bdf00c3cf2162e207ee2681405b",
-  "notes": "Offiziellen Endnutzerzugang für Gerätenamen ergänzt: optionalen Schlüssel sk-… unter Direkter Cloudzugriff eintragen. Gerät wird vor und nach der Namensänderung gezielt gelesen; kein zweiter Schreibversuch über das Entwicklerprojekt. Benötigt den separaten Endnutzer-Schlüssel; Live-Test mit deinem Konto steht aus. Räume, Szenen und Automationen verwenden weiterhin den bisherigen Zugang."
+  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.10-app.zip",
+  "sha256": "7104f05c47849af804c37e51eba4b44f0a3d1ffd4297616bca139810c6dbf0fe",
+  "notes": "Unpassende Automationswarnung nach bestätigter Gerätenamensänderung behoben. Zugehörige Ansichten verwenden den bestätigten Namen über die Geräte-ID; vollständige Regeln werden dabei nicht erneut geladen oder verändert. Schutzprüfung beim tatsächlichen Bearbeiten von Automationen bleibt aktiv."
 }

@@ -1,8 +1,16 @@
-# Smart Life Desktop 0.2.9
+# Smart Life Desktop 0.2.10
 
 Deutscher Windows-Client für Smart Life mit direktem Zugriff auf ein verknüpftes Tuya-Cloud-Projekt.
 
-[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.9-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.10-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+
+## Änderungen in 0.2.10
+
+Die Warnung über unvollständige Auslöser und Aktionen nach einer bestätigten Gerätenamensänderung behoben. Ursache war eine zusätzliche vollständige Automationsabfrage im Ablauf der Geräteaktualisierung. Diese verwendete dieselbe strenge Prüfung wie das Bearbeiten einer Regel. Eine Namensänderung verändert jedoch keine Geräte-ID und keine Regelbedingungen oder Aktionen. Die Ansichten lösen die Gerätenamen bereits aus der aktuellen Geräteliste auf.
+
+Nach dem gezielten Rücklesen des Geräts werden deshalb nur die abhängigen Ansichten aus dem bestehenden Regelbestand aktualisiert. Keine vollständige Automationsabfrage und kein Regelschreibzugriff. Vorhandene Originalregeln einschließlich unbekannter Felder bleiben unverändert. Die vollständige Prüfung beim tatsächlichen Öffnen oder Speichern einer Automation bleibt erhalten. Eine dort unvollständige Cloudantwort wird weiterhin nicht zum Überschreiben einer Regel verwendet; ihre Ursache wird mit diesem Update nicht als behoben behauptet.
+
+140 lokale Tests bestanden. Die Regression prüft den neuen Namen in einer abhängigen Aktion, unveränderte Originalregeln, ausbleibende Automationsabfragen und die weiterhin aktive Schutzprüfung beim Bearbeiten. Bestätigung des Gerätenamens, gezielte Raum-/Statusabfrage und Fehlerbehandlung bei tatsächlichem Fehlschlag bleiben erhalten.
 
 ## Änderungen in 0.2.9
 

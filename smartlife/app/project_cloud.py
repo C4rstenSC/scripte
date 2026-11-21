@@ -214,12 +214,10 @@ class DirectCloud:
         device.update(fresh);self.name_checked.add(did);updated=[]
         for automation in self.automations:
             if automation['home']!=device['home'] or not references_device(automation.get('original',automation),did):continue
-            try:
-                raw=self.get_automation(automation['home'],automation['id'])
-                for key in ('name','enabled','conditions','actions','match_type','condition_rule','preconditions'):
-                    if key in raw:automation[key]=copy.deepcopy(raw[key])
-                automation['original']=copy.deepcopy(raw);updated.append(copy.deepcopy(automation))
-            except Exception as e:warnings.append('Gerätename bestätigt; zugehörige Automation „'+automation['name']+'“ konnte nicht nachgelesen werden: '+str(e))
+            # A device rename/move does not change rule IDs, conditions or actions.
+            # Views resolve names using the freshly confirmed device snapshot.
+            # Full rule validation belongs only to explicitly opening/saving it.
+            updated.append(copy.deepcopy(automation))
         return {'device':copy.deepcopy(device),'automations':updated,'warnings':warnings}
     def add_room(self,home,name):
         self._home(home);return self._write('POST',f'/v1.0/homes/{part(home)}/room',{'name':checked_name(name)})

@@ -33,6 +33,23 @@ class DeviceUpdateTests(unittest.TestCase):
   self.assertEqual([a['id'] for a in result['automations']],['related'])
   self.assertNotIn('not-for-ui',str(result));self.assertEqual(self.calls[0],('PUT','/v1.0/devices/s',{'name':'Fernseher Steckdose'}))
   self.assertTrue(all('/devices/s' in path or '/rooms/Wohnzimmer/devices' in path or '/automations/related' in path for _,path,_ in self.calls))
+ def test_rename_preserves_related_rule_exactly_without_fetching_details(self):
+  before=copy.deepcopy(self.direct.automations)
+  result=self.direct.rename_and_refresh('s','Fernseher neu')
+  self.assertEqual(result['warnings'],[]);self.assertEqual(self.direct.automations,before)
+  self.assertEqual(result['automations'],[before[0]])
+  self.assertFalse(any('/automations/' in path for method,path,body in self.calls))
+ def test_rename_refreshes_display_from_device_id_with_partial_original_rule(self):
+  from desktop_scenes import scene_rows,condition_rows
+  self.direct.automations[0]['original']={'actions':[{'entity_id':'s','action_executor':'dpIssue','executor_property':{'switch':False}}]}
+  result=self.direct.rename_and_refresh('s','Fernseher neu')
+  self.assertEqual(result['warnings'],[])
+  rows=scene_rows(result['automations'][0]['original'],self.direct.devices)
+  self.assertEqual(rows[0][0],'Fernseher neu')
+  self.assertFalse(any('/automations/' in path for method,path,body in self.calls))
+ def test_full_validation_is_retained_when_editing_incomplete_rule(self):
+  self.raw={'automation_id':'related','actions':[{'entity_id':'s'}]}
+  with self.assertRaisesRegex(ValueError,'vollständigen Auslöser'):self.direct.get_automation('demo','related')
  def test_unconfirmed_rename_never_changes_display_snapshot(self):
   self.return_old_name=True;old=copy.deepcopy(self.direct.devices)
   with patch('project_cloud.time.sleep'),self.assertRaisesRegex(RuntimeError,'nicht bestätigt'):self.direct.rename_and_refresh('s','Neuer Name')
