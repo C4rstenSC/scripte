@@ -1,0 +1,12 @@
+{
+  "version": "1.6.5.1",
+  "buildRevision": "20261122.1605.3",
+  "files": {
+    "RaspberryPI_Addons/Witty PI Addon/witty_addon.zip.enc": "17175614e92e1a44f273f02072297ed1436234ef0610504637a891eb33160ff8",
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte.zip.enc": "356069e2044e54691d4b2ef4ccbde3c6a165b01ab72f559ffcd160d663416965",
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Module.zip.enc": "9089e6fafec5349f17d805d314d3c56962f92229a0124c3b2930ce37f44bac7e",
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Modular-Content.zip.enc": "74c2584cf95a81c2c5b4a925144db107e3f508e2e8adfd1f7cab9718288c194a",
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Content.zip.enc": "74c2584cf95a81c2c5b4a925144db107e3f508e2e8adfd1f7cab9718288c194a",
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Programm.zip.enc": "356069e2044e54691d4b2ef4ccbde3c6a165b01ab72f559ffcd160d663416965"
+  }
+}
