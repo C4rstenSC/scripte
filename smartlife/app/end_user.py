@@ -1,7 +1,7 @@
 """Tuya Smart Control end-user REST API, documented at tuya.ai/developer/docs.
-Only user-initiated renames are written; never retries mutations.
+User-initiated device mutations; never retries mutations.
 """
-import re,time
+import re,time,json
 from urllib.parse import quote
 import requests
 HOSTS={'EU':'openapi.tuyaeu.com','WE':'openapi-weaz.tuyaeu.com','AY':'openapi.tuyacn.com',
@@ -17,7 +17,7 @@ class EndUserAPI:
             reply=self.session.request(method,self.origin+path,headers={'Authorization':'Bearer '+self.key,'Content-Type':'application/json'},json=body,timeout=20,allow_redirects=False)
             if 300<=reply.status_code<400:raise RuntimeError('Unerwartete Weiterleitung. Endnutzer-Anfrage abgebrochen.')
             reply.raise_for_status();data=reply.json()
-        except requests.RequestException as e:raise RuntimeError('Endnutzer-Zugang nicht erreichbar oder abgelehnt. Bei Zeitüberschreitung einer Änderung zuerst den tatsächlichen Namen prüfen.') from None
+        except requests.RequestException as e:raise RuntimeError('Endnutzer-Zugang nicht erreichbar oder abgelehnt. Bei Zeitüberschreitung einer Änderung zuerst den tatsächlichen Gerätestand prüfen.') from None
         except ValueError:raise RuntimeError('Endnutzer-Zugang hat keine lesbare Antwort geliefert.') from None
         if not isinstance(data,dict) or data.get('success') is not True:
             code=str(data.get('code','unbekannt')) if isinstance(data,dict) else 'unbekannt'
@@ -33,6 +33,16 @@ class EndUserAPI:
         data=self.request('GET','/v1.0/end-user/devices/'+quote(str(did),safe='')+'/detail')
         if not isinstance(data,dict) or str(data.get('device_id',''))!=str(did):raise RuntimeError('Dieses Gerät wurde im Endnutzer-Konto nicht eindeutig bestätigt. Es wird nichts als erfolgreich geändert angezeigt.')
         return data
+    def properties(self,did):
+        record=self.detail(did)
+        if not isinstance(record.get('properties'),dict):raise RuntimeError('Endnutzer-Zugang liefert keine auswertbaren Gerätewerte. Der bisherige Stand bleibt erhalten.')
+        return record
+    def command(self,did,code,value):
+        self.detail(did)
+        result=self.request('POST','/v1.0/end-user/devices/'+quote(str(did),safe='')+'/shadow/properties/issue',
+                            {'properties':json.dumps({code:value},ensure_ascii=False,separators=(',',':'))})
+        if result is False or result is None:raise RuntimeError('Endnutzer-Zugang hat den Gerätebefehl nicht bestätigt. Bitte den tatsächlichen Zustand neu laden.')
+        return True
     def rename(self,did,name):
         # Confirm the exact target in this account before writing anything.
         self.detail(did)

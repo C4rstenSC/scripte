@@ -1,8 +1,30 @@
-# Smart Life Desktop 0.2.10
+# Smart Life Desktop 0.2.11
 
 Deutscher Windows-Client für Smart Life mit direktem Zugriff auf ein verknüpftes Tuya-Cloud-Projekt.
 
-[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.10-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+[Windows-Setup herunterladen](downloads/SmartLife-Desktop-0.2.11-Setup.zip). ZIP entpacken und `Installieren.cmd` starten. Vorhandene Installationen erhalten das App-Paket über den Update-Button. Updates werden beim Start und alle 60 Sekunden geprüft. Rote Schrift erscheint nur bei einer neueren Version.
+
+## Änderungen in 0.2.11
+
+Gerätesteuerung und Statusabfrage bei vorhandenem Endnutzer-Schlüssel auf den offiziellen Endnutzer-Zugang umgestellt. Die vorherige Version nutzte den neuen Zugang nur beim Umbenennen; Schaltbefehle liefen noch über das kontingentierte Entwicklerprojekt. Das verursachte weiterhin Fehler 60001001. Dieser unvollständige Wechsel ist korrigiert.
+
+Ein Schaltbefehl verwendet nach Prüfung des konkreten Zielgeräts POST /v1.0/end-user/devices/{device_id}/shadow/properties/issue. Das Feld properties enthält gemäß Tuya-Dokumentation einen JSON-String. Das gilt für die geladenen und validierten schreibbaren booleschen, numerischen und Auswahlfunktionen, auch Rollladenfunktionen. Fehlgeschlagene Befehle werden nicht automatisch wiederholt und nicht an den alten Schreibzugriff weitergereicht. Der angezeigte Gerätestand wird anschließend aus GET /v1.0/end-user/devices/{device_id}/detail gelesen. Eine Annahme des Befehls wird nicht mit einem bestätigten Gerätezustand gleichgesetzt. Null und Aus bleiben gültige Werte; fehlende Werte werden nicht erfunden.
+
+Zusätzlich verwenden die unterstützten Leseabfragen für Zuhause, Raumlisten, Geräte pro Zuhause/Raum, Gerätedetails und Gerätemodelle den Endnutzer-Zugang. Bestehender Schlüssel bleibt erhalten. Bestätigte MAC-Adressen und Gateway-Zuordnungen bleiben bei fehlenden Metadaten anhand der unveränderten Geräte-ID erhalten. Ohne Endnutzer-Schlüssel bleibt der bisherige Zugangsweg aktiv.
+
+| Funktion | Zugang bei gespeichertem Endnutzer-Schlüssel |
+| --- | --- |
+| Gerätename ändern, Gerät direkt steuern, aktuellen Status lesen | Endnutzer |
+| Zuhause, Räume und Geräte auflisten, Gerätemodell lesen | Endnutzer |
+| Räume erstellen/umbenennen/löschen, Gerät einem Raum zuordnen | Entwicklerprojekt |
+| Smart-Life-Szenen und Automationen lesen/bearbeiten/ausführen | Entwicklerprojekt |
+| MAC-Adressen aus Tuya auslesen | Entwicklerprojekt |
+| Spezifikationen als Rückfall nach fehlgeschlagenem Gerätemodell | Entwicklerprojekt, ausschließlich lesend |
+| IP-Adressen und Hostnamen aus FRITZ!Box, Hostnamen ändern | Lokal über FRITZ!Box |
+
+Es wird kein vollständiger Ersatz sämtlicher Cloud-APIs behauptet. Die veröffentlichte Endnutzer-Dokumentation liefert für die hier beibehaltenen Schreibfunktionen keine eingebauten Ersatzrouten. Bestehende Automationen werden nicht verändert.
+
+151 lokale Tests bestanden: korrekter regionaler Endpunkt und doppeltes JSON, falsche Geräte-ID verhindert Schreiben, fehlende Bestätigung verhindert Erfolg, kein Ausweichen auf Projekt-Schreibzugriff, validierte Standard-/Rohdaten-Geräte, unverfälschte Statuswerte sowie die explizite Zuordnung der Lese- und verbliebenen Projektabfragen. Die reale Steuerung im persönlichen Konto muss nach Installation mit dem dort gespeicherten Schlüssel bestätigt werden.
 
 ## Änderungen in 0.2.10
 

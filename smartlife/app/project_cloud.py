@@ -70,39 +70,61 @@ class ProjectAPI:
 class DirectCloud:
     def __init__(self,config,api=None):
         self.config=copy.deepcopy(config);self.api=api or ProjectAPI(config);self.homes=[];self.rooms=[];self.devices=[];self.scenes=[];self.spec_cache={};self.warnings=[];self.automations=[];self.background_pause=threading.Event();self.name_checked=set();self.mac_attempted=set();self.end_user=EndUserAPI(config["end_user_key"]) if config.get("end_user_key") else None
+    def _read(self,path):
+        if self.end_user:
+            if re.fullmatch(r'/v1.0/users/[^/]+/homes',path):return self.end_user.request('GET','/v1.0/end-user/homes/all')
+            match=re.fullmatch(r'/v1.0/homes/([^/]+)/rooms',path)
+            if match:return self.end_user.request('GET','/v1.0/end-user/homes/'+match[1]+'/rooms')
+            match=re.fullmatch(r'/v1.0/homes/[^/]+/rooms/([^/]+)/devices',path)
+            if match:return self.end_user.request('GET','/v1.0/end-user/homes/room/'+match[1]+'/devices')
+            match=re.fullmatch(r'/v1.0/homes/([^/]+)/devices',path)
+            if match:return self.end_user.request('GET','/v1.0/end-user/homes/'+match[1]+'/devices')
+            match=re.fullmatch(r'/v1.0/devices/([^/]+)',path)
+            if match:return self.end_user.detail(match[1])
+            match=re.fullmatch(r'/v2.0/cloud/thing/([^/]+)/model',path)
+            if match:return self.end_user.request('GET','/v1.0/end-user/devices/'+match[1]+'/model')
+        return self.api.request('GET',path)
     def verify(self):
-        self.api.connect();homes=items(self.api.request('GET',f'/v1.0/users/{part(self.config["uid"])}/homes'),'homes')
+        
+        if not self.end_user:self.api.connect()
+        homes=items(self._read(f'/v1.0/users/{part(self.config["uid"])}/homes'),'homes')
         if not homes:raise RuntimeError('Die Anmeldung funktioniert, aber für diese UID werden keine Zuhause geliefert. UID und App-Verknüpfung prüfen.')
         if self.end_user:self.end_user.devices()
         return len(homes)
     def load(self):
-        homes=items(self.api.request('GET',f'/v1.0/users/{part(self.config["uid"])}/homes'),'homes')
+        homes=items(self._read(f'/v1.0/users/{part(self.config["uid"])}/homes'),'homes')
         hs=[];rs=[];ds=[];ss=[];automations=[];automation_errors=[];warnings=[]
+        known_devices={d['id']:d for d in self.devices}
         for h in homes:
             hid=str(h.get('home_id',h.get('id','')));part(hid);hs.append({'id':hid,'name':h.get('name','Zuhause')})
-            room_list=items(self.api.request('GET',f'/v1.0/homes/{part(hid)}/rooms'),'rooms')
+            room_list=items(self._read(f'/v1.0/homes/{part(hid)}/rooms'),'rooms')
             room_map={}
             for room in room_list:
                 rid=str(room.get('room_id',room.get('id','')));part(rid);name=room.get('name','Raum');rs.append({'id':rid,'name':name,'home':hid})
-                for d in items(self.api.request('GET',f'/v1.0/homes/{part(hid)}/rooms/{part(rid)}/devices'),'devices'):
+                for d in items(self._read(f'/v1.0/homes/{part(hid)}/rooms/{part(rid)}/devices'),'devices'):
                     room_map[str(d.get('id',d.get('device_id','')))]=(rid,name)
-            for item in items(self.api.request('GET',f'/v1.0/homes/{part(hid)}/devices'),'devices'):
+            for item in items(self._read(f'/v1.0/homes/{part(hid)}/devices'),'devices'):
                 did=str(item.get('id',item.get('device_id','')));part(did);rid,name=room_map.get(did,('',''))
                 device={'id':did,'home':hid,'name':item.get('name','Gerät'),'room_id':rid,'room':name,'room_order':0,
                  'category':item.get('category',''),'product_id':item.get('product_id',''),'product_name':item.get('product_name',''),
                  'mac':item.get('mac','') or '', 'online':bool(item.get('online',False)),'ip':item.get('ip','') or '','sub':bool(item.get('sub',False)),
                  'status':normalize_status(item.get('status',[])),'functions':{},'ranges':{},'raw_control':False}
+                previous=known_devices.get(did,{})
+                for key in ('mac','sub','category','product_id','product_name'):
+                    if key not in item and key in previous:device[key]=copy.deepcopy(previous[key])
                 if did in self.name_checked:
                     try:
-                        detail=self.api.request('GET',f'/v1.0/devices/{part(did)}')
+                        detail=self._read(f'/v1.0/devices/{part(did)}')
                         if not isinstance(detail,dict) or not isinstance(detail.get('name'),str):raise ValueError('Gerätename fehlt in den Gerätedetails.')
                         device['name']=detail['name']
                     except Exception as e:warnings.append(device['name']+': Name konnte nicht bestätigt werden ('+str(e)+')')
                 if did not in self.spec_cache:
                     try:
-                        model=self.api.request('GET',f'/v2.0/cloud/thing/{part(did)}/model');functions,ranges=parse_model(model)
+                        model=self._read(f'/v2.0/cloud/thing/{part(did)}/model');functions,ranges=parse_model(model)
                         self.spec_cache[did]=(functions,ranges,True)
                     except Exception as raw_error:
+                        if self.end_user:
+                            warnings.append(device['name']+': Endnutzer-Funktionsabfrage fehlgeschlagen ('+str(raw_error)+')')
                         try:
                             spec=self.api.request('GET',f'/v1.0/devices/{part(did)}/specifications') or {}
                             functions={x['code']:x for x in spec.get('functions',[])};ranges={x['code']:x for x in spec.get('status',[])}
@@ -151,6 +173,10 @@ class DirectCloud:
         try:return items(self.api.request('GET',f'/v1.1/homes/{part(home)}/scenes'),'scenes')
         except RuntimeError:return items(self.api.request('GET',f'/v1.0/homes/{part(home)}/scenes'),'scenes')
     def read_status(self,d):
+        if self.end_user:
+            record=self.end_user.properties(d["id"])
+            if isinstance(record.get("online"),bool):d["online"]=record["online"]
+            return normalize_status(record["properties"])
         if d.get('raw_control'):
             r=self.api.request('GET',f'/v2.0/cloud/thing/{part(d["id"])}/shadow/properties')
             return normalize_status(r.get('properties',r) if isinstance(r,dict) else r)
@@ -166,6 +192,7 @@ class DirectCloud:
         if not d['online']:raise RuntimeError('Gerät wird als nicht erreichbar gemeldet.')
         if code not in d['functions']:raise ValueError('Diese Funktion ist nicht schreibbar.')
         validate(d['functions'][code],value)
+        if self.end_user:return self.end_user.command(did,code,value)
         if d.get('raw_control'):
             result=self.api.request('POST',f'/v2.0/cloud/thing/{part(did)}/shadow/properties/issue',body={'properties':json.dumps({code:value},ensure_ascii=False,separators=(',',':'))})
         else:result=self.api.request('POST',f'/v1.0/devices/{part(did)}/commands',body={'commands':[{'code':code,'value':value}]})
@@ -192,7 +219,7 @@ class DirectCloud:
         if not device:raise ValueError('Unbekanntes Gerät.')
         record=None
         for attempt in range(3):
-            record=confirmed_record if confirmed_record is not None else self.api.request('GET',f'/v1.0/devices/{part(did)}')
+            record=confirmed_record if confirmed_record is not None else self._read(f'/v1.0/devices/{part(did)}')
             if not isinstance(record,dict) or str(record.get('id',did))!=did:raise RuntimeError('Die Cloud hat keine passenden Gerätedetails zurückgegeben.')
             if isinstance(record.get('name'),str) and record['name'] and (expected_name is None or record['name']==expected_name):break
             if attempt<2:time.sleep(.2)
@@ -201,12 +228,12 @@ class DirectCloud:
         for key in ('online','ip','sub'):
             if key in record:fresh[key]=record[key]
         if target_room:
-            members=items(self.api.request('GET',f'/v1.0/homes/{part(device["home"])}/rooms/{part(target_room)}/devices'),'devices')
+            members=items(self._read(f'/v1.0/homes/{part(device["home"])}/rooms/{part(target_room)}/devices'),'devices')
             if not any(str(x.get('id',x.get('device_id','')))==did for x in members):raise RuntimeError('Die neue Raumzuordnung wurde beim Rücklesen nicht bestätigt.')
             room=next(r for r in self.rooms if r['id']==target_room and r['home']==device['home']);fresh['room_id']=room['id'];fresh['room']=room['name']
         elif device.get('room_id'):
             try:
-                members=items(self.api.request('GET',f'/v1.0/homes/{part(device["home"])}/rooms/{part(device["room_id"])}/devices'),'devices')
+                members=items(self._read(f'/v1.0/homes/{part(device["home"])}/rooms/{part(device["room_id"])}/devices'),'devices')
                 if not any(str(x.get('id',x.get('device_id','')))==did for x in members):warnings.append('Die bisherige Raumzuordnung wird von der Cloud nicht mehr bestätigt.')
             except Exception as e:warnings.append('Gerätename bestätigt; Raumzuordnung konnte nicht nachgelesen werden: '+str(e))
         try:fresh['status']=self.read_status(fresh)
@@ -226,7 +253,7 @@ class DirectCloud:
     def delete_room(self,home,room):
         self._room(home,room)
         # Refuse nonempty rooms; avoids accidental device/group disassociation.
-        current=items(self.api.request('GET',f'/v1.0/homes/{part(home)}/rooms/{part(room)}/devices'),'devices')
+        current=items(self._read(f'/v1.0/homes/{part(home)}/rooms/{part(room)}/devices'),'devices')
         if current:raise ValueError('Dieser Raum enthält noch Geräte. Bitte die Geräte zuerst in andere Räume verschieben.')
         return self._write('DELETE',f'/v1.0/homes/{part(home)}/rooms/{part(room)}')
     def move_device(self,did,room):
@@ -237,7 +264,7 @@ class DirectCloud:
         self._write('POST',f'/v1.0/homes/{part(d["home"])}/rooms/{part(room)}/devices',{'device_ids':[did]})
         old=d.get('room_id')
         if old and old!=room:
-            members=items(self.api.request('GET',f'/v1.0/homes/{part(d["home"])}/rooms/{part(old)}/devices'),'devices')
+            members=items(self._read(f'/v1.0/homes/{part(d["home"])}/rooms/{part(old)}/devices'),'devices')
             if any(str(x.get('id',x.get('device_id','')))==did for x in members):
                 try:self._write('DELETE',f'/v1.0/homes/{part(d["home"])}/rooms/{part(old)}/devices',{'device_ids':[did]})
                 except Exception as e:raise RuntimeError('Die Zielzuordnung wurde gespeichert; die bisherige Zuordnung konnte nicht entfernt werden. Bitte neu laden. '+str(e)) from e

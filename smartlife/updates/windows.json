@@ -1,9 +1,9 @@
 {
   "status": "available",
   "platform": "win32",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "runtime": "win64-py313-qt683-v1",
-  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.10-app.zip",
-  "sha256": "7104f05c47849af804c37e51eba4b44f0a3d1ffd4297616bca139810c6dbf0fe",
-  "notes": "Unpassende Automationswarnung nach bestätigter Gerätenamensänderung behoben. Zugehörige Ansichten verwenden den bestätigten Namen über die Geräte-ID; vollständige Regeln werden dabei nicht erneut geladen oder verändert. Schutzprüfung beim tatsächlichen Bearbeiten von Automationen bleibt aktiv."
+  "url": "https://raw.githubusercontent.com/C4rstenSC/scripte/main/smartlife/updates/windows/SmartLife-Desktop-0.2.11-app.zip",
+  "sha256": "ccd3ae11e689e87a6df978c888152f06594989bcd8b87aaa07f5a28b2fe5adc3",
+  "notes": "Gerätesteuerung und Statusabfrage verwenden jetzt ebenfalls den gespeicherten Endnutzer-Schlüssel. Unterstützte Zuhause-/Raum-/Geräte-Leseabfragen und Gerätemodelle umgestellt. Keine erneute Schlüsseleingabe erforderlich. Räume bearbeiten, Szenen, Automationen und MAC-Abfragen laufen weiterhin über das Entwicklerprojekt; FRITZ!Box bleibt lokal."
 }
