@@ -1,0 +1,14 @@
+Version 1.6.2 – 21 November 2026
+Base installation:
+- Restore shared preparation missing since the earlier edits: confirmation, progress, OS packages, region and user groups. Make git, Python installation helpers and GPS readers available before WURB/WIRC. Stop on package errors.
+- Restore preparation for Allsky-only installations. Allsky-specific installation files and its final installation phase remain unchanged from published Build 3. Do not restore the retired USB GPS service chain.
+Update:
+- Copy the homepage, I2C readers and permission helper through the existing incremental update path without rerunning the base installer.
+- Remove the later overwrite of both wp5 lock rules with the older app-lock-only definition. Include the invoking SSH user in permission repair.
+Shared:
+- Other settings show the onboard fan and measured RPM, distinguishing a cooling command from measured rotation. Missing data is not reported as off.
+- Use the manufacturer's combined I2C read protocol and retry high/low byte pairs if the high byte changes. Keep register mapping and /1000 scaling unchanged. Maximum status-cache age is five seconds instead of 45. No calibration changes; IOUT measures output current.
+- Persist I2C device/lock permissions and reapply lock rules before manufacturer daemon startup; check file access as an ordinary user. Reconnect existing SSH sessions after group changes. Manufacturer binary unchanged.
+- Correct the Pi model in the direct USB GPS message. Preserve direct USB access and existing Waveshare bridge.
+- Content and embedded Add-ons advance to 1.6.2. Windows binary module remains 1.6.0.3, retaining its real version and checksum.
+Validation: nine automated methods covering base-install selections and package failures, update file sync for existing WURB/Allsky while retaining extra settings/schedules, unchanged Allsky files, fan states, firmware 1.7/1.8 measurements, torn pairs, combined I2C transactions and permission setup; shell/Python/JavaScript syntax, ZIP and AES-GCM checks. No physical Raspberry/Witty current measurement or native Windows WPF test.

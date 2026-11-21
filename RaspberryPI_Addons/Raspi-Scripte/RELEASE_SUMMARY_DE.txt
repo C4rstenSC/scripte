@@ -1,8 +1,14 @@
-Version 1.6 Build 3 – 20.11.2026
-- V-IN/V-USB tatsächlich nach Herstellerregisterdefinition korrigiert: V-IN 5/6, V-USB 3/4. V-OUT 7/8 und I-OUT 9/10 bleiben getrennte Ausgangswerte. I-OUT ist der Strom auf der 5-V-Seite. Kein USB-Ersatzwert bei fehlendem V-IN.
-- Windows-Versionsvergleich korrigiert: 1.6 und 1.6.0 sind gleich; erst danach wird die numerische Buildrevision verglichen. Ein älterer Build wird nicht wegen eines abweichenden Versionstexts als Update angeboten.
-- GPS-Lampe liest denselben vorhandenen WURB-GPS-Status wie der GPS-Datenweg. Direkter USB-Betrieb benötigt keine GPSD-/PTY-Zusatzkette. Bei nicht erreichbarem Status unbekannt statt falscher roter Fehleranzeige; Legacy-Fallback bleibt vorhanden.
-- wp5-Berechtigungen bei Updates auch ohne passende alte Modellauswahl reparieren: i2c-Gruppenmitgliedschaft, Geräte- und Herstellerlockrechte sowie dauerhafte udev-/tmpfiles-Regeln. Bestehende SSH-Sitzung einmal neu verbinden, danach wp5 ohne vorangestelltes sudo.
-- USB-/Waveshare-GPS-Dienststruktur und WURB-Lesezyklus bleiben wie 1.6. Carsten meldet aktuell gleichen Verbrauch wie bei der manuellen Installation; keine eigene Hardwaremessung.
-- Windows-DLL, Modul-, Inhalts-, Voll- und Add-on-Pakete gemeinsam auf Buildrevision 20261120.1600.3 aktualisiert. Technischer Änderungsbericht ab 1.5.0 beigefügt.
-Prüfung: 40 Python-Testmethoden, 12 ausführbare Windows-Vergleichsfälle, 16 DOM-Kombinationen und 12 Modusmigrationen bestanden. Syntax, Archive, gleiche eingebettete Add-ons und AES-GCM-Rückprüfung geprüft. Kein physischer Raspberry-/Witty-/GPS-Test und kein nativer Windows-WPF-Test.
+Version 1.6.2 – 21.11.2026
+Basisinstallation:
+- Fehlenden gemeinsamen Vorbereitungsabschnitt aus 1.3.8 wiederhergestellt: Bestätigung, Fortschritt, Linux-Pakete, Region, Benutzergruppen. git, Python-Installationshelfer und GPS-Lesehelfer stehen vor WURB/WIRC bereit. Paketfehler stoppen die Installation.
+- Allsky allein erhält ebenfalls wieder die notwendige Vorbereitung; Allsky-spezifische Installationsdateien und die abschließende Allsky-Phase bleiben unverändert zum veröffentlichten Build 3. Keine Rückkehr zur alten USB-GPS-Zusatzkette.
+Update:
+- Übernimmt Homepage, I2C-Leser und Berechtigungshelfer über den bestehenden inkrementellen Dateiabgleich. Die Basisinstallation wird dafür nicht erneut ausgeführt.
+- Zweites Überschreiben der wp5-tmpfiles-Regeln mit der älteren Fassung entfernt. Beide Hersteller-Locks behalten ihre persistenten Gruppenrechte. Auch der aufrufende SSH-Benutzer wird berücksichtigt.
+Gemeinsam:
+- Weitere Einstellungen: Onboard-Lüfter mit gemessener Drehzahl. Ohne Tachosignal wird die Ansteuerung ausdrücklich als solche angezeigt; fehlende Daten gelten nicht als Aus.
+- Messwerte über den kombinierten I2C-Leseweg des Herstellers; High-/Low-Byte-Paare mit Wiederholung bei Bytewechsel. Register und Skalierung bleiben VIN 5/6, VUSB 3/4, VOUT 7/8, IOUT 9/10, jeweils /1000. Statuscache maximal fünf statt 45 Sekunden. Keine Änderung der Kalibrierung; IOUT ist Ausgangsstrom.
+- wp5: i2c-Gruppe, Geräte-/Lockrechte und Rechteanwendung vor Herstellerdaemon-Start; Dateizugriff wird als normaler Benutzer geprüft. Nach Gruppenänderung bestehende SSH-Sitzung neu verbinden. Herstellerprogramm bleibt unverändert.
+- Pi-Modell in der USB-GPS-Meldung korrigiert. Direkter USB-GPS-Betrieb bleibt erhalten, Waveshare nutzt weiterhin die vorhandene Bridge.
+- Windows-Inhalte und eingebettete Add-ons 1.6.2. Windows-Binärmodul unverändert 1.6.0.3; dessen Modulversion und Prüfsumme bleiben erhalten.
+Prüfung: neun automatisierte Testmethoden. Basis-Matrix: WURB/WIRC USB, Allsky mit/ohne Witty, WURB Waveshare und Abbruch bei Paketfehler. Update-Dateiabgleich für bestehende WURB-/Allsky-Installationen mit Erhalt zusätzlicher Einstellungen/Zeitpläne. Allsky-Dateivergleich, Lüfterzustände, Messwerte für Firmware 1.7/1.8, Bytewechsel, kombinierter I2C-Aufruf und Berechtigungshelfer. Shell-/Python-/JavaScript-Syntax, ZIP und AES-GCM geprüft. Keine physische Raspberry-/Witty-Strommessung und kein nativer Windows-WPF-Test.
