@@ -1,12 +1,12 @@
 {
   "version": "1.6.6",
-  "buildRevision": "20261122.1606.1",
+  "buildRevision": "20261122.1606.2",
   "files": {
-    "RaspberryPI_Addons/Witty PI Addon/witty_addon.zip.enc": "41a79e87e3a125e1a024c69ef0da6f1b1f28a9e95afdaf41dc338559de358081",
-    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte.zip.enc": "5ef3e4f04b757ddaa9d97169416037ed19d13167186824cfb5ed35a0a2c13773",
+    "RaspberryPI_Addons/Witty PI Addon/witty_addon.zip.enc": "6a4ee22eed996a8aa7b0ad793883dd70bdd465614d9f315640b95f3aa4053ee5",
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte.zip.enc": "7368663d8eecbccfc90480ad64f0e068a765aa7c342cc1daa4b45573477efca9",
     "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Module.zip.enc": "9089e6fafec5349f17d805d314d3c56962f92229a0124c3b2930ce37f44bac7e",
-    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Modular-Content.zip.enc": "e86cc787712377456eea652189947de15f81329ebf1bb4f371a1c45948e18f86",
-    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Content.zip.enc": "e86cc787712377456eea652189947de15f81329ebf1bb4f371a1c45948e18f86",
-    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Programm.zip.enc": "5ef3e4f04b757ddaa9d97169416037ed19d13167186824cfb5ed35a0a2c13773"
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Modular-Content.zip.enc": "7272f3c09b9cd07b734bb43feb041b53933135c248674bb31b577eea3b564fd3",
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Content.zip.enc": "7272f3c09b9cd07b734bb43feb041b53933135c248674bb31b577eea3b564fd3",
+    "RaspberryPI_Addons/Raspi-Scripte/Raspi-Scripte-Programm.zip.enc": "7368663d8eecbccfc90480ad64f0e068a765aa7c342cc1daa4b45573477efca9"
   }
 }
